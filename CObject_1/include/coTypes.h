@@ -15,7 +15,7 @@ extern "C" {
 	#include <sys/types.h>
 
 	typedef u_int8_t u8;
-	typedef u_int8_t b8;	// boolean type
+	typedef u_int8_t b8;	/* boolean type */
 	#define true	1
 	#define false	0
 
@@ -28,7 +28,7 @@ extern "C" {
 	typedef int32_t s32;
 	typedef int64_t s64;
 	
-	typedef enum co_error co_error;
+	/*typedef enum co_error co_error;*/
 	typedef struct coClass				coClass;
 	typedef struct coObject				coObject;
 	typedef struct coString				coString;

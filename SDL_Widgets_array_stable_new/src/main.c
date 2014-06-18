@@ -23,6 +23,7 @@
 #include "StdDefinitions.h"
 #include "Static.h"
 #include "Screen.h"
+#include "StackList.h"
 #include "Memory.h"
 #include "Widget.h"
 #include "Image.h"
@@ -130,12 +131,19 @@ perr MainProgram_parseOptions(int argc, const char **argv) {
  
 /* SECTION USER INTERFACE */
 /* Count of each type of widget, can't be lower than needed */
-#define cBUTTONIMAGE (3)
+#define cBUTTONIMAGE 	(3)
+#define cSTACKLIST 		(1)
+#define cRECTANGLE 		(5)
 
 static Screen 		*sc;
 static Image		*background;
 static ButtonImage  *buttonimage;
 static u16 		c_buttonimage=0;
+static u16 		c_stacklist=0;
+static u16 		c_rectangle=0;
+
+static StackList	*stacklist;
+static Rectangle	*rectangle;
 
 void button_Graphics_clicked(Widget *sender, Screen *screen) {
 	if (GraphicsMain_Main()) {
@@ -166,9 +174,13 @@ void main_keydown(Screen *screen, SDLKey key) {
 }
 
 void Main_createInterface() {
+	StackList 	*sli;
 	ButtonImage *butimg;
+	Rectangle   *rect;
 	
 	buttonimage = (cBUTTONIMAGE > 0)? malloc(cBUTTONIMAGE * sizeof(ButtonImage))  : NULL;
+	stacklist = (cSTACKLIST > 0)? malloc(cSTACKLIST * sizeof(StackList))  : NULL;
+	rectangle = (cRECTANGLE > 0)? malloc(cRECTANGLE * sizeof(Rectangle))  : NULL;
 	
 	background  = Image_new(new(Image_class), "img/FreeGreatPicture.com-26189-abstract-color-background.jpg", 0, 0);
 	//Screen_setBackgroundColor(sc, 0x90EE90);
@@ -196,6 +208,19 @@ void Main_createInterface() {
 	ButtonImage_applyDefaultStyle(butimg, 1750, 14, 20, 20, true);
 	WIDGET(butimg)->click_handler = Screen_buttonExitClicked;
 	Screen_addWidget(sc, WIDGET(butimg));
+	
+	sli = &stacklist[c_stacklist++];
+	StackList_new(sli, VERTICAL, 2);
+	Container_setPadding(CONTAINER(sli), 20, 30);
+	WIDGET(sli)->draggable = true;
+	Screen_addWidget(sc, WIDGET(sli));
+
+	rect = &rectangle[c_rectangle++];
+	Rectangle_new(rect, 0xFF0000);
+	Widget_setSize(WIDGET(rect), 50, 30);
+	Widget_refresh(WIDGET(rect));
+	StackList_addWidgetLast(sli, WIDGET(rect), ALIGN_LEFT, ALIGN_CENTER, 0, 0, 0, 30);
+	Widget_refresh(WIDGET(sli));
 }
 
 int main(int argc, const char **argv) {
@@ -205,7 +230,10 @@ int main(int argc, const char **argv) {
 		return ee;
 	}
 	
-	if (MainProgram_parseOptions(argc, argv) == E_EXIT_REQUESTED) return 0;
+	if (MainProgram_parseOptions(argc, argv) == E_EXIT_REQUESTED) {
+		Memory_end();
+		return 0;
+	}
 	Screen_setOptions(&op);
 	
 	/* Initialize SDL and Screen */
@@ -214,6 +242,7 @@ int main(int argc, const char **argv) {
 	if ((e) || (! sc)) {
 		fprintf(stderr, "main: Screen_new returned NULL object pointer(%p) and/or failed with error %s\n", sc, perr_getName(e));
 		if (sc) { free(delete(sc)); sc = NULL; }
+		Memory_end();
 		exit(e);
 	}
 
@@ -245,19 +274,29 @@ int main(int argc, const char **argv) {
 	AudioMain_Destroy();
 	GraphicsMain_Destroy();
 	
-	/* Delete screen object */
-	if (sc) { free(delete(sc)); sc = NULL; }
-	
+	u16 i;
 	/* Delete buttonimages */
 	if (buttonimage) {
-		u16 i = 0; 
-		for (; i < c_buttonimage; i++) delete(&buttonimage[i]);
+		for (i = 0; i < c_buttonimage; i++) delete(&buttonimage[i]);
 		free(buttonimage);
 		buttonimage = NULL;
+	}
+	if (rectangle) {
+		for (i = 0; i < c_rectangle; i++) delete(&rectangle[i]);
+		free(rectangle);
+		rectangle = NULL;
+	}
+	if (stacklist) {
+		for (i = 0; i < c_stacklist; i++) delete(&stacklist[i]);
+		free(stacklist);
+		stacklist = NULL;
 	}
 	
 	/* Delete background dynamic widget */
 	if (background) { free(delete(background)); background = NULL; }
+	
+	/* Delete screen object */
+	if (sc) { free(delete(sc)); sc = NULL; }
 	
 	if ( (ee = Memory_end()) ) {// stops memory management
 		fprintf(stderr, "main: Memory_end() exited with error: %s\n", Memory_getError(ee));

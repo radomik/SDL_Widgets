@@ -95,8 +95,10 @@ StackList* StackList_new(StackList *this, layouttype layout, u32 size) {
 	this->layout  			= layout;
 	this->size 				= size;
 	this->count 			= 0;
-	this->items 			= (size) ? calloc(size, sizeof(ContainerItem)) : NULL;
+	this->items 			= (size) ? malloc(size * sizeof(ContainerItem)) : NULL;
 	
+	fprintf(stderr, "%s: this(%p), .layout(%s), .size(%u), .items(%p) [malloc]\n", 
+		__FUNCTION__, this, StackList_getLayoutName(this->layout), this->size, this->items);
 	return this;
 }
 
@@ -168,8 +170,7 @@ void StackList_vrefresh(void *vthis) {
 		StackListX_refresh(STACKLIST(vthis));
 }
 
-static void StackList_validateAt(StackList *this, u32 index) {
-	ContainerItem *item = &this->items[index];
+static void StackList_validateItem(const StackList *this, ContainerItem *item, u32 index) {
 	u8 d;
 	if (item->halign == ALIGN_CENTER) {	// if center calculate average of horizontal margineses
 		item->margin_left 	+= item->margin_right;
@@ -196,6 +197,9 @@ static void StackList_validateAt(StackList *this, u32 index) {
 	
 	item->widget->draggable = false;	// for security (there is no such thing like dragging widget in a stack)
 	
+	fprintf(stderr, "%s: before specific {X,Y}_validateItem: item[%u]:\n\t%s\n",
+		__FUNCTION__, index, ContainerItem_toString(item));
+
 	if (this->layout == VERTICAL)
 		StackListY_validateItem(this, item, index);
 	else
@@ -204,12 +208,12 @@ static void StackList_validateAt(StackList *this, u32 index) {
 
 // Validates whole list on Y axis - StackListY or on X - StackListX (runs validateAt for each item)
 /*static void StackList_validate(StackList *this) { 
-	u32 i = 0; for (; i < this->count; i++) StackList_validateAt(this, i); 
+	u32 i = 0; for (; i < this->count; i++) StackList_validateItem(this, &this->items[i], i); 
 }*/
 
 // Validates all items from given index (including it) on Y axis - StackListY or on X - StackListX
 static void StackList_validateFrom(StackList *this, u32 index) { 
-	u32 i = index; for (; i < this->count; i++) StackList_validateAt(this, i); 
+	u32 i = index; for (; i < this->count; i++) StackList_validateItem(this, &this->items[i], i); 
 }
 
 /* Grow stacklist array or return current function with error */
@@ -236,7 +240,7 @@ static perr StackList_growArray(StackList *this) {
 // 
 // given element is structure which just copies (can be changed later in source)
 // another approach is to add widget manually filling:
-// stacklist->items[index] and then run StackList_validateAt(stacklist, index)
+// stacklist->items[index] and then run StackList_validateItem(stacklist, item, index)
 // one another is to add only Widget*, fill its properties and validateAt
 perr StackList_appendAt(StackList *this, ContainerItem *container_item, u32 index) 
 {
@@ -283,7 +287,7 @@ perr StackList_addLast(StackList *this, ContainerItem *container_item) {
 	
 	this->items[this->count] = *container_item;	// copy structure
 	
-	StackList_validateAt(this, this->count);
+	StackList_validateItem(this, &this->items[this->count], this->count);
 	
 	this->count++;
 	return E_NO_ERROR;
@@ -317,12 +321,14 @@ perr StackList_addWidgetLast(	StackList *this, Widget *widget,
 	item->halign			= halign;
 	item->valign			= valign;
 	
-	StackList_validateAt(this, this->count);
+	fprintf(stderr, "%s: >>> this(%p), item[%u](%s)\n",
+		__FUNCTION__, this, this->count, ContainerItem_toString(item));
 	
-	//fprintf(stderr, "StackList_addWidgetLast: item[%u]: %s\n\n", this->count, 
-					//StackList_itemToString(&this->items[this->count]));
+	StackList_validateItem(this, item, this->count);
 	
 	this->count++;
+
+	fprintf(stderr, "%s: >>> this(%p) Added widget current count: %u\n", __FUNCTION__, this, this->count);
 	
 	return E_NO_ERROR;
 }

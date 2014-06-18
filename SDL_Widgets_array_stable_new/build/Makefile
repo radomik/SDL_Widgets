@@ -24,7 +24,7 @@
 
 MAKEFILE_NAME  := "build"
 export LDFLAGS = -lcobject `sdl-config --libs` -lSDL_image -lSDL_gfx -lSDL_ttf -lportaudio -lm 
-export CFLAGS  = `sdl-config --cflags` -Wall -msse3 -march=native -mtune=native -pipe -O1
+export CFLAGS  = `sdl-config --cflags` -Wall -msse3 -march=native -mtune=native -pipe -O1 -Werror
 export AFLAGS  = $(CFLAGS) -S -masm=intel -fverbose-asm
 export CC      = /usr/lib/colorgcc/bin/x86_64-pc-linux-gnu-gcc
 export BINNAME = $(realpath .)/SDL_Widgets

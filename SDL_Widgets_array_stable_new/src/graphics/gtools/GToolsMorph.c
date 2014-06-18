@@ -447,11 +447,11 @@ u8 GToolsMorph_dilate(SDL_Surface *imgsrc, SDL_Surface *imgdst, const PixelDrawB
 	uint col, alpha = 0, str_color;
 	
 	u8 *off_src_start = imgsrc->pixels;
-	u8 *off_src_end = imgsrc->pixels + pitch * imgsrc->h;
-	u8 *off_src_pom = imgsrc->pixels - specY * pitch;
+	u8 *off_src_end = (u8*)imgsrc->pixels + pitch * imgsrc->h;
+	u8 *off_src_pom = (u8*)imgsrc->pixels - specY * pitch;
 	u8 *off_src = off_src_pom - Bpp * specX;
 	u8 *off_dst = imgdst->pixels;
-	u8 *off_dst_end = imgdst->pixels + pitch * imgdst->h;
+	u8 *off_dst_end = (u8*)imgdst->pixels + pitch * imgdst->h;
 	
 	u8 *off_dst_xend;
 	u8 *first_xsrc, *last_xsrc;
@@ -586,11 +586,11 @@ u8 GToolsMorph_erode(SDL_Surface *imgsrc, SDL_Surface *imgdst, const PixelDrawBo
 	uint col, alpha = 0, str_color;
 	
 	u8 *off_src_start = imgsrc->pixels;
-	u8 *off_src_end = imgsrc->pixels + pitch * imgsrc->h;
-	u8 *off_src_pom = imgsrc->pixels - specY * pitch;
+	u8 *off_src_end = (u8*)imgsrc->pixels + pitch * imgsrc->h;
+	u8 *off_src_pom = (u8*)imgsrc->pixels - specY * pitch;
 	u8 *off_src = off_src_pom - Bpp * specX;
 	u8 *off_dst = imgdst->pixels;
-	u8 *off_dst_end = imgdst->pixels + pitch * imgdst->h;
+	u8 *off_dst_end = (u8*)imgdst->pixels + pitch * imgdst->h;
 	
 	u8 *off_dst_xend;
 	u8 *first_xsrc, *last_xsrc;
@@ -780,7 +780,7 @@ u8 GToolsMorph_reconstruction(SDL_Surface *imgmask, SDL_Surface *imgmarker, cons
 	const u8 *pixels_mask     = imgmask->pixels;
 	u8 		 *pixels_tmp      = imgtmp->pixels;
 	u8 		 *pixels_marker   = imgmarker->pixels;
-	const u8 *pixels_mask_end = imgmask->pixels + pitch * imgmask->h;
+	const u8 *pixels_mask_end = (u8*)imgmask->pixels + pitch * imgmask->h;
 	const u8 *px_mask;
 	u8 		 *px_marker, *px_tmp;
 	u16 	  iter = 0;

@@ -35,7 +35,7 @@
 		u16		relx;			// x, y - of point relative to most
 		u16		rely;			// top-left corner of widget surface
 	};
-	typedef struct wdb_point wdb_point;
+	//typedef struct wdb_point wdb_point;
 	
 	extern const coClass *WaveDrawBox_class;
 	#define WAVE_DRAW_BOX(VTHIS) ((WaveDrawBox*)VTHIS)

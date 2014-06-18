@@ -14,8 +14,6 @@ extern "C" {
 
 #include "coCommon.h"
 
-const char *coGetStringError(const co_error co_err);
-
 /** Stackoverflow question 9907160 */
 #define FOREACH_CO_ERROR(CO_ERROR)					\
 	CO_ERROR(CO_ERR_NO_ERROR=0)						\
@@ -53,9 +51,12 @@ const char *coGetStringError(const co_error co_err);
 #define GENERATE_ENUM(ENUM) ENUM,
 #define GENERATE_STRING(STRING) #STRING,
 
-enum co_error {
+
+typedef enum co_error {
 	FOREACH_CO_ERROR(GENERATE_ENUM)
-};
+} co_error;
+
+const char *coGetStringError(const co_error co_err);
 
 #ifdef	__cplusplus
 }

@@ -112,11 +112,11 @@ void Container_createSurfaceIfNeeded(Container *this) {
 	widget->need_reload = true;
 }
 
-static char str_id[600];
+static char str_id[750];
 const char *ContainerItem_toString(const ContainerItem *item) {
 	
 	if (! item) return "container_item=NULL";
-	snprintf(str_id, sizeof(str_id), "ContainerItem: widget=%s, margins=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rect=[%hu,%hu,%hu,%hu], cell_max=(%hu,%hu)",
+	snprintf(str_id, sizeof(str_id), "ContainerItem: widget=%s, marginTLBR=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rectXYWH=[%hu,%hu,%hu,%hu], cell_rect_MX,MY=(%hu,%hu)",
 					(item->widget) ? Widget_toString(item->widget) : "(null)",
 					item->margin_top, item->margin_left, item->margin_bottom,
 					item->margin_right, Container_alignmentToString(item->halign),
