@@ -712,7 +712,7 @@ u8 GToolsMorph_open(SDL_Surface *imgsrc, SDL_Surface *imgdst, const PixelDrawBox
 	}
 	
 	SDL_Surface *temp_surface;
-	if (! (temp_surface = Static_CopySurface(imgsrc))) {		// copy surface
+	if (! (temp_surface = Static_newSurface(imgsrc->w, imgsrc->h))) {		// copy surface
 		fprintf(stderr, "GToolsMorph_open> Failed to create temporary surface SDL_ConvertSurface: %s\n", SDL_GetError());
 		return 3;
 	}
@@ -747,7 +747,7 @@ u8 GToolsMorph_close(SDL_Surface *imgsrc, SDL_Surface *imgdst, const PixelDrawBo
 	}
 	
 	SDL_Surface *temp_surface;
-	if (! (temp_surface = Static_CopySurface(imgsrc))) {		// copy surface
+	if (! (temp_surface = Static_newSurface(imgsrc->w, imgsrc->h))) {		// copy surface
 		fprintf(stderr, "GToolsMorph_close() Failed to create temporary surface SDL_ConvertSurface: %s\n", SDL_GetError());
 		return 3;
 	}
@@ -775,7 +775,7 @@ u8 GToolsMorph_reconstruction(SDL_Surface *imgmask, SDL_Surface *imgmarker, cons
 	uint  pitches = 0, pitch = imgmask->pitch;
 	uint  wb = imgmask->w * Bpp2; 				// count of bytes of image per line	
 	uint  col[3], r[3], g[3], b[3], a;
-	SDL_Surface *imgtmp = Static_CopySurface(imgmask);
+	SDL_Surface *imgtmp = Static_copySurface(imgmask);
 	
 	const u8 *pixels_mask     = imgmask->pixels;
 	u8 		 *pixels_tmp      = imgtmp->pixels;

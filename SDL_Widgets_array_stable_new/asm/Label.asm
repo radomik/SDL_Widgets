@@ -168,7 +168,7 @@ Label_vrefresh:
 	sar	eax	# tmp154
 	add	ax, WORD PTR [rbx+98]	# tmp155, MEM[(struct Widget *)vthis_3(D)].pos.y
 	mov	WORD PTR [rbx+274], ax	# MEM[(struct Widget *)vthis_3(D) + 176B].pos.y, tmp155
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	rbp, rax	# bg_surf,
 	test	rax, rax	# bg_surf
 	jne	.L9	#,

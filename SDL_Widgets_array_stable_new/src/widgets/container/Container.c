@@ -95,8 +95,10 @@ void Container_createSurfaceIfNeeded(Container *this) {
 			create_surf = false;	// surface exists and is at least as big as needed
 	}
 	
-	if (create_surf)
-		widget->surf = Static_NewSurface(widget->pos.w, widget->pos.h);
+	if (create_surf) {
+		//fprintf(stderr, "%s: Creating surface of size w=%hu, h=%hu\n", __FUNCTION__, widget->pos.w, widget->pos.h);
+		widget->surf = Static_newSurface(widget->pos.w, widget->pos.h);
+	}
 	if (! widget->surf) {
 		fprintf(stderr, "Container_createSurfaceIfNeeded: CreateRGBSurface of container failed: %s\n", SDL_GetError());
 		widget->visible = false;	// only container background not visible (items are separate widgets)
@@ -110,13 +112,15 @@ void Container_createSurfaceIfNeeded(Container *this) {
 	}
 	widget->visible     = true;
 	widget->need_reload = true;
+	//fprintf(stderr, "%s: Surface size is w=%hu, h=%hu\n", __FUNCTION__, widget->surf->w, widget->surf->h);
 }
 
 static char str_id[750];
 const char *ContainerItem_toString(const ContainerItem *item) {
 	
 	if (! item) return "container_item=NULL";
-	snprintf(str_id, sizeof(str_id), "ContainerItem: widget=%s, marginTLBR=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rectXYWH=[%hu,%hu,%hu,%hu], cell_rect_MX,MY=(%hu,%hu)",
+	snprintf(str_id, sizeof(str_id), "ContainerItem: widget=%s\n\t\
+marginTLBR=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rectXYWH=[%hu,%hu,%hu,%hu], cell_rect_MX,MY=(%hu,%hu)",
 					(item->widget) ? Widget_toString(item->widget) : "(null)",
 					item->margin_top, item->margin_left, item->margin_bottom,
 					item->margin_right, Container_alignmentToString(item->halign),

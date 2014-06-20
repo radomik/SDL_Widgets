@@ -111,6 +111,8 @@ static StackList	*stacklist;
 static Grid			*grid;
 static TTF_Font		*font2;
 
+static Widget		*pure_widget;
+
 static u16 c_image=0, c_button=0, c_textblock=0, c_label=0, c_labelimage=0, c_wdb=0,
 			 c_buttonimage = 0, c_rectangle=0, c_stacklist=0, c_grid=0;
 
@@ -170,6 +172,7 @@ int AudioMain_createInterface() {
 		butimg = &(buttonimage[c_buttonimage++]);
 		ButtonImage_new(butimg, "img/application-exit-5.png");
 		ButtonImage_applyDefaultStyle(butimg, 1750, 14, 20, 20, true);
+		Widget_setPosition(WIDGET(butimg), Screen_getWidth() - WIDGET(butimg)->pos.w - 50, WIDGET(butimg)->pos.y);
 		WIDGET(butimg)->click_handler = Screen_buttonExitClicked;
 		Screen_addWidget(sc, WIDGET(butimg));
 		fprintf(stderr, "%hux%hu\n", Screen_getWidth(), Screen_getHeight());
@@ -186,7 +189,7 @@ int AudioMain_createInterface() {
 	{/*!! Play/pause/stop buttons section !! (FIRST SECTION) */
 		//! create StackList(slix) and add it to screen
 		slix = &(stacklist[c_stacklist++]);
-		StackList_new( slix, HORIZONTAL, 2 );
+		StackList_new( slix, HORIZONTAL, 3 );
 		Container_setPadding( CONTAINER(slix), 15, 15 );
 		Widget_setPosition( WIDGET(slix), 20, 20 );
 		WIDGET(slix)->draggable = true;
@@ -287,6 +290,7 @@ int AudioMain_createInterface() {
 		
 		// create stacklist(sliy2) and add it to screen
 		sliy2 = &(stacklist[c_stacklist++]);
+		fprintf(stderr, "#### %s: Creating base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
 		StackList_new(sliy2, VERTICAL, 6);
 		Widget_setPosition(WIDGET(sliy2), 486, 2);
 		WIDGET(sliy2)->draggable	= true;
@@ -295,6 +299,7 @@ int AudioMain_createInterface() {
 		for (k = label_off, f = 0; k < label_off+6; k++, f++) {	// create each Row of StackList
 			// create StackList(sliy) (contains arrow buttons placed along Y axis)
 			sliy = &(stacklist[c_stacklist++]);
+			fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 			StackList_new(sliy, VERTICAL, 2);
 			
 			// create buttonimage[c_buttonimage] as copy of bt_arrow_up (arrow up) and add to stacklist(sliy)
@@ -312,28 +317,76 @@ int AudioMain_createInterface() {
 			StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 			
 			// Refresh StackList(sliy) with buttons filled
+			fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 			Widget_refresh(WIDGET(sliy));
 			
 			// create stacklist(slix) (full row)
 			slix = &(stacklist[c_stacklist++]);
+			fprintf(stderr, "#### %s: Creating row horizontal stacklist @ %p\n", __FUNCTION__, slix);
 			StackList_new(slix, HORIZONTAL, 2);
 			
 			// add stacklist(sliy) and label[k] to stacklist(slix)
 			StackList_addWidgetLast(slix, WIDGET(sliy), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 10);
 			StackList_addWidgetLast(slix, WIDGET(&label[k]), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
+			
+			fprintf(stderr, "#### %s: Refreshing row horizontal stacklist @ %p\n", __FUNCTION__, slix);
 			Widget_refresh(WIDGET(slix));
 			
+			fprintf(stderr, "#### %s: Adding row horizontal stacklist @ %p to base vertical stacklist @ %p\n", 
+				__FUNCTION__, slix, sliy2);
 			// add stacklist(slix) to stacklist(sliy2) (full row)
 			StackList_addWidgetLast(sliy2, WIDGET(slix), ALIGN_LEFT, ALIGN_CENTER, 4, 0, 2, 4);
 		}
 		
 		// refresh StackList(sliy2)
+		fprintf(stderr, "#### %s: Refreshing base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
 		Widget_refresh(WIDGET(sliy2));
 	
 	}/*!! END Labels section !!*/
 	
+	sliy = &stacklist[c_stacklist++];
+	fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+	StackList_new(sliy, VERTICAL, 2);
+	Widget_setPosition(WIDGET(sliy), 10, 100);
+	
+	// create buttonimage[c_buttonimage] as copy of bt_arrow_up (arrow up) and add to stacklist(sliy)
+	butimg = &buttonimage[c_buttonimage++];
+	ButtonImage_copy(butimg, Static_getArrowUpButton(), false);
+	StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
+	SDL_SaveBMP(WIDGET(butimg)->surf, "arrow_button.bmp");
+	// create buttonimage[c_buttonimage] as copy of bt_arrow_dn (arrow down) and add to stacklist(sliy)
+	butimg = &buttonimage[c_buttonimage++];
+	ButtonImage_copy(butimg, Static_getArrowDnButton(), false);
+	StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
+	
+	// Refresh StackList(sliy) with buttons filled
+	fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+	Widget_refresh(WIDGET(sliy));
+	
+	Screen_addWidget(sc, WIDGET(sliy));
+	
+	pure_widget = Widget_new(new(Widget_class));
+	pure_widget->surf = Static_newSurface(WIDGET(butimg)->pos.w, WIDGET(butimg)->pos.h << 1);
+	
+	SDL_BlitSurface(WIDGET(butimg)->surf, NULL, pure_widget->surf, NULL);
+	pure_widget->pos.y = WIDGET(butimg)->pos.h;
+	SDL_BlitSurface(WIDGET(butimg)->surf, NULL, pure_widget->surf, &pure_widget->pos);
+	pure_widget->pos.x = 50;
+	pure_widget->pos.y = 200;
+	pure_widget->pos.w = pure_widget->surf->w;
+	pure_widget->pos.h = pure_widget->surf->h;
+	pure_widget->visible = true;
+	pure_widget->draggable = true;
+	Widget_updateMaxXY(pure_widget);
+	Screen_addWidget(sc, pure_widget);
+	
+	fprintf(stderr, "WIDGET(butimg)->surf->w = %hu\n", WIDGET(butimg)->surf->w);
+	fprintf(stderr, "WIDGET(butimg)->pos.w   = %hu\n", WIDGET(butimg)->pos.w);
+	fprintf(stderr, "WIDGET(butimg)->surf->h = %hu\n", WIDGET(butimg)->surf->h);
+	fprintf(stderr, "WIDGET(butimg)->pos.h   = %hu\n", WIDGET(butimg)->pos.h);
+	
 	/** Flowable image used to adjust frequency of AudioSinus */
-	img = &(image[c_image++]);
+	img = &image[c_image++];
 	Image_new(img, "img/applications-multimedia-2.png", 300, 300);
 	WIDGET(img)->release_handler = image_mrelease;
 	WIDGET(img)->draggable = true;
@@ -414,7 +467,7 @@ int AudioMain_createInterface() {
 	
 	fprintf(stderr, "AudioMain - count of widgets:\n\tImages %hu/%d\n\tButtons %hu/%d\n\tTextBlocks %hu/%d\n\tLabels %hu/%d\n\tLabelImages %hu/%d\n\tButtonImages %hu/%d\n\tRectangles %hu/%d\n\tStackList %hu/%d\n\tGrids %hu/%d\n",
 					c_image, cIMAGE, c_button, cBUTTON, c_textblock, cTEXTBLOCK, c_label, cLABEL, c_labelimage, cLABELIMAGE, c_buttonimage, cBUTTONIMAGE, c_rectangle, cRECTANGLE, c_stacklist, cSTACKLIST, c_grid, cGRID);
-	
+	//~ 
 
 	return 0; // remember
 
@@ -442,8 +495,8 @@ void AudioMain_Destroy() {
 	if (! is_inited) return;
 	u16 i;
 	
-	if (sc) { free(delete(sc)); sc = NULL; }
-	if (background) { free(delete(background)); background = NULL; }
+	
+	free(delete(pure_widget));
 	
 	if (font2) { TTF_CloseFont(font2); font2 = NULL; }
 	if (image)			{ for (i = 0; i < c_image; i++) 			delete(&image[i]); 			free(image);		image = NULL;		c_image = 0; }
@@ -456,6 +509,9 @@ void AudioMain_Destroy() {
 	if (wdb)			{ for (i = 0; i < c_wdb; i++) 				delete(&wdb[i]);			free(wdb);			wdb = NULL;			c_wdb = 0; }
 	if (stacklist)		{ for (i = 0; i < c_stacklist; i++) 		delete(&stacklist[i]);		free(stacklist);	stacklist = NULL;	c_stacklist = 0; }
 	if (grid)			{ for (i = 0; i < c_grid; i++) 				delete(&grid[i]);			free(grid);			grid = NULL;		c_grid = 0; }
+	
+	if (background) { free(delete(background)); background = NULL; }
+	if (sc) { free(delete(sc)); sc = NULL; }
 	
 	AudioMain_deleteAudio();
 

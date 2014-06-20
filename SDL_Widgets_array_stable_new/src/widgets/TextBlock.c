@@ -68,7 +68,7 @@ void TextBlock_vrefresh(void *vthis) {
 	}
 	else {
 		SDL_FreeSurface(bg_surf); // free current surface (safe to pass NULL)
-		bg_surf = Static_NewSurface((u16)w, (u16)h);
+		bg_surf = Static_newSurface((u16)w, (u16)h);
 		if (! bg_surf) {
 			fprintf(stderr, "TextBlock_refresh[%s] CreateRGBSurface (bg_surf) failed: %s\n", text_block->text, SDL_GetError());
 			Widget_setVisible(widget, false);

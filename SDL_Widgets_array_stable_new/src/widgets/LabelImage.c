@@ -18,12 +18,9 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "StdDefinitions.h"
 #include "Screen.h"
 #include "Static.h"
 #include "Memory.h"
-#include "Widget.h"
-#include "Image.h"
 #include "LabelImage.h"
 
 static const void* vtable[] = {
@@ -43,8 +40,8 @@ static coClass type = {
 const coClass *LabelImage_class = &type;
 
 void LabelImage_vrefresh(void *vthis) {
-	LabelImage *labelimage = LABEL_IMAGE(vthis);
-	Image 		*im 	= &(labelimage->image);
+	LabelImage  *labelimage = LABEL_IMAGE(vthis);
+	Image 		*im 	= &labelimage->image;
 	Widget		*widget = WIDGET(vthis);
 	Widget		*imw	= WIDGET(im);			//! @note Image have to inherit from Widget
 	SDL_Surface *bg_surf;
@@ -62,7 +59,7 @@ void LabelImage_vrefresh(void *vthis) {
 	imw->pos.y = widget->pos.y + ((widget->pos.h - ih)>>1);
 	
 	/* Create base surface (for whole labelimage) */
-	bg_surf = Static_NewSurface(widget->pos.w, widget->pos.h);
+	bg_surf = Static_newSurface(widget->pos.w, widget->pos.h);
 	if (! bg_surf) {
 		fprintf(stderr, "LabelImage_refresh: Failed to create base SDL_Surface bg_surf [%s]\n", SDL_GetError());
 		Widget_setVisible(widget, false);
@@ -105,8 +102,7 @@ void LabelImage_vrefresh(void *vthis) {
 	//}
 	SDL_FreeSurface(widget->surf);
 	widget->surf = bg_surf;
-	widget->maxx = widget->pos.x + widget->pos.w;
-	widget->maxy = widget->pos.y + widget->pos.h;
+	Widget_updateMaxXY(widget);
 	Widget_setVisible(widget, true);
 }
 

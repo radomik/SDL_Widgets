@@ -513,7 +513,7 @@ WaveDrawBox_vrefresh:
 .L44:
 	movzx	esi, si	# D.9230, D.9230
 	movzx	edi, ax	# D.9234, D.9234
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)vthis_1(D)].surf, D.9259
 	test	rax, rax	# D.9259
 	jne	.L46	#,

@@ -24,6 +24,9 @@
 	#include "StdDefinitions.h"
 	#include "perr.h"
 	
+	/** Uncomment to enable verbose adding and refreshing of stacklist */
+	//#define STACKLIST_DEBUG		1
+	
 	// layout of StackList (horizontal or vertical)
 	enum layouttype {
 		HORIZONTAL = 0,
@@ -50,27 +53,31 @@
 	void StackList_vdestroy(void *vthis);
 	void StackList_vmevent(void *vthis, Screen *screen);
 	void StackList_vdraw(void *vthis, Screen *screen, b8 flip);
+	
+	/** Refresh stacklist virtual on both axis
+	 * This is implementation of virtual Widget_refresh() */
 	void StackList_vrefresh(void *vthis);
+	
 	void StackList_vdrag(void *vthis, s16 dx, s16 dy);
 	void StackList_vsetVisible(void *vthis, b8 vis);
 	
-	// constructor
+	/// constructor
 	StackList* StackList_new(StackList *this, layouttype layout, u32 size);
 
-	// Append item to specific position, this index can be in range 0...count
-	// if added at last, count is automatically increased
-	// 
-	// given element is structure which just copies (can be changed later in source)
-	// another approach is to add widget manually filling:
-	// stacklist->items[index] and then run StackList_validateAt(stacklist, index)
-	// one another is to add only Widget*, fill its properties and validateAt
+	/** Append item to specific position, this index can be in range 0...count
+	 * if added at last, count is automatically increased
+	 * 
+	 * given element is structure which just copies (can be changed later in source)
+	 * another approach is to add widget manually filling:
+	 * stacklist->items[index] and then run StackList_validateItem(stacklist, item, index)
+	 * one another is to add only Widget*, fill its properties and validateAt */
 	perr StackList_appendAt(StackList *this, ContainerItem *container_item, u32 index);
 
-	// add item at last position
+	/// add item at last position
 	perr StackList_addLast(StackList *this, ContainerItem *container_item);
 
-	// Add single widget to end of StackList, remember to run StackList_refresh 
-	// after adding a bunch of items
+	/** Add single widget to end of StackList, remember to run StackList_refresh 
+	 * after adding a bunch of items */
 	perr StackList_addWidgetLast(	StackList *this, Widget *widget, 
 									alignment halign, alignment valign,
 									u16 marg_top, u16 marg_left, 
@@ -82,4 +89,16 @@
 									u16 marg_top, u16 marg_left, 
 									u16 marg_bot, u16 marg_right
 								 );
+	
+	/** Validate all stacklist items on its base axis
+	 * i.e. for StackListX this method updates items on X axis
+	 * for StackListY on Y axis
+	 * 
+	 * Method is called only from StackListX_refresh() and StackListY_refresh()
+	 * 
+	 * @return MAX(.items[].cell_rect.w) for StackListY or 
+	 *  		MAX(.items[].cell_rect.h) for StackListX
+	 * 
+	 */
+	u16 StackList_validateAllItemsOnBaseAxis(StackList *this);
 #endif

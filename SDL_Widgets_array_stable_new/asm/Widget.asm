@@ -259,7 +259,7 @@ Widget_copy:
 	je	.L16	#,
 	mov	BYTE PTR [rbx+167], 1	# this_2(D)->visible,
 	mov	rdi, QWORD PTR [rbp+88]	# src_4(D)->surf, src_4(D)->surf
-	call	Static_CopySurface	#
+	call	Static_copySurface	#
 	mov	QWORD PTR [rbx+88], rax	# this_2(D)->surf, D.9967
 	test	rax, rax	# D.9967
 	jne	.L17	#,

@@ -169,7 +169,7 @@ TextBlock_vrefresh:
 	call	wSDL_FreeSurface	#
 	movzx	esi, WORD PTR [rsp+24]	# tmp131, h
 	movzx	edi, WORD PTR [rsp+28]	# tmp133, w
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	rbp, rax	# bg_surf,
 	test	rax, rax	# bg_surf
 	jne	.L10	#,

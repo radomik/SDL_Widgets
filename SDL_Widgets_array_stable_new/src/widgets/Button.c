@@ -94,8 +94,7 @@ void Button_vrefresh(void *vthis) {
 	WIDGET(this)->pos.h		  = label_wt->pos.h;
 	WIDGET(this)->visible	  = label_wt->visible;
 	WIDGET(this)->need_reload = true;
-	WIDGET(this)->maxx		  = WIDGET(this)->pos.x + label_wt->pos.w;
-	WIDGET(this)->maxy		  = WIDGET(this)->pos.y + label_wt->pos.h;
+	Widget_updateMaxXY(WIDGET(this));
 }
 
 void Button_vdestroy(void *vthis) {
@@ -158,7 +157,7 @@ void Button_setFixedWidth(Button *this, b8 sel) {
 }
 
 void Button_setText(Button *this, const char *text) {
-	int i=0; for(;i<4;i++) Label_setText(&this->label[i], text);
+	int i = 0; for(; i < 4; i++) Label_setText(&this->label[i], text);
 }
 
 void Button_applyDefaultStyle(	Button *this,  u16 posx, u16 posy, 

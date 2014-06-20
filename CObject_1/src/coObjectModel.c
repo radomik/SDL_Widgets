@@ -12,8 +12,8 @@
 
 #define __CLASSOF(VTHIS) ( (VTHIS) ? (CO_OBJECT(VTHIS)->class) : (NULL)  )
 
-#define __VTABLEOF(VTHIS, VTABLE) 			\
-	const coClass *__class = __CLASSOF(VTHIS);	\
+#define __VTABLEOF(VTHIS, VTABLE) 					\
+	const coClass *__class = __CLASSOF(VTHIS);		\
 	(VTABLE) = __class ? __class->vtable : NULL;
 
 

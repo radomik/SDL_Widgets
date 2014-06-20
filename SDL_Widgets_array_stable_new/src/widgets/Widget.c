@@ -18,23 +18,10 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "StdDefinitions.h"
 #include "Screen.h"
 #include "Static.h"
 #include "Memory.h"
-#include "Histogram.h"
-#include "HistStretchGraph.h"
-#include "PixelDrawBox.h"
-#include "WaveDrawBox.h"
 #include "Widget.h"
-#include "Image.h"
-#include "Button.h"
-#include "TextBlock.h"
-#include "Label.h"
-#include "LabelImage.h"
-#include "ButtonImage.h"
-#include "Rectangle.h"
-#include "Container.h"
 
 static const void* vtable[] = {
 	Widget_vdestroy,
@@ -112,7 +99,6 @@ static inline void Widget_copy_common(Widget *this, const Widget *src) {
 	this->mevent_internal.release	  = NULL;
 	this->parameter 			= src->parameter;
 	this->void_parameter 		= src->void_parameter;
-	this->void_parameter2		= src->void_parameter2;
 	this->vparam 				= NULL;			// don't copy vparam
 	this->vparam_size 			= this->vparam_count = 0;
 	this->cparam 				= NULL;	
@@ -132,7 +118,7 @@ Widget* Widget_copy(Widget *this, const Widget *src, b8 copy_pos, b8 copy_surf) 
 	
 	if (copy_surf) {
 		this->visible = true;
-		if (! (this->surf = Static_CopySurface(src->surf))) {		// copy surface
+		if (! (this->surf = Static_copySurface(src->surf))) {		// copy surface
 			fprintf(stderr, "Widget_copy: Failed to copy surface SDL_ConvertSurface: %s\n", SDL_GetError());
 			this->visible = false;
 			return this;
@@ -183,7 +169,6 @@ static inline void Widget_std_init(Widget *this) {
 	this->mevent_internal.release	  = NULL;
 	this->parameter				= NULL;
 	this->void_parameter		= NULL;
-	this->void_parameter2	    = NULL;
 	this->cparam				= NULL;
 	this->cparam_exist			= true;		// of course it does NOT yet exist, it'll be searched for 
 											// first time click_event occur;
@@ -225,13 +210,13 @@ const char *Widget_toString(const Widget *this) {
 #define MOUSE_CLICK   6
 #define MOUSE_RELEASE 7
 
-static void Widget_mousePressed(Widget *widget, SDL_Event *event) {
+static void Widget_mousePressed(Widget *this, SDL_Event *event) {
 	if (event->button.button == 1) { 	// left button
-		if ((widget->draggable) && (widget->visible)) {
-			widget->dragging = true;	// start dragging
-			widget->stx = event->button.x;
-			widget->sty = event->button.y;
-			fprintf(stderr, "\n----------------------\nStart drag: %s\n", Widget_toString(widget));
+		if ((this->draggable) && (this->visible)) {
+			this->dragging = true;	// start dragging
+			this->stx = event->button.x;
+			this->sty = event->button.y;
+			fprintf(stderr, "\n----------------------\nStart drag: %s\n", Widget_toString(this));
 		}
 	}
 }
@@ -313,62 +298,48 @@ static void Widget_mouseEvent(Widget *this, Screen *screen, u8 _event_type) {
 }
 
 //! Scale widget, creates new .surf, updates .pos.w, .pos.h, .maxx, .maxy
-void Widget_scale(Widget *widget, double xscale, double yscale, int smooth) {
-	SDL_Surface *surf = zoomSurface(widget->surf, xscale, yscale, smooth);
+void Widget_scale(Widget *this, double xscale, double yscale, int smooth) {
+	SDL_Surface *surf = zoomSurface(this->surf, xscale, yscale, smooth);
 	if (! surf) return;
-	SDL_FreeSurface(widget->surf);
-	widget->surf   = surf;
-	widget->pos.w *= xscale;
-	widget->pos.h *= yscale;
-	widget->maxx = widget->pos.x + widget->pos.w;
-	widget->maxy = widget->pos.y + widget->pos.h;
+	SDL_FreeSurface(this->surf);
+	this->surf   = surf;
+	this->pos.w  = surf->w;
+	this->pos.h  = surf->h;
+	Widget_updateMaxXY(this);
 }
 
 //! Returns true if given widget pointer contains u16 x,y absolute point (use .pos as reference)
-inline b8 Widget_contains(const Widget *widget, u16 x, u16 y) { 
-	return (widget) 
-				? Static_PointInside(x, y, widget->pos.x, widget->maxx, widget->pos.y, widget->maxy)
-				: false; 
+inline b8 Widget_contains(const Widget *this, u16 x, u16 y) { 
+	return Static_pointInside(x, y, this->pos.x, this->maxx, this->pos.y, this->maxy);
 }
 
 //! Updates .pos.x, .pos.y, .minx, .miny
-void Widget_setPosition(Widget *widget, u16 minx, u16 miny) {
-	if (widget) {
-		widget->pos.x = minx;
-		widget->pos.y = miny;
-		widget->maxx  = minx + widget->pos.w;
-		widget->maxy  = miny + widget->pos.h;
-	}
+void Widget_setPosition(Widget *this, u16 minx, u16 miny) {
+	this->pos.x = minx;
+	this->pos.y = miny;
+	Widget_updateMaxXY(this);
 }
 
 //! Updates .pos.w and .pos.h
-void Widget_setSize(Widget *widget, u16 width, u16 height) {
-	if (widget) {
-		widget->pos.w = width;
-		widget->pos.h = height;
-	}
+void Widget_setSize(Widget *this, u16 width, u16 height) {
+	this->pos.w = width;
+	this->pos.h = height;
 }
 
 //! Updates .pos.w, .pos.h, .maxx, .maxy
-void Widget_setSizeUpdatePos(Widget *widget, u16 width, u16 height) {
-	if (widget) {
-		widget->pos.w = width;
-		widget->pos.h = height;
-		widget->maxx  = widget->pos.x + width;
-		widget->maxy  = widget->pos.y + height;
-	}
+void Widget_setSizeUpdatePos(Widget *this, u16 width, u16 height) {
+	this->pos.w = width;
+	this->pos.h = height;
+	Widget_updateMaxXY(this);
 }
 
 //! Updates .pos.x, .pos.y, .pos.w, .pos.h, .maxx, .maxy
-void Widget_setRect(Widget *widget, u16 minx, u16 miny, u16 width, u16 height) {
-	if (widget) {
-		widget->pos.x = minx;
-		widget->pos.y = miny;
-		widget->pos.w = width;
-		widget->pos.h = height;
-		widget->maxx  = minx + width;
-		widget->maxy  = miny + height;
-	}
+void Widget_setRect(Widget *this, u16 minx, u16 miny, u16 width, u16 height) {
+	this->pos.x = minx;
+	this->pos.y = miny;
+	this->pos.w = width;
+	this->pos.h = height;
+	Widget_updateMaxXY(this);
 }
 
 //! Gets center of widget (uses .pos as reference)
@@ -384,11 +355,14 @@ void Widget_setCenter(Widget *this, u16 cx, u16 cy) {
 	if (this) {
 		this->pos.x = cx - (this->pos.w >> 1);
 		this->pos.y = cy - (this->pos.h >> 1);
-		this->maxx  = this->pos.x + this->pos.w;
-		this->maxy  = this->pos.y + this->pos.h;
+		Widget_updateMaxXY(this);
 	}
 }
 
+inline void Widget_updateMaxXY(Widget *this) {
+	this->maxx = this->pos.x + this->pos.w - 1;
+	this->maxy = this->pos.y + this->pos.h - 1;
+}
 
 /** ### Default virtual methods implementations ### */
 

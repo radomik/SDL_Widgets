@@ -40,7 +40,7 @@
 		if (SDL_MUSTLOCK(SURF_PTR)) SDL_UnlockSurface(SURF_PTR);																			\
 	}
 	
-	#define Static_PointInside(X, Y, XMIN, XMAX, YMIN, YMAX) (((X)>=(XMIN))&&((Y)>=(YMIN))&&((X)<=(XMAX))&&((Y)<=(YMAX)))
+	#define Static_pointInside(X, Y, XMIN, XMAX, YMIN, YMAX) (((X)>=(XMIN))&&((Y)>=(YMIN))&&((X)<=(XMAX))&&((Y)<=(YMAX)))
 	#define Bool_toString(VAL) ((VAL)?"true":"false") 
 	
 	inline void Static_printObj2(const void *vthis, const char *fname);
@@ -74,9 +74,9 @@
 	
 	TTF_Font *Static_getDefaultFont();
 	TTF_Font *Static_getFont(const char *path, u8 size);
-	inline SDL_Surface* Static_CopySurface(SDL_Surface* src);
+	inline SDL_Surface* Static_copySurface(SDL_Surface* src);
 	const char *Static_u64toHexString(u64 value);
-	const char* Static_SurfaceToString(SDL_Surface *surf);
+	const char* Static_surfaceToString(SDL_Surface *surf);
 	
 	
 	
@@ -117,7 +117,7 @@
 							
 	b8 Static_fileExist(const char *path);
 	
-	SDL_Surface* Static_NewSurface(u16 w, u16 h);
+	SDL_Surface* Static_newSurface(u16 w, u16 h);
 	
 	ButtonImage* Static_getArrowUpButton();
 	ButtonImage* Static_getArrowDnButton();

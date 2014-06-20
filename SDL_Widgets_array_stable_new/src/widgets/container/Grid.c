@@ -227,8 +227,6 @@ void Grid_vrefresh(void *vthis) {
 		}
 	}
 	
-	free(maxw);
-	
 	//!fprintf(stderr, "Second for\n");
 	//!for (y = 0; y < this->c_row; y++) {
 	//!	for (x = 0; x < this->c_col; x++) {
@@ -332,7 +330,7 @@ Grid* Grid_new(Grid *this, u16 c_row, u16 c_col) {
 	this->c_col = c_col ? c_col : 1;
 	this->c_row = c_row ? c_row : 1;
 
-	fprintf(stderr, "Grid_new[this=%p]: Allocating this->maxw of size: %lu bytes\n", this, this->c_col * sizeof(u16));
+	//fprintf(stderr, "Grid_new[this=%p]: Allocating this->maxw of size: %lu bytes\n", this, this->c_col * sizeof(u16));
 	this->maxw  = malloc(this->c_col * sizeof(u16));
 	this->items = calloc(c_row, sizeof(ContainerItem*));
 	u16 i = 0; for (; i < c_row; i++) this->items[i] = calloc(c_col, sizeof(ContainerItem));

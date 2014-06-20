@@ -57,8 +57,7 @@ void ButtonImage_vrefresh(void *vthis) {
 	WIDGET(this)->pos.h		  = label_wt->pos.h;
 	WIDGET(this)->visible	  = label_wt->visible;
 	WIDGET(this)->need_reload = true;
-	WIDGET(this)->maxx		  = WIDGET(this)->pos.x + label_wt->pos.w;
-	WIDGET(this)->maxy		  = WIDGET(this)->pos.y + label_wt->pos.h;
+	Widget_updateMaxXY(WIDGET(this));
 }
 
 void ButtonImage_vdestroy(void *vthis) {
@@ -183,7 +182,18 @@ void ButtonImage_setImage(ButtonImage *this, const Image *image) {
 }
 
 void ButtonImage_scale(ButtonImage *this, double xscale, double yscale, int smooth) {
-	int i=0; for(;i<4;i++) LabelImage_scale(&this->labelimage[i], xscale, yscale, smooth);
+	LabelImage *lbimg;
+	int i=0; 
+	u16 w = 0, h = 0, w1 = 0, h1 = 0;
+	
+	WIDGET(this)->pos.w = WIDGET(this)->pos.h = 0;
+	for(;i<4;i++) {
+		lbimg = &this->labelimage[i];
+		LabelImage_scale(lbimg, xscale, yscale, smooth);
+		if ((w = WIDGET(lbimg)->pos.w) > w1) w1 = w;
+		if ((h = WIDGET(lbimg)->pos.h) > h1) h1 = h;
+	}
+	Widget_setSizeUpdatePos(WIDGET(this), w1, h1);
 }
 
 void ButtonImage_applyDefaultStyle(ButtonImage *this, 	u16 posx, u16 posy, 

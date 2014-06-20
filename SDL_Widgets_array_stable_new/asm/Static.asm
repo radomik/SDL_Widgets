@@ -134,9 +134,9 @@ Static_fileExist:
 .LC2:
 	.string	"SDL_Surface: (w,h)=(%d,%d), pitch=%hu, format: Bpp=%d, (R,G,B,A)loss=[%d,%d,%d,%d], (R,G,B,A)shift=[%d,%d,%d,%d],  (R,G,B,A)mask=[0x%8X,0x%8X,0x%8x,0x%8X], colorkey=0x%8X, alpha=%d"
 	.text
-	.globl	Static_SurfaceToString
-	.type	Static_SurfaceToString, @function
-Static_SurfaceToString:
+	.globl	Static_surfaceToString
+	.type	Static_surfaceToString, @function
+Static_surfaceToString:
 .LFB106:
 	.cfi_startproc
 	sub	rsp, 152	#,
@@ -190,7 +190,7 @@ Static_SurfaceToString:
 	ret
 	.cfi_endproc
 .LFE106:
-	.size	Static_SurfaceToString, .-Static_SurfaceToString
+	.size	Static_surfaceToString, .-Static_surfaceToString
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC3:
 	.string	"Static.c"
@@ -274,9 +274,9 @@ Static_getFont:
 	.cfi_endproc
 .LFE108:
 	.size	Static_getFont, .-Static_getFont
-	.globl	Static_CopySurface
-	.type	Static_CopySurface, @function
-Static_CopySurface:
+	.globl	Static_copySurface
+	.type	Static_copySurface, @function
+Static_copySurface:
 .LFB109:
 	.cfi_startproc
 	test	rdi, rdi	# src
@@ -301,7 +301,7 @@ Static_CopySurface:
 	ret
 	.cfi_endproc
 .LFE109:
-	.size	Static_CopySurface, .-Static_CopySurface
+	.size	Static_copySurface, .-Static_copySurface
 	.globl	getpixel
 	.type	getpixel, @function
 getpixel:
@@ -531,9 +531,9 @@ Static_growArray:
 	.cfi_endproc
 .LFE112:
 	.size	Static_growArray, .-Static_growArray
-	.globl	Static_NewSurface
-	.type	Static_NewSurface, @function
-Static_NewSurface:
+	.globl	Static_newSurface
+	.type	Static_newSurface, @function
+Static_newSurface:
 .LFB113:
 	.cfi_startproc
 	push	rbp	#
@@ -576,7 +576,7 @@ Static_NewSurface:
 	ret
 	.cfi_endproc
 .LFE113:
-	.size	Static_NewSurface, .-Static_NewSurface
+	.size	Static_newSurface, .-Static_newSurface
 	.section	.rodata.str1.1
 .LC9:
 	.string	"img/arrow-up.png"

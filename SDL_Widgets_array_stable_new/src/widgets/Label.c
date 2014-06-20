@@ -18,12 +18,9 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "StdDefinitions.h"
 #include "Screen.h"
 #include "Static.h"
 #include "Memory.h"
-#include "Widget.h"
-#include "TextBlock.h"
 #include "Label.h"
 
 static const void* vtable[] = {
@@ -84,7 +81,7 @@ void Label_vrefresh(void *vthis) {
 	tbw->pos.y = widget->pos.y + ((widget->pos.h - th)>>1);
 	
 	/* Create base surface (for whole label) */
-	bg_surf = Static_NewSurface(widget->pos.w, widget->pos.h);
+	bg_surf = Static_newSurface(widget->pos.w, widget->pos.h);
 	if (! bg_surf) {
 		fprintf(stderr, "Label_refresh: Failed to create base SDL_Surface bg_surf\n");
 		Widget_setVisible(widget, false);
@@ -128,8 +125,7 @@ void Label_vrefresh(void *vthis) {
 	
 	SDL_FreeSurface(widget->surf);
 	widget->surf = bg_surf;
-	widget->maxx = widget->pos.x + widget->pos.w;
-	widget->maxy = widget->pos.y + widget->pos.h;
+	Widget_updateMaxXY(widget);
 	Widget_setVisible(widget, true);
 }
 

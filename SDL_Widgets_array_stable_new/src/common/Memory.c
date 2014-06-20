@@ -231,7 +231,7 @@ inline MM_Info *MM_seek_ptr(void *ptr) {
 
 void *wmalloc(size_t __size, const char *_file_, int _line_) {
 	void *ptr = malloc(__size);
-	fprintf(stderr, "wmalloc: From %s @ %d Allocating %lu bytes [ptr = %p]\n", _file_, _line_, __size, ptr);
+	//fprintf(stderr, "wmalloc: From %s @ %d Allocating %lu bytes [ptr = %p]\n", _file_, _line_, __size, ptr);
 	if (! ptr) { // cannot allocate desired memory
 		fprintf(stderr, "wmalloc: Failed to allocate memory of size %lu (malloc returned NULL), file: %s, line: %d\n", 
 			__size, _file_, _line_);

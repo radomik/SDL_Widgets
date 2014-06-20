@@ -200,6 +200,7 @@ int GraphicsMain_createInterface() {
 		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_new(butimg, "img/application-exit-5.png");
 		ButtonImage_applyDefaultStyle(butimg, 1750, 14, 20, 20, true);
+		Widget_setPosition(WIDGET(butimg), Screen_getWidth() - WIDGET(butimg)->pos.w - 50, WIDGET(butimg)->pos.y);
 		WIDGET(butimg)->click_handler = Screen_buttonExitClicked;
 		Screen_addWidget(sc, WIDGET(butimg));
 		

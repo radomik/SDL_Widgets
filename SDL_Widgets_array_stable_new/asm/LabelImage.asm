@@ -132,7 +132,7 @@ LabelImage_vrefresh:
 	sar	eax	# tmp152
 	add	ax, WORD PTR [rbx+98]	# tmp153, MEM[(struct Widget *)vthis_1(D)].pos.y
 	mov	WORD PTR [rbx+274], ax	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.y, tmp153
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	rbp, rax	# bg_surf,
 	test	rax, rax	# bg_surf
 	jne	.L5	#,

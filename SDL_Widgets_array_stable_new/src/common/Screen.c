@@ -64,10 +64,13 @@ inline void Screen_flip(Screen *this) { SDL_Flip(this->screen); }
 
 static void Screen_reloadBgWidget(Screen *this) {
 	if ((this) && (BASE_SURFACE) && (this->background.bg_widget)) {
-		u16 sw = BASE_SURFACE_WIDTH;
-		u16 sh = BASE_SURFACE_HEIGHT;
+		fprintf(stderr, "%s: BASE_SURFACE_WIDTH(%hu), BASE_SURFACE_HEIGHT(%hu), BASE_SURFACE->w(%hu), BASE_SURFACE->h(%hu)\n",
+			__FUNCTION__, BASE_SURFACE_WIDTH, BASE_SURFACE_HEIGHT, BASE_SURFACE->w, BASE_SURFACE->h);
+		u16 sw = (BASE_SURFACE_WIDTH = BASE_SURFACE->w);
+		u16 sh = (BASE_SURFACE_HEIGHT = BASE_SURFACE->h);
 		u16 w  = this->background.bg_widget->pos.w;
 		u16 h  = this->background.bg_widget->pos.h;
+		fprintf(stderr, "%s: sw(%hu), sh(%hu)\n", __FUNCTION__, sw, sh);
 		if (this->background.bg_mode == BG_STRETCH) {
 			if ((w != sw) || (h != sh)) {
 				double sx = ((double)sw) / ((double)w);
@@ -101,7 +104,10 @@ static inline void Screen_MainDestroy() {
 /** private method -- initializes base SDL_Surface and other SDL libraries and so on */
 static perr Screen_MainInit() {
 	/* SDL initialize */
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) return E_SDL__SDL_Init;
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
+		fprintf(stderr, "%s: Failed to SDL_Init() [%s]\n", __FUNCTION__, SDL_GetError());
+		return E_SDL__SDL_Init;
+	}
 	
 	/* Create base surface */
 	SDL_Surface *sdl_screen  = SDL_SetVideoMode(
@@ -109,12 +115,14 @@ static perr Screen_MainInit() {
 					W_BPP, BASE_SURFACE_FLAGS); // width, height, bpp, initializer
 	
 	if (! sdl_screen) {
+		fprintf(stderr, "%s: Failed to SDL_SetVideoMode() [%s]\n", __FUNCTION__, SDL_GetError());
 		SDL_Quit();
 		return E_SDL__SDL_SetVideoMode;
 	}
 	
 	/* Initialize SDL_ttf */ // http://info.wsisiz.edu.pl/~szymank0/doku.php?id=public:programowanie:sdl:sdltutorial7 */
 	if (TTF_Init()) {
+		fprintf(stderr, "%s: Failed to TTF_Init() [%s]\n", __FUNCTION__, SDL_GetError());
 		SDL_FreeSurface(sdl_screen);
 		SDL_Quit();
 		return E_SDL__TTF_Init;
@@ -124,6 +132,7 @@ static perr Screen_MainInit() {
 	int flags   = IMG_INIT_JPG | IMG_INIT_PNG;
 	int initted = IMG_Init(flags);
 	if ((initted & flags) != flags) {	// http://stackoverflow.com/questions/4425901/blitting-a-transparent-png-image-onto-a-screen
+		fprintf(stderr, "%s: Failed to IMG_Init() [%s]\n", __FUNCTION__, SDL_GetError());
 		SDL_FreeSurface(sdl_screen);
 		TTF_Quit();
 		SDL_Quit();
@@ -358,9 +367,9 @@ Screen* Screen_new(Screen *this, perr *e, u32 size_widget) {
 	
 	if (! BASE_SURFACE) {
 		perr ee = E_NO_ERROR;
-		fprintf(stderr, "Screen_init[this=%p]: NOTICE: Starting SDL session.\n", this);
+		fprintf(stderr, "%s[this=%p]: NOTICE: Starting SDL session.\n", __FUNCTION__, this);
 		if ( (ee = Screen_MainInit()) ) {
-			fprintf(stderr, "Screen_init: Screen_MainInit() failed with error: %s\n", perr_getName(ee));
+			fprintf(stderr, "%s: Screen_MainInit() failed with error: %s\n", __FUNCTION__, perr_getName(ee));
 			if (e) *e = ee;
 			return this;
 		}
@@ -442,7 +451,10 @@ void Screen_MainStart(Screen *this) {
 	
 	while (! this->has_exited) {
 		/* Draw all widgets if needed */
-		if (this->need_reload) Screen_draw(this);
+		if ((BASE_SURFACE_WIDTH != BASE_SURFACE->w) || (BASE_SURFACE_HEIGHT != BASE_SURFACE->h)) 
+			Screen_reloadBgWidget(this);
+		if (this->need_reload) 
+			Screen_draw(this);
 		
 		/* Process events by screen and run user specified callback event handlers from inside */
 		event_loop:
@@ -502,15 +514,15 @@ void Screen_MainStart(Screen *this) {
 				case SDL_MOUSEBUTTONDOWN:
 				case SDL_MOUSEBUTTONUP:
 				case SDL_MOUSEMOTION:  /** Mouse events (mevents) **/
-					if ((this->widget_ontop) && (this->widget_ontop->visible)) { // pass event to widget on top
-						Widget_vmevent(this->widget_ontop, this);
+					if (this->widget_ontop) { // pass event to widget on top
+						Widget_mevent(this->widget_ontop, this);
 						if (this->event_handled) break;
 					}
 					
 					for (i = 0; i < this->c_widget; i++) {
 						widget = this->widget[i];
 						if (widget) {
-							Widget_vmevent(widget, this);
+							Widget_mevent(widget, this);
 							if (this->event_handled) break;
 						}
 					}

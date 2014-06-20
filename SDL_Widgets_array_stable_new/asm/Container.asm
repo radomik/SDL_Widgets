@@ -228,7 +228,7 @@ Container_createSurfaceIfNeeded:
 .L18:
 	movzx	esi, WORD PTR [rbx+102]	# MEM[(struct Widget *)this_2(D)].pos.h, MEM[(struct Widget *)this_2(D)].pos.h
 	movzx	edi, WORD PTR [rbx+100]	# MEM[(struct Widget *)this_2(D)].pos.w, MEM[(struct Widget *)this_2(D)].pos.w
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.8965
 	mov	rdi, rax	# D.8952, D.8965
 	test	rax, rax	# D.8965

@@ -24,6 +24,13 @@
 	
 	/* These methods are all PRIVATE use methods from StackList class instead */
 	void StackListY_refresh(StackList *this);
-	void StackListY_validateItem(const StackList *this, ContainerItem *item, u32 index);
+	
+	/// Validates only element at given index on Y axis
+	/// index ought to be valid index of items array (no check)
+	/// better to use as private method
+	///
+	/// @returns Final item->cell_rect.w
+	///
+	u16 StackListY_validateItemOnBaseAxis(const StackList *this, ContainerItem *item, u32 index);
 	
 #endif

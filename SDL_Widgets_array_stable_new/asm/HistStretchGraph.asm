@@ -849,7 +849,7 @@ HistStretchGraph_vrefresh:
 	jne	.L75	#,
 	movzx	esi, dx	# D.9327, D.9327
 	movzx	edi, ax	# D.9322, D.9322
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)vthis_3(D)].surf, D.9343
 	test	rax, rax	# D.9343
 	jne	.L75	#,
@@ -869,7 +869,7 @@ HistStretchGraph_vrefresh:
 	jne	.L76	#,
 	movzx	esi, WORD PTR [rbx+102]	# MEM[(struct Widget *)vthis_3(D)].pos.h, MEM[(struct Widget *)vthis_3(D)].pos.h
 	movzx	edi, WORD PTR [rbx+100]	# MEM[(struct Widget *)vthis_3(D)].pos.w, MEM[(struct Widget *)vthis_3(D)].pos.w
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+600], rax	# MEM[(struct HistStretchGraph *)vthis_3(D)].bg_surf, D.9350
 	test	rax, rax	# D.9350
 	jne	.L76	#,

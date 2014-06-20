@@ -46,7 +46,7 @@ void Histogram_vrefresh(void *vthis) {
 	
 	/* Create base surface (assume that pos.x && pos.y are already set */
 	SDL_FreeSurface(widget->surf);	// delete old surface
-	widget->surf = Static_NewSurface(HIST_W, HIST_H);
+	widget->surf = Static_newSurface(HIST_W, HIST_H);
 	if (! widget->surf) {
 		fprintf(stderr, "Histogram_vrefresh: CreateRGBSurface failed: %s\n", SDL_GetError());
         Widget_setVisible(widget, false);

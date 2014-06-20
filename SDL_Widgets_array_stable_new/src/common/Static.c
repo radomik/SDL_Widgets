@@ -41,7 +41,7 @@ b8 Static_fileExist(const char *path) {
 	return (stat(path, &st) == 0);
 }
 
-const char* Static_SurfaceToString(const SDL_Surface *surf) {
+const char* Static_surfaceToString(const SDL_Surface *surf) {
 	static char str_id[256];
 	const SDL_PixelFormat *format = surf->format;
 	snprintf(str_id, sizeof(str_id), "SDL_Surface: (w,h)=(%d,%d), pitch=%hu, format: Bpp=%d, (R,G,B,A)loss=[%d,%d,%d,%d], (R,G,B,A)shift=[%d,%d,%d,%d],  (R,G,B,A)mask=[0x%8X,0x%8X,0x%8x,0x%8X], colorkey=0x%8X, alpha=%d", 
@@ -72,7 +72,7 @@ TTF_Font *Static_getFont(const char *path, u8 size) {
 
 // http://sdl.5483.n7.nabble.com/Copying-one-SDL-Surface-to-another-SDL-Surface-how-i-do-it-properly-td18814.html
 // Jonathan Dearborn
-inline SDL_Surface* Static_CopySurface(SDL_Surface* src) { 
+inline SDL_Surface* Static_copySurface(SDL_Surface* src) { 
 	return (src) ? SDL_ConvertSurface(src, src->format, W_SDL_FLAGS) : NULL;
 }
 
@@ -208,7 +208,7 @@ void* Static_growArray(	perr *e, void *array, u32 *ext_size,
 	return _array;
 }
 
-SDL_Surface* Static_NewSurface(u16 w, u16 h) {
+SDL_Surface* Static_newSurface(u16 w, u16 h) {
 	SDL_PixelFormat *spx = Screen_getBaseSurfaceFormat();
 	if (! spx) return NULL;
 	return SDL_CreateRGBSurface(W_SDL_FLAGS, w, h, spx->BitsPerPixel, spx->Rmask, spx->Gmask, spx->Bmask, spx->Amask);

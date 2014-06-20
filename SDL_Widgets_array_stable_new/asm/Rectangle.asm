@@ -129,7 +129,7 @@ Rectangle_vrefresh:
 .L2:
 	movzx	esi, WORD PTR [rbx+102]	# MEM[(struct Widget *)vthis_2(D)].pos.h, MEM[(struct Widget *)vthis_2(D)].pos.h
 	movzx	edi, WORD PTR [rbx+100]	# MEM[(struct Widget *)vthis_2(D)].pos.w, MEM[(struct Widget *)vthis_2(D)].pos.w
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)vthis_2(D)].surf, D.9092
 	test	rax, rax	# D.9092
 	jne	.L4	#,

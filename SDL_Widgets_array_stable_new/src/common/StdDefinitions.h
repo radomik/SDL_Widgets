@@ -48,9 +48,17 @@
 	#define	UINF				((u32)0xFFFFFFFF)
 	#define	USINF				((u16)0xFFFF)
 	
+	/** Enable memory leaks detection for known allocation/deallocation
+	 * functions
+	 * @see common/Memory.h
+	 */
 	#define CHECK_MEMORY_LEAKS	1
 	
-	//#define USE_MACRO_VIRTUAL_METHOD_CALL	1
+	/** Use macros instead of proxy methods to virtuals
+	 * @note Macros does not offer any checks
+	 * for NULL: this, class, vtable, vptr but are faster
+	 */
+	#define USE_MACRO_VIRTUAL_METHOD_CALL	1
 	
 	struct options {
 		const char  *base_dir;
@@ -63,7 +71,13 @@
 	};
 	
 	/** DEBUG FLAGS **/
+	
+	/** Uncomment this to enable logging in constructors and destructors
+	 * at any level of inheritance
+	 */
 	//#define VERBOSE_CREATE		1
+	
+	
 	#define PRINT_MOUSE_ENTERS	0
 	
 	#define CSTR(CONST_PCHAR) ((CONST_PCHAR)?(CONST_PCHAR):"(null)")

@@ -88,7 +88,7 @@ Histogram_vrefresh:
 	call	wSDL_FreeSurface	#
 	mov	esi, 180	#,
 	mov	edi, 512	#,
-	call	Static_NewSurface	#
+	call	Static_newSurface	#
 	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)vthis_4(D)].surf, D.8981
 	test	rax, rax	# D.8981
 	jne	.L2	#,

@@ -52,7 +52,7 @@ void Rectangle_vrefresh(void *vthis) {
 	}
 	
 	if (creat_surf) {
-		widget->surf = Static_NewSurface(widget->pos.w, widget->pos.h);
+		widget->surf = Static_newSurface(widget->pos.w, widget->pos.h);
 		if (! widget->surf) {
 			fprintf(stderr, "Rectangle_refresh: Failed to create empty surface SDL_CreateRGBSurface() (%s)\n", SDL_GetError());
 			Widget_setVisible(widget, false);
@@ -65,8 +65,7 @@ void Rectangle_vrefresh(void *vthis) {
 		Widget_setVisible(widget, false);
 		return;
 	}
-	widget->maxx        = widget->pos.x + widget->pos.w;
-	widget->maxy        = widget->pos.y + widget->pos.h;
+	Widget_updateMaxXY(widget);
 	Widget_setVisible(widget, true);
 	widget->need_reload = true;
 }

@@ -174,9 +174,9 @@ void main_keydown(Screen *screen, SDLKey key) {
 }
 
 void Main_createInterface() {
-	StackList 	*sli;
+	//~ StackList 	*sli;
 	ButtonImage *butimg;
-	Rectangle   *rect;
+	//~ Rectangle   *rect;
 	
 	buttonimage = (cBUTTONIMAGE > 0)? malloc(cBUTTONIMAGE * sizeof(ButtonImage))  : NULL;
 	stacklist = (cSTACKLIST > 0)? malloc(cSTACKLIST * sizeof(StackList))  : NULL;
@@ -205,22 +205,23 @@ void Main_createInterface() {
 	// buttonimage[3]
 	butimg	= &(buttonimage[c_buttonimage++]);
 	ButtonImage_new(butimg, "img/application-exit-5.png");
-	ButtonImage_applyDefaultStyle(butimg, 1750, 14, 20, 20, true);
+	ButtonImage_applyDefaultStyle(butimg, 0, 14, 20, 20, true);
+	Widget_setPosition(WIDGET(butimg), Screen_getWidth() - WIDGET(butimg)->pos.w - 50, WIDGET(butimg)->pos.y);
 	WIDGET(butimg)->click_handler = Screen_buttonExitClicked;
 	Screen_addWidget(sc, WIDGET(butimg));
 	
-	sli = &stacklist[c_stacklist++];
-	StackList_new(sli, VERTICAL, 2);
-	Container_setPadding(CONTAINER(sli), 20, 30);
-	WIDGET(sli)->draggable = true;
-	Screen_addWidget(sc, WIDGET(sli));
-
-	rect = &rectangle[c_rectangle++];
-	Rectangle_new(rect, 0xFF0000);
-	Widget_setSize(WIDGET(rect), 50, 30);
-	Widget_refresh(WIDGET(rect));
-	StackList_addWidgetLast(sli, WIDGET(rect), ALIGN_LEFT, ALIGN_CENTER, 0, 0, 0, 30);
-	Widget_refresh(WIDGET(sli));
+	//~ sli = &stacklist[c_stacklist++];
+	//~ StackList_new(sli, VERTICAL, 2);
+	//~ Container_setPadding(CONTAINER(sli), 20, 30);
+	//~ WIDGET(sli)->draggable = true;
+	//~ Screen_addWidget(sc, WIDGET(sli));
+//~ 
+	//~ rect = &rectangle[c_rectangle++];
+	//~ Rectangle_new(rect, 0xFF0000);
+	//~ Widget_setSize(WIDGET(rect), 50, 30);
+	//~ Widget_refresh(WIDGET(rect));
+	//~ StackList_addWidgetLast(sli, WIDGET(rect), ALIGN_LEFT, ALIGN_CENTER, 0, 0, 0, 30);
+	//~ Widget_refresh(WIDGET(sli));
 }
 
 int main(int argc, const char **argv) {
@@ -246,7 +247,7 @@ int main(int argc, const char **argv) {
 		exit(e);
 	}
 
-	sc->drag_on = false;					// turn off dragging
+	sc->drag_on = true;					// turn on dragging
 	sc->key_up = main_keydown;
 	
 	/* Create user interface */

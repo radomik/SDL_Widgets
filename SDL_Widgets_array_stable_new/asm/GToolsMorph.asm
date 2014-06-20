@@ -1050,7 +1050,7 @@ GToolsMorph_open:
 	jmp	.L86	#
 .L88:
 	mov	rdi, rbp	#, imgsrc
-	call	Static_CopySurface	#
+	call	Static_copySurface	#
 	mov	r13, rax	# temp_surface,
 	test	rax, rax	# temp_surface
 	jne	.L92	#,
@@ -1220,7 +1220,7 @@ GToolsMorph_close:
 	jmp	.L97	#
 .L99:
 	mov	rdi, rbp	#, imgsrc
-	call	Static_CopySurface	#
+	call	Static_copySurface	#
 	mov	r13, rax	# temp_surface,
 	test	rax, rax	# temp_surface
 	jne	.L103	#,
@@ -1359,7 +1359,7 @@ GToolsMorph_reconstruction:
 	imul	eax, DWORD PTR [rbp+16]	# D.9288, imgmask_16(D)->w
 	mov	DWORD PTR [rsp+36], eax	# %sfp, D.9288
 	mov	rdi, rbp	#, imgmask
-	call	Static_CopySurface	#
+	call	Static_copySurface	#
 	mov	QWORD PTR [rsp+16], rax	# %sfp,
 	mov	rsi, QWORD PTR [rbp+32]	#, imgmask_16(D)->pixels
 	mov	QWORD PTR [rsp+40], rsi	# %sfp,

@@ -18,7 +18,6 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "Widget.h"
 #include "StdDefinitions.h"
 #include "Screen.h"
 #include "Static.h"
@@ -27,7 +26,6 @@
 #include "StackList.h"
 #include "StackListX.h"
 #include "StackListY.h"
-#include "Container.h"
 
 static const void* vtable[] = {
 	StackList_vdestroy,
@@ -76,7 +74,7 @@ void StackList_vdestroy(void *vthis) {
 	Container_vdestroy(vthis);
 }
 
-// constructor
+/// constructor
 StackList* StackList_new(StackList *this, layouttype layout, u32 size) {
 	if (! this) {
 		Static_nullThis();
@@ -96,9 +94,11 @@ StackList* StackList_new(StackList *this, layouttype layout, u32 size) {
 	this->size 				= size;
 	this->count 			= 0;
 	this->items 			= (size) ? malloc(size * sizeof(ContainerItem)) : NULL;
-	
+
+#ifdef STACKLIST_DEBUG
 	fprintf(stderr, "%s: this(%p), .layout(%s), .size(%u), .items(%p) [malloc]\n", 
 		__FUNCTION__, this, StackList_getLayoutName(this->layout), this->size, this->items);
+#endif
 	return this;
 }
 
@@ -125,7 +125,6 @@ void StackList_vdraw(void *vthis, Screen *screen, b8 flip) {
 	for (; i < STACKLIST(vthis)->count; i++) {	// draw visible children even if stacklist is invisible
 		item_wt = STACKLIST(vthis)->items[i].widget;
 		if (item_wt) {
-			//Widget_draw_FAST(item_wt, screen, false);
 			Widget_draw(item_wt, screen, false);
 		}
 	}
@@ -160,9 +159,8 @@ void StackList_vsetVisible(void *vthis, b8 vis) {
 	}
 }
 
-// Validates StackList on other axis than main of given StackList:
-// for StackListX it validates on Y axis
-// for StackListY on X axis
+/** Refresh stacklist virtual on both axis
+ * This is implementation of virtual Widget_refresh() */
 void StackList_vrefresh(void *vthis) {
 	if (STACKLIST(vthis)->layout == VERTICAL)
 		StackListY_refresh(STACKLIST(vthis));
@@ -170,7 +168,7 @@ void StackList_vrefresh(void *vthis) {
 		StackListX_refresh(STACKLIST(vthis));
 }
 
-static void StackList_validateItem(const StackList *this, ContainerItem *item, u32 index) {
+static inline u16 StackList_validateItemOnBaseAxis(const StackList *this, ContainerItem *item, u32 index, u16 max_opposite_size) {
 	u8 d;
 	if (item->halign == ALIGN_CENTER) {	// if center calculate average of horizontal margineses
 		item->margin_left 	+= item->margin_right;
@@ -197,26 +195,53 @@ static void StackList_validateItem(const StackList *this, ContainerItem *item, u
 	
 	item->widget->draggable = false;	// for security (there is no such thing like dragging widget in a stack)
 	
+#ifdef STACKLIST_DEBUG
 	fprintf(stderr, "%s: before specific {X,Y}_validateItem: item[%u]:\n\t%s\n",
 		__FUNCTION__, index, ContainerItem_toString(item));
-
-	if (this->layout == VERTICAL)
-		StackListY_validateItem(this, item, index);
-	else
-		StackListX_validateItem(this, item, index);
+#endif
+	
+	u16 item_opposite_size = (this->layout == VERTICAL)
+		? StackListY_validateItemOnBaseAxis(this, item, index)
+		: StackListX_validateItemOnBaseAxis(this, item, index);
+		
+	
+	return item_opposite_size > max_opposite_size ? item_opposite_size : max_opposite_size;
 }
 
-// Validates whole list on Y axis - StackListY or on X - StackListX (runs validateAt for each item)
-/*static void StackList_validate(StackList *this) { 
-	u32 i = 0; for (; i < this->count; i++) StackList_validateItem(this, &this->items[i], i); 
-}*/
-
-// Validates all items from given index (including it) on Y axis - StackListY or on X - StackListX
-static void StackList_validateFrom(StackList *this, u32 index) { 
-	u32 i = index; for (; i < this->count; i++) StackList_validateItem(this, &this->items[i], i); 
+/** Validate all stacklist items on its base axis
+ * i.e. for StackListX this method updates items on X axis
+ * for StackListY on Y axis
+ * 
+ * Method is called only from StackListX_refresh() and StackListY_refresh()
+ * 
+ * @return MAX(.items[].cell_rect.w) for StackListY or 
+ *  		MAX(.items[].cell_rect.h) for StackListX
+ * 
+ */
+u16 StackList_validateAllItemsOnBaseAxis(StackList *this) {
+	ContainerItem	*item;
+	u32 			i;
+	u16 			max_opposite_size = 0;
+	
+#ifdef STACKLIST_DEBUG
+	fprintf(stderr, "%s: [%s] Validating stacklist on base axis and finding maximum cell opposite size:\n", 
+		__FUNCTION__, StackList_getLayoutName(this->layout));
+#endif
+	for (i = 0; i < this->count; i++) {
+		item = &this->items[i];
+#ifdef STACKLIST_DEBUG
+		fprintf(stderr, "   *** [%u] Validating: %s\n", i, ContainerItem_toString(item));
+#endif
+		max_opposite_size = StackList_validateItemOnBaseAxis(this, item, i, max_opposite_size);
+#ifdef STACKLIST_DEBUG
+		fprintf(stderr, "   *** [%u] Validated: %s\n", i, ContainerItem_toString(item));
+#endif
+	}
+	
+	return max_opposite_size;
 }
 
-/* Grow stacklist array or return current function with error */
+/** Grow stacklist array or return current function with error */
 static perr StackList_growArray(StackList *this) {
 	perr e = E_NO_ERROR;
 	ContainerItem* new_array = Static_growArray(	&e,							/* error management		*/
@@ -235,13 +260,13 @@ static perr StackList_growArray(StackList *this) {
 	return e;
 }
 
-// Append item to specific position, this index can be in range 0...count
-// if added at last, count is automatically increased
-// 
-// given element is structure which just copies (can be changed later in source)
-// another approach is to add widget manually filling:
-// stacklist->items[index] and then run StackList_validateItem(stacklist, item, index)
-// one another is to add only Widget*, fill its properties and validateAt
+/** Append item to specific position, this index can be in range 0...count
+ * if added at last, count is automatically increased
+ * 
+ * given element is structure which just copies (can be changed later in source)
+ * another approach is to add widget manually filling:
+ * stacklist->items[index] and then run StackList_validateItem(stacklist, item, index)
+ * one another is to add only Widget*, fill its properties and validateAt */
 perr StackList_appendAt(StackList *this, ContainerItem *container_item, u32 index) 
 {
 	if ((! this) || (! container_item)) {
@@ -265,12 +290,12 @@ perr StackList_appendAt(StackList *this, ContainerItem *container_item, u32 inde
 	
 	if (index == this->count) this->count++; 
 	
-	StackList_validateFrom(this, index);
+	//StackList_validateFrom(this, index);
 	
 	return E_NO_ERROR;
 }
 
-// add item at last position
+/// add item at last position
 perr StackList_addLast(StackList *this, ContainerItem *container_item) {
 	if ((! this) || (! container_item)) {
 		fprintf(stderr, "StackList_addLast: Passed NULL: this(%p) or container_item(%p)\n", this, container_item);
@@ -287,14 +312,14 @@ perr StackList_addLast(StackList *this, ContainerItem *container_item) {
 	
 	this->items[this->count] = *container_item;	// copy structure
 	
-	StackList_validateItem(this, &this->items[this->count], this->count);
+	//StackList_validateItem(this, &this->items[this->count], this->count);
 	
 	this->count++;
 	return E_NO_ERROR;
 }
 
-// Add single widget to end of StackList, remember to run StackList_refresh 
-// after adding a bunch of items
+/** Add single widget to end of StackList, remember to run StackList_refresh 
+ * after adding a bunch of items */
 perr StackList_addWidgetLast(	StackList *this, Widget *widget, 
 								alignment halign, alignment valign,
 								u16 marg_top, u16 marg_left, 
@@ -307,7 +332,7 @@ perr StackList_addWidgetLast(	StackList *this, Widget *widget,
 	if (this->size == this->count) {
 		perr e = StackList_growArray(this);
 		if (e) {
-			fprintf(stderr, "StackList_addWidgetLast: Failed to add widget on the end [err: %s, .count: %u, .size: %u]\n",
+			fprintf(stderr, "StackList_addWidgetLast: Failed to grow array of items [err: %s, .count: %u, .size: %u]\n",
 				perr_getName(e), this->count, this->size);
 			return e;
 		}
@@ -320,16 +345,20 @@ perr StackList_addWidgetLast(	StackList *this, Widget *widget,
 	item->margin_right		= marg_right;
 	item->halign			= halign;
 	item->valign			= valign;
-	
-	fprintf(stderr, "%s: >>> this(%p), item[%u](%s)\n",
-		__FUNCTION__, this, this->count, ContainerItem_toString(item));
-	
-	StackList_validateItem(this, item, this->count);
+
+#ifdef STACKLIST_DEBUG	
+	fprintf(stderr, "\n--------------\n%s: >>> this(%s) padXY=[%hu,%hu]\n\tAdding item[%u](%s)\n",
+		__FUNCTION__, Widget_toString(WIDGET(this)), 
+		CONTAINER(this)->padx, CONTAINER(this)->pady, 
+		this->count, ContainerItem_toString(item));
+#endif
+	//StackList_validateItem(this, item, this->count);
 	
 	this->count++;
 
+#ifdef STACKLIST_DEBUG
 	fprintf(stderr, "%s: >>> this(%p) Added widget current count: %u\n", __FUNCTION__, this, this->count);
-	
+#endif	
 	return E_NO_ERROR;
 }
 
@@ -368,7 +397,7 @@ perr StackList_appendWidgetAt(	StackList *this, Widget *widget,
 	
 	if (index == this->count) this->count++;
 	
-	StackList_validateFrom(this, index);
+	//StackList_validateFrom(this, index);
 	
 	return E_NO_ERROR;
 }

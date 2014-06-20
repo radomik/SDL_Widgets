@@ -34,7 +34,7 @@
 		void				(*mouse_enter_handler)(Widget*, Screen*);
 		void				(*mouse_exit_handler)(Widget*, Screen*);
 		
-		struct {
+		struct {	// these events are only enabled when .mevent == true
 			void				(*click)(Widget*, Screen*);
 			void				(*press)(Widget*, Screen*);
 			void				(*release)(Widget*, Screen*);
@@ -48,7 +48,6 @@
 		/* Some parameters pointers (obsolete) use widget.vparam and Widget_addVParam(Widget*, void *) instead */
 		struct Widget		*parameter;		// pointer to any widget (used by mouse click handler)
 		void				*void_parameter; // parameter pointer to what you want
-		void				*void_parameter2;// parameter pointer to what you want
 		
 		/* Pointer to Screen specified cparam array */
 		void 				**cparam;
@@ -136,26 +135,30 @@
 	const char *Widget_toString(const Widget *this);
 	
 	//! Scale widget, creates new .surf, updates .pos.w, .pos.h, .maxx, .maxy
-	void Widget_scale(Widget *widget, double xscale, double yscale, int smooth);
+	void Widget_scale(Widget *this, double xscale, double yscale, int smooth);
 	
 	//! Returns true if given widget pointer contains u16 x,y absolute point (use .pos as reference)
-	inline b8 Widget_contains(const Widget *widget, u16 x, u16 y);
+	inline b8 Widget_contains(const Widget *this, u16 x, u16 y);
 	
 	//! Updates .pos.x, .pos.y, .minx, .miny
-	void Widget_setPosition(Widget *widget, u16 minx, u16 miny);
+	void Widget_setPosition(Widget *this, u16 minx, u16 miny);
 
 	//! Updates .pos.w and .pos.h
-	void Widget_setSize(Widget *widget, u16 width, u16 height);
+	void Widget_setSize(Widget *this, u16 width, u16 height);
 
 	//! Updates .pos.w, .pos.h, .maxx, .maxy
-	void Widget_setSizeUpdatePos(Widget *widget, u16 width, u16 height);
+	void Widget_setSizeUpdatePos(Widget *this, u16 width, u16 height);
 
 	//! Updates .pos.x, .pos.y, .pos.w, .pos.h, .maxx, .maxy
-	void Widget_setRect(Widget *widget, u16 minx, u16 miny, u16 width, u16 height);
+	void Widget_setRect(Widget *this, u16 minx, u16 miny, u16 width, u16 height);
 
 	//! Gets center of widget (uses .pos as reference)
 	void Widget_getCenter(const Widget *this, u16 *cx, u16 *cy);
 
 	//! Sets center of widget (updates .pos.x, .pos.y, .maxx, .maxy
 	void Widget_setCenter(Widget *this, u16 cx, u16 cy);
+	
+	/// widget->maxx        = widget->pos.x + widget->pos.w - 1;
+	/// widget->maxy        = widget->pos.y + widget->pos.h - 1;
+	void Widget_updateMaxXY(Widget *this);
 #endif

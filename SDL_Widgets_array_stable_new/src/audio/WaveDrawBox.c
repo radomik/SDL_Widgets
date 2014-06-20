@@ -81,7 +81,7 @@ const coClass *WaveDrawBox_class = &type;
 	{																													\
 		this->relx = screen->event.motion.x - WIDGET(this)->pos.x;															\
 		this->rely = screen->event.motion.y - WIDGET(this)->pos.y;															\
-		if (Static_PointInside(this->relx, this->rely, this->relx_min, this->relx_max, this->rely_min, this->rely_max)) {		\
+		if (Static_pointInside(this->relx, this->rely, this->relx_min, this->relx_max, this->rely_min, this->rely_max)) {		\
 			WaveDrawBox_DrawPoint(this, screen, 1);																		\
 		}																												\
 	}																													\
@@ -129,7 +129,7 @@ static void WaveDrawBox_mousePressed(Widget *sender, Screen *screen)
 	WaveDrawBox *this = WAVE_DRAW_BOX(sender);
 	this->relx = screen->event.button.x - sender->pos.x;
 	this->rely = screen->event.button.y - sender->pos.y;
-	if (Static_PointInside(this->relx, this->rely, this->relx_min, this->relx_max, this->rely_min, this->rely_max)) {
+	if (Static_pointInside(this->relx, this->rely, this->relx_min, this->relx_max, this->rely_min, this->rely_max)) {
 		sender->dragging = true;
 		WaveDrawBox_DrawPoint(this, screen, 0);
 		while (sender->dragging) {
@@ -187,7 +187,7 @@ void WaveDrawBox_vrefresh(void *vthis) {
 	}
 	else {
 		if (DEBUG) fprintf(stderr, "WaveDrawBox_vrefresh: [2] Surface not exists creating\n");
-		if (! (WIDGET(this)->surf = Static_NewSurface(WIDGET(this)->pos.w, WIDGET(this)->pos.h)))
+		if (! (WIDGET(this)->surf = Static_newSurface(WIDGET(this)->pos.w, WIDGET(this)->pos.h)))
 		{
 			fprintf(stderr, "WaveDrawBox_vrefresh: Failed to fill create background surface (SDL_CreateRGBSurface) %s\n", SDL_GetError());
 			WIDGET(this)->visible = false;
@@ -243,7 +243,7 @@ void WaveDrawBox_vrefresh(void *vthis) {
 	
 	if (DEBUG) {
 		fprintf(stderr, "WaveDrawBox_vrefresh: Final: %s\n", WaveDrawBox_toString(this));
-		fprintf(stderr, "WaveDrawBox_vrefresh: Surface: %s\n", Static_SurfaceToString(WIDGET(this)->surf));
+		fprintf(stderr, "WaveDrawBox_vrefresh: Surface: %s\n", Static_surfaceToString(WIDGET(this)->surf));
 	}
 	
 	WIDGET(this)->visible = true;
