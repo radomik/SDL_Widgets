@@ -38,13 +38,24 @@
 #define		LINE_COLOR	0x0000FFFF
 #define		RECT_SIZE	12
 
-static const void* vtable[] = {
-	HistStretchGraph_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	HistStretchGraph_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = HistStretchGraph_vdestroy,
+	.toString = HistStretchGraph_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= HistStretchGraph_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -54,9 +65,9 @@ static coClass type = {
 };
 const coClass *HistStretchGraph_class = &type;
 
-const char *HistStretchGraph_toString(const HistStretchGraph *this) {
+const char *HistStretchGraph_vtoString(const void *vthis) {
 	static char str_id[160];
-	if (! this) return "hsg=NULL";
+	const HistStretchGraph *this = HIST_STRETCH_GRAPH(this);
 	snprintf(str_id, sizeof(str_id), "HistStretchGraph: (x,y,w,h,maxx,maxy)=[%hu,%hu,%hu,%hu,%hu,%hu], (ax,ay)=[%hu,%hu], (tw,th)=[%hu,%hu], size=%hu",
 		WIDGET(this)->pos.x, WIDGET(this)->pos.y, WIDGET(this)->pos.w, WIDGET(this)->pos.h, WIDGET(this)->maxx, WIDGET(this)->maxy, 
 		this->ax, this->ay, WIDGET(&this->labelX)->pos.w, WIDGET(&this->labelX)->pos.h, this->size);

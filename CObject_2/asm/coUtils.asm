@@ -10,7 +10,7 @@
 # -mno-sse4.2 -mno-sse4.1 -mno-lzcnt -mno-rdrnd -mno-f16c -mno-fsgsbase
 # --param l1-cache-size=32 --param l1-cache-line-size=64
 # --param l2-cache-size=4096 -mtune=core2 -msse3 -masm=intel
-# -auxbase-strip asm/coUtils.asm -O1 -Wall -pedantic -ansi -fverbose-asm
+# -auxbase-strip asm/coUtils.asm -O1 -Wall -fverbose-asm
 # options enabled:  -fasynchronous-unwind-tables -fauto-inc-dec
 # -fbranch-count-reg -fcombine-stack-adjustments -fcommon -fcompare-elim
 # -fcprop-registers -fdebug-types-section -fdefer-pop
@@ -45,9 +45,9 @@
 	.globl	coFileExist
 	.type	coFileExist, @function
 coFileExist:
-.LFB46:
+.LFB77:
 	.cfi_startproc
-	mov	eax, 0	# D.3279,
+	mov	eax, 0	# D.4729,
 	test	rdi, rdi	# path
 	je	.L6	#,
 	sub	rsp, 152	#,
@@ -56,15 +56,15 @@ coFileExist:
 	mov	rsi, rdi	#, path
 	mov	edi, 1	#,
 	call	__xstat	#
-	test	eax, eax	# D.3307
-	sete	al	#, D.3279
+	test	eax, eax	# D.4757
+	sete	al	#, D.4729
 	add	rsp, 152	#,
 	.cfi_def_cfa_offset 8
 .L6:
 	rep
 	ret
 	.cfi_endproc
-.LFE46:
+.LFE77:
 	.size	coFileExist, .-coFileExist
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC0:
@@ -73,7 +73,7 @@ coFileExist:
 	.globl	__coError
 	.type	__coError, @function
 __coError:
-.LFB47:
+.LFB78:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -121,7 +121,7 @@ __coError:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE47:
+.LFE78:
 	.size	__coError, .-__coError
 	.section	.rodata.str1.1
 .LC1:
@@ -130,7 +130,7 @@ __coError:
 	.globl	__coError2
 	.type	__coError2, @function
 __coError2:
-.LFB48:
+.LFB79:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -176,12 +176,12 @@ __coError2:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE48:
+.LFE79:
 	.size	__coError2, .-__coError2
 	.globl	coRandUnique
 	.type	coRandUnique, @function
 coRandUnique:
-.LFB49:
+.LFB80:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -189,18 +189,18 @@ coRandUnique:
 	mov	ebx, edi	# max, max
 .L14:
 	call	rand	#
-	mov	edx, eax	# tmp64, D.3265
+	mov	edx, eax	# tmp64, D.4715
 	sar	edx, 31	# tmp64,
 	idiv	ebx	# max
 	mov	eax, edx	# r, tmp64
-	cmp	edx, DWORD PTR r2.3020[rip]	# tmp64, r2
+	cmp	edx, DWORD PTR r2.4470[rip]	# tmp64, r2
 	je	.L14	#,
-	mov	DWORD PTR r2.3020[rip], edx	# r2, r
+	mov	DWORD PTR r2.4470[rip], edx	# r2, r
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE49:
+.LFE80:
 	.size	coRandUnique, .-coRandUnique
 	.section	.rodata.str1.1
 .LC2:
@@ -209,7 +209,7 @@ coRandUnique:
 	.globl	coLoadFileIntoArray
 	.type	coLoadFileIntoArray, @function
 coLoadFileIntoArray:
-.LFB50:
+.LFB81:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -226,7 +226,7 @@ coLoadFileIntoArray:
 	test	rdi, rdi	# path
 	je	.L18	#,
 	call	coFileExist	#
-	test	al, al	# D.3219
+	test	al, al	# D.4669
 	jne	.L19	#,
 .L18:
 	test	rbp, rbp	# e
@@ -252,7 +252,7 @@ coLoadFileIntoArray:
 	mov	esi, 0	#,
 	mov	rdi, rax	#, file
 	call	fseek	#
-	test	eax, eax	# D.3227
+	test	eax, eax	# D.4677
 	je	.L22	#,
 	test	rbp, rbp	# e
 	je	.L23	#,
@@ -295,7 +295,7 @@ coLoadFileIntoArray:
 	mov	rsi, r13	#, len
 	mov	rdi, rax	#, buf
 	call	fread	#
-	cmp	rax, 1	# D.3339,
+	cmp	rax, 1	# D.4789,
 	je	.L28	#,
 	test	rbp, rbp	# e
 	je	.L29	#,
@@ -326,12 +326,12 @@ coLoadFileIntoArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE50:
+.LFE81:
 	.size	coLoadFileIntoArray, .-coLoadFileIntoArray
 	.globl	coGrowArray
 	.type	coGrowArray, @function
 coGrowArray:
-.LFB51:
+.LFB82:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -497,12 +497,12 @@ coGrowArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE51:
+.LFE82:
 	.size	coGrowArray, .-coGrowArray
 	.globl	coResizeArray
 	.type	coResizeArray, @function
 coResizeArray:
-.LFB52:
+.LFB83:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -530,15 +530,15 @@ coResizeArray:
 .L59:
 	mov	rax, rsi	# array, array
 	mov	r12d, ecx	# new_size, new_size
-	mov	ecx, DWORD PTR [rbp+0]	# D.3113, *ext_size_2(D)
-	cmp	ecx, r12d	# D.3113, new_size
+	mov	ecx, DWORD PTR [rbp+0]	# D.4563, *ext_size_2(D)
+	cmp	ecx, r12d	# D.4563, new_size
 	jne	.L61	#,
 	test	rdi, rdi	# e
 	je	.L60	#,
 	mov	DWORD PTR [rdi], 0	# *e_10(D),
 	jmp	.L60	#
 .L61:
-	cmp	ecx, r12d	# D.3113, new_size
+	cmp	ecx, r12d	# D.4563, new_size
 	jae	.L62	#,
 	lea	ecx, [r12-1]	# tmp87,
 	movzx	edx, dl	# flag, flag
@@ -577,12 +577,12 @@ coResizeArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE52:
+.LFE83:
 	.size	coResizeArray, .-coResizeArray
 	.globl	coFill4fv
 	.type	coFill4fv, @function
 coFill4fv:
-.LFB53:
+.LFB84:
 	.cfi_startproc
 	test	rdi, rdi	# tab
 	je	.L67	#,
@@ -594,12 +594,12 @@ coFill4fv:
 	rep
 	ret
 	.cfi_endproc
-.LFE53:
+.LFE84:
 	.size	coFill4fv, .-coFill4fv
 	.globl	coFill3fv
 	.type	coFill3fv, @function
 coFill3fv:
-.LFB54:
+.LFB85:
 	.cfi_startproc
 	test	rdi, rdi	# tab
 	je	.L69	#,
@@ -610,12 +610,12 @@ coFill3fv:
 	rep
 	ret
 	.cfi_endproc
-.LFE54:
+.LFE85:
 	.size	coFill3fv, .-coFill3fv
 	.globl	coRgbaToArray
 	.type	coRgbaToArray, @function
 coRgbaToArray:
-.LFB55:
+.LFB86:
 	.cfi_startproc
 	test	rsi, rsi	# v
 	je	.L71	#,
@@ -633,7 +633,7 @@ coRgbaToArray:
 	rep
 	ret
 	.cfi_endproc
-.LFE55:
+.LFE86:
 	.size	coRgbaToArray, .-coRgbaToArray
 	.globl	CO_NULL_STR
 	.section	.rodata.str1.1
@@ -666,9 +666,9 @@ CO_FALSE_STR:
 CO_TRUE_STR:
 	.quad	.LC5
 	.align 4
-	.type	r2.3020, @object
-	.size	r2.3020, 4
-r2.3020:
+	.type	r2.4470, @object
+	.size	r2.4470, 4
+r2.4470:
 	.long	2147483647
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

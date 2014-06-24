@@ -59,6 +59,6 @@
 
 	inline void LabelImage_scale(LabelImage *this, double xscale, double yscale, int smooth);
 
-	const char *LabelImage_toString(const LabelImage *this);
+	const char *LabelImage_vtoString(const void *vthis);
 	
 #endif

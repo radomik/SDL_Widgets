@@ -31,8 +31,8 @@ export BINNAME = $(realpath .)/SDL_Widgets
 export ODIR    = $(realpath ../obj)
 export ASMDIR  = $(realpath ../asm)
 export SRCDIR  = $(realpath ../src)
-CO_OBJECT_INC  = $(realpath ../../CObject_1/include)
-CO_OBJECT_LIB  = $(realpath ../../CObject_1/lib)
+CO_OBJECT_INC  = $(realpath ../../CObject_2/include)
+CO_OBJECT_LIB  = $(realpath ../../CObject_2/lib)
 export LDPATH  = -L$(CO_OBJECT_LIB)
 export INC     = -I$(SRCDIR)/audio -I$(SRCDIR)/common -I$(SRCDIR)/graphics \
 -I$(SRCDIR)/graphics/gtools -I$(SRCDIR)/widgets -I$(SRCDIR)/widgets/container -I$(CO_OBJECT_INC)

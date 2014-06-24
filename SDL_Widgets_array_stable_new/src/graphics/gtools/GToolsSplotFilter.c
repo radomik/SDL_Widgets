@@ -26,10 +26,20 @@
 #include "Memory.h"
 #include "GToolsSplotFilter.h"
 
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = coObject_coIObject_vdestroy,
+	.toString = coObject_coIObject_vtoString
+};
+
+static const void *vtable[] = {
+	&override_coIObject
+};
+
 static coClass type = {
 	.size	= sizeof(GToolsSplotFilter),
 	.name	= "GToolsSplotFilter",
-	.vtable	= NULL /* no virtual methods nor destructor */
+	.vtable	= vtable
 };
 const coClass *GToolsSplotFilter_class = &type;
 
@@ -80,7 +90,7 @@ GToolsSplotFilter* GToolsSplotFilter_new(GToolsSplotFilter *this) {
 		Static_nullThis();
 		return NULL;
 	}
-	coObject_new(this);
+	coObject_new(CO_OBJECT(this));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE

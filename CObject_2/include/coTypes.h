@@ -31,6 +31,7 @@ extern "C" {
 	/*typedef enum co_error co_error;*/
 	typedef struct coClass				coClass;
 	typedef struct coObject				coObject;
+	typedef struct coIObject			coIObject;
 	typedef struct coString				coString;
 	typedef struct coList1D				coList1D;
 	typedef struct coList1DItem			coList1DItem;

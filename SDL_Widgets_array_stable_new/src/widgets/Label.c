@@ -23,13 +23,24 @@
 #include "Memory.h"
 #include "Label.h"
 
-static const void* vtable[] = {
-	Label_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Label_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Label_vdestroy,
+	.toString = Label_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Label_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -215,9 +226,8 @@ void Label_applyDefaultStyle(	Label *this, 		u16 posx, u16 posy,
 	this->fixed_width = fixed_width;
 }
 
-const char *Label_toString(const Label *this) {
+const char *Label_vtoString(const void *vthis) {
 	static char str_id[128];
-	if (! this) return "label=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", TextBlock_toString(&this->text_block));
+	snprintf(str_id, sizeof(str_id), "%s", toString( &( LABEL(vthis)->text_block ) ) );
 	return str_id;
 }

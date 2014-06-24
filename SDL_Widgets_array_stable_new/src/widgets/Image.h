@@ -37,7 +37,7 @@
 	
 	void Image_vdestroy(void *vthis);
 
-	const char *Image_toString(const Image *this);
+	const char *Image_vtoString(const void *vthis);
 	
 	// returns true if ext file extension (without '.') is supported by Image class
 	inline b8 Image_isExtSupported(const char *ext);

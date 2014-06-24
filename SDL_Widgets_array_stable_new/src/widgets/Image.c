@@ -26,13 +26,24 @@
 #include "Image.h"
 #include "Widget.h"
 
-static const void* vtable[] = {
-	Image_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Widget_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Image_vdestroy,
+	.toString = Image_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Widget_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -121,9 +132,8 @@ Image* Image_copy(Image *this, const Image *src, b8 copy_pos) {
 	return this;
 }
 
-const char *Image_toString(const Image *this) {
+const char *Image_vtoString(const void *vthis) {
 	static char str_id[128];
-	if (! this) return "image=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", this->path);
+	snprintf(str_id, sizeof(str_id), "%s", IMAGE(vthis)->path);
 	return str_id;
 }

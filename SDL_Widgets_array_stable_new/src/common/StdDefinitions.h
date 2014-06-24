@@ -54,12 +54,6 @@
 	 */
 	#define CHECK_MEMORY_LEAKS	1
 	
-	/** Use macros instead of proxy methods to virtuals
-	 * @note Macros does not offer any checks
-	 * for NULL: this, class, vtable, vptr but are faster
-	 */
-	#define USE_MACRO_VIRTUAL_METHOD_CALL	1
-	
 	struct options {
 		const char  *base_dir;
 		u16			screen_width;

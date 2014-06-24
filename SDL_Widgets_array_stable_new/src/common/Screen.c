@@ -27,8 +27,14 @@
 #include "Widget.h"
 #include "Image.h"
 
-static const void* vtable[] = {
-	Screen_vdestroy
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Screen_vdestroy,
+	.toString = coObject_coIObject_vtoString
+};
+
+static const void *vtable[] = {
+	&override_coIObject
 };
 
 static coClass type = {
@@ -239,8 +245,9 @@ void Screen_switchFullscreen(Screen *this) {
 	}
 }
 
-const char *Screen_toString(const Screen *this) {
+const char *Screen_vtoString(const void *vthis) {
 	static char	str_id[380];
+	Screen *this = SCREEN(vthis);
 	snprintf(str_id, sizeof(str_id), "Screen:\n\twidget=%p\n\tc_widget=%u\n\tsize_widget=%u\n\tscreen=%p\n\tevent.type=%d\n\tpevent=%p(real %p)\n\tbackground.bg_widget=%p\n\tdrag_on=%d\n\tneed_reload=%d\n",
 		this->widget, this->c_widget, this->size_widget,
 		this->screen, this->event.type, this->pevent, &(this->event),
@@ -336,7 +343,7 @@ Screen* Screen_new(Screen *this, perr *e, u32 size_widget) {
 		if (e) *e = E_NULL_THIS_POINTER;
 		return NULL;
 	}
-	coObject_new(this);
+	coObject_new(CO_OBJECT(this));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE

@@ -25,13 +25,24 @@
 #include "Button.h"
 #include "ButtonImage.h"
 
-static const void* vtable[] = {
-	ButtonImage_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	ButtonImage_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = ButtonImage_vdestroy,
+	.toString = ButtonImage_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= ButtonImage_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -265,9 +276,8 @@ void ButtonImage_applyDefaultStyle3(ButtonImage *this, 	u16 posx, u16 posy,
 	ButtonImage_setFixedWidth(this, fixed_width);
 }
 
-const char *ButtonImage_toString(const ButtonImage *this) {
+const char *ButtonImage_vtoString(const void *vthis) {
 	static char str_id[128];
-	if (! this) return "buttonimage=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", LabelImage_toString(&this->labelimage[BUT_NORMAL]));
+	snprintf(str_id, sizeof(str_id), "%s", toString( &( BUTTON_IMAGE(vthis)->labelimage[BUT_NORMAL] ) ) );
 	return str_id;
 }

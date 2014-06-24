@@ -25,13 +25,24 @@
 #include "Widget.h"
 #include "Rectangle.h"
 
-static const void* vtable[] = {
-	Widget_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Rectangle_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Widget_vdestroy,
+	.toString = Rectangle_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Rectangle_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -154,9 +165,8 @@ inline void Rectangle_scale(Rectangle *this, double xscale, double yscale, int s
 	Widget_scale(WIDGET(this), xscale, yscale, smooth); 
 }
 
-const char *Rectangle_toString(const Rectangle *this) {
+const char *Rectangle_vtoString(const void *vthis) {
 	static char str_id[32];
-	if (! this) return "rectangle=NULL";
-	snprintf(str_id, sizeof(str_id), "Rectangle color: 0x%X", this->color);
+	snprintf(str_id, sizeof(str_id), "Rectangle color: 0x%X", RECTANGLE(vthis)->color);
 	return str_id;
 }

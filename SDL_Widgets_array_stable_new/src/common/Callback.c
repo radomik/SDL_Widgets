@@ -23,8 +23,14 @@
 #include "Callback.h"
 #include "Memory.h"
 
-static const void* vtable[] = {
-	Callback_vdestroy
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Callback_vdestroy,
+	.toString = coObject_coIObject_vtoString
+};
+
+static const void *vtable[] = {
+	&override_coIObject
 };
 
 static coClass type = {
@@ -55,14 +61,14 @@ void Callback_vdestroy(void *vthis) {
 
 Callback* Callback_new(	Callback	*this, 
 						void		(*click_handler[])(Widget*, Screen*),
-						u32		size
+						u32			size
 						) {
 	if (! this) {
 		Static_nullThis();
 		fprintf(stderr, "%20s:\tWithin context: click_handler=%p, size=%u\n", __FUNCTION__, click_handler, size);
 		return NULL;
 	}
-	coObject_new(this);
+	coObject_new(CO_OBJECT(this));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE

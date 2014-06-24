@@ -35,33 +35,42 @@ struct coIObject {
 	const char* (*toString)(const void *vthis);
 };
 
-void coIObject_destroy(void *vthis);
-const char* coIObject_toString(const void *vthis);
+/** extract const coIObject* entry from any const coObject* object pointer
+ * @note no checks for NULL: VTHIS, VTHIS->class, VTHIS->class->vtable, 
+ * VTHIS->class->vtable[CO_IOBJECT_VTABLE_INDEX]
+ */
+#define coIObject_vptr(VTHIS) ( CO_IOBJECT( vptrof_fast(VTHIS, CO_IOBJECT_VTABLE_INDEX) ) )
 
-#define coIObject_destroy_fast(VTHIS) (CO_IOBJECT( vptrof_fast(VTHIS, CO_IOBJECT_VTABLE_INDEX) )->destroy(VTHIS))
+/** Call coIObject.destroy method from any object implementing coIObject.
+ * All objects in current coObjectModel should implement coIObject 
+ * @note Macro does not perform any checks
+ * @see struct coIObject, coIObject_vptr, coObjectModel.h */
+#define coIObject_destroy(VTHIS) ( coIObject_vptr(VTHIS)->destroy(VTHIS) )
+
+/** Call coIObject.toString method from any object implementing coIObject.
+ * All objects in current coObjectModel should implement coIObject
+ * @note Macro does not perform any checks
+ * @see struct coIObject, coIObject_vptr, coObjectModel.h */
+#define coIObject_toString(VTHIS) ( coIObject_vptr(VTHIS)->toString(VTHIS) )
 
 
 /** CObject/src/coIObject.c [only for generate assembler code for optimization tests]
  *  use coIObject_METHOD_fast instead */
-void coIObject_destroy(void *vthis) {
+static void coIObject_destroy_test(void *vthis) {
 	CO_IOBJECT( vptrof_fast(vthis, CO_IOBJECT_VTABLE_INDEX) )->destroy(vthis);
 }
 
-const char* coIObject_toString(const void *vthis) {
+static const char* coIObject_toString_test(const void *vthis) {
 	return CO_IOBJECT( vptrof_fast(vthis, CO_IOBJECT_VTABLE_INDEX) )->toString(vthis);
 }
 
 /** CObject/src/coObjectModel.c */
+const char *TO_STRING_NULL_THIS_STR = "toString(NULL)";
 #define __CLASSOF(VTHIS) ( (VTHIS) ? (CO_OBJECT(VTHIS)->class) : (NULL)  )
 
 #define __VTABLEOF(VTHIS, VTABLE) 					\
 	const coClass *__class = __CLASSOF(VTHIS);		\
 	(VTABLE) = __class ? __class->vtable : NULL;
-
-/** Call virtual toString method of current object */
-const char* toString(const void *vthis) {
-	
-}
 
 /** Call virtual destructor of current object
  * @param	VTHIS 	(void*) any class directly or indirectly inheriting from coObject
@@ -69,21 +78,22 @@ const char* toString(const void *vthis) {
  * @return  VTHIS if VTHIS != NULL, otherwise NULL
  * @note 	method does not delete allocated space, for dynamic objects use: free(delete(obj));
  * 
+ * @note	Method does not perform any checks for NULL:
+ * 		 VTHIS, VTHIS->class, VTHIS->class->vtable, VTHIS->class->vtable[CO_IOBJECT_VTABLE_INDEX]
+ * @see coIObject.h
+ * 
  * 23 wiersze delete (w tym: call coIObject_destroy)
- * 25 wierszy delete (w tym użycie makra coIObject_destroy_fast)
+ * 25 wierszy delete (w tym użycie makra coIObject_destroy)
  * 
  * 
  */
 void* delete(void *vthis)
 {
-	const void **vtable;
-	__VTABLEOF(vthis, vtable);
-	
-	/* if vthis != NULL, object has vtable and vtable has non-null IObject interface entry */
-	if ((vtable) && (vtable[CO_IOBJECT_VTABLE_INDEX])) 
-		coIObject_destroy_fast(vthis);
+	if (vthis) coIObject_destroy(vthis);
 	return vthis;
 }
+
+
 
 /** SDL_Widgets/common/Types.h */
 typedef struct IWidget IWidget;

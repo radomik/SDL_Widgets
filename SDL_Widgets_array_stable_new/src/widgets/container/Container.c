@@ -23,13 +23,24 @@
 #include "Memory.h"
 #include "Container.h"
 
-static const void* vtable[] = {
-	Widget_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Widget_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Widget_vdestroy,
+	.toString = Container_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Widget_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -131,11 +142,9 @@ marginTLBR=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rectXYWH=[%hu,%hu,%hu,%
 	return str_id;
 }
 
-const char *Container_toString(const Container *this) {
-	if (! this) return "container=NULL";
-	
-	/* This ought to be no more than 128 chars see Widget_toString() */	
+const char *Container_vtoString(const void *vthis) {
+	const Container *this = CONTAINER(vthis);
 	snprintf(str_id, sizeof(str_id), "Container(%s): color=0x%X, padx=%hu, pady=%hu", 
-		classname_fast(this), this->color, this->padx, this->pady);
+		classname(this), this->color, this->padx, this->pady);
 	return str_id;
 }

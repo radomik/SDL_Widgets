@@ -21,6 +21,7 @@
 #ifndef _Audio_h_
 	#define _Audio_h_
 	#include "StdDefinitions.h"
+	#include "IAudio.h"
 	
 	#define PI 3.14159265358979323846264338327950288
 	
@@ -75,11 +76,7 @@
 	void Audio_vdestroy(void *this);
 
 	/** Call current implementation virtual method Audio_play()  */
-#ifndef USE_MACRO_VIRTUAL_METHOD_CALL
-	b8 Audio_play(Audio *this, b8 start_paused);
-#else
-	#define Audio_play(VTHIS, START_PAUSED)	 		( ( (b8 (*)(void*, b8)) vptrof_fast(VTHIS, 1) )(VTHIS, START_PAUSED) )
-#endif
+	#define Audio_play(VTHIS, START_PAUSED)	 		( IAudio_play(VTHIS, START_PAUSED) )
 
 	/** Initialize audio device (method run from Audio_play) */
 	void Audio_SDL_initialize(Audio *this, SDL_AudioSpec *desired, SDL_AudioSpec *obtained, 
@@ -97,5 +94,5 @@
 	inline void Audio_remove(Audio *this);
 
 	const char *Audio_getLibName(const Audio *this);
-	const char *Audio_toString(const Audio *this);
+	const char *Audio_vtoString(const void *vthis);
 #endif

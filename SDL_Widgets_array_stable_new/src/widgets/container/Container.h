@@ -72,7 +72,7 @@
 	// toStrings methods
 	const char *Container_alignmentToString(alignment align);
 	const char *ContainerItem_toString(const ContainerItem *item);
-	const char *Container_toString(const Container *this);
+	const char *Container_vtoString(const void *vthis);
 	
 	void Container_setPadding(Container *this, u16 padx, u16 pady);
 	

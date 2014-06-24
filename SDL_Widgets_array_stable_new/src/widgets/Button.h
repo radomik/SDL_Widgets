@@ -56,6 +56,7 @@
 	void Button_applyDefaultStyle2(	Button *this,  u16 posx, u16 posy, 
 									TTF_Font *font2, u16 padx, u16 pady,
 									b8 fixed_width);
-	const char *Button_toString(const Button *this);
+									
+	const char *Button_vtoString(const void *vthis);
 	
 #endif

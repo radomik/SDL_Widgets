@@ -46,7 +46,7 @@
 	
 	const char* StackList_getLayoutName(layouttype layout);
 
-	const const char *StackList_toString(const StackList *this);
+	const char *StackList_vtoString(const void *vthis);
 
 	const char *StackList_lastWidgetToString(const StackList *this);
 

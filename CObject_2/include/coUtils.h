@@ -32,8 +32,8 @@ extern "C" {
 	void 		__coError(const char *fname, const void *this, const char *file, int line, const char *format, ...);
 	void 		__coError2(const char *fname, const char *file, int line, const char *format, ...);
 
-	#define		coError(fname, this, format, ...) __coError(#fname, this, __FILE__, __LINE__, format, ##__VA_ARGS__)
-	#define		coError2(fname, format, ...) __coError2(#fname, __FILE__, __LINE__, format, ##__VA_ARGS__)
+	/*#define		coError(fname, this, format, ...) __coError(#fname, this, __FILE__, __LINE__, format, ##__VA_ARGS__)
+	#define		coError2(fname, format, ...) __coError2(#fname, __FILE__, __LINE__, format, ##__VA_ARGS__)*/
 
 	b8 coFileExist(const char *path);
 

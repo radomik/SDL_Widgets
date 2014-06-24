@@ -50,6 +50,6 @@
 							u16 marg_top, u16 marg_left, 
 							u16 marg_bot, u16 marg_right);
 							
-	const char *Grid_toString(const Grid *this);
+	const char *Grid_vtoString(const void *vthis);
 	
 #endif

@@ -25,13 +25,24 @@
 #include "TextBlock.h"
 #include "Widget.h"
 
-static const void* vtable[] = {
-	TextBlock_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	TextBlock_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = TextBlock_vdestroy,
+	.toString = TextBlock_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= TextBlock_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -172,10 +183,9 @@ inline void TextBlock_setBackgroundColor(TextBlock *this, u32 rgb) {
 	/*WIDGET(this)->need_refresh = true;*/
 }
 
-const char *TextBlock_toString(const TextBlock *this) {
-	static char str_id[128];
-	if (! this) return "text_block=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", this->text);
+const char *TextBlock_vtoString(const void *vthis) {
+	static char str_id[512];
+	snprintf(str_id, sizeof(str_id), "%s", TEXTBLOCK(vthis)->text);
 	return str_id;
 }
 

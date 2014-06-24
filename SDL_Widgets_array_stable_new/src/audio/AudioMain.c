@@ -290,7 +290,7 @@ int AudioMain_createInterface() {
 		
 		// create stacklist(sliy2) and add it to screen
 		sliy2 = &(stacklist[c_stacklist++]);
-		fprintf(stderr, "#### %s: Creating base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
+		//fprintf(stderr, "#### %s: Creating base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
 		StackList_new(sliy2, VERTICAL, 6);
 		Widget_setPosition(WIDGET(sliy2), 486, 2);
 		WIDGET(sliy2)->draggable	= true;
@@ -299,7 +299,7 @@ int AudioMain_createInterface() {
 		for (k = label_off, f = 0; k < label_off+6; k++, f++) {	// create each Row of StackList
 			// create StackList(sliy) (contains arrow buttons placed along Y axis)
 			sliy = &(stacklist[c_stacklist++]);
-			fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+			//fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 			StackList_new(sliy, VERTICAL, 2);
 			
 			// create buttonimage[c_buttonimage] as copy of bt_arrow_up (arrow up) and add to stacklist(sliy)
@@ -317,35 +317,35 @@ int AudioMain_createInterface() {
 			StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 			
 			// Refresh StackList(sliy) with buttons filled
-			fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+			//fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 			Widget_refresh(WIDGET(sliy));
 			
 			// create stacklist(slix) (full row)
 			slix = &(stacklist[c_stacklist++]);
-			fprintf(stderr, "#### %s: Creating row horizontal stacklist @ %p\n", __FUNCTION__, slix);
+			//fprintf(stderr, "#### %s: Creating row horizontal stacklist @ %p\n", __FUNCTION__, slix);
 			StackList_new(slix, HORIZONTAL, 2);
 			
 			// add stacklist(sliy) and label[k] to stacklist(slix)
 			StackList_addWidgetLast(slix, WIDGET(sliy), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 10);
 			StackList_addWidgetLast(slix, WIDGET(&label[k]), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 			
-			fprintf(stderr, "#### %s: Refreshing row horizontal stacklist @ %p\n", __FUNCTION__, slix);
+			//fprintf(stderr, "#### %s: Refreshing row horizontal stacklist @ %p\n", __FUNCTION__, slix);
 			Widget_refresh(WIDGET(slix));
 			
-			fprintf(stderr, "#### %s: Adding row horizontal stacklist @ %p to base vertical stacklist @ %p\n", 
-				__FUNCTION__, slix, sliy2);
+			/*fprintf(stderr, "#### %s: Adding row horizontal stacklist @ %p to base vertical stacklist @ %p\n", 
+				__FUNCTION__, slix, sliy2);*/
 			// add stacklist(slix) to stacklist(sliy2) (full row)
 			StackList_addWidgetLast(sliy2, WIDGET(slix), ALIGN_LEFT, ALIGN_CENTER, 4, 0, 2, 4);
 		}
 		
 		// refresh StackList(sliy2)
-		fprintf(stderr, "#### %s: Refreshing base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
+		//fprintf(stderr, "#### %s: Refreshing base vertical stacklist @ %p\n", __FUNCTION__, sliy2);
 		Widget_refresh(WIDGET(sliy2));
 	
 	}/*!! END Labels section !!*/
 	
 	sliy = &stacklist[c_stacklist++];
-	fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+	//fprintf(stderr, "#### %s: Creating vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 	StackList_new(sliy, VERTICAL, 2);
 	Widget_setPosition(WIDGET(sliy), 10, 100);
 	
@@ -360,7 +360,7 @@ int AudioMain_createInterface() {
 	StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 	
 	// Refresh StackList(sliy) with buttons filled
-	fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
+	//fprintf(stderr, "#### %s: Refreshing vertical button stacklist @ %p\n", __FUNCTION__, sliy);
 	Widget_refresh(WIDGET(sliy));
 	
 	Screen_addWidget(sc, WIDGET(sliy));
@@ -380,10 +380,10 @@ int AudioMain_createInterface() {
 	Widget_updateMaxXY(pure_widget);
 	Screen_addWidget(sc, pure_widget);
 	
-	fprintf(stderr, "WIDGET(butimg)->surf->w = %hu\n", WIDGET(butimg)->surf->w);
+	/*fprintf(stderr, "WIDGET(butimg)->surf->w = %hu\n", WIDGET(butimg)->surf->w);
 	fprintf(stderr, "WIDGET(butimg)->pos.w   = %hu\n", WIDGET(butimg)->pos.w);
 	fprintf(stderr, "WIDGET(butimg)->surf->h = %hu\n", WIDGET(butimg)->surf->h);
-	fprintf(stderr, "WIDGET(butimg)->pos.h   = %hu\n", WIDGET(butimg)->pos.h);
+	fprintf(stderr, "WIDGET(butimg)->pos.h   = %hu\n", WIDGET(butimg)->pos.h);*/
 	
 	/** Flowable image used to adjust frequency of AudioSinus */
 	img = &image[c_image++];

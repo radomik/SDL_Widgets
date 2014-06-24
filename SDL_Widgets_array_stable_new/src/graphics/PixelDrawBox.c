@@ -27,13 +27,24 @@
 #include "Grid.h"
 #include "PixelDrawBox.h"
 
-static const void* vtable[] = {
-	PixelDrawBox_vdestroy,
-	Grid_vmevent,
-	Grid_vdraw,
-	PixelDrawBox_vrefresh,
-	Grid_vdrag,
-	Grid_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = PixelDrawBox_vdestroy,
+	.toString = PixelDrawBox_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Grid_vmevent,
+	.draw 		= Grid_vdraw,
+	.refresh	= PixelDrawBox_vrefresh,
+	.drag		= Grid_vdrag,
+	.setVisible	= Grid_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -43,9 +54,10 @@ static coClass type = {
 };
 const coClass *PixelDrawBox_class = &type;
 
-const char *PixelDrawBox_toString(const PixelDrawBox *pdb) {
-	static char str_id[204];
-	if (! pdb) return "pdb=NULL";
+
+const char *PixelDrawBox_vtoString(const void *vthis) {
+	static char str_id[240];
+	const PixelDrawBox *pdb = PIXEL_DRAW_BOX(vthis);
 	snprintf(str_id, sizeof(str_id), "PixelDrawBox: (width,height)=(%hu,%hu), (c_col,c_row)=(%hu,%hu), (actX,actY)=\
 (%hu,%hu), (rect_w,rect_h)=(%hu,%hu), (spec_x,spec_y)=(%hu,%hu)", pdb->width, pdb->height, GRID(pdb)->c_col, GRID(pdb)->c_row, 
 	pdb->actX, pdb->actY, pdb->rect_w, pdb->rect_h, pdb->spec_pix_x, pdb->spec_pix_y);
@@ -180,7 +192,7 @@ PixelDrawBox* PixelDrawBox_new(PixelDrawBox *this, 	u16 width, u16 height,
 	
 	/* Check whether settings are proper */
 	if ((width < 1) || (height < 1) || (c_col < 1) || (c_row < 1) || (actX < 1) || (actY < 1)) {
-		fprintf(stderr, "PixelDrawBox_new: Wrong initialization: %s\n", PixelDrawBox_toString(this));
+		fprintf(stderr, "PixelDrawBox_new: Wrong initialization: %s\n", toString(this));
 	}
 	return this;
 }
@@ -232,10 +244,11 @@ void PixelDrawBox_vrefresh(void *vthis) {
 			create = true;
 			col = ((y < pdb->actY && x < pdb->actX) ? PDB_BGCOLOR : PDB_DISABLED_COLOR);
 			if (rect_wt) {								// if there is already widget
-				if (classof_fast(rect_wt) != Rectangle_class) {	// if type is not rectangle
-					fprintf(stderr, "PixelDrawBox_refresh: Found Widget of invalid type: %s at (y,x)=(%hu,%hu). Deleting\n",
-						classname_fast(rect_wt), y, x);
-					delete(rect_wt);
+				if (classof(rect_wt) != Rectangle_class) {	// if type is not rectangle
+					fprintf(stderr, "PixelDrawBox_refresh: Error: Found Widget of invalid type: %s at (y,x)=(%hu,%hu). Skipping\n",
+						classname(rect_wt), y, x);
+					//delete(rect_wt);
+					continue;
 				}
 				else {
 					/* Found rectangle at (y,x) cell */

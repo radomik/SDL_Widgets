@@ -27,7 +27,7 @@
 
 inline void Static_printObj2(const void *vthis, const char *fname) {
 	const char *Static_printObj_fmt = "%20s: this=%p, this.class.name: %20s, this.class.size: %5lu, this.class.vtable = %p\n";
-	fprintf(stderr, Static_printObj_fmt, fname, vthis, classof_fast(vthis)->name, classof_fast(vthis)->size, classof_fast(vthis)->vtable);
+	fprintf(stderr, Static_printObj_fmt, fname, vthis, classof(vthis)->name, classof(vthis)->size, classof(vthis)->vtable);
 }
 
 inline void Static_nullThis2(const char *fname) {

@@ -106,7 +106,7 @@
 	
 	// ToStrings()
 	const char *Screen_lastWidgetToString(const Screen *screen);
-	const char *Screen_toString(const Screen *screen);
+	const char *Screen_vtoString(const void *vthis);
 	const char *Screen_getEventName(Uint8 sdl_event_type);
 	
 	// Wrappers used to manage cparams 

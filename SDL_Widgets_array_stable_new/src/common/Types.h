@@ -23,6 +23,7 @@
 	
 	typedef struct Object Object;
 	typedef struct Audio Audio;
+	typedef struct IAudio IAudio;
 	typedef struct AudioSinus AudioSinus;
 	typedef struct AudioTest AudioTest;
 	typedef struct WaveDrawBox WaveDrawBox;
@@ -39,6 +40,7 @@
 	typedef struct Label Label;
 	typedef struct LabelImage LabelImage;
 	typedef struct Widget Widget;
+	typedef struct IWidget IWidget;
 	typedef struct Rectangle Rectangle;
 	typedef struct TextBlock TextBlock;
 	

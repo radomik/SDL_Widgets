@@ -60,6 +60,6 @@
 									TTF_Font *font2, 	u16 padx, u16 pady,
 									b8 fixed_width);
 
-	const char *Label_toString(const Label *this);
+	const char *Label_vtoString(const void *vthis);
 	
 #endif

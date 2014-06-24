@@ -75,7 +75,7 @@
 
 	inline void PixelDrawBox_setPadding(PixelDrawBox *pdb, u16 padx, u16 pady);
 	
-	const char* PixelDrawBox_toString(const PixelDrawBox *pdb);
+	const char *PixelDrawBox_vtoString(const void *vthis);
 	
 	inline void PixelDrawBox_setEnabled(PixelDrawBox *pdb, b8 sel);
 	

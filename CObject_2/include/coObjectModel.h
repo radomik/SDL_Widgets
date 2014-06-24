@@ -14,8 +14,11 @@ extern "C" {
 
 #include "coCommon.h"
 #include "coObject.h"
+#include "coIObject.h"
 #include "coClass.h"
 
+/** definied in coObjectModel.c */
+extern const char *TO_STRING_NULL_THIS_STR;
 
 /** Set current object class descriptor
  * @param	VTHIS 	(void*) any class directly or indirectly inheriting from coObject
@@ -29,6 +32,10 @@ extern "C" {
  * 
  * @return  VTHIS if VTHIS != NULL, otherwise NULL
  * @note 	method does not delete allocated space, for dynamic objects use: free(delete(obj));
+ * 
+ * @note	Method does not perform any checks for NULL:
+ * 		 VTHIS, VTHIS->class, VTHIS->class->vtable, VTHIS->class->vtable[CO_IOBJECT_VTABLE_INDEX]
+ * @see coIObject.h
  */
 void* delete(void *vthis);
 
@@ -39,29 +46,14 @@ void* delete(void *vthis);
  */
 #define new(CLASS) 				malloc(CLASS->size)
 
-/** Get class descriptor of object
- * @param	vthis 	(void*) any class directly or indirectly inheriting from coObject
- * @return 	(const coClass*) class descriptor of vthis (NULL if vthis is NULL)
- */
-const coClass* classof(const void *vthis);
+#define classof(VTHIS) 			(CO_OBJECT(VTHIS)->class)
 
-#define classof_fast(VTHIS) (CO_OBJECT(VTHIS)->class)
+#define vptrof(VTHIS, INDEX) 	(CO_OBJECT(VTHIS)->class->vtable[INDEX])
 
-/** Get vtable of object
- * @param	vthis 	(void*) any class directly or indirectly inheriting from coObject
- * @return 	(const void**) array of void* virtual function pointers
- */
-const void **vtableof(const void *vthis);
+#define classname(VTHIS) 		(classof(VTHIS)->name)
 
-/** Get given index of vptr or NULL if:
- * vthis = NULL, vtable == NULL, vtable[index] == NULL
- */
-const void *vptrof(const void *vthis, u32 index);
-#define vptrof_fast(VTHIS, INDEX) (CO_OBJECT(VTHIS)->class->vtable[INDEX])
+#define toString(VTHIS) 		((VTHIS) ? (coIObject_toString(VTHIS)) : (TO_STRING_NULL_THIS_STR))
 
-const char *classname(const void *vthis);
-
-#define classname_fast(VTHIS) (classof_fast(VTHIS)->name)
 
 #ifdef	__cplusplus
 }

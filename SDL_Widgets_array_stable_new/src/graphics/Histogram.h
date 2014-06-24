@@ -43,7 +43,7 @@
 	Histogram* Histogram_new(Histogram *this);
 	void Histogram_vdestroy(void *vthis);
 	
-	const char *Histogram_toString(const Histogram *this);
+	const char *Histogram_vtoString(const void *vthis);
 	void Histogram_vrefresh(void *vthis);
 	void Histogram_setColor(Histogram *this, u32 color_rgb);
 	

@@ -63,5 +63,5 @@
 
 	inline void Rectangle_scale(Rectangle *this, double xscale, double yscale, int smooth);
 
-	const char *Rectangle_toString(const Rectangle *this);
+	const char *Rectangle_vtoString(const void *vthis);
 #endif

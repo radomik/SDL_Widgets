@@ -34,22 +34,22 @@
 		void				(*release_handler)(Widget*, Screen*);
 		SDL_Surface			*bg_surf;
 		Rectangle			*rect;
-		u16				*x;
-		u16				*y;
-		u16				size;
+		u16					*x;
+		u16					*y;
+		u16					size;
 		
 		u16 				zero_x;
-		u16				zero_y;
+		u16					zero_y;
 		
-		u16				ax;		// w_255+2m
-		u16				ay;		// h_255+2m
+		u16					ax;		// w_255+2m
+		u16					ay;		// h_255+2m
 	};
 	
 	HistStretchGraph* HistStretchGraph_new(HistStretchGraph *this, TTF_Font *font, u16 size);
 	void HistStretchGraph_vdestroy(void *vthis);
 	
 	u8 HistStretchGraph_setCountPoints(HistStretchGraph *hsg, u16 size);
-	const char *HistStretchGraph_toString(const HistStretchGraph *this);
+	const char *HistStretchGraph_vtoString(const void *vthis);
 	
 	void HistStretchGraph_vrefresh(void *vthis);
 #endif

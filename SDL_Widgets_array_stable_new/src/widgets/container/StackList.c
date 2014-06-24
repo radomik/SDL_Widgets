@@ -27,13 +27,24 @@
 #include "StackListX.h"
 #include "StackListY.h"
 
-static const void* vtable[] = {
-	StackList_vdestroy,
-	StackList_vmevent,
-	StackList_vdraw,
-	StackList_vrefresh,
-	StackList_vdrag,
-	StackList_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = StackList_vdestroy,
+	.toString = StackList_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= StackList_vmevent,
+	.draw 		= StackList_vdraw,
+	.refresh	= StackList_vrefresh,
+	.drag		= StackList_vdrag,
+	.setVisible	= StackList_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -47,9 +58,9 @@ const char* StackList_getLayoutName(layouttype layout) {
 	return (layout == HORIZONTAL)?"HORIZONTAL":"VERTICAL"; 
 }
 
-const const char *StackList_toString(const StackList *this) {
+const char *StackList_vtoString(const void *vthis) {
 	static char str_id[80];
-	if (! this) return "stacklist=NULL";
+	const StackList *this = STACKLIST(vthis);
 	snprintf(str_id, sizeof(str_id), "StackList[this=%p]: layout=%s, count=%u, size=%u",
 		this, StackList_getLayoutName(this->layout), this->count, this->size);
 	return str_id;

@@ -61,7 +61,7 @@
 															u16 padx, u16 pady,
 															b8 fixed_width);
 
-	const char *ButtonImage_toString(const ButtonImage *this);
+	const char *ButtonImage_vtoString(const void *vthis);
 
 	
 #endif

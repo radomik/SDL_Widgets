@@ -24,13 +24,24 @@
 #include "Static.h"
 #include "Grid.h"
 
-static const void* vtable[] = {
-	Grid_vdestroy,
-	Grid_vmevent,
-	Grid_vdraw,
-	Grid_vrefresh,
-	Grid_vdrag,
-	Grid_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Grid_vdestroy,
+	.toString = Grid_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Grid_vmevent,
+	.draw 		= Grid_vdraw,
+	.refresh	= Grid_vrefresh,
+	.drag		= Grid_vdrag,
+	.setVisible	= Grid_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -372,10 +383,10 @@ void Grid_add(Grid *this, Widget *widget, u16 row, u16 col,
 	}
 }
 
-const char *Grid_toString(const Grid *this) {
-	static char str_id[64];
-	if (! this) return "grid=NULL";
+const char *Grid_vtoString(const void *vthis) {
+	static char str_id[128];
 	snprintf(str_id, sizeof(str_id), "GRID(%s): c_row=%hu, c_col=%hu", 
-		classname_fast(this), this->c_row, this->c_col);
+		classname(vthis), GRID(vthis)->c_row, GRID(vthis)->c_col);
 	return str_id;
 }
+

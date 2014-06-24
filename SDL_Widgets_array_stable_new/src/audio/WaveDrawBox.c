@@ -26,13 +26,24 @@
 #include	"WaveDrawBox.h"
 #include	"AudioFromGraph.h"
 
-static const void* vtable[] = {
-	WaveDrawBox_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	WaveDrawBox_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = WaveDrawBox_vdestroy,
+	.toString = WaveDrawBox_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= WaveDrawBox_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -150,9 +161,9 @@ static void WaveDrawBox_mousePressed(Widget *sender, Screen *screen)
 	}
 }
 
-const char* WaveDrawBox_toString(const WaveDrawBox *this) {
+const char *WaveDrawBox_vtoString(const void *vthis) {
 	static char str_id[256];
-	if (! this) return "WaveDrawBox: NULL";
+	const WaveDrawBox *this = WAVE_DRAW_BOX(this);
 	snprintf(str_id, sizeof(str_id), "WaveDrawBox: [x,y,w,h]=[%hu,%hu,%hu,%hu], freq=%hu, bunch=%hu, (zero)=(%hu,%hu), xrel_range=(%hu,%hu)[%hu], yrel_range=(%hu,%hu)[%hu+1], (padx,pady)=(%hu,%hu), my=%hu",
 		WIDGET(this)->pos.x, WIDGET(this)->pos.y, WIDGET(this)->pos.w, WIDGET(this)->pos.h, 
 		this->sample_freq, this->bunch, this->zero_x, this->zero_y, this->relx_min, this->relx_max, 
@@ -164,7 +175,7 @@ const char* WaveDrawBox_toString(const WaveDrawBox *this) {
 void WaveDrawBox_vrefresh(void *vthis) {
 	WaveDrawBox *this = WAVE_DRAW_BOX(vthis);
 	if ((! this->sample_freq) || (! this->bunch)) {
-		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion ((! this->sample_freq) || (! this->bunch)) == true\n%s\n", WaveDrawBox_toString(this));
+		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion ((! this->sample_freq) || (! this->bunch)) == true\n%s\n", toString(this));
 		WIDGET(this)->visible = false;
 		return;
 	}
@@ -175,7 +186,7 @@ void WaveDrawBox_vrefresh(void *vthis) {
 	WIDGET(this)->maxx  = WIDGET(this)->pos.x + WIDGET(this)->pos.w;
 	WIDGET(this)->maxy  = WIDGET(this)->pos.y + WIDGET(this)->pos.h;
 	
-	if (DEBUG) fprintf(stderr, "WaveDrawBox_vrefresh: [1] %s\n", WaveDrawBox_toString(this));
+	if (DEBUG) fprintf(stderr, "WaveDrawBox_vrefresh: [1] %s\n", toString(this));
 	
 	if (WIDGET(this)->surf) {
 		if (DEBUG) fprintf(stderr, "WaveDrawBox_vrefresh: [2] Surface exists filling with BGCOLOR\n");
@@ -220,12 +231,12 @@ void WaveDrawBox_vrefresh(void *vthis) {
 	this->yrange = this->rely_max - this->rely_min;
 	
 	if (this->xrange != (this->relx_max - this->relx_min + 1)) {
-		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion (this->xrange != (this->relx_max - this->relx_min + 1)) == true\n%s\n", WaveDrawBox_toString(this));
+		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion (this->xrange != (this->relx_max - this->relx_min + 1)) == true\n%s\n", toString(this));
 		WIDGET(this)->visible = false;
 		return;
 	}
 	if ((this->xrange == 0) || (this->xrange >= this->sample_freq)) {
-		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion ((this->xrange == 0) || (this->xrange >= this->sample_freq)) == true\n%s\n", WaveDrawBox_toString(this));
+		fprintf(stderr, "WaveDrawBox_vrefresh: Failed on assertion ((this->xrange == 0) || (this->xrange >= this->sample_freq)) == true\n%s\n", toString(this));
 		WIDGET(this)->visible = false;
 		return;
 	}
@@ -242,7 +253,7 @@ void WaveDrawBox_vrefresh(void *vthis) {
 	}
 	
 	if (DEBUG) {
-		fprintf(stderr, "WaveDrawBox_vrefresh: Final: %s\n", WaveDrawBox_toString(this));
+		fprintf(stderr, "WaveDrawBox_vrefresh: Final: %s\n", toString(this));
 		fprintf(stderr, "WaveDrawBox_vrefresh: Surface: %s\n", Static_surfaceToString(WIDGET(this)->surf));
 	}
 	

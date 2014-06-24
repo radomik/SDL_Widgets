@@ -42,40 +42,6 @@
 # -msse3 -mssse3 -mtls-direct-seg-refs
 
 	.text
-	.globl	coIObject_destroy
-	.type	coIObject_destroy, @function
-coIObject_destroy:
-.LFB19:
-	.cfi_startproc
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
-	mov	rax, QWORD PTR [rax]	# D.2065_2->vtable, D.2065_2->vtable
-	mov	rax, QWORD PTR [rax]	# *D.2066_3, *D.2066_3
-	call	[QWORD PTR [rax]]	# MEM[(struct coIObject *)D.2067_4].destroy
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE19:
-	.size	coIObject_destroy, .-coIObject_destroy
-	.globl	coIObject_toString
-	.type	coIObject_toString, @function
-coIObject_toString:
-.LFB20:
-	.cfi_startproc
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
-	mov	rax, QWORD PTR [rax]	# D.2060_2->vtable, D.2060_2->vtable
-	mov	rax, QWORD PTR [rax]	# *D.2061_3, *D.2061_3
-	call	[QWORD PTR [rax+8]]	# MEM[(struct coIObject *)D.2062_4].toString
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE20:
-	.size	coIObject_toString, .-coIObject_toString
 	.globl	delete
 	.type	delete, @function
 delete:
@@ -86,22 +52,15 @@ delete:
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
 	test	rdi, rdi	# vthis
-	je	.L6	#,
-	mov	rax, QWORD PTR [rdi]	# __class, MEM[(struct coObject *)vthis_3(D)].class
-	test	rax, rax	# __class
-	je	.L6	#,
-	mov	rax, QWORD PTR [rax]	# vtable, __class_4->vtable
-	test	rax, rax	# vtable
-	je	.L6	#,
-	mov	rax, QWORD PTR [rax]	# D.2050, *vtable_7
-	test	rax, rax	# D.2050
-	je	.L6	#,
-	call	[QWORD PTR [rax]]	# MEM[(struct coIObject *)D.2050_10].destroy
-.L6:
+	je	.L2	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax]	# D.2037_2->vtable, D.2037_2->vtable
+	mov	rax, QWORD PTR [rax]	# *D.2038_3, *D.2038_3
+	call	[QWORD PTR [rax]]	# MEM[(struct coIObject *)D.2039_4].destroy
+.L2:
 	mov	rax, rbx	#, vthis
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
-	.p2align 4,,1
 	ret
 	.cfi_endproc
 .LFE21:
@@ -121,7 +80,7 @@ Widget_vdestroy:
 Widget_vtoString:
 .LFB23:
 	.cfi_startproc
-	mov	eax, OFFSET FLAT:buf.2030	#,
+	mov	eax, OFFSET FLAT:buf.2025	#,
 	ret
 	.cfi_endproc
 .LFE23:
@@ -136,7 +95,17 @@ main:
 	.cfi_endproc
 .LFE24:
 	.size	main, .-main
-	.local	buf.2030
-	.comm	buf.2030,64,32
+	.globl	TO_STRING_NULL_THIS_STR
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"toString(NULL)"
+	.data
+	.align 8
+	.type	TO_STRING_NULL_THIS_STR, @object
+	.size	TO_STRING_NULL_THIS_STR, 8
+TO_STRING_NULL_THIS_STR:
+	.quad	.LC0
+	.local	buf.2025
+	.comm	buf.2025,64,32
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

@@ -24,13 +24,24 @@
 #include "Memory.h"
 #include "Histogram.h"
 
-static const void* vtable[] = {
-	Widget_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Histogram_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Widget_vdestroy,
+	.toString = Histogram_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Histogram_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -125,8 +136,8 @@ void Histogram_setColor(Histogram *this, u32 color_rgb) {
 	color_rgb <<= 8; color_rgb |= 0xFF; this->color = color_rgb;
 }
 
-const char *Histogram_toString(const Histogram *this) {
+const char *Histogram_vtoString(const void *vthis) {
 	static char str_id[64];
-	snprintf(str_id, sizeof(str_id), "histogram data=%p", this->data);
+	snprintf(str_id, sizeof(str_id), "histogram data=%p", HISTOGRAM(vthis)->data);
 	return str_id;
 }

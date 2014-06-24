@@ -26,13 +26,24 @@
 #include "Label.h"
 #include "FloatingMenu.h"
 
-static const void* vtable[] = {
-	FloatingMenu_vdestroy,
-	StackList_vmevent,
-	StackList_vdraw,
-	StackList_vrefresh,
-	StackList_vdrag,
-	StackList_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = FloatingMenu_vdestroy,
+	.toString = StackList_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= StackList_vmevent,
+	.draw 		= StackList_vdraw,
+	.refresh	= StackList_vrefresh,
+	.drag		= StackList_vdrag,
+	.setVisible	= StackList_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {

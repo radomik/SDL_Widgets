@@ -72,6 +72,6 @@
 	void WaveDrawBox_clearData(WaveDrawBox *this);
 	
 	// toString
-	const char* WaveDrawBox_toString(const WaveDrawBox *this);
+	const char *WaveDrawBox_vtoString(const void *vthis);
 #endif
 

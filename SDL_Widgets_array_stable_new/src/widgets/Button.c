@@ -24,13 +24,24 @@
 #include "Memory.h"
 #include "Button.h"
 
-static const void* vtable[] = {
-	Button_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Button_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Button_vdestroy,
+	.toString = Button_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Button_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -244,9 +255,8 @@ void Button_applyDefaultStyle2(	Button *this,  u16 posx, u16 posy,
 	Button_setFixedWidth(this, fixed_width);
 }
 
-const char *Button_toString(const Button *this) {
+const char *Button_vtoString(const void *vthis) {
 	static char str_id[128];
-	if (! this) return "button=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", Label_toString(&this->label[BUT_NORMAL]));
+	snprintf(str_id, sizeof(str_id), "%s", toString( &( BUTTON(vthis)->label[BUT_NORMAL] ) ) );
 	return str_id;
 }

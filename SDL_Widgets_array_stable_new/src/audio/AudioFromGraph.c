@@ -24,9 +24,20 @@
 #include "Static.h"
 #include "WaveDrawBox.h"
 
-static const void* vtable[] = {
-	Audio_vdestroy,				/* use super class destructor */
-	AudioFromGraph_vplay		/* Audio_play virtual method implementation */
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Audio_vdestroy,
+	.toString = Audio_vtoString
+};
+
+/** Methods overriden from interface IAudio */
+static const IAudio override_IAudio = {
+	.play = AudioFromGraph_vplay
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IAudio
 };
 
 static coClass type = {

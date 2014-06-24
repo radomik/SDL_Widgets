@@ -15,9 +15,9 @@ extern "C" {
 #include "coTypes.h"
 
 struct coClass {
-	const void			**vtable;
 	const size_t		size;
 	const char 			*name;
+	const void			**vtable;
 };
 
 #ifdef	__cplusplus

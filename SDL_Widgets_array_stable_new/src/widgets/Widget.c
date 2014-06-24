@@ -23,13 +23,24 @@
 #include "Memory.h"
 #include "Widget.h"
 
-static const void* vtable[] = {
-	Widget_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	Widget_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Widget_vdestroy,
+	.toString = Widget_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= Widget_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -109,7 +120,7 @@ static inline void Widget_copy_common(Widget *this, const Widget *src) {
 }
 
 Widget* Widget_copy(Widget *this, const Widget *src, b8 copy_pos, b8 copy_surf) {
-	coObject_copy(this, src);
+	coObject_copy(CO_OBJECT(this), CO_OBJECT(src));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE
@@ -182,7 +193,7 @@ static inline void Widget_std_init(Widget *this) {
 }
 
 Widget* Widget_new(Widget *this) {
-	coObject_new(this);
+	coObject_new(CO_OBJECT(this));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE
@@ -193,13 +204,17 @@ Widget* Widget_new(Widget *this) {
 	return this;
 }
 
-const char *Widget_toString(const Widget *this) {
+const char *Widget_vtoString(const void *vthis) {
 	static char str_id[512];
-	if (! this) return "widget=NULL";
+	const Widget *this = WIDGET(vthis);
 	snprintf(str_id, sizeof(str_id), "Widget[%p](%s): ID=%u, VIS=%s [x,y,mx,my,w,h]=[%hu,%hu,%hu,%hu,%hu,%hu]", 
-		this, classof_fast(this)->name, this->id, Bool_toString(this->visible), 
+		this, classof(this)->name, this->id, Bool_toString(this->visible), 
 		this->pos.x, this->pos.y, this->maxx, this->maxy, this->pos.w, this->pos.h);
 	return str_id;
+}
+
+const char *Widget_toString(const Widget* this) {
+	return this ? Widget_vtoString(this) : "widget=NULL";
 }
 
 #define MOUSE_MOVE    1
@@ -528,42 +543,3 @@ void Widget_vdrag(void *vthis, s16 dx, s16 dy) {
 inline void Widget_vsetVisible(void *vthis, b8 vis) {
 	WIDGET(vthis)->visible = vis;
 }
-
-
-/** ### Wrappers to the most current virtual methods implementations ### */
-#ifndef USE_MACRO_VIRTUAL_METHOD_CALL
-/// mouse event handler [ virtual method implementation ]
-void Widget_mevent(Widget *this, Screen *screen) {
-	const void *vptr = vptrof_fast(this, 1);
-	assert(vptr != NULL);
-	( (void (*)(void*, Screen*)) vptr )(this, screen);
-}
-
-/// draw widget [ virtual method implementation ]
-void Widget_draw(Widget *this, Screen *screen, b8 flip) {
-	const void *vptr = vptrof_fast(this, 2);
-	assert(vptr != NULL);
-	( (void (*)(void*, Screen*, b8)) vptr )(this, screen, flip);
-}
-
-/// refresh widget [ virtual method implementation ]
-void Widget_refresh(Widget *this) {
-	const void *vptr = vptrof_fast(this, 3);
-	assert(vptr != NULL);
-	( (void (*)(void*)) vptr )(this);
-}
-
-/// drag widget [ virtual method implementation ]
-void Widget_drag(Widget *this, s16 dx, s16 dy) {
-	const void *vptr = vptrof_fast(this, 4);
-	assert(vptr != NULL);
-	( (void (*)(void*, s16, s16)) vptr )(this, dx, dy);
-}
-
-/// change visibility [ virtual method implementation ]
-void Widget_setVisible(Widget *this, b8 vis) {
-	const void *vptr = vptrof_fast(this, 5);
-	assert(vptr != NULL);
-	( (void (*)(void*, b8)) vptr )(this, vis);
-}
-#endif

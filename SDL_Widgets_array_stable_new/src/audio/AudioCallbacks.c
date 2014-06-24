@@ -53,7 +53,7 @@ void button_play_clicked(Widget *sender, Screen *screen) {
 	u16	 *audio_current_index = (u16*) sender->vparam[1];
 	if (*audio_current_index == USINF) return;
 	if (! Audio_play(audio[*audio_current_index], false)) {
-		if ( classof_fast(sender) == ButtonImage_class ) {
+		if ( classof(sender) == ButtonImage_class ) {
 			ButtonImage *butimg = (ButtonImage*)sender;
 			ButtonImage_setBorder(butimg, butimg->labelimage[BUT_NORMAL].border_width, 0xFF0000);
 			Widget_refresh(sender);
@@ -213,6 +213,8 @@ void button_source_change(Widget *sender, Screen *screen) {
 		}
 		else return;
 	}
+	audio_current = audio[*audio_current_index];
+	
 	if (_play) Audio_play(audio_current, _pause);
 	sprintf(label->text_block.text+22, "%20s", audio_current->name);
 	Widget_refresh(WIDGET(label));

@@ -23,13 +23,24 @@
 #include "Memory.h"
 #include "LabelImage.h"
 
-static const void* vtable[] = {
-	LabelImage_vdestroy,
-	Widget_vmevent,
-	Widget_vdraw,
-	LabelImage_vrefresh,
-	Widget_vdrag,
-	Widget_vsetVisible
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = LabelImage_vdestroy,
+	.toString = LabelImage_vtoString
+};
+
+/** Methods overriden from interface IWidget */
+static const IWidget override_IWidget = {
+	.mevent 	= Widget_vmevent,
+	.draw 		= Widget_vdraw,
+	.refresh	= LabelImage_vrefresh,
+	.drag		= Widget_vdrag,
+	.setVisible	= Widget_vsetVisible
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IWidget
 };
 
 static coClass type = {
@@ -199,9 +210,8 @@ inline void LabelImage_scale(LabelImage *this, double xscale, double yscale, int
 	Widget_scale(WIDGET(this), xscale, yscale, smooth); 
 }
 
-const char *LabelImage_toString(const LabelImage *this) {
+const char *LabelImage_vtoString(const void *vthis) {
 	static char str_id[128];
-	if (! this) return "labelimage=NULL";
-	snprintf(str_id, sizeof(str_id), "%s", Image_toString(&this->image));
+	snprintf(str_id, sizeof(str_id), "%s", toString( &( LABEL_IMAGE(vthis)->image ) ) );
 	return str_id;
 }

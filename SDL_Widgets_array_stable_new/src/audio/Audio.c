@@ -23,9 +23,20 @@
 #include "Memory.h"
 #include "Audio.h"
 
-static const void* vtable[] = {
-	Audio_vdestroy,	/* default implementation of Audio_destroy */
-	NULL			/* Audio_play is PURE virtual */
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = Audio_vdestroy,
+	.toString = Audio_vtoString
+};
+
+/** Methods overriden from interface IAudio */
+static const IAudio override_IAudio = {
+	.play = NULL	/** pure virtual method */
+};
+
+static const void *vtable[] = {
+	&override_coIObject,
+	&override_IAudio
 };
 
 static coClass type = {
@@ -34,15 +45,6 @@ static coClass type = {
 	.vtable	= vtable
 };
 const coClass *Audio_class = &type;
-
-#ifndef USE_MACRO_VIRTUAL_METHOD_CALL
-/* Call current implementation virtual method Audio_play()  */
-b8 Audio_play(Audio *this, b8 start_paused) {
-	const void *vptr = vptrof_fast(this, 1);
-	assert(vptr != NULL);
-	return ( (b8 (*)(void*, b8)) vptr )(this, start_paused);
-}
-#endif
 
 static inline void Audio_initDefault(Audio *this) {
 	this->lib				= 0;
@@ -75,7 +77,7 @@ Audio* Audio_new(Audio *this) {
 		Static_nullThis();
 		return NULL;
 	}
-	coObject_new(this);
+	coObject_new(CO_OBJECT(this));
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE
@@ -176,9 +178,10 @@ const char *Audio_getLibName(const Audio *this) {
 	}
 }
 
-const char *Audio_toString(const Audio *this) {
+const char *Audio_vtoString(const void *vthis) {
 	static char str_id[96];
-	if (! this) return "audio=NULL";
-	snprintf(str_id, sizeof(str_id), "audio(%p), lib=%s, name=%s, type=%s", this, Audio_getLibName(this), this->name, classof_fast(this)->name);
+	const Audio *this = AUDIO(this);
+	snprintf(str_id, sizeof(str_id), "audio(%p), lib=%s, name=%s, type=%s", 
+		this, Audio_getLibName(this), this->name, classof(this)->name);
 	return str_id;
 }

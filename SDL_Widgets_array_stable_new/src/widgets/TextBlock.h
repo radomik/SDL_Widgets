@@ -50,7 +50,7 @@
 
 	inline void TextBlock_setBackgroundColor(TextBlock *this, u32 rgb);
 
-	const char *TextBlock_toString(const TextBlock *this);
+	const char *TextBlock_vtoString(const void *vthis);
 
 	inline void TextBlock_staticGetTextSize(TTF_Font *font, const char *text, int *w, int *h);
 	

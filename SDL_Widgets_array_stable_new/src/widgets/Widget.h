@@ -21,6 +21,7 @@
 #ifndef _Widget_h_
 	#define _Widget_h_
 	#include "StdDefinitions.h"
+	#include "IWidget.h"
 	#include "perr.h"
 
 	extern const coClass *Widget_class;
@@ -103,36 +104,29 @@
 	inline void Widget_vsetVisible(void *vthis, b8 vis);
 	
 	/** ### Wrappers to the most current virtual methods implementations ### */
-#ifndef USE_MACRO_VIRTUAL_METHOD_CALL
+	
 	/// mouse event handler [ virtual method implementation ]
-	void Widget_mevent(Widget *this, Screen *screen);
+	#define Widget_mevent(VTHIS, SCREEN)	 		( IWidget_mevent(VTHIS, SCREEN) )
 	
 	/// draw widget [ virtual method implementation ]
-	void Widget_draw(Widget *this, Screen *screen, b8 flip);
+	#define Widget_draw(VTHIS, SCREEN, FLIP) 		( IWidget_draw(VTHIS, SCREEN, FLIP) )
 	
 	/// refresh widget [ virtual method implementation ]
-	void Widget_refresh(Widget *this);
+	#define Widget_drag(VTHIS, DX, DY)				( IWidget_drag(VTHIS, DX, DY) )
 	
 	/// drag widget [ virtual method implementation ]
-	void Widget_drag(Widget *this, s16 dx, s16 dy);
+	#define Widget_refresh(VTHIS) 					( IWidget_refresh(VTHIS) )
 	
 	/// change visibility [ virtual method implementation ]
-	void Widget_setVisible(Widget *this, b8 vis);
-#else	
-	/** ### Wrappers to the most current virtual methods implementations 
-	 *  ### (macro versions) [ no check for NULL vthis, class, vtable, vptr ] ### */
-	#define Widget_mevent(VTHIS, SCREEN)	 		( ( (void (*)(void*, Screen*)) vptrof_fast(VTHIS, 1) )(VTHIS, SCREEN) )
-	#define Widget_draw(VTHIS, SCREEN, FLIP) 		( ( (void (*)(void*, Screen*, b8)) vptrof_fast(VTHIS, 2) )(VTHIS, SCREEN, FLIP) )
-	#define Widget_refresh(VTHIS) 					( ( (void (*)(void*)) vptrof_fast(VTHIS, 3) )(VTHIS) )
-	#define Widget_drag(VTHIS, DX, DY)				( ( (void (*)(void*, s16, s16)) vptrof_fast(VTHIS, 4) )(VTHIS, DX, DY) )
-	#define Widget_setVisible(VTHIS, VIS) 			( ( (void (*)(void*, b8)) vptrof_fast(VTHIS, 5) )(VTHIS, VIS) )
-#endif
+	#define Widget_setVisible(VTHIS, VIS) 			( IWidget_setVisible(VTHIS, VIS) )
+
 	/**/
 	
 	// add void parameter to vparam array, see widget.vparam field definition
 	perr Widget_addVParam(Widget* this, void *vparam, u32 def_size);
 	
-	const char *Widget_toString(const Widget *this);
+	const char *Widget_vtoString(const void *vthis);
+	const char *Widget_toString(const Widget* this);
 	
 	//! Scale widget, creates new .surf, updates .pos.w, .pos.h, .maxx, .maxy
 	void Widget_scale(Widget *this, double xscale, double yscale, int smooth);
