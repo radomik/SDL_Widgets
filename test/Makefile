@@ -1,6 +1,6 @@
 #  -msse3 -march=native -mtune=native -pipe -O1
 CC := /usr/lib/colorgcc/bin/x86_64-pc-linux-gnu-gcc
-CFLAGS := -Wall -march=native -mtune=native -pipe -O1
+CFLAGS := -Wall -msse3 -march=native -mtune=native -pipe -O1
 AFLAGS := $(CFLAGS) -S -masm=intel -fverbose-asm
 INC := -I../CObject_1/include
 all:
