@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT Image.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -57,52 +57,79 @@
 	.globl	Image_vdestroy
 	.type	Image_vdestroy, @function
 Image_vdestroy:
-.LFB94:
+.LFB108:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8945	#,
-	call	Static_printObj2	#
-	mov	rdi, QWORD PTR [rbx+176]	# MEM[(struct Image *)vthis_1(D)].path, MEM[(struct Image *)vthis_1(D)].path
-	mov	edx, 56	#,
+	mov	rdi, QWORD PTR [rdi+168]	# MEM[(struct Image *)vthis_1(D)].path, MEM[(struct Image *)vthis_1(D)].path
+	mov	edx, 71	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	call	wfree	#
-	mov	QWORD PTR [rbx+176], 0	# MEM[(struct Image *)vthis_1(D)].path,
+	mov	QWORD PTR [rbx+168], 0	# MEM[(struct Image *)vthis_1(D)].path,
 	mov	rdi, rbx	#, vthis
 	call	Widget_vdestroy	#
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE108:
 	.size	Image_vdestroy, .-Image_vdestroy
+	.section	.rodata.str1.1
+.LC1:
+	.string	"%s"
+	.text
+	.globl	Image_vtoString
+	.type	Image_vtoString, @function
+Image_vtoString:
+.LFB111:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rcx, QWORD PTR [rdi+168]	# MEM[(struct Image *)vthis_1(D)].path, MEM[(struct Image *)vthis_1(D)].path
+	mov	edx, OFFSET FLAT:.LC1	#,
+	mov	esi, 128	#,
+	mov	edi, OFFSET FLAT:str_id.9532	#,
+	mov	eax, 0	#,
+	call	snprintf	#
+	mov	eax, OFFSET FLAT:str_id.9532	#,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE111:
+	.size	Image_vtoString, .-Image_vtoString
 	.globl	Image_isExtSupported
 	.type	Image_isExtSupported, @function
 Image_isExtSupported:
-.LFB93:
+.LFB107:
 	.cfi_startproc
-	mov	eax, 0	#,
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rsi, QWORD PTR IMAGE_SUPPORTED_FILES[rip]	#, IMAGE_SUPPORTED_FILES
+	call	File_onExtMask	#
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE107:
 	.size	Image_isExtSupported, .-Image_isExtSupported
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
-.LC1:
+.LC2:
 	.string	"%20s:\tWithin context: img_path=%s, minx=%hu, miny=%hu\n"
 	.align 8
-.LC2:
+.LC3:
 	.string	"Image_new: File does not exist %s\n"
 	.align 8
-.LC3:
+.LC4:
 	.string	"Image_new: IMG_Load failed with error %s [path=%s]\n"
 	.text
 	.globl	Image_new
 	.type	Image_new, @function
 Image_new:
-.LFB95:
+.LFB109:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -119,85 +146,95 @@ Image_new:
 	mov	r12d, edx	# minx, minx
 	mov	r13d, ecx	# miny, miny
 	test	rdi, rdi	# this
-	jne	.L5	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8952	#,
+	jne	.L8	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9523	#,
 	call	Static_nullThis2	#
 	movzx	r13d, r13w	# miny, miny
 	mov	DWORD PTR [rsp], r13d	#, miny
 	movzx	r9d, r12w	#, minx
 	mov	r8, rbp	#, img_path
-	mov	ecx, OFFSET FLAT:__FUNCTION__.8952	#,
-	mov	edx, OFFSET FLAT:.LC1	#,
-	mov	esi, 1	#,
-	mov	rdi, QWORD PTR stderr[rip]	#, stderr
-	mov	eax, 0	#,
-	call	__fprintf_chk	#
-	jmp	.L6	#
-.L5:
-	call	Widget_new	#
-	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8952	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	mov	QWORD PTR [rbx+176], 0	# this_2(D)->path,
-	test	rbp, rbp	# img_path
-	jne	.L7	#,
-	mov	esi, 0	#,
-	mov	rdi, rbx	#, this
-	call	Widget_setVisible	#
-	jmp	.L6	#
-.L7:
-	mov	rdi, rbp	#, img_path
-	call	Static_fileExist	#
-	test	al, al	# D.8996
-	.p2align 4,,3
-	jne	.L8	#,
-	mov	rcx, rbp	#, img_path
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9523	#,
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	jmp	.L9	#
+.L8:
+	call	Widget_new	#
+	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
+	mov	QWORD PTR [rbx+168], 0	# this_2(D)->path,
+	test	rbp, rbp	# img_path
+	jne	.L10	#,
+	mov	rax, QWORD PTR type[rip+16]	# type.vtable, type.vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9565_11 + 8B], MEM[(const void * *)D.9565_11 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, this
-	call	Widget_setVisible	#
-	jmp	.L6	#
-.L8:
-	mov	edx, 90	#,
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9567_13].setVisible
+	jmp	.L9	#
+.L10:
+	mov	rdi, rbp	#, img_path
+	call	File_exists	#
+	test	al, al	# D.9569
+	.p2align 4,,3
+	jne	.L11	#,
+	mov	rcx, rbp	#, img_path
+	mov	edx, OFFSET FLAT:.LC3	#,
+	mov	esi, 1	#,
+	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_2(D)].class, MEM[(struct coObject *)this_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9564_18->vtable, D.9564_18->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9565_19 + 8B], MEM[(const void * *)D.9565_19 + 8B]
+	mov	esi, 0	#,
+	mov	rdi, rbx	#, this
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9567_21].setVisible
+	jmp	.L9	#
+.L11:
+	mov	edx, 105	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	mov	rdi, rbp	#, img_path
 	call	wIMG_Load	#
-	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.8999
-	test	rax, rax	# D.8999
-	jne	.L9	#,
+	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.9572
+	test	rax, rax	# D.9572
+	jne	.L12	#,
 	call	SDL_GetError	#
 	mov	r8, rbp	#, img_path
-	mov	rcx, rax	#, D.9003
-	mov	edx, OFFSET FLAT:.LC3	#,
+	mov	rcx, rax	#, D.9576
+	mov	edx, OFFSET FLAT:.LC4	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_2(D)].class, MEM[(struct coObject *)this_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9564_28->vtable, D.9564_28->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9565_29 + 8B], MEM[(const void * *)D.9565_29 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, this
-	call	Widget_setVisible	#
-	jmp	.L6	#
-.L9:
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9567_31].setVisible
+	jmp	.L9	#
+.L12:
+	mov	edx, 112	#,
+	mov	esi, OFFSET FLAT:.LC0	#,
 	mov	rdi, rbp	#, img_path
-	call	coCopyCstr	#
-	mov	QWORD PTR [rbx+176], rax	# this_2(D)->path, D.9004
-	mov	rax, QWORD PTR [rbx+88]	# D.9000, MEM[(struct Widget *)this_2(D)].surf
-	movzx	edx, WORD PTR [rax+20]	# tmp84, D.9000_20->h
-	movzx	esi, WORD PTR [rax+16]	# tmp86, D.9000_20->w
+	call	wstrdup	#
+	mov	QWORD PTR [rbx+168], rax	# this_2(D)->path, D.9577
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_2(D)].class, MEM[(struct coObject *)this_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9564_35->vtable, D.9564_35->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9565_36 + 8B], MEM[(const void * *)D.9565_36 + 8B]
+	mov	esi, 1	#,
+	mov	rdi, rbx	#, this
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9567_38].setVisible
+	mov	rax, QWORD PTR [rbx+88]	# D.9573, MEM[(struct Widget *)this_2(D)].surf
+	movzx	edx, WORD PTR [rax+20]	# tmp114, D.9573_40->h
+	movzx	esi, WORD PTR [rax+16]	# tmp116, D.9573_40->w
 	mov	rdi, rbx	#, this
 	call	Widget_setSize	#
 	movzx	edx, r13w	# miny, miny
 	movzx	esi, r12w	# minx, minx
 	mov	rdi, rbx	#, this
 	call	Widget_setPosition	#
-	mov	esi, 1	#,
-	mov	rdi, rbx	#, this
-	call	Widget_setVisible	#
-.L6:
+.L9:
 	mov	rax, rbx	#, this
 	mov	rbx, QWORD PTR [rsp+24]	#,
 	mov	rbp, QWORD PTR [rsp+32]	#,
@@ -207,17 +244,17 @@ Image_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE109:
 	.size	Image_new, .-Image_new
 	.section	.rodata.str1.8
 	.align 8
-.LC4:
+.LC5:
 	.string	"Image_copy: Passed NULL: this(%p) or src(%p)\n"
 	.text
 	.globl	Image_copy
 	.type	Image_copy, @function
 Image_copy:
-.LFB96:
+.LFB110:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -230,36 +267,34 @@ Image_copy:
 	mov	rbx, rdi	# this, this
 	mov	rbp, rsi	# src, src
 	test	rsi, rsi	# src
-	je	.L16	#,
+	je	.L20	#,
 	test	rdi, rdi	# this
-	jne	.L12	#,
-.L16:
+	jne	.L15	#,
+.L20:
 	mov	r8, rbp	#, src
 	mov	rcx, rbx	#, this
-	mov	edx, OFFSET FLAT:.LC4	#,
+	mov	edx, OFFSET FLAT:.LC5	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	ebx, 0	# this,
-	jmp	.L14	#
-.L12:
+	jmp	.L17	#
+.L15:
 	movzx	edx, dl	# copy_pos, copy_pos
 	mov	ecx, 1	#,
 	call	Widget_copy	#
-	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8958	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	mov	rdi, QWORD PTR [rbp+176]	# D.8980, src_4(D)->path
-	test	rdi, rdi	# D.8980
-	je	.L15	#,
-	call	coCopyCstr	#
-	mov	QWORD PTR [rbx+176], rax	# this_2(D)->path, D.8983
-	jmp	.L14	#
-.L15:
-	mov	QWORD PTR [rbx+176], 0	# this_2(D)->path,
-.L14:
+	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
+	mov	rdi, QWORD PTR [rbp+168]	# D.9549, src_5(D)->path
+	mov	eax, 0	# iftmp.1,
+	test	rdi, rdi	# D.9549
+	je	.L18	#,
+	mov	edx, 137	#,
+	mov	esi, OFFSET FLAT:.LC0	#,
+	call	wstrdup	#
+.L18:
+	mov	QWORD PTR [rbx+168], rax	# this_3(D)->path, iftmp.1
+.L17:
 	mov	rax, rbx	#, this
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 24
@@ -269,39 +304,8 @@ Image_copy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE110:
 	.size	Image_copy, .-Image_copy
-	.section	.rodata.str1.1
-.LC5:
-	.string	"image=NULL"
-.LC6:
-	.string	"%s"
-	.text
-	.globl	Image_toString
-	.type	Image_toString, @function
-Image_toString:
-.LFB97:
-	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC5	# D.8966,
-	test	rdi, rdi	# this
-	je	.L23	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rcx, QWORD PTR [rdi+176]	# this_2(D)->path, this_2(D)->path
-	mov	edx, OFFSET FLAT:.LC6	#,
-	mov	esi, 128	#,
-	mov	edi, OFFSET FLAT:str_id.8962	#,
-	mov	eax, 0	#,
-	call	snprintf	#
-	mov	eax, OFFSET FLAT:str_id.8962	# D.8966,
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L23:
-	rep
-	ret
-	.cfi_endproc
-.LFE97:
-	.size	Image_toString, .-Image_toString
 	.globl	Image_class
 	.data
 	.align 8
@@ -309,45 +313,83 @@ Image_toString:
 	.size	Image_class, 8
 Image_class:
 	.quad	type
+	.globl	IMAGE_SUPPORTED_FILES
+	.align 8
+	.type	IMAGE_SUPPORTED_FILES, @object
+	.size	IMAGE_SUPPORTED_FILES, 8
+IMAGE_SUPPORTED_FILES:
+	.quad	supported_files
 	.section	.rodata.str1.1
-.LC7:
+.LC6:
 	.string	"Image"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	176
+# name:
+	.quad	.LC6
 # vtable:
 	.quad	vtable
-# size:
-	.quad	184
-# name:
-	.quad	.LC7
 	.section	.rodata
-	.type	__FUNCTION__.8945, @object
-	.size	__FUNCTION__.8945, 15
-__FUNCTION__.8945:
-	.string	"Image_vdestroy"
-	.type	__FUNCTION__.8952, @object
-	.size	__FUNCTION__.8952, 10
-__FUNCTION__.8952:
+	.type	__FUNCTION__.9523, @object
+	.size	__FUNCTION__.9523, 10
+__FUNCTION__.9523:
 	.string	"Image_new"
-	.type	__FUNCTION__.8958, @object
-	.size	__FUNCTION__.8958, 11
-__FUNCTION__.8958:
-	.string	"Image_copy"
-	.local	str_id.8962
-	.comm	str_id.8962,128,32
-	.data
+	.local	str_id.9532
+	.comm	str_id.9532,128,32
 	.align 32
+	.type	supported_files, @object
+	.size	supported_files, 72
+supported_files:
+	.string	"bmp"
+	.zero	5
+	.string	"jpg"
+	.zero	5
+	.string	"jpeg"
+	.zero	4
+	.string	"gif"
+	.zero	5
+	.string	"png"
+	.zero	5
+	.string	"tif"
+	.zero	5
+	.string	"tiff"
+	.zero	4
+	.string	""
+	.string	""
+	.zero	7
+	.data
+	.align 16
 	.type	vtable, @object
-	.size	vtable, 48
+	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	Image_vdestroy
+# toString:
+	.quad	Image_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	Widget_vmevent
+# draw:
 	.quad	Widget_vdraw
+# refresh:
 	.quad	Widget_vrefresh
+# drag:
 	.quad	Widget_vdrag
+# setVisible:
 	.quad	Widget_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

@@ -161,7 +161,7 @@ void button_Audio_clicked(Widget *sender, Screen *screen) {
 	screen->need_reload = true;
 }
 
-void main_keydown(Screen *screen, SDLKey key) {
+void main_keydown(Screen *screen, SDLKey key, void *vthis) {
 	switch (key) {
 		case SDLK_F1:
 			button_Graphics_clicked(NULL, screen);
@@ -249,6 +249,7 @@ int main(int argc, const char **argv) {
 
 	sc->drag_on = true;					// turn on dragging
 	sc->key_up = main_keydown;
+	sc->param = NULL;
 	
 	/* Create user interface */
 	Main_createInterface();

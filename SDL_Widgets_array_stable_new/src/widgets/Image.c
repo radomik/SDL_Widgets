@@ -22,9 +22,9 @@
 #include "Screen.h"
 #include "Static.h"
 #include "Memory.h"
-/*#include "file_browse_common.h"*/
 #include "Image.h"
 #include "Widget.h"
+#include "File.h"
 
 /** Methods overriden from interface coIObject */
 static const coIObject override_coIObject = {
@@ -53,10 +53,14 @@ static coClass type = {
 };
 const coClass *Image_class = &type;
 
-//static char supported_files[][MAX_EXT_SIZE] = {"bmp", "jpg", "jpeg", "gif", "png", "tif", "tiff", "\0"};
+static const char supported_files[][MAX_EXT_SIZE] = {"bmp", "jpg", "jpeg", "gif", "png", "tif", "tiff", "\0"};
+
+const char (*IMAGE_SUPPORTED_FILES)[][MAX_EXT_SIZE] = &supported_files;
 
 // returns true if ext file extension (without '.') is supported by Image class
-inline b8 Image_isExtSupported(const char *ext) { /*return fileOnMask(ext, &supported_files);*/ return false; }
+inline b8 Image_isExtSupported(const char *ext) { 
+	return File_onExtMask(ext, IMAGE_SUPPORTED_FILES);
+}
 
 void Image_vdestroy(void *vthis) {
 #ifdef VERBOSE_CREATE
@@ -91,24 +95,27 @@ Image* Image_new(Image *this, const char *img_path, u16 minx, u16 miny) { // png
 		Widget_setVisible(WIDGET(this), false);
 		return this; // invisible image, still should be destroyed
 	}
-	
-	if (! Static_fileExist(img_path)) {
-		fprintf(stderr, "Image_new: File does not exist %s\n", img_path);
-		Widget_setVisible(WIDGET(this), false);
-		return this; // this and other errors are critical errors (but image still should be destroyed)
-	} 
-	
-	WIDGET(this)->surf = IMG_Load(img_path);
-	if (! WIDGET(this)->surf) {
-		fprintf(stderr, "Image_new: IMG_Load failed with error %s [path=%s]\n", SDL_GetError(), img_path);
-		Widget_setVisible(WIDGET(this), false);
-		return this;
+	else {
+		if (! File_exists(img_path)) {
+			fprintf(stderr, "Image_new: File does not exist %s\n", img_path);
+			Widget_setVisible(WIDGET(this), false);
+			return this; // this and other errors are critical errors (but image still should be destroyed)
+		} 
+		
+		WIDGET(this)->surf = IMG_Load(img_path);
+		if (! WIDGET(this)->surf) {
+			fprintf(stderr, "Image_new: IMG_Load failed with error %s [path=%s]\n", SDL_GetError(), img_path);
+			Widget_setVisible(WIDGET(this), false);
+			return this;
+		}
+		
+		this->path	= strdup(img_path);
+		Widget_setVisible(WIDGET(this), true);
+		Widget_setSize(WIDGET(this), WIDGET(this)->surf->w, WIDGET(this)->surf->h);
 	}
 	
-	this->path	= strdup(img_path);
-	Widget_setSize(WIDGET(this), WIDGET(this)->surf->w, WIDGET(this)->surf->h);
 	Widget_setPosition(WIDGET(this), minx, miny);
-	Widget_setVisible(WIDGET(this), true);
+	
 	return this;
 }
 

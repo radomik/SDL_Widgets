@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT Static.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -58,18 +58,18 @@
 	.globl	Static_printObj2
 	.type	Static_printObj2, @function
 Static_printObj2:
-.LFB93:
+.LFB107:
 	.cfi_startproc
 	sub	rsp, 24	#,
 	.cfi_def_cfa_offset 32
 	mov	r8, rdi	# vthis, vthis
 	mov	rcx, rsi	# fname, fname
-	mov	rax, QWORD PTR [rdi]	# D.9484, MEM[(struct coObject *)vthis_2(D)].class
-	mov	r9, QWORD PTR [rax+16]	# D.9484_3->name, D.9484_3->name
-	mov	rdx, QWORD PTR [rax]	# D.9484_3->vtable, D.9484_3->vtable
-	mov	QWORD PTR [rsp+8], rdx	#, D.9484_3->vtable
-	mov	rax, QWORD PTR [rax+8]	# D.9484_3->size, D.9484_3->size
-	mov	QWORD PTR [rsp], rax	#, D.9484_3->size
+	mov	rax, QWORD PTR [rdi]	# D.9838, MEM[(struct coObject *)vthis_2(D)].class
+	mov	r9, QWORD PTR [rax+8]	# D.9838_3->name, D.9838_3->name
+	mov	rdx, QWORD PTR [rax+16]	# D.9838_3->vtable, D.9838_3->vtable
+	mov	QWORD PTR [rsp+8], rdx	#, D.9838_3->vtable
+	mov	rax, QWORD PTR [rax]	# D.9838_3->size, D.9838_3->size
+	mov	QWORD PTR [rsp], rax	#, D.9838_3->size
 	mov	edx, OFFSET FLAT:.LC0	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -79,7 +79,7 @@ Static_printObj2:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE107:
 	.size	Static_printObj2, .-Static_printObj2
 	.section	.rodata.str1.8
 	.align 8
@@ -89,7 +89,7 @@ Static_printObj2:
 	.globl	Static_nullThis2
 	.type	Static_nullThis2, @function
 Static_nullThis2:
-.LFB94:
+.LFB108:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -103,32 +103,8 @@ Static_nullThis2:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE108:
 	.size	Static_nullThis2, .-Static_nullThis2
-	.globl	Static_fileExist
-	.type	Static_fileExist, @function
-Static_fileExist:
-.LFB105:
-	.cfi_startproc
-	mov	eax, 0	# D.9476,
-	test	rdi, rdi	# path
-	je	.L10	#,
-	sub	rsp, 152	#,
-	.cfi_def_cfa_offset 160
-	mov	rdx, rsp	#,
-	mov	rsi, rdi	#, path
-	mov	edi, 1	#,
-	call	__xstat	#
-	test	eax, eax	# D.9522
-	sete	al	#, D.9476
-	add	rsp, 152	#,
-	.cfi_def_cfa_offset 8
-.L10:
-	rep
-	ret
-	.cfi_endproc
-.LFE105:
-	.size	Static_fileExist, .-Static_fileExist
 	.section	.rodata.str1.8
 	.align 8
 .LC2:
@@ -137,7 +113,7 @@ Static_fileExist:
 	.globl	Static_surfaceToString
 	.type	Static_surfaceToString, @function
 Static_surfaceToString:
-.LFB106:
+.LFB109:
 	.cfi_startproc
 	sub	rsp, 152	#,
 	.cfi_def_cfa_offset 160
@@ -181,15 +157,15 @@ Static_surfaceToString:
 	mov	ecx, 256	#,
 	mov	edx, 1	#,
 	mov	esi, 256	#,
-	mov	edi, OFFSET FLAT:str_id.9216	#,
+	mov	edi, OFFSET FLAT:str_id.9579	#,
 	mov	eax, 0	#,
 	call	__snprintf_chk	#
-	mov	eax, OFFSET FLAT:str_id.9216	#,
+	mov	eax, OFFSET FLAT:str_id.9579	#,
 	add	rsp, 152	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE106:
+.LFE109:
 	.size	Static_surfaceToString, .-Static_surfaceToString
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC3:
@@ -204,38 +180,38 @@ Static_surfaceToString:
 	.globl	Static_getDefaultFont
 	.type	Static_getDefaultFont, @function
 Static_getDefaultFont:
-.LFB107:
+.LFB110:
 	.cfi_startproc
 	cmp	QWORD PTR DEFAULT_FONT[rip], 0	# DEFAULT_FONT,
-	jne	.L16	#,
+	jne	.L10	#,
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	mov	ecx, 55	#,
+	mov	ecx, 52	#,
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 30	#,
 	mov	edi, OFFSET FLAT:.LC4	#,
 	call	wTTF_OpenFont	#
 	mov	QWORD PTR DEFAULT_FONT[rip], rax	# DEFAULT_FONT, DEFAULT_FONT.16
 	test	rax, rax	# DEFAULT_FONT.16
-	jne	.L14	#,
+	jne	.L8	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9436,
+	mov	r8, rax	# D.9799,
 	mov	ecx, OFFSET FLAT:.LC4	#,
 	mov	edx, OFFSET FLAT:.LC5	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-.L14:
+.L8:
 	mov	rax, QWORD PTR DEFAULT_FONT[rip]	#, DEFAULT_FONT
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
-.L16:
+.L10:
 	mov	rax, QWORD PTR DEFAULT_FONT[rip]	#, DEFAULT_FONT
 	ret
 	.cfi_endproc
-.LFE107:
+.LFE110:
 	.size	Static_getDefaultFont, .-Static_getDefaultFont
 	.section	.rodata.str1.8
 	.align 8
@@ -245,20 +221,20 @@ Static_getDefaultFont:
 	.globl	Static_getFont
 	.type	Static_getFont, @function
 Static_getFont:
-.LFB108:
+.LFB111:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# path, path
 	movzx	esi, sil	# size, size
-	mov	ecx, 62	#,
+	mov	ecx, 59	#,
 	mov	edx, OFFSET FLAT:.LC3	#,
 	call	wTTF_OpenFont	#
 	test	rax, rax	# font
-	jne	.L18	#,
+	jne	.L12	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9426,
+	mov	r8, rax	# D.9789,
 	mov	rcx, rbx	#, path
 	mov	edx, OFFSET FLAT:.LC6	#,
 	mov	esi, 1	#,
@@ -267,98 +243,98 @@ Static_getFont:
 	call	__fprintf_chk	#
 	mov	eax, 0	#,
 	call	Static_getDefaultFont	#
-.L18:
+.L12:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE108:
+.LFE111:
 	.size	Static_getFont, .-Static_getFont
 	.globl	Static_copySurface
 	.type	Static_copySurface, @function
 Static_copySurface:
-.LFB109:
+.LFB112:
 	.cfi_startproc
 	test	rdi, rdi	# src
-	je	.L22	#,
+	je	.L16	#,
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
 	mov	rsi, QWORD PTR [rdi+8]	# src_2(D)->format, src_2(D)->format
-	mov	r8d, 76	#,
+	mov	r8d, 73	#,
 	mov	ecx, OFFSET FLAT:.LC3	#,
 	mov	edx, 1073741825	#,
 	call	wSDL_ConvertSurface	#
-	jmp	.L21	#
-.L22:
+	jmp	.L15	#
+.L16:
 	.cfi_def_cfa_offset 8
-	mov	eax, 0	# D.9416,
+	mov	eax, 0	# D.9779,
 	ret
-.L21:
+.L15:
 	.cfi_def_cfa_offset 16
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	.p2align 4,,3
 	ret
 	.cfi_endproc
-.LFE109:
+.LFE112:
 	.size	Static_copySurface, .-Static_copySurface
 	.globl	getpixel
 	.type	getpixel, @function
 getpixel:
-.LFB110:
+.LFB113:
 	.cfi_startproc
 	mov	rax, QWORD PTR [rdi+8]	# surface_2(D)->format, surface_2(D)->format
-	movzx	eax, BYTE PTR [rax+9]	# D.9386, D.9385_3->BytesPerPixel
+	movzx	eax, BYTE PTR [rax+9]	# D.9749, D.9748_3->BytesPerPixel
 	movzx	ecx, WORD PTR [rdi+24]	# surface_2(D)->pitch, surface_2(D)->pitch
 	imul	edx, ecx	# tmp90, surface_2(D)->pitch
 	movsx	rdx, edx	# tmp91, tmp90
-	movzx	ecx, al	# D.9386, D.9386
-	imul	esi, ecx	# tmp93, D.9386
+	movzx	ecx, al	# D.9749, D.9749
+	imul	esi, ecx	# tmp93, D.9749
 	movsx	rsi, esi	# tmp94, tmp93
 	add	rdx, rsi	# tmp95, tmp94
 	add	rdx, QWORD PTR [rdi+32]	# p, surface_2(D)->pixels
-	cmp	al, 2	# D.9386,
-	je	.L28	#,
-	cmp	al, 2	# D.9386,
-	ja	.L31	#,
-	cmp	al, 1	# D.9386,
-	jne	.L32	#,
+	cmp	al, 2	# D.9749,
+	je	.L22	#,
+	cmp	al, 2	# D.9749,
+	ja	.L25	#,
+	cmp	al, 1	# D.9749,
+	jne	.L26	#,
 	.p2align 4,,7
-	jmp	.L27	#
-.L31:
-	cmp	al, 3	# D.9386,
+	jmp	.L21	#
+.L25:
+	cmp	al, 3	# D.9749,
 	.p2align 4,,7
-	je	.L29	#,
-	cmp	al, 4	# D.9386,
+	je	.L23	#,
+	cmp	al, 4	# D.9749,
 	.p2align 4,,7
-	jne	.L32	#,
+	jne	.L26	#,
 	.p2align 4,,7
-	jmp	.L30	#
-.L27:
-	movzx	eax, BYTE PTR [rdx]	# D.9395, *p_16
+	jmp	.L24	#
+.L21:
+	movzx	eax, BYTE PTR [rdx]	# D.9758, *p_16
 	.p2align 4,,6
 	ret
-.L28:
-	movzx	eax, WORD PTR [rdx]	# D.9395, MEM[(Uint16 *)p_16]
+.L22:
+	movzx	eax, WORD PTR [rdx]	# D.9758, MEM[(Uint16 *)p_16]
 	.p2align 4,,6
 	ret
-.L29:
+.L23:
 	movzx	ecx, BYTE PTR [rdx+1]	# MEM[(Uint8 *)p_16 + 1B], MEM[(Uint8 *)p_16 + 1B]
 	sal	ecx, 8	# tmp98,
 	movzx	eax, BYTE PTR [rdx+2]	# MEM[(Uint8 *)p_16 + 2B], MEM[(Uint8 *)p_16 + 2B]
 	sal	eax, 16	# tmp100,
 	or	eax, ecx	# tmp101, tmp98
 	movzx	edx, BYTE PTR [rdx]	# *p_16, *p_16
-	or	eax, edx	# D.9395, *p_16
+	or	eax, edx	# D.9758, *p_16
 	ret
-.L30:
-	mov	eax, DWORD PTR [rdx]	# D.9395, MEM[(Uint32 *)p_16]
+.L24:
+	mov	eax, DWORD PTR [rdx]	# D.9758, MEM[(Uint32 *)p_16]
 	ret
-.L32:
-	mov	eax, 0	# D.9395,
+.L26:
+	mov	eax, 0	# D.9758,
 	ret
 	.cfi_endproc
-.LFE110:
+.LFE113:
 	.size	getpixel, .-getpixel
 	.section	.rodata.str1.1
 .LC7:
@@ -369,43 +345,43 @@ getpixel:
 	.globl	Static_u64toHexString
 	.type	Static_u64toHexString, @function
 Static_u64toHexString:
-.LFB111:
+.LFB114:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
 	mov	eax, 4294967295	# tmp65,
 	cmp	rdi, rax	# value, tmp65
-	jbe	.L34	#,
+	jbe	.L28	#,
 	mov	r9d, edi	#, value
 	mov	r8, rdi	#, value
 	shr	r8, 32	#,
 	mov	ecx, OFFSET FLAT:.LC7	#,
 	mov	edx, 19	#,
 	mov	esi, 1	#,
-	mov	edi, OFFSET FLAT:s.9244	#,
+	mov	edi, OFFSET FLAT:s.9607	#,
 	mov	eax, 0	#,
 	call	__sprintf_chk	#
-	jmp	.L35	#
-.L34:
+	jmp	.L29	#
+.L28:
 	mov	r8d, edi	#, value
 	mov	ecx, OFFSET FLAT:.LC8	#,
 	mov	edx, 19	#,
 	mov	esi, 1	#,
-	mov	edi, OFFSET FLAT:s.9244	#,
+	mov	edi, OFFSET FLAT:s.9607	#,
 	mov	eax, 0	#,
 	call	__sprintf_chk	#
-.L35:
-	mov	eax, OFFSET FLAT:s.9244	#,
+.L29:
+	mov	eax, OFFSET FLAT:s.9607	#,
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE111:
+.LFE114:
 	.size	Static_u64toHexString, .-Static_u64toHexString
 	.globl	Static_growArray
 	.type	Static_growArray, @function
 Static_growArray:
-.LFB112:
+.LFB115:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -425,99 +401,99 @@ Static_growArray:
 	mov	rbp, rdx	# ext_size, ext_size
 	mov	edx, DWORD PTR [rsp+64]	# max_size, max_size
 	test	rbp, rbp	# ext_size
-	je	.L38	#,
+	je	.L32	#,
 	mov	r14, rsi	# array, array
 	mov	esi, DWORD PTR [rbp+0]	# new_size, *ext_size_3(D)
 	cmp	esi, ecx	# new_size, new_pos
-	ja	.L38	#,
+	ja	.L32	#,
 	cmp	QWORD PTR [rsp+72], 0	# item_size,
-	je	.L38	#,
+	je	.L32	#,
 	test	r9d, r9d	# def_size
-	jne	.L47	#,
-.L38:
+	jne	.L41	#,
+.L32:
 	test	r12, r12	# e
-	je	.L48	#,
+	je	.L42	#,
 	mov	DWORD PTR [r12], 13	# *e_14(D),
 	mov	r15d, 0	# _array,
-	jmp	.L41	#
-.L47:
+	jmp	.L35	#
+.L41:
 	mov	r13d, r8d	# curr_count, curr_count
 	mov	ebx, esi	# new_size, new_size
-.L39:
+.L33:
 	test	ebx, ebx	# new_size
-	jne	.L42	#,
+	jne	.L36	#,
 	cmp	r9d, edx	# def_size, max_size
-	jbe	.L49	#,
+	jbe	.L43	#,
 	test	r12, r12	# e
-	je	.L50	#,
+	je	.L44	#,
 	mov	DWORD PTR [r12], 14	# *e_14(D),
 	mov	r15d, 0	# _array,
-	jmp	.L41	#
-.L42:
+	jmp	.L35	#
+.L36:
 	lea	eax, [rbx+rbx]	# new_size,
 	cmp	esi, eax	# new_size, new_size
-	jae	.L44	#,
+	jae	.L38	#,
 	cmp	ebx, eax	# new_size, new_size
-	jae	.L44	#,
+	jae	.L38	#,
 	cmp	edx, eax	# max_size, new_size
 	.p2align 4,,2
-	jae	.L51	#,
-.L44:
+	jae	.L45	#,
+.L38:
 	test	r12, r12	# e
 	.p2align 4,,4
-	je	.L52	#,
+	je	.L46	#,
 	mov	DWORD PTR [r12], 15	# *e_14(D),
 	mov	r15d, 0	# _array,
-	jmp	.L41	#
-.L49:
-	mov	ebx, r9d	# new_size, def_size
-	jmp	.L43	#
-.L51:
-	mov	ebx, eax	# new_size, new_size
+	jmp	.L35	#
 .L43:
+	mov	ebx, r9d	# new_size, def_size
+	jmp	.L37	#
+.L45:
+	mov	ebx, eax	# new_size, new_size
+.L37:
 	cmp	ecx, ebx	# new_pos, new_size
-	jae	.L39	#,
+	jae	.L33	#,
 	mov	edi, ebx	# new_size, new_size
-	mov	ecx, 190	#,
+	mov	ecx, 187	#,
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	rsi, QWORD PTR [rsp+72]	#, item_size
 	call	wcalloc	#
 	mov	r15, rax	# _array,
 	test	rax, rax	# _array
-	jne	.L45	#,
+	jne	.L39	#,
 	test	r12, r12	# e
-	je	.L41	#,
+	je	.L35	#,
 	mov	DWORD PTR [r12], 16	# *e_14(D),
-	jmp	.L41	#
-.L45:
+	jmp	.L35	#
+.L39:
 	test	r13d, r13d	# curr_count
-	je	.L46	#,
+	je	.L40	#,
 	test	r14, r14	# array
-	je	.L46	#,
+	je	.L40	#,
 	mov	edx, r13d	# curr_count, curr_count
 	imul	rdx, QWORD PTR [rsp+72]	# tmp98, item_size
 	mov	rsi, r14	#, array
 	mov	rdi, rax	#, _array
 	call	memcpy	#
-	mov	edx, 200	#,
+	mov	edx, 197	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
 	mov	rdi, r14	#, array
 	call	wfree	#
-.L46:
+.L40:
 	mov	DWORD PTR [rbp+0], ebx	# *ext_size_3(D), new_size
 	test	r12, r12	# e
-	je	.L41	#,
+	je	.L35	#,
 	mov	DWORD PTR [r12], 0	# *e_14(D),
-	jmp	.L41	#
-.L48:
+	jmp	.L35	#
+.L42:
 	mov	r15d, 0	# _array,
-	jmp	.L41	#
-.L50:
+	jmp	.L35	#
+.L44:
 	mov	r15d, 0	# _array,
-	jmp	.L41	#
-.L52:
+	jmp	.L35	#
+.L46:
 	mov	r15d, 0	# _array,
-.L41:
+.L35:
 	mov	rax, r15	#, _array
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
@@ -529,12 +505,12 @@ Static_growArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE112:
+.LFE115:
 	.size	Static_growArray, .-Static_growArray
 	.globl	Static_newSurface
 	.type	Static_newSurface, @function
 Static_newSurface:
-.LFB113:
+.LFB116:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -549,13 +525,13 @@ Static_newSurface:
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
 	test	rax, rax	# spx
-	je	.L57	#,
+	je	.L51	#,
 	mov	r9d, DWORD PTR [rax+24]	# spx_2->Gmask, spx_2->Gmask
 	mov	r8d, DWORD PTR [rax+20]	# spx_2->Rmask, spx_2->Rmask
 	movzx	ecx, BYTE PTR [rax+8]	# spx_2->BitsPerPixel, spx_2->BitsPerPixel
 	movzx	edx, bp	# h, h
 	movzx	esi, bx	# w, w
-	mov	DWORD PTR [rsp+24], 214	#,
+	mov	DWORD PTR [rsp+24], 211	#,
 	mov	QWORD PTR [rsp+16], OFFSET FLAT:.LC3	#,
 	mov	edi, DWORD PTR [rax+32]	# spx_2->Amask, spx_2->Amask
 	mov	DWORD PTR [rsp+8], edi	#, spx_2->Amask
@@ -563,10 +539,10 @@ Static_newSurface:
 	mov	DWORD PTR [rsp], eax	#, spx_2->Bmask
 	mov	edi, 1073741825	#,
 	call	wSDL_CreateRGBSurface	#
-	jmp	.L56	#
-.L57:
-	mov	eax, 0	# D.9320,
-.L56:
+	jmp	.L50	#
+.L51:
+	mov	eax, 0	# D.9683,
+.L50:
 	add	rsp, 40	#,
 	.cfi_def_cfa_offset 24
 	pop	rbx	#
@@ -575,7 +551,7 @@ Static_newSurface:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE113:
+.LFE116:
 	.size	Static_newSurface, .-Static_newSurface
 	.section	.rodata.str1.1
 .LC9:
@@ -588,31 +564,31 @@ Static_newSurface:
 	.globl	Static_getArrowUpButton
 	.type	Static_getArrowUpButton, @function
 Static_getArrowUpButton:
-.LFB114:
+.LFB117:
 	.cfi_startproc
 	cmp	QWORD PTR bt_arrow_up[rip], 0	# bt_arrow_up,
-	jne	.L64	#,
+	jne	.L58	#,
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR ButtonImage_class[rip]	# ButtonImage_class, ButtonImage_class
-	mov	rdi, QWORD PTR [rax+8]	# ButtonImage_class.9_3->size, ButtonImage_class.9_3->size
-	mov	edx, 222	#,
+	mov	edx, 219	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
+	mov	rax, QWORD PTR ButtonImage_class[rip]	# ButtonImage_class, ButtonImage_class
+	mov	rdi, QWORD PTR [rax]	#, ButtonImage_class.9_3->size
 	call	wmalloc	#
 	mov	esi, OFFSET FLAT:.LC9	#,
-	mov	rdi, rax	#, D.9310
+	mov	rdi, rax	#, D.9673
 	call	ButtonImage_new	#
 	mov	QWORD PTR bt_arrow_up[rip], rax	# bt_arrow_up, bt_arrow_up.10
 	test	rax, rax	# bt_arrow_up.10
-	jne	.L61	#,
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9272	#,
+	jne	.L55	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9635	#,
 	mov	edx, OFFSET FLAT:.LC10	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9316,
-	jmp	.L62	#
-.L61:
+	mov	eax, 0	# D.9679,
+	jmp	.L56	#
+.L55:
 	mov	r9d, 0	#,
 	mov	r8d, 2	#,
 	mov	ecx, 4	#,
@@ -625,16 +601,16 @@ Static_getArrowUpButton:
 	movsd	xmm0, QWORD PTR .LC12[rip]	#,
 	mov	rdi, QWORD PTR bt_arrow_up[rip]	#, bt_arrow_up
 	call	ButtonImage_scale	#
-	mov	rax, QWORD PTR bt_arrow_up[rip]	# D.9316, bt_arrow_up
-.L62:
+	mov	rax, QWORD PTR bt_arrow_up[rip]	# D.9679, bt_arrow_up
+.L56:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
-.L64:
-	mov	rax, QWORD PTR bt_arrow_up[rip]	# D.9316, bt_arrow_up
+.L58:
+	mov	rax, QWORD PTR bt_arrow_up[rip]	# D.9679, bt_arrow_up
 	ret
 	.cfi_endproc
-.LFE114:
+.LFE117:
 	.size	Static_getArrowUpButton, .-Static_getArrowUpButton
 	.section	.rodata.str1.1
 .LC13:
@@ -643,31 +619,31 @@ Static_getArrowUpButton:
 	.globl	Static_getArrowDnButton
 	.type	Static_getArrowDnButton, @function
 Static_getArrowDnButton:
-.LFB115:
+.LFB118:
 	.cfi_startproc
 	cmp	QWORD PTR bt_arrow_dn[rip], 0	# bt_arrow_dn,
-	jne	.L70	#,
+	jne	.L64	#,
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR ButtonImage_class[rip]	# ButtonImage_class, ButtonImage_class
-	mov	rdi, QWORD PTR [rax+8]	# ButtonImage_class.4_3->size, ButtonImage_class.4_3->size
-	mov	edx, 236	#,
+	mov	edx, 233	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
+	mov	rax, QWORD PTR ButtonImage_class[rip]	# ButtonImage_class, ButtonImage_class
+	mov	rdi, QWORD PTR [rax]	#, ButtonImage_class.4_3->size
 	call	wmalloc	#
 	mov	esi, OFFSET FLAT:.LC13	#,
-	mov	rdi, rax	#, D.9295
+	mov	rdi, rax	#, D.9658
 	call	ButtonImage_new	#
 	mov	QWORD PTR bt_arrow_dn[rip], rax	# bt_arrow_dn, bt_arrow_dn.5
 	test	rax, rax	# bt_arrow_dn.5
-	jne	.L67	#,
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9275	#,
+	jne	.L61	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9638	#,
 	mov	edx, OFFSET FLAT:.LC10	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9301,
-	jmp	.L68	#
-.L67:
+	mov	eax, 0	# D.9664,
+	jmp	.L62	#
+.L61:
 	mov	r9d, 0	#,
 	mov	r8d, 2	#,
 	mov	ecx, 4	#,
@@ -680,78 +656,99 @@ Static_getArrowDnButton:
 	movsd	xmm0, QWORD PTR .LC12[rip]	#,
 	mov	rdi, QWORD PTR bt_arrow_dn[rip]	#, bt_arrow_dn
 	call	ButtonImage_scale	#
-	mov	rax, QWORD PTR bt_arrow_dn[rip]	# D.9301, bt_arrow_dn
-.L68:
+	mov	rax, QWORD PTR bt_arrow_dn[rip]	# D.9664, bt_arrow_dn
+.L62:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
-.L70:
-	mov	rax, QWORD PTR bt_arrow_dn[rip]	# D.9301, bt_arrow_dn
+.L64:
+	mov	rax, QWORD PTR bt_arrow_dn[rip]	# D.9664, bt_arrow_dn
 	ret
 	.cfi_endproc
-.LFE115:
+.LFE118:
 	.size	Static_getArrowDnButton, .-Static_getArrowDnButton
 	.globl	Static_quit
 	.type	Static_quit, @function
 Static_quit:
-.LFB116:
+.LFB119:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
 	mov	rdi, QWORD PTR DEFAULT_FONT[rip]	# DEFAULT_FONT.0, DEFAULT_FONT
 	test	rdi, rdi	# DEFAULT_FONT.0
-	je	.L72	#,
-	mov	edx, 248	#,
+	je	.L66	#,
+	mov	edx, 245	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
 	call	wTTF_CloseFont	#
 	mov	QWORD PTR DEFAULT_FONT[rip], 0	# DEFAULT_FONT,
-.L72:
+.L66:
 	mov	rdi, QWORD PTR bt_arrow_up[rip]	# bt_arrow_up.1, bt_arrow_up
 	test	rdi, rdi	# bt_arrow_up.1
-	je	.L73	#,
+	je	.L67	#,
 	call	delete	#
-	mov	edx, 249	#,
+	mov	edx, 246	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
-	mov	rdi, rax	#, D.9285
+	mov	rdi, rax	#, D.9648
 	call	wfree	#
 	mov	QWORD PTR bt_arrow_up[rip], 0	# bt_arrow_up,
-.L73:
+.L67:
 	mov	rdi, QWORD PTR bt_arrow_dn[rip]	# bt_arrow_dn.2, bt_arrow_dn
 	test	rdi, rdi	# bt_arrow_dn.2
-	je	.L71	#,
+	je	.L65	#,
 	call	delete	#
-	mov	edx, 250	#,
+	mov	edx, 247	#,
 	mov	esi, OFFSET FLAT:.LC3	#,
-	mov	rdi, rax	#, D.9289
+	mov	rdi, rax	#, D.9652
 	call	wfree	#
 	mov	QWORD PTR bt_arrow_dn[rip], 0	# bt_arrow_dn,
-.L71:
+.L65:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE116:
+.LFE119:
 	.size	Static_quit, .-Static_quit
-	.local	str_id.9216
-	.comm	str_id.9216,256,32
+	.globl	__false_str
+	.section	.rodata.str1.1
+.LC14:
+	.string	"false"
+	.data
+	.align 8
+	.type	__false_str, @object
+	.size	__false_str, 8
+__false_str:
+	.quad	.LC14
+	.globl	__true_str
+	.section	.rodata.str1.1
+.LC15:
+	.string	"true"
+	.data
+	.align 8
+	.type	__true_str, @object
+	.size	__true_str, 8
+__true_str:
+	.quad	.LC15
+	.comm	IMAGE_SUPPORTED_FILES,8,8
+	.local	str_id.9579
+	.comm	str_id.9579,256,32
 	.local	DEFAULT_FONT
 	.comm	DEFAULT_FONT,8,8
-	.local	s.9244
-	.comm	s.9244,19,16
+	.local	s.9607
+	.comm	s.9607,19,16
 	.local	bt_arrow_up
 	.comm	bt_arrow_up,8,8
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.9272, @object
-	.size	__FUNCTION__.9272, 24
-__FUNCTION__.9272:
+	.type	__FUNCTION__.9635, @object
+	.size	__FUNCTION__.9635, 24
+__FUNCTION__.9635:
 	.string	"Static_getArrowUpButton"
 	.local	bt_arrow_dn
 	.comm	bt_arrow_dn,8,8
 	.align 16
-	.type	__FUNCTION__.9275, @object
-	.size	__FUNCTION__.9275, 24
-__FUNCTION__.9275:
+	.type	__FUNCTION__.9638, @object
+	.size	__FUNCTION__.9638, 24
+__FUNCTION__.9638:
 	.string	"Static_getArrowDnButton"
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8

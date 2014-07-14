@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT StackList.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -57,7 +57,7 @@
 	.text
 	.type	StackList_growArray, @function
 StackList_growArray:
-.LFB105:
+.LFB115:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -66,21 +66,21 @@ StackList_growArray:
 	.cfi_def_cfa_offset 48
 	mov	rbx, rdi	# this, this
 	mov	DWORD PTR [rsp+28], 0	# e,
-	mov	ecx, DWORD PTR [rdi+196]	# D.9167, this_1(D)->count
-	lea	rdx, [rdi+192]	# tmp69,
-	mov	rsi, QWORD PTR [rdi+184]	# this_1(D)->items, this_1(D)->items
+	mov	ecx, DWORD PTR [rdi+188]	# D.9458, this_1(D)->count
+	lea	rdx, [rdi+184]	# tmp69,
+	mov	rsi, QWORD PTR [rdi+176]	# this_1(D)->items, this_1(D)->items
 	mov	QWORD PTR [rsp+8], 40	#,
 	mov	DWORD PTR [rsp], -1	#,
 	mov	r9d, 10	#,
-	mov	r8d, ecx	#, D.9167
+	mov	r8d, ecx	#, D.9458
 	lea	rdi, [rsp+28]	#,
 	call	Static_growArray	#
 	test	rax, rax	# new_array
 	jne	.L2	#,
 	mov	edi, DWORD PTR [rsp+28]	#, e
 	call	perr_getName	#
-	mov	r8, rax	# D.9173,
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9104	#,
+	mov	r8, rax	# D.9464,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9395	#,
 	mov	edx, OFFSET FLAT:.LC0	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -88,7 +88,7 @@ StackList_growArray:
 	call	__fprintf_chk	#
 	jmp	.L3	#
 .L2:
-	mov	QWORD PTR [rbx+184], rax	# this_1(D)->items, new_array
+	mov	QWORD PTR [rbx+176], rax	# this_1(D)->items, new_array
 .L3:
 	mov	eax, DWORD PTR [rsp+28]	#, e
 	add	rsp, 32	#,
@@ -97,125 +97,34 @@ StackList_growArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE105:
+.LFE115:
 	.size	StackList_growArray, .-StackList_growArray
-	.type	StackList_validateAt, @function
-StackList_validateAt:
-.LFB103:
+	.globl	StackList_vrefresh
+	.type	StackList_vrefresh, @function
+StackList_vrefresh:
+.LFB112:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	mov	eax, esi	# index, index
-	lea	rdx, [rax+rax*4]	# tmp94,
-	mov	rax, QWORD PTR [rdi+184]	# this_1(D)->items, this_1(D)->items
-	lea	rax, [rax+rdx*8]	# item,
-	cmp	DWORD PTR [rax+28], 3	# item_6->halign,
+	cmp	DWORD PTR [rdi+192], 1	# MEM[(struct StackList *)vthis_1(D)].layout,
 	jne	.L6	#,
-	movzx	ecx, WORD PTR [rax+18]	# item_6->margin_right, item_6->margin_right
-	add	cx, WORD PTR [rax+16]	# D.9190, item_6->margin_left
-	mov	edx, ecx	# D.9192, D.9190
-	shr	dx	# D.9192
-	mov	WORD PTR [rax+16], dx	# item_6->margin_left, D.9192
-	and	ecx, 1	# tmp99,
-	add	edx, ecx	# tmp100, tmp99
-	mov	WORD PTR [rax+18], dx	# item_6->margin_right, tmp100
-.L6:
-	cmp	DWORD PTR [rax+32], 3	# item_6->valign,
-	jne	.L7	#,
-	movzx	ecx, WORD PTR [rax+22]	# item_6->margin_bottom, item_6->margin_bottom
-	add	cx, WORD PTR [rax+20]	# D.9200, item_6->margin_top
-	mov	edx, ecx	# D.9202, D.9200
-	shr	dx	# D.9202
-	mov	WORD PTR [rax+20], dx	# item_6->margin_top, D.9202
-	and	ecx, 1	# tmp103,
-	add	edx, ecx	# tmp104, tmp103
-	mov	WORD PTR [rax+22], dx	# item_6->margin_bottom, tmp104
-.L7:
-	mov	rdx, QWORD PTR [rax]	# D.9204, item_6->widget
-	movzx	ecx, WORD PTR [rax+16]	# item_6->margin_left, item_6->margin_left
-	add	cx, WORD PTR [rdx+100]	# tmp105, D.9204_33->pos.w
-	add	cx, WORD PTR [rax+18]	# tmp108, item_6->margin_right
-	mov	WORD PTR [rax+12], cx	# item_6->cell_rect.w, tmp108
-	movzx	ecx, WORD PTR [rax+20]	# item_6->margin_top, item_6->margin_top
-	add	cx, WORD PTR [rdx+102]	# tmp110, D.9204_33->pos.h
-	add	cx, WORD PTR [rax+22]	# tmp113, item_6->margin_bottom
-	mov	WORD PTR [rax+14], cx	# item_6->cell_rect.h, tmp113
-	mov	BYTE PTR [rdx+165], 0	# D.9204_33->draggable,
-	cmp	DWORD PTR [rdi+200], 1	# this_1(D)->layout,
-	jne	.L8	#,
-	call	StackListY_validateItem	#
+	call	StackListY_refresh	#
 	jmp	.L5	#
-.L8:
+.L6:
 	.p2align 4,,8
-	call	StackListX_validateItem	#
+	call	StackListX_refresh	#
 .L5:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	.p2align 4,,4
 	ret
 	.cfi_endproc
-.LFE103:
-	.size	StackList_validateAt, .-StackList_validateAt
-	.type	StackList_validateFrom, @function
-StackList_validateFrom:
-.LFB104:
-	.cfi_startproc
-	push	rbp	#
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	push	rbx	#
-	.cfi_def_cfa_offset 24
-	.cfi_offset 3, -24
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 32
-	mov	rbp, rdi	# this, this
-	cmp	esi, DWORD PTR [rdi+196]	# index, this_4(D)->count
-	jae	.L11	#,
-	mov	ebx, esi	# i, index
-.L13:
-	mov	esi, ebx	#, i
-	mov	rdi, rbp	#, this
-	call	StackList_validateAt	#
-	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# this_4(D)->count, i
-	ja	.L13	#,
-.L11:
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 24
-	pop	rbx	#
-	.cfi_def_cfa_offset 16
-	pop	rbp	#
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE104:
-	.size	StackList_validateFrom, .-StackList_validateFrom
-	.globl	StackList_vrefresh
-	.type	StackList_vrefresh, @function
-StackList_vrefresh:
-.LFB102:
-	.cfi_startproc
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	cmp	DWORD PTR [rdi+200], 1	# MEM[(struct StackList *)vthis_1(D)].layout,
-	jne	.L17	#,
-	call	StackListY_refresh	#
-	jmp	.L16	#
-.L17:
-	.p2align 4,,8
-	call	StackListX_refresh	#
-.L16:
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-	.p2align 4,,4
-	ret
-	.cfi_endproc
-.LFE102:
+.LFE112:
 	.size	StackList_vrefresh, .-StackList_vrefresh
 	.globl	StackList_vsetVisible
 	.type	StackList_vsetVisible, @function
 StackList_vsetVisible:
-.LFB101:
+.LFB111:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -227,29 +136,30 @@ StackList_vsetVisible:
 	.cfi_def_cfa_offset 32
 	.cfi_offset 3, -32
 	mov	rbp, rdi	# vthis, vthis
-	movzx	r12d, sil	# D.9284, vis
-	mov	esi, r12d	#, D.9284
+	movzx	r12d, sil	# D.9581, vis
+	mov	esi, r12d	#, D.9581
 	call	Widget_vsetVisible	#
-	cmp	DWORD PTR [rbp+196], 0	# MEM[(struct StackList *)vthis_2(D)].count,
-	je	.L20	#,
+	cmp	DWORD PTR [rbp+188], 0	# MEM[(struct StackList *)vthis_2(D)].count,
+	je	.L9	#,
 	mov	ebx, 0	# i,
-.L23:
+.L12:
 	mov	eax, ebx	# i, i
-	lea	rax, [rax+rax*4]	# tmp80,
-	sal	rax, 3	# tmp81,
-	add	rax, QWORD PTR [rbp+184]	# tmp82, MEM[(struct StackList *)vthis_2(D)].items
-	mov	rdi, QWORD PTR [rax]	# widget, D.9288_11->widget
+	lea	rax, [rax+rax*4]	# tmp82,
+	sal	rax, 3	# tmp83,
+	add	rax, QWORD PTR [rbp+176]	# tmp84, MEM[(struct StackList *)vthis_2(D)].items
+	mov	rdi, QWORD PTR [rax]	# widget, D.9585_11->widget
 	test	rdi, rdi	# widget
-	je	.L22	#,
+	je	.L11	#,
 	mov	rdx, QWORD PTR [rdi]	# MEM[(struct coObject *)widget_12].class, MEM[(struct coObject *)widget_12].class
-	mov	rdx, QWORD PTR [rdx]	# D.9291_13->vtable, D.9291_13->vtable
-	mov	esi, r12d	#, D.9284
-	call	[QWORD PTR [rdx+40]]	# MEM[(const void * *)D.9292_14 + 40B]
-.L22:
+	mov	rdx, QWORD PTR [rdx+16]	# D.9588_13->vtable, D.9588_13->vtable
+	mov	rdx, QWORD PTR [rdx+8]	# MEM[(const void * *)D.9589_14 + 8B], MEM[(const void * *)D.9589_14 + 8B]
+	mov	esi, r12d	#, D.9581
+	call	[QWORD PTR [rdx+32]]	# MEM[(struct IWidget *)D.9591_16].setVisible
+.L11:
 	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# MEM[(struct StackList *)vthis_2(D)].count, i
-	ja	.L23	#,
-.L20:
+	cmp	DWORD PTR [rbp+188], ebx	# MEM[(struct StackList *)vthis_2(D)].count, i
+	ja	.L12	#,
+.L9:
 	pop	rbx	#
 	.cfi_def_cfa_offset 24
 	pop	rbp	#
@@ -258,12 +168,12 @@ StackList_vsetVisible:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE111:
 	.size	StackList_vsetVisible, .-StackList_vsetVisible
 	.globl	StackList_vmevent
 	.type	StackList_vmevent, @function
 StackList_vmevent:
-.LFB100:
+.LFB110:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -276,32 +186,33 @@ StackList_vmevent:
 	.cfi_offset 3, -32
 	mov	rbp, rdi	# vthis, vthis
 	mov	r12, rsi	# screen, screen
-	cmp	DWORD PTR [rdi+196], 0	# MEM[(struct StackList *)vthis_3(D)].count,
-	je	.L27	#,
+	cmp	DWORD PTR [rdi+188], 0	# MEM[(struct StackList *)vthis_3(D)].count,
+	je	.L16	#,
 	mov	ebx, 0	# i,
-.L30:
+.L19:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*4]	# tmp79,
 	sal	rax, 3	# tmp80,
-	add	rax, QWORD PTR [rbp+184]	# tmp81, MEM[(struct StackList *)vthis_3(D)].items
-	mov	rdi, QWORD PTR [rax]	# item_wt, D.9300_8->widget
+	add	rax, QWORD PTR [rbp+176]	# tmp81, MEM[(struct StackList *)vthis_3(D)].items
+	mov	rdi, QWORD PTR [rax]	# item_wt, D.9597_8->widget
 	test	rdi, rdi	# item_wt
-	je	.L28	#,
+	je	.L17	#,
 	mov	rdx, QWORD PTR [rdi]	# MEM[(struct coObject *)item_wt_9].class, MEM[(struct coObject *)item_wt_9].class
-	mov	rdx, QWORD PTR [rdx]	# D.9303_10->vtable, D.9303_10->vtable
+	mov	rdx, QWORD PTR [rdx+16]	# D.9600_10->vtable, D.9600_10->vtable
+	mov	rdx, QWORD PTR [rdx+8]	# MEM[(const void * *)D.9601_11 + 8B], MEM[(const void * *)D.9601_11 + 8B]
 	mov	rsi, r12	#, screen
-	call	[QWORD PTR [rdx+8]]	# MEM[(const void * *)D.9304_11 + 8B]
-	cmp	BYTE PTR [r12+121], 0	# screen_15(D)->event_handled,
-	jne	.L26	#,
-.L28:
+	call	[QWORD PTR [rdx]]	# MEM[(struct IWidget *)D.9603_13].mevent
+	cmp	BYTE PTR [r12+169], 0	# screen_15(D)->event_handled,
+	jne	.L15	#,
+.L17:
 	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# MEM[(struct StackList *)vthis_3(D)].count, i
-	ja	.L30	#,
-.L27:
+	cmp	DWORD PTR [rbp+188], ebx	# MEM[(struct StackList *)vthis_3(D)].count, i
+	ja	.L19	#,
+.L16:
 	mov	rsi, r12	#, screen
 	mov	rdi, rbp	#, vthis
 	call	Widget_vmevent	#
-.L26:
+.L15:
 	pop	rbx	#
 	.cfi_def_cfa_offset 24
 	pop	rbp	#
@@ -310,12 +221,12 @@ StackList_vmevent:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE110:
 	.size	StackList_vmevent, .-StackList_vmevent
 	.globl	StackList_vdraw
 	.type	StackList_vdraw, @function
 StackList_vdraw:
-.LFB99:
+.LFB109:
 	.cfi_startproc
 	push	r13	#
 	.cfi_def_cfa_offset 16
@@ -336,32 +247,33 @@ StackList_vdraw:
 	mov	r13d, edx	# flip, flip
 	mov	edx, 0	#,
 	call	Widget_vdraw	#
-	cmp	DWORD PTR [rbp+196], 0	# MEM[(struct StackList *)vthis_3(D)].count,
-	je	.L34	#,
+	cmp	DWORD PTR [rbp+188], 0	# MEM[(struct StackList *)vthis_3(D)].count,
+	je	.L23	#,
 	mov	ebx, 0	# i,
-.L36:
+.L25:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*4]	# tmp80,
 	sal	rax, 3	# tmp81,
-	add	rax, QWORD PTR [rbp+184]	# tmp82, MEM[(struct StackList *)vthis_3(D)].items
-	mov	rdi, QWORD PTR [rax]	# item_wt, D.9316_9->widget
+	add	rax, QWORD PTR [rbp+176]	# tmp82, MEM[(struct StackList *)vthis_3(D)].items
+	mov	rdi, QWORD PTR [rax]	# item_wt, D.9613_9->widget
 	test	rdi, rdi	# item_wt
-	je	.L35	#,
+	je	.L24	#,
 	mov	rdx, QWORD PTR [rdi]	# MEM[(struct coObject *)item_wt_10].class, MEM[(struct coObject *)item_wt_10].class
-	mov	rcx, QWORD PTR [rdx]	# D.9319_11->vtable, D.9319_11->vtable
+	mov	rdx, QWORD PTR [rdx+16]	# D.9616_11->vtable, D.9616_11->vtable
+	mov	rcx, QWORD PTR [rdx+8]	# MEM[(const void * *)D.9617_12 + 8B], MEM[(const void * *)D.9617_12 + 8B]
 	mov	edx, 0	#,
 	mov	rsi, r12	#, screen
-	call	[QWORD PTR [rcx+16]]	# MEM[(const void * *)D.9320_12 + 16B]
-.L35:
+	call	[QWORD PTR [rcx+8]]	# MEM[(struct IWidget *)D.9619_14].draw
+.L24:
 	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# MEM[(struct StackList *)vthis_3(D)].count, i
-	ja	.L36	#,
-.L34:
+	cmp	DWORD PTR [rbp+188], ebx	# MEM[(struct StackList *)vthis_3(D)].count, i
+	ja	.L25	#,
+.L23:
 	test	r13b, r13b	# flip
-	je	.L33	#,
+	je	.L22	#,
 	mov	rdi, r12	#, screen
 	call	Screen_flip	#
-.L33:
+.L22:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 40
 	pop	rbx	#
@@ -374,12 +286,12 @@ StackList_vdraw:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE109:
 	.size	StackList_vdraw, .-StackList_vdraw
 	.globl	StackList_vdrag
 	.type	StackList_vdrag, @function
 StackList_vdrag:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	push	r13	#
 	.cfi_def_cfa_offset 16
@@ -396,32 +308,33 @@ StackList_vdrag:
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 48
 	mov	rbp, rdi	# vthis, vthis
-	movsx	r12d, dx	# D.9327, dy
-	movsx	r13d, si	# D.9328, dx
-	mov	edx, r12d	#, D.9327
-	mov	esi, r13d	#, D.9328
+	movsx	r12d, dx	# D.9624, dy
+	movsx	r13d, si	# D.9625, dx
+	mov	edx, r12d	#, D.9624
+	mov	esi, r13d	#, D.9625
 	call	Widget_vdrag	#
-	cmp	DWORD PTR [rbp+196], 0	# MEM[(struct StackList *)vthis_7(D)].count,
-	je	.L40	#,
+	cmp	DWORD PTR [rbp+188], 0	# MEM[(struct StackList *)vthis_7(D)].count,
+	je	.L29	#,
 	mov	ebx, 0	# i,
-.L43:
+.L32:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*4]	# tmp83,
 	sal	rax, 3	# tmp84,
-	add	rax, QWORD PTR [rbp+184]	# tmp85, MEM[(struct StackList *)vthis_7(D)].items
-	mov	rdi, QWORD PTR [rax]	# item_wt, D.9332_12->widget
+	add	rax, QWORD PTR [rbp+176]	# tmp85, MEM[(struct StackList *)vthis_7(D)].items
+	mov	rdi, QWORD PTR [rax]	# item_wt, D.9629_12->widget
 	test	rdi, rdi	# item_wt
-	je	.L42	#,
+	je	.L31	#,
 	mov	rdx, QWORD PTR [rdi]	# MEM[(struct coObject *)item_wt_13].class, MEM[(struct coObject *)item_wt_13].class
-	mov	rcx, QWORD PTR [rdx]	# D.9335_14->vtable, D.9335_14->vtable
-	mov	edx, r12d	#, D.9327
-	mov	esi, r13d	#, D.9328
-	call	[QWORD PTR [rcx+32]]	# MEM[(const void * *)D.9336_15 + 32B]
-.L42:
+	mov	rdx, QWORD PTR [rdx+16]	# D.9632_14->vtable, D.9632_14->vtable
+	mov	rcx, QWORD PTR [rdx+8]	# MEM[(const void * *)D.9633_15 + 8B], MEM[(const void * *)D.9633_15 + 8B]
+	mov	edx, r12d	#, D.9624
+	mov	esi, r13d	#, D.9625
+	call	[QWORD PTR [rcx+24]]	# MEM[(struct IWidget *)D.9635_17].drag
+.L31:
 	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# MEM[(struct StackList *)vthis_7(D)].count, i
-	ja	.L43	#,
-.L40:
+	cmp	DWORD PTR [rbp+188], ebx	# MEM[(struct StackList *)vthis_7(D)].count, i
+	ja	.L32	#,
+.L29:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 40
 	pop	rbx	#
@@ -434,7 +347,7 @@ StackList_vdrag:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	StackList_vdrag, .-StackList_vdrag
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC1:
@@ -443,31 +356,29 @@ StackList_vdrag:
 	.globl	StackList_vdestroy
 	.type	StackList_vdestroy, @function
 StackList_vdestroy:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.9026	#,
-	call	Static_printObj2	#
-	mov	rdi, QWORD PTR [rbx+184]	# D.9352, MEM[(struct StackList *)vthis_1(D)].items
-	test	rdi, rdi	# D.9352
-	je	.L47	#,
-	mov	edx, 71	#,
+	mov	rdi, QWORD PTR [rdi+176]	# D.9650, MEM[(struct StackList *)vthis_1(D)].items
+	test	rdi, rdi	# D.9650
+	je	.L36	#,
+	mov	edx, 80	#,
 	mov	esi, OFFSET FLAT:.LC1	#,
 	call	wfree	#
-	mov	QWORD PTR [rbx+184], 0	# MEM[(struct StackList *)vthis_1(D)].items,
-	mov	DWORD PTR [rbx+196], 0	# MEM[(struct StackList *)vthis_1(D)].count,
-	mov	DWORD PTR [rbx+192], 0	# MEM[(struct StackList *)vthis_1(D)].size,
-.L47:
+	mov	QWORD PTR [rbx+176], 0	# MEM[(struct StackList *)vthis_1(D)].items,
+	mov	DWORD PTR [rbx+188], 0	# MEM[(struct StackList *)vthis_1(D)].count,
+	mov	DWORD PTR [rbx+184], 0	# MEM[(struct StackList *)vthis_1(D)].size,
+.L36:
 	mov	rdi, rbx	#, vthis
 	call	Container_vdestroy	#
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	StackList_vdestroy, .-StackList_vdestroy
 	.section	.rodata.str1.1
 .LC2:
@@ -478,101 +389,94 @@ StackList_vdestroy:
 	.globl	StackList_getLayoutName
 	.type	StackList_getLayoutName, @function
 StackList_getLayoutName:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	test	edi, edi	# layout
 	mov	eax, OFFSET FLAT:.LC2	# tmp64,
 	mov	edx, OFFSET FLAT:.LC3	# tmp63,
-	cmovne	rax, rdx	# tmp63,, D.9380
+	cmovne	rax, rdx	# tmp63,, D.9676
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	StackList_getLayoutName, .-StackList_getLayoutName
-	.section	.rodata.str1.1
-.LC4:
-	.string	"stacklist=NULL"
 	.section	.rodata.str1.8
 	.align 8
-.LC5:
+.LC4:
 	.string	"StackList[this=%p]: layout=%s, count=%u, size=%u"
 	.text
-	.globl	StackList_toString
-	.type	StackList_toString, @function
-StackList_toString:
-.LFB94:
+	.globl	StackList_vtoString
+	.type	StackList_vtoString, @function
+StackList_vtoString:
+.LFB104:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	sub	rsp, 32	#,
 	.cfi_def_cfa_offset 48
-	mov	rbx, rdi	# this, this
-	mov	eax, OFFSET FLAT:.LC4	# D.9371,
-	test	rdi, rdi	# this
-	je	.L53	#,
-	mov	edi, DWORD PTR [rdi+200]	# this_2(D)->layout, this_2(D)->layout
+	mov	rbx, rdi	# vthis, vthis
+	mov	edi, DWORD PTR [rdi+192]	# MEM[(const struct StackList *)vthis_1(D)].layout, MEM[(const struct StackList *)vthis_1(D)].layout
 	call	StackList_getLayoutName	#
-	mov	edx, DWORD PTR [rbx+192]	# this_2(D)->size, this_2(D)->size
-	mov	DWORD PTR [rsp+16], edx	#, this_2(D)->size
-	mov	edx, DWORD PTR [rbx+196]	# this_2(D)->count, this_2(D)->count
-	mov	DWORD PTR [rsp+8], edx	#, this_2(D)->count
-	mov	QWORD PTR [rsp], rax	#, D.9375
-	mov	r9, rbx	#, this
-	mov	r8d, OFFSET FLAT:.LC5	#,
+	mov	edx, DWORD PTR [rbx+184]	# MEM[(const struct StackList *)vthis_1(D)].size, MEM[(const struct StackList *)vthis_1(D)].size
+	mov	DWORD PTR [rsp+16], edx	#, MEM[(const struct StackList *)vthis_1(D)].size
+	mov	edx, DWORD PTR [rbx+188]	# MEM[(const struct StackList *)vthis_1(D)].count, MEM[(const struct StackList *)vthis_1(D)].count
+	mov	DWORD PTR [rsp+8], edx	#, MEM[(const struct StackList *)vthis_1(D)].count
+	mov	QWORD PTR [rsp], rax	#, D.9670
+	mov	r9, rbx	#, vthis
+	mov	r8d, OFFSET FLAT:.LC4	#,
 	mov	ecx, 80	#,
 	mov	edx, 1	#,
 	mov	esi, 80	#,
-	mov	edi, OFFSET FLAT:str_id.9019	#,
+	mov	edi, OFFSET FLAT:str_id.9317	#,
 	mov	eax, 0	#,
 	call	__snprintf_chk	#
-	mov	eax, OFFSET FLAT:str_id.9019	# D.9371,
-.L53:
+	mov	eax, OFFSET FLAT:str_id.9317	#,
 	add	rsp, 32	#,
 	.cfi_def_cfa_offset 16
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
-	.size	StackList_toString, .-StackList_toString
+.LFE104:
+	.size	StackList_vtoString, .-StackList_vtoString
 	.section	.rodata.str1.1
-.LC6:
+.LC5:
 	.string	"(empty stacklist)"
 	.text
 	.globl	StackList_lastWidgetToString
 	.type	StackList_lastWidgetToString, @function
 StackList_lastWidgetToString:
-.LFB95:
+.LFB105:
 	.cfi_startproc
-	mov	edx, DWORD PTR [rdi+196]	# D.9358, this_2(D)->count
-	mov	eax, OFFSET FLAT:.LC6	# D.9356,
-	test	edx, edx	# D.9358
-	je	.L61	#,
+	mov	edx, DWORD PTR [rdi+188]	# D.9656, this_2(D)->count
+	mov	eax, OFFSET FLAT:.LC5	# D.9654,
+	test	edx, edx	# D.9656
+	je	.L48	#,
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
 	sub	edx, 1	# tmp70,
 	lea	rax, [rdx+rdx*4]	# tmp74,
 	sal	rax, 3	# tmp75,
-	add	rax, QWORD PTR [rdi+184]	# tmp76, this_2(D)->items
-	mov	rdi, QWORD PTR [rax]	#, D.9365_9->widget
+	add	rax, QWORD PTR [rdi+176]	# tmp76, this_2(D)->items
+	mov	rdi, QWORD PTR [rax]	#, D.9663_9->widget
 	call	Widget_toString	#
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
-.L61:
+.L48:
 	rep
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	StackList_lastWidgetToString, .-StackList_lastWidgetToString
 	.section	.rodata.str1.8
 	.align 8
-.LC7:
+.LC6:
 	.string	"%20s:\tWithin context: layout='%s', size=%u\n"
 	.text
 	.globl	StackList_new
 	.type	StackList_new, @function
 StackList_new:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -586,40 +490,38 @@ StackList_new:
 	mov	r12d, esi	# layout, layout
 	mov	ebp, edx	# size, size
 	test	rdi, rdi	# this
-	jne	.L63	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.9032	#,
+	jne	.L50	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9330	#,
 	call	Static_nullThis2	#
 	mov	edi, r12d	#, layout
 	call	StackList_getLayoutName	#
-	mov	r8, rax	# D.9343,
+	mov	r8, rax	# D.9640,
 	mov	r9d, ebp	#, size
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9032	#,
-	mov	edx, OFFSET FLAT:.LC7	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9330	#,
+	mov	edx, OFFSET FLAT:.LC6	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L64	#
-.L63:
+	jmp	.L51	#
+.L50:
 	call	Container_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9032	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	mov	DWORD PTR [rbx+200], r12d	# this_3(D)->layout, layout
-	mov	DWORD PTR [rbx+192], ebp	# this_3(D)->size, size
-	mov	DWORD PTR [rbx+196], 0	# this_3(D)->count,
-	mov	eax, 0	# iftmp.7,
+	mov	DWORD PTR [rbx+192], r12d	# this_3(D)->layout, layout
+	mov	DWORD PTR [rbx+184], ebp	# this_3(D)->size, size
+	mov	DWORD PTR [rbx+188], 0	# this_3(D)->count,
+	mov	eax, 0	# iftmp.8,
 	test	ebp, ebp	# size
-	je	.L65	#,
-	mov	edi, ebp	# size, size
-	mov	ecx, 98	#,
-	mov	edx, OFFSET FLAT:.LC1	#,
-	mov	esi, 40	#,
-	call	wcalloc	#
-.L65:
-	mov	QWORD PTR [rbx+184], rax	# this_3(D)->items, iftmp.7
-.L64:
+	je	.L52	#,
+	mov	ebp, ebp	# size, size
+	lea	rdi, [rbp+0+rbp*4]	# tmp71,
+	sal	rdi, 3	# tmp72,
+	mov	edx, 107	#,
+	mov	esi, OFFSET FLAT:.LC1	#,
+	call	wmalloc	#
+.L52:
+	mov	QWORD PTR [rbx+176], rax	# this_3(D)->items, iftmp.8
+.L51:
 	mov	rax, rbx	#, this
 	mov	rbx, QWORD PTR [rsp]	#,
 	mov	rbp, QWORD PTR [rsp+8]	#,
@@ -628,23 +530,110 @@ StackList_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	StackList_new, .-StackList_new
+	.globl	StackList_validateAllItemsOnBaseAxis
+	.type	StackList_validateAllItemsOnBaseAxis, @function
+StackList_validateAllItemsOnBaseAxis:
+.LFB114:
+	.cfi_startproc
+	push	r12	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 12, -16
+	push	rbp	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 6, -24
+	push	rbx	#
+	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -32
+	mov	rbp, rdi	# this, this
+	cmp	DWORD PTR [rdi+188], 0	# this_5(D)->count,
+	je	.L62	#,
+	mov	r12d, 0	# max_opposite_size,
+	mov	ebx, 0	# i,
+.L61:
+	mov	eax, ebx	# i, i
+	lea	rdx, [rax+rax*4]	# tmp100,
+	mov	rax, QWORD PTR [rbp+176]	# this_5(D)->items, this_5(D)->items
+	lea	rsi, [rax+rdx*8]	# item,
+	cmp	DWORD PTR [rsi+28], 3	# item_10->halign,
+	jne	.L57	#,
+	movzx	edx, WORD PTR [rsi+18]	# item_10->margin_right, item_10->margin_right
+	add	dx, WORD PTR [rsi+16]	# D.9844, item_10->margin_left
+	mov	eax, edx	# D.9842, D.9844
+	shr	ax	# D.9842
+	mov	WORD PTR [rsi+16], ax	# item_10->margin_left, D.9842
+	and	edx, 1	# tmp105,
+	add	eax, edx	# tmp106, tmp105
+	mov	WORD PTR [rsi+18], ax	# item_10->margin_right, tmp106
+.L57:
+	cmp	DWORD PTR [rsi+32], 3	# item_10->valign,
+	jne	.L58	#,
+	movzx	edx, WORD PTR [rsi+22]	# item_10->margin_bottom, item_10->margin_bottom
+	add	dx, WORD PTR [rsi+20]	# D.9836, item_10->margin_top
+	mov	eax, edx	# D.9834, D.9836
+	shr	ax	# D.9834
+	mov	WORD PTR [rsi+20], ax	# item_10->margin_top, D.9834
+	and	edx, 1	# tmp109,
+	add	eax, edx	# tmp110, tmp109
+	mov	WORD PTR [rsi+22], ax	# item_10->margin_bottom, tmp110
+.L58:
+	mov	rdx, QWORD PTR [rsi]	# D.9832, item_10->widget
+	movzx	eax, WORD PTR [rsi+16]	# item_10->margin_left, item_10->margin_left
+	add	ax, WORD PTR [rdx+100]	# tmp111, D.9832_33->pos.w
+	add	ax, WORD PTR [rsi+18]	# tmp114, item_10->margin_right
+	mov	WORD PTR [rsi+12], ax	# item_10->cell_rect.w, tmp114
+	movzx	eax, WORD PTR [rsi+20]	# item_10->margin_top, item_10->margin_top
+	add	ax, WORD PTR [rdx+102]	# tmp116, D.9832_33->pos.h
+	add	ax, WORD PTR [rsi+22]	# tmp119, item_10->margin_bottom
+	mov	WORD PTR [rsi+14], ax	# item_10->cell_rect.h, tmp119
+	mov	BYTE PTR [rdx+157], 0	# D.9832_33->draggable,
+	cmp	DWORD PTR [rbp+192], 1	# MEM[(const struct StackList *)this_5(D)].layout,
+	jne	.L59	#,
+	mov	edx, ebx	#, i
+	mov	rdi, rbp	#, this
+	call	StackListY_validateItemOnBaseAxis	#
+	jmp	.L60	#
+.L59:
+	mov	edx, ebx	#, i
+	mov	rdi, rbp	#, this
+	call	StackListX_validateItemOnBaseAxis	#
+.L60:
+	cmp	r12w, ax	# max_opposite_size, item_opposite_size
+	cmovb	r12d, eax	# max_opposite_size,, max_opposite_size, item_opposite_size
+	add	ebx, 1	# i,
+	cmp	DWORD PTR [rbp+188], ebx	# this_5(D)->count, i
+	ja	.L61	#,
+	jmp	.L56	#
+.L62:
+	mov	r12d, 0	# max_opposite_size,
+.L56:
+	mov	eax, r12d	#, max_opposite_size
+	pop	rbx	#
+	.cfi_def_cfa_offset 24
+	pop	rbp	#
+	.cfi_def_cfa_offset 16
+	pop	r12	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE114:
+	.size	StackList_validateAllItemsOnBaseAxis, .-StackList_validateAllItemsOnBaseAxis
 	.section	.rodata.str1.8
 	.align 8
-.LC8:
+.LC7:
 	.string	"StackList_appendAt: Passed NULL: this(%p) or container_item(%p)\n"
 	.align 8
-.LC9:
+.LC8:
 	.string	"StackList_appendAt: index=%u out of range (count=%u)\n"
 	.align 8
-.LC10:
+.LC9:
 	.string	"StackList_appendAt: Failed to append item at index: %u, [err: %s, .count: %u, .size: %u]\n"
 	.text
 	.globl	StackList_appendAt
 	.type	StackList_appendAt, @function
 StackList_appendAt:
-.LFB106:
+.LFB116:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-40], rbx	#,
 	mov	QWORD PTR [rsp-32], rbp	#,
@@ -661,82 +650,78 @@ StackList_appendAt:
 	mov	rbp, rdi	# this, this
 	mov	rbx, rsi	# container_item, container_item
 	test	rsi, rsi	# container_item
-	je	.L75	#,
+	je	.L72	#,
 	test	rdi, rdi	# this
-	jne	.L69	#,
-.L75:
+	jne	.L66	#,
+.L72:
 	mov	r8, rbx	#, container_item
 	mov	rcx, rbp	#, this
-	mov	edx, OFFSET FLAT:.LC8	#,
+	mov	edx, OFFSET FLAT:.LC7	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r14d, 1	# e,
-	jmp	.L71	#
-.L69:
+	jmp	.L68	#
+.L66:
 	mov	r12d, edx	# index, index
-	mov	r13d, DWORD PTR [rdi+196]	# D.9261, this_2(D)->count
-	cmp	r13d, edx	# D.9261, index
-	jae	.L72	#,
-	mov	r8d, r13d	#, D.9261
+	mov	r13d, DWORD PTR [rdi+188]	# D.9518, this_2(D)->count
+	cmp	r13d, edx	# D.9518, index
+	jae	.L69	#,
+	mov	r8d, r13d	#, D.9518
 	mov	ecx, edx	#, index
-	mov	edx, OFFSET FLAT:.LC9	#,
+	mov	edx, OFFSET FLAT:.LC8	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r14d, 19	# e,
-	jmp	.L71	#
-.L72:
-	cmp	r13d, edx	# D.9261, index
-	jne	.L73	#,
-	cmp	r13d, DWORD PTR [rdi+192]	# D.9261, this_2(D)->size
-	jne	.L73	#,
+	jmp	.L68	#
+.L69:
+	cmp	r13d, edx	# D.9518, index
+	jne	.L70	#,
+	cmp	r13d, DWORD PTR [rdi+184]	# D.9518, this_2(D)->size
+	jne	.L70	#,
 	call	StackList_growArray	#
 	mov	r14d, eax	# e,
 	test	eax, eax	# e
-	je	.L73	#,
-	mov	r12d, DWORD PTR [rbp+192]	# D.9266, this_2(D)->size
-	mov	ebx, DWORD PTR [rbp+196]	# D.9261, this_2(D)->count
+	je	.L70	#,
+	mov	r12d, DWORD PTR [rbp+184]	# D.9523, this_2(D)->size
+	mov	ebx, DWORD PTR [rbp+188]	# D.9518, this_2(D)->count
 	mov	edi, eax	#, e
 	call	perr_getName	#
-	mov	r8, rax	# D.9271,
-	mov	DWORD PTR [rsp], r12d	#, D.9266
-	mov	r9d, ebx	#, D.9261
-	mov	ecx, r13d	#, D.9261
-	mov	edx, OFFSET FLAT:.LC10	#,
+	mov	r8, rax	# D.9528,
+	mov	DWORD PTR [rsp], r12d	#, D.9523
+	mov	r9d, ebx	#, D.9518
+	mov	ecx, r13d	#, D.9518
+	mov	edx, OFFSET FLAT:.LC9	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L71	#
-.L73:
+	jmp	.L68	#
+.L70:
 	mov	eax, r12d	# index, index
 	lea	rax, [rax+rax*4]	# tmp89,
 	sal	rax, 3	# tmp90,
-	add	rax, QWORD PTR [rbp+184]	# tmp91, this_2(D)->items
+	add	rax, QWORD PTR [rbp+176]	# tmp91, this_2(D)->items
 	mov	rdx, QWORD PTR [rbx]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax], rdx	# *D.9275_26, *container_item_4(D)
+	mov	QWORD PTR [rax], rdx	# *D.9532_26, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbx+8]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+8], rdx	# *D.9275_26, *container_item_4(D)
+	mov	QWORD PTR [rax+8], rdx	# *D.9532_26, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbx+16]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+16], rdx	# *D.9275_26, *container_item_4(D)
+	mov	QWORD PTR [rax+16], rdx	# *D.9532_26, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbx+24]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+24], rdx	# *D.9275_26, *container_item_4(D)
+	mov	QWORD PTR [rax+24], rdx	# *D.9532_26, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbx+32]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+32], rdx	# *D.9275_26, *container_item_4(D)
-	mov	eax, DWORD PTR [rbp+196]	# D.9261, this_2(D)->count
-	cmp	eax, r12d	# D.9261, index
-	jne	.L74	#,
-	add	eax, 1	# tmp97,
-	mov	DWORD PTR [rbp+196], eax	# this_2(D)->count, tmp97
-.L74:
-	mov	esi, r12d	#, index
-	mov	rdi, rbp	#, this
-	call	StackList_validateFrom	#
+	mov	QWORD PTR [rax+32], rdx	# *D.9532_26, *container_item_4(D)
+	mov	eax, DWORD PTR [rbp+188]	# D.9518, this_2(D)->count
 	mov	r14d, 0	# e,
-.L71:
+	cmp	eax, r12d	# D.9518, index
+	jne	.L68	#,
+	add	eax, 1	# tmp97,
+	mov	DWORD PTR [rbp+188], eax	# this_2(D)->count, tmp97
+.L68:
 	mov	eax, r14d	#, e
 	mov	rbx, QWORD PTR [rsp+16]	#,
 	mov	rbp, QWORD PTR [rsp+24]	#,
@@ -747,20 +732,20 @@ StackList_appendAt:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE106:
+.LFE116:
 	.size	StackList_appendAt, .-StackList_appendAt
 	.section	.rodata.str1.8
 	.align 8
-.LC11:
+.LC10:
 	.string	"StackList_addLast: Passed NULL: this(%p) or container_item(%p)\n"
 	.align 8
-.LC12:
+.LC11:
 	.string	"StackList_addLast: Failed to add item on the end [err: %s, .count: %u, .size: %u]\n"
 	.text
 	.globl	StackList_addLast
 	.type	StackList_addLast, @function
 StackList_addLast:
-.LFB107:
+.LFB117:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -773,61 +758,58 @@ StackList_addLast:
 	mov	rbx, rdi	# this, this
 	mov	rbp, rsi	# container_item, container_item
 	test	rsi, rsi	# container_item
-	je	.L82	#,
+	je	.L79	#,
 	test	rdi, rdi	# this
-	jne	.L78	#,
-.L82:
+	jne	.L75	#,
+.L79:
 	mov	r8, rbp	#, container_item
 	mov	rcx, rbx	#, this
-	mov	edx, OFFSET FLAT:.LC11	#,
+	mov	edx, OFFSET FLAT:.LC10	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r12d, 1	# e,
-	jmp	.L80	#
-.L78:
-	mov	eax, DWORD PTR [rdi+196]	#, this_2(D)->count
-	cmp	DWORD PTR [rdi+192], eax	# this_2(D)->size,
-	jne	.L81	#,
+	jmp	.L77	#
+.L75:
+	mov	eax, DWORD PTR [rdi+188]	#, this_2(D)->count
+	cmp	DWORD PTR [rdi+184], eax	# this_2(D)->size,
+	jne	.L78	#,
 	call	StackList_growArray	#
 	mov	r12d, eax	# e,
 	test	eax, eax	# e
-	je	.L81	#,
-	mov	ebp, DWORD PTR [rbx+192]	# D.9241, this_2(D)->size
-	mov	ebx, DWORD PTR [rbx+196]	# D.9242, this_2(D)->count
+	je	.L78	#,
+	mov	ebp, DWORD PTR [rbx+184]	# D.9498, this_2(D)->size
+	mov	ebx, DWORD PTR [rbx+188]	# D.9499, this_2(D)->count
 	mov	edi, eax	#, e
 	call	perr_getName	#
-	mov	r9d, ebp	#, D.9241
-	mov	r8d, ebx	#, D.9242
-	mov	rcx, rax	#, D.9247
-	mov	edx, OFFSET FLAT:.LC12	#,
+	mov	r9d, ebp	#, D.9498
+	mov	r8d, ebx	#, D.9499
+	mov	rcx, rax	#, D.9504
+	mov	edx, OFFSET FLAT:.LC11	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L80	#
-.L81:
-	mov	eax, DWORD PTR [rbx+196]	# this_2(D)->count, this_2(D)->count
-	lea	rax, [rax+rax*4]	# tmp90,
-	sal	rax, 3	# tmp91,
-	add	rax, QWORD PTR [rbx+184]	# tmp92, this_2(D)->items
+	jmp	.L77	#
+.L78:
+	mov	eax, DWORD PTR [rbx+188]	# this_2(D)->count, this_2(D)->count
+	lea	rax, [rax+rax*4]	# tmp89,
+	sal	rax, 3	# tmp90,
+	add	rax, QWORD PTR [rbx+176]	# tmp91, this_2(D)->items
 	mov	rdx, QWORD PTR [rbp+0]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax], rdx	# *D.9251_21, *container_item_4(D)
+	mov	QWORD PTR [rax], rdx	# *D.9508_21, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbp+8]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+8], rdx	# *D.9251_21, *container_item_4(D)
+	mov	QWORD PTR [rax+8], rdx	# *D.9508_21, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbp+16]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+16], rdx	# *D.9251_21, *container_item_4(D)
+	mov	QWORD PTR [rax+16], rdx	# *D.9508_21, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbp+24]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+24], rdx	# *D.9251_21, *container_item_4(D)
+	mov	QWORD PTR [rax+24], rdx	# *D.9508_21, *container_item_4(D)
 	mov	rdx, QWORD PTR [rbp+32]	# *container_item_4(D), *container_item_4(D)
-	mov	QWORD PTR [rax+32], rdx	# *D.9251_21, *container_item_4(D)
-	mov	esi, DWORD PTR [rbx+196]	# this_2(D)->count, this_2(D)->count
-	mov	rdi, rbx	#, this
-	call	StackList_validateAt	#
-	add	DWORD PTR [rbx+196], 1	# this_2(D)->count,
+	mov	QWORD PTR [rax+32], rdx	# *D.9508_21, *container_item_4(D)
+	add	DWORD PTR [rbx+188], 1	# this_2(D)->count,
 	mov	r12d, 0	# e,
-.L80:
+.L77:
 	mov	eax, r12d	#, e
 	mov	rbx, QWORD PTR [rsp]	#,
 	mov	rbp, QWORD PTR [rsp+8]	#,
@@ -836,20 +818,20 @@ StackList_addLast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE107:
+.LFE117:
 	.size	StackList_addLast, .-StackList_addLast
 	.section	.rodata.str1.8
 	.align 8
-.LC13:
+.LC12:
 	.string	"StackList_addWidgetLast: Passed NULL: this(%p) or widget(%p)\n"
 	.align 8
-.LC14:
-	.string	"StackList_addWidgetLast: Failed to add widget on the end [err: %s, .count: %u, .size: %u]\n"
+.LC13:
+	.string	"StackList_addWidgetLast: Failed to grow array of items [err: %s, .count: %u, .size: %u]\n"
 	.text
 	.globl	StackList_addWidgetLast
 	.type	StackList_addWidgetLast, @function
 StackList_addWidgetLast:
-.LFB108:
+.LFB118:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -874,46 +856,46 @@ StackList_addWidgetLast:
 	movzx	edx, WORD PTR [rsp+88]	#, marg_right
 	mov	WORD PTR [rsp+14], dx	# %sfp,
 	test	rsi, rsi	# widget
-	je	.L89	#,
+	je	.L86	#,
 	test	rdi, rdi	# this
-	jne	.L85	#,
-.L89:
+	jne	.L82	#,
+.L86:
 	mov	r8, rbp	#, widget
 	mov	rcx, rbx	#, this
-	mov	edx, OFFSET FLAT:.LC13	#,
+	mov	edx, OFFSET FLAT:.LC12	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r12d, 1	# e,
-	jmp	.L87	#
-.L85:
+	jmp	.L84	#
+.L82:
 	mov	r15d, r8d	# marg_top, marg_top
 	mov	r14d, r9d	# marg_left, marg_left
-	mov	eax, DWORD PTR [rdi+196]	#, this_2(D)->count
-	cmp	DWORD PTR [rdi+192], eax	# this_2(D)->size,
-	jne	.L88	#,
+	mov	eax, DWORD PTR [rdi+188]	#, this_2(D)->count
+	cmp	DWORD PTR [rdi+184], eax	# this_2(D)->size,
+	jne	.L85	#,
 	call	StackList_growArray	#
 	mov	r12d, eax	# e,
 	test	eax, eax	# e
-	je	.L88	#,
-	mov	ebp, DWORD PTR [rbx+192]	# D.9222, this_2(D)->size
-	mov	ebx, DWORD PTR [rbx+196]	# D.9223, this_2(D)->count
+	je	.L85	#,
+	mov	ebp, DWORD PTR [rbx+184]	# D.9479, this_2(D)->size
+	mov	ebx, DWORD PTR [rbx+188]	# D.9480, this_2(D)->count
 	mov	edi, eax	#, e
 	call	perr_getName	#
-	mov	r9d, ebp	#, D.9222
-	mov	r8d, ebx	#, D.9223
-	mov	rcx, rax	#, D.9228
-	mov	edx, OFFSET FLAT:.LC14	#,
+	mov	r9d, ebp	#, D.9479
+	mov	r8d, ebx	#, D.9480
+	mov	rcx, rax	#, D.9485
+	mov	edx, OFFSET FLAT:.LC13	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L87	#
-.L88:
-	mov	eax, DWORD PTR [rbx+196]	# this_2(D)->count, this_2(D)->count
-	lea	rdx, [rax+rax*4]	# tmp99,
-	mov	rax, QWORD PTR [rbx+184]	# this_2(D)->items, this_2(D)->items
+	jmp	.L84	#
+.L85:
+	mov	eax, DWORD PTR [rbx+188]	# this_2(D)->count, this_2(D)->count
+	lea	rdx, [rax+rax*4]	# tmp98,
+	mov	rax, QWORD PTR [rbx+176]	# this_2(D)->items, this_2(D)->items
 	lea	rax, [rax+rdx*8]	# item,
 	mov	QWORD PTR [rax], rbp	# item_21->widget, widget
 	mov	WORD PTR [rax+20], r15w	# item_21->margin_top, marg_top
@@ -925,12 +907,9 @@ StackList_addWidgetLast:
 	mov	DWORD PTR [rax+28], r13d	# item_21->halign, halign
 	mov	edx, DWORD PTR [rsp+8]	#, %sfp
 	mov	DWORD PTR [rax+32], edx	# item_21->valign,
-	mov	esi, DWORD PTR [rbx+196]	# this_2(D)->count, this_2(D)->count
-	mov	rdi, rbx	#, this
-	call	StackList_validateAt	#
-	add	DWORD PTR [rbx+196], 1	# this_2(D)->count,
+	add	DWORD PTR [rbx+188], 1	# this_2(D)->count,
 	mov	r12d, 0	# e,
-.L87:
+.L84:
 	mov	eax, r12d	#, e
 	mov	rbx, QWORD PTR [rsp+24]	#,
 	mov	rbp, QWORD PTR [rsp+32]	#,
@@ -942,23 +921,23 @@ StackList_addWidgetLast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE108:
+.LFE118:
 	.size	StackList_addWidgetLast, .-StackList_addWidgetLast
 	.section	.rodata.str1.8
 	.align 8
-.LC15:
+.LC14:
 	.string	"StackList_appendWidgetAt: Passed NULL: this(%p) or widget(%p)\n"
 	.align 8
-.LC16:
+.LC15:
 	.string	"StackList_appendWidgetAt: index=%u out of range (count=%u)\n"
 	.align 8
-.LC17:
+.LC16:
 	.string	"StackList_addWidgetLast: Failed to append widget at index %u [err: %s, .count: %u, .size: %u]\n"
 	.text
 	.globl	StackList_appendWidgetAt
 	.type	StackList_appendWidgetAt, @function
 StackList_appendWidgetAt:
-.LFB109:
+.LFB119:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -986,60 +965,60 @@ StackList_appendWidgetAt:
 	movzx	eax, WORD PTR [rsp+112]	#, marg_right
 	mov	WORD PTR [rsp+30], ax	# %sfp,
 	test	rsi, rsi	# widget
-	je	.L98	#,
+	je	.L95	#,
 	test	rdi, rdi	# this
-	jne	.L92	#,
-.L98:
+	jne	.L89	#,
+.L95:
 	mov	r8, r12	#, widget
 	mov	rcx, rbx	#, this
-	mov	edx, OFFSET FLAT:.LC15	#,
+	mov	edx, OFFSET FLAT:.LC14	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r14d, 1	# e,
-	jmp	.L94	#
-.L92:
-	mov	r13d, DWORD PTR [rdi+196]	# D.9149, this_2(D)->count
-	cmp	r13d, ebp	# D.9149, index
-	jae	.L95	#,
-	mov	r8d, r13d	#, D.9149
+	jmp	.L91	#
+.L89:
+	mov	r13d, DWORD PTR [rdi+188]	# D.9440, this_2(D)->count
+	cmp	r13d, ebp	# D.9440, index
+	jae	.L92	#,
+	mov	r8d, r13d	#, D.9440
 	mov	ecx, ebp	#, index
-	mov	edx, OFFSET FLAT:.LC16	#,
+	mov	edx, OFFSET FLAT:.LC15	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	r14d, 19	# e,
-	jmp	.L94	#
-.L95:
+	jmp	.L91	#
+.L92:
 	mov	r15d, r9d	# marg_top, marg_top
-	cmp	r13d, ebp	# D.9149, index
-	jne	.L96	#,
-	cmp	r13d, DWORD PTR [rdi+192]	# D.9149, this_2(D)->size
-	jne	.L96	#,
+	cmp	r13d, ebp	# D.9440, index
+	jne	.L93	#,
+	cmp	r13d, DWORD PTR [rdi+184]	# D.9440, this_2(D)->size
+	jne	.L93	#,
 	call	StackList_growArray	#
 	mov	r14d, eax	# e,
 	test	eax, eax	# e
-	je	.L96	#,
-	mov	ebp, DWORD PTR [rbx+192]	# D.9154, this_2(D)->size
-	mov	ebx, DWORD PTR [rbx+196]	# D.9149, this_2(D)->count
+	je	.L93	#,
+	mov	ebp, DWORD PTR [rbx+184]	# D.9445, this_2(D)->size
+	mov	ebx, DWORD PTR [rbx+188]	# D.9440, this_2(D)->count
 	mov	edi, eax	#, e
 	call	perr_getName	#
-	mov	r8, rax	# D.9159,
-	mov	DWORD PTR [rsp], ebp	#, D.9154
-	mov	r9d, ebx	#, D.9149
-	mov	ecx, r13d	#, D.9149
-	mov	edx, OFFSET FLAT:.LC17	#,
+	mov	r8, rax	# D.9450,
+	mov	DWORD PTR [rsp], ebp	#, D.9445
+	mov	r9d, ebx	#, D.9440
+	mov	ecx, r13d	#, D.9440
+	mov	edx, OFFSET FLAT:.LC16	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L94	#
-.L96:
+	jmp	.L91	#
+.L93:
 	mov	eax, ebp	# index, index
 	lea	rdx, [rax+rax*4]	# tmp98,
-	mov	rax, QWORD PTR [rbx+184]	# this_2(D)->items, this_2(D)->items
+	mov	rax, QWORD PTR [rbx+176]	# this_2(D)->items, this_2(D)->items
 	lea	rax, [rax+rdx*8]	# item,
 	mov	QWORD PTR [rax], r12	# item_26->widget, widget
 	mov	WORD PTR [rax+20], r15w	# item_26->margin_top, marg_top
@@ -1053,17 +1032,13 @@ StackList_appendWidgetAt:
 	mov	DWORD PTR [rax+28], edx	# item_26->halign,
 	mov	edx, DWORD PTR [rsp+20]	#, %sfp
 	mov	DWORD PTR [rax+32], edx	# item_26->valign,
-	mov	eax, DWORD PTR [rbx+196]	# D.9149, this_2(D)->count
-	cmp	eax, ebp	# D.9149, index
-	jne	.L97	#,
-	add	eax, 1	# tmp101,
-	mov	DWORD PTR [rbx+196], eax	# this_2(D)->count, tmp101
-.L97:
-	mov	esi, ebp	#, index
-	mov	rdi, rbx	#, this
-	call	StackList_validateFrom	#
+	mov	eax, DWORD PTR [rbx+188]	# D.9440, this_2(D)->count
 	mov	r14d, 0	# e,
-.L94:
+	cmp	eax, ebp	# D.9440, index
+	jne	.L91	#,
+	add	eax, 1	# tmp101,
+	mov	DWORD PTR [rbx+188], eax	# this_2(D)->count, tmp101
+.L91:
 	mov	eax, r14d	#, e
 	mov	rbx, QWORD PTR [rsp+40]	#,
 	mov	rbp, QWORD PTR [rsp+48]	#,
@@ -1075,7 +1050,7 @@ StackList_appendWidgetAt:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE109:
+.LFE119:
 	.size	StackList_appendWidgetAt, .-StackList_appendWidgetAt
 	.globl	StackList_class
 	.data
@@ -1085,46 +1060,60 @@ StackList_appendWidgetAt:
 StackList_class:
 	.quad	type
 	.section	.rodata.str1.1
-.LC18:
+.LC17:
 	.string	"StackList"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	200
+# name:
+	.quad	.LC17
 # vtable:
 	.quad	vtable
-# size:
-	.quad	208
-# name:
-	.quad	.LC18
-	.local	str_id.9019
-	.comm	str_id.9019,80,32
+	.local	str_id.9317
+	.comm	str_id.9317,80,32
 	.section	.rodata
-	.align 16
-	.type	__FUNCTION__.9026, @object
-	.size	__FUNCTION__.9026, 19
-__FUNCTION__.9026:
-	.string	"StackList_vdestroy"
-	.type	__FUNCTION__.9032, @object
-	.size	__FUNCTION__.9032, 14
-__FUNCTION__.9032:
+	.type	__FUNCTION__.9330, @object
+	.size	__FUNCTION__.9330, 14
+__FUNCTION__.9330:
 	.string	"StackList_new"
 	.align 16
-	.type	__FUNCTION__.9104, @object
-	.size	__FUNCTION__.9104, 20
-__FUNCTION__.9104:
+	.type	__FUNCTION__.9395, @object
+	.size	__FUNCTION__.9395, 20
+__FUNCTION__.9395:
 	.string	"StackList_growArray"
 	.data
-	.align 32
+	.align 16
 	.type	vtable, @object
-	.size	vtable, 48
+	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	StackList_vdestroy
+# toString:
+	.quad	StackList_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	StackList_vmevent
+# draw:
 	.quad	StackList_vdraw
+# refresh:
 	.quad	StackList_vrefresh
+# drag:
 	.quad	StackList_vdrag
+# setVisible:
 	.quad	StackList_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

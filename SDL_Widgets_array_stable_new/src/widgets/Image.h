@@ -22,6 +22,7 @@
 	#define 	_Image_h_
 	#include "StdDefinitions.h"
 	#include "Widget.h"
+	#include "File.h"
 	
 	extern const coClass *Image_class;
 	#define IMAGE(VTHIS) ((Image*)VTHIS)
@@ -30,6 +31,8 @@
 		Widget		_super;		// Image inherits from Widget
 		char		*path;
 	};
+	
+	const char (*IMAGE_SUPPORTED_FILES)[][MAX_EXT_SIZE];
 	
 	Image* Image_new(Image *this, const char *img_path, u16 minx, u16 miny); // png, tiff, giff, jpeg
 	

@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT LabelImage.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -54,15 +54,13 @@
 	.globl	LabelImage_vdestroy
 	.type	LabelImage_vdestroy, @function
 LabelImage_vdestroy:
-.LFB94:
+.LFB108:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8997	#,
-	call	Static_printObj2	#
-	lea	rdi, [rbx+176]	# tmp61,
+	lea	rdi, [rdi+168]	# tmp61,
 	call	delete	#
 	mov	rdi, rbx	#, vthis
 	call	Widget_vdestroy	#
@@ -70,7 +68,7 @@ LabelImage_vdestroy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE108:
 	.size	LabelImage_vdestroy, .-LabelImage_vdestroy
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -92,7 +90,7 @@ LabelImage_vdestroy:
 	.globl	LabelImage_vrefresh
 	.type	LabelImage_vrefresh, @function
 LabelImage_vrefresh:
-.LFB93:
+.LFB107:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -103,140 +101,151 @@ LabelImage_vrefresh:
 	sub	rsp, 24	#,
 	.cfi_def_cfa_offset 48
 	mov	rbx, rdi	# vthis, vthis
-	movzx	edx, WORD PTR [rdi+276]	# iw, MEM[(struct Widget *)vthis_1(D) + 176B].pos.w
-	movzx	eax, WORD PTR [rdi+278]	# ih, MEM[(struct Widget *)vthis_1(D) + 176B].pos.h
-	cmp	BYTE PTR [rdi+374], 0	# MEM[(struct LabelImage *)vthis_1(D)].fixed_width,
+	movzx	edx, WORD PTR [rdi+268]	# iw, MEM[(struct Widget *)vthis_1(D) + 168B].pos.w
+	movzx	eax, WORD PTR [rdi+270]	# ih, MEM[(struct Widget *)vthis_1(D) + 168B].pos.h
+	cmp	BYTE PTR [rdi+358], 0	# MEM[(struct LabelImage *)vthis_1(D)].fixed_width,
 	jne	.L4	#,
-	movzx	ecx, WORD PTR [rdi+368]	# D.9095, MEM[(struct LabelImage *)vthis_1(D)].border_width
-	mov	esi, ecx	# tmp137, D.9095
-	add	si, WORD PTR [rdi+370]	# tmp137, MEM[(struct LabelImage *)vthis_1(D)].padx
-	lea	esi, [rdx+rsi*2]	# tmp140,
-	mov	WORD PTR [rdi+100], si	# MEM[(struct Widget *)vthis_1(D)].pos.w, tmp140
-	add	cx, WORD PTR [rdi+372]	# tmp141, MEM[(struct LabelImage *)vthis_1(D)].pady
-	lea	ecx, [rax+rcx*2]	# tmp144,
-	mov	WORD PTR [rdi+102], cx	# MEM[(struct Widget *)vthis_1(D)].pos.h, tmp144
+	movzx	ecx, WORD PTR [rdi+352]	# D.9668, MEM[(struct LabelImage *)vthis_1(D)].border_width
+	mov	esi, ecx	# tmp149, D.9668
+	add	si, WORD PTR [rdi+354]	# tmp149, MEM[(struct LabelImage *)vthis_1(D)].padx
+	lea	esi, [rdx+rsi*2]	# tmp152,
+	mov	WORD PTR [rdi+100], si	# MEM[(struct Widget *)vthis_1(D)].pos.w, tmp152
+	add	cx, WORD PTR [rdi+356]	# tmp153, MEM[(struct LabelImage *)vthis_1(D)].pady
+	lea	ecx, [rax+rcx*2]	# tmp156,
+	mov	WORD PTR [rdi+102], cx	# MEM[(struct Widget *)vthis_1(D)].pos.h, tmp156
 .L4:
-	movzx	edi, WORD PTR [rbx+100]	# D.9106, MEM[(struct Widget *)vthis_1(D)].pos.w
+	movzx	edi, WORD PTR [rbx+100]	# D.9679, MEM[(struct Widget *)vthis_1(D)].pos.w
 	movzx	edx, dx	# iw, iw
-	mov	ecx, edi	#, D.9106
+	mov	ecx, edi	#, D.9679
 	sub	ecx, edx	#, iw
-	mov	edx, ecx	# tmp146,
-	sar	edx	# tmp147
-	add	dx, WORD PTR [rbx+96]	# tmp148, MEM[(struct Widget *)vthis_1(D)].pos.x
-	mov	WORD PTR [rbx+272], dx	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.x, tmp148
-	movzx	esi, WORD PTR [rbx+102]	# D.9116, MEM[(struct Widget *)vthis_1(D)].pos.h
+	mov	edx, ecx	# tmp158,
+	sar	edx	# tmp159
+	add	dx, WORD PTR [rbx+96]	# tmp160, MEM[(struct Widget *)vthis_1(D)].pos.x
+	mov	WORD PTR [rbx+264], dx	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.x, tmp160
+	movzx	esi, WORD PTR [rbx+102]	# D.9689, MEM[(struct Widget *)vthis_1(D)].pos.h
 	movzx	eax, ax	# ih, ih
-	mov	edx, esi	#, D.9116
+	mov	edx, esi	#, D.9689
 	sub	edx, eax	#, ih
-	mov	eax, edx	# tmp151,
-	sar	eax	# tmp152
-	add	ax, WORD PTR [rbx+98]	# tmp153, MEM[(struct Widget *)vthis_1(D)].pos.y
-	mov	WORD PTR [rbx+274], ax	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.y, tmp153
+	mov	eax, edx	# tmp163,
+	sar	eax	# tmp164
+	add	ax, WORD PTR [rbx+98]	# tmp165, MEM[(struct Widget *)vthis_1(D)].pos.y
+	mov	WORD PTR [rbx+266], ax	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.y, tmp165
 	call	Static_newSurface	#
 	mov	rbp, rax	# bg_surf,
 	test	rax, rax	# bg_surf
 	jne	.L5	#,
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.9125
+	mov	rcx, rax	#, D.9698
 	mov	edx, OFFSET FLAT:.LC0	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9700_46->vtable, D.9700_46->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9701_47 + 8B], MEM[(const void * *)D.9701_47 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9703_49].setVisible
 	jmp	.L3	#
 .L5:
-	mov	edx, DWORD PTR [rbx+360]	# MEM[(struct LabelImage *)vthis_1(D)].border, MEM[(struct LabelImage *)vthis_1(D)].border
+	mov	edx, DWORD PTR [rbx+344]	# MEM[(struct LabelImage *)vthis_1(D)].border, MEM[(struct LabelImage *)vthis_1(D)].border
 	mov	esi, 0	#,
 	mov	rdi, rax	#, bg_surf
 	call	SDL_FillRect	#
-	test	eax, eax	# D.9128
+	test	eax, eax	# D.9706
 	je	.L7	#,
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.9131
+	mov	rcx, rax	#, D.9709
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9700_55->vtable, D.9700_55->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9701_56 + 8B], MEM[(const void * *)D.9701_56 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9703_58].setVisible
 	jmp	.L3	#
 .L7:
-	movzx	eax, WORD PTR [rbx+368]	# iw, MEM[(struct LabelImage *)vthis_1(D)].border_width
+	movzx	eax, WORD PTR [rbx+352]	# iw, MEM[(struct LabelImage *)vthis_1(D)].border_width
 	lea	edx, [rax+rax]	# ih,
 	mov	WORD PTR [rsp], ax	# bgr.x, iw
 	mov	WORD PTR [rsp+2], ax	# bgr.y, iw
-	movzx	eax, WORD PTR [rbx+100]	# tmp156, MEM[(struct Widget *)vthis_1(D)].pos.w
-	sub	eax, edx	# tmp156, ih
-	mov	WORD PTR [rsp+4], ax	# bgr.w, tmp156
-	movzx	eax, WORD PTR [rbx+102]	# tmp158, MEM[(struct Widget *)vthis_1(D)].pos.h
-	sub	eax, edx	# tmp158, ih
-	mov	WORD PTR [rsp+6], ax	# bgr.h, tmp158
-	mov	edx, DWORD PTR [rbx+364]	# MEM[(struct LabelImage *)vthis_1(D)].background, MEM[(struct LabelImage *)vthis_1(D)].background
+	movzx	eax, WORD PTR [rbx+100]	# tmp176, MEM[(struct Widget *)vthis_1(D)].pos.w
+	sub	eax, edx	# tmp176, ih
+	mov	WORD PTR [rsp+4], ax	# bgr.w, tmp176
+	movzx	eax, WORD PTR [rbx+102]	# tmp178, MEM[(struct Widget *)vthis_1(D)].pos.h
+	sub	eax, edx	# tmp178, ih
+	mov	WORD PTR [rsp+6], ax	# bgr.h, tmp178
+	mov	edx, DWORD PTR [rbx+348]	# MEM[(struct LabelImage *)vthis_1(D)].background, MEM[(struct LabelImage *)vthis_1(D)].background
 	mov	rsi, rsp	#,
 	mov	rdi, rbp	#, bg_surf
 	call	SDL_FillRect	#
-	test	eax, eax	# D.9136
+	test	eax, eax	# D.9714
 	je	.L8	#,
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.9139
+	mov	rcx, rax	#, D.9717
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9700_73->vtable, D.9700_73->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9701_74 + 8B], MEM[(const void * *)D.9701_74 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9703_76].setVisible
 	jmp	.L3	#
 .L8:
-	movzx	eax, WORD PTR [rbx+272]	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.x, MEM[(struct Widget *)vthis_1(D) + 176B].pos.x
-	sub	ax, WORD PTR [rbx+96]	# tmp163, MEM[(struct Widget *)vthis_1(D)].pos.x
-	mov	WORD PTR [rsp], ax	# bgr.x, tmp163
-	movzx	eax, WORD PTR [rbx+276]	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.w, MEM[(struct Widget *)vthis_1(D) + 176B].pos.w
-	mov	WORD PTR [rsp+4], ax	# bgr.w, MEM[(struct Widget *)vthis_1(D) + 176B].pos.w
-	movzx	eax, WORD PTR [rbx+274]	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.y, MEM[(struct Widget *)vthis_1(D) + 176B].pos.y
-	sub	ax, WORD PTR [rbx+98]	# tmp167, MEM[(struct Widget *)vthis_1(D)].pos.y
-	mov	WORD PTR [rsp+2], ax	# bgr.y, tmp167
-	movzx	eax, WORD PTR [rbx+278]	# MEM[(struct Widget *)vthis_1(D) + 176B].pos.h, MEM[(struct Widget *)vthis_1(D) + 176B].pos.h
-	mov	WORD PTR [rsp+6], ax	# bgr.h, MEM[(struct Widget *)vthis_1(D) + 176B].pos.h
-	mov	rdi, QWORD PTR [rbx+264]	# MEM[(struct Widget *)vthis_1(D) + 176B].surf, MEM[(struct Widget *)vthis_1(D) + 176B].surf
+	movzx	eax, WORD PTR [rbx+264]	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.x, MEM[(struct Widget *)vthis_1(D) + 168B].pos.x
+	sub	ax, WORD PTR [rbx+96]	# tmp187, MEM[(struct Widget *)vthis_1(D)].pos.x
+	mov	WORD PTR [rsp], ax	# bgr.x, tmp187
+	movzx	eax, WORD PTR [rbx+268]	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.w, MEM[(struct Widget *)vthis_1(D) + 168B].pos.w
+	mov	WORD PTR [rsp+4], ax	# bgr.w, MEM[(struct Widget *)vthis_1(D) + 168B].pos.w
+	movzx	eax, WORD PTR [rbx+266]	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.y, MEM[(struct Widget *)vthis_1(D) + 168B].pos.y
+	sub	ax, WORD PTR [rbx+98]	# tmp191, MEM[(struct Widget *)vthis_1(D)].pos.y
+	mov	WORD PTR [rsp+2], ax	# bgr.y, tmp191
+	movzx	eax, WORD PTR [rbx+270]	# MEM[(struct Widget *)vthis_1(D) + 168B].pos.h, MEM[(struct Widget *)vthis_1(D) + 168B].pos.h
+	mov	WORD PTR [rsp+6], ax	# bgr.h, MEM[(struct Widget *)vthis_1(D) + 168B].pos.h
+	mov	rdi, QWORD PTR [rbx+256]	# MEM[(struct Widget *)vthis_1(D) + 168B].surf, MEM[(struct Widget *)vthis_1(D) + 168B].surf
 	mov	rcx, rsp	#,
 	mov	rdx, rbp	#, bg_surf
 	mov	esi, 0	#,
 	call	SDL_UpperBlit	#
-	test	eax, eax	# D.9151
+	test	eax, eax	# D.9729
 	je	.L9	#,
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.9154
+	mov	rcx, rax	#, D.9732
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9700_96->vtable, D.9700_96->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9701_97 + 8B], MEM[(const void * *)D.9701_97 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9703_99].setVisible
 	jmp	.L3	#
 .L9:
 	mov	rdi, QWORD PTR [rbx+88]	# MEM[(struct Widget *)vthis_1(D)].surf, MEM[(struct Widget *)vthis_1(D)].surf
-	mov	edx, 106	#,
+	mov	edx, 114	#,
 	mov	esi, OFFSET FLAT:.LC4	#,
 	call	wSDL_FreeSurface	#
 	mov	QWORD PTR [rbx+88], rbp	# MEM[(struct Widget *)vthis_1(D)].surf, bg_surf
-	movzx	eax, WORD PTR [rbx+96]	# MEM[(struct Widget *)vthis_1(D)].pos.x, MEM[(struct Widget *)vthis_1(D)].pos.x
-	add	ax, WORD PTR [rbx+100]	# tmp174, MEM[(struct Widget *)vthis_1(D)].pos.w
-	mov	WORD PTR [rbx+152], ax	# MEM[(struct Widget *)vthis_1(D)].maxx, tmp174
-	movzx	eax, WORD PTR [rbx+98]	# MEM[(struct Widget *)vthis_1(D)].pos.y, MEM[(struct Widget *)vthis_1(D)].pos.y
-	add	ax, WORD PTR [rbx+102]	# tmp177, MEM[(struct Widget *)vthis_1(D)].pos.h
-	mov	WORD PTR [rbx+154], ax	# MEM[(struct Widget *)vthis_1(D)].maxy, tmp177
+	mov	rdi, rbx	#, vthis
+	call	Widget_updateMaxXY	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9700_102->vtable, D.9700_102->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9701_103 + 8B], MEM[(const void * *)D.9701_103 + 8B]
 	mov	esi, 1	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9703_105].setVisible
 .L3:
 	add	rsp, 24	#,
 	.cfi_def_cfa_offset 24
@@ -246,77 +255,104 @@ LabelImage_vrefresh:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE107:
 	.size	LabelImage_vrefresh, .-LabelImage_vrefresh
+	.section	.rodata.str1.1
+.LC5:
+	.string	"%s"
+	.text
+	.globl	LabelImage_vtoString
+	.type	LabelImage_vtoString, @function
+LabelImage_vtoString:
+.LFB117:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rcx, QWORD PTR TO_STRING_NULL_THIS_STR[rip]	# iftmp.0, TO_STRING_NULL_THIS_STR
+	mov	rax, rdi	# D.9615, vthis
+	add	rax, 168	# D.9615,
+	je	.L14	#,
+	mov	rdx, QWORD PTR [rdi+168]	# MEM[(struct coObject *)vthis_2(D) + 168B].class, MEM[(struct coObject *)vthis_2(D) + 168B].class
+	mov	rdx, QWORD PTR [rdx+16]	# D.9618_5->vtable, D.9618_5->vtable
+	mov	rdx, QWORD PTR [rdx]	# *D.9619_6, *D.9619_6
+	mov	rdi, rax	#, D.9615
+	call	[QWORD PTR [rdx+8]]	# MEM[(struct coIObject *)D.9620_7].toString
+	mov	rcx, rax	# iftmp.0,
+.L14:
+	mov	edx, OFFSET FLAT:.LC5	#,
+	mov	esi, 128	#,
+	mov	edi, OFFSET FLAT:str_id.9612	#,
+	mov	eax, 0	#,
+	call	snprintf	#
+	mov	eax, OFFSET FLAT:str_id.9612	#,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE117:
+	.size	LabelImage_vtoString, .-LabelImage_vtoString
 	.section	.rodata.str1.8
 	.align 8
-.LC5:
+.LC6:
 	.string	"%20s:\tWithin context: img_path=%s\n"
 	.text
 	.globl	LabelImage_new
 	.type	LabelImage_new, @function
 LabelImage_new:
-.LFB95:
+.LFB109:
 	.cfi_startproc
-	push	rbp	#
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	push	rbx	#
-	.cfi_def_cfa_offset 24
-	.cfi_offset 3, -24
-	sub	rsp, 8	#,
+	mov	QWORD PTR [rsp-16], rbx	#,
+	mov	QWORD PTR [rsp-8], rbp	#,
+	sub	rsp, 24	#,
 	.cfi_def_cfa_offset 32
+	.cfi_offset 3, -24
+	.cfi_offset 6, -16
 	mov	rbx, rdi	# this, this
 	mov	rbp, rsi	# img_path, img_path
 	test	rdi, rdi	# this
-	jne	.L13	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.9002	#,
+	jne	.L17	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9571	#,
 	call	Static_nullThis2	#
 	mov	r8, rbp	#, img_path
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9002	#,
-	mov	edx, OFFSET FLAT:.LC5	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9571	#,
+	mov	edx, OFFSET FLAT:.LC6	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L14	#
-.L13:
+	jmp	.L18	#
+.L17:
 	call	Widget_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9002	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	lea	rdi, [rbx+176]	# tmp64,
+	lea	rdi, [rbx+168]	# tmp64,
 	mov	ecx, 0	#,
 	mov	edx, 0	#,
 	mov	rsi, rbp	#, img_path
 	call	Image_new	#
-	mov	BYTE PTR [rbx+374], 0	# this_2(D)->fixed_width,
-	mov	WORD PTR [rbx+370], 5	# this_2(D)->padx,
-	mov	WORD PTR [rbx+372], 5	# this_2(D)->pady,
-	mov	WORD PTR [rbx+368], 1	# this_2(D)->border_width,
-	mov	DWORD PTR [rbx+360], 187	# this_2(D)->border,
-.L14:
+	mov	BYTE PTR [rbx+358], 0	# this_2(D)->fixed_width,
+	mov	WORD PTR [rbx+354], 5	# this_2(D)->padx,
+	mov	WORD PTR [rbx+356], 5	# this_2(D)->pady,
+	mov	WORD PTR [rbx+352], 1	# this_2(D)->border_width,
+	mov	DWORD PTR [rbx+344], 187	# this_2(D)->border,
+.L18:
 	mov	rax, rbx	#, this
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 24
-	pop	rbx	#
-	.cfi_def_cfa_offset 16
-	pop	rbp	#
+	mov	rbx, QWORD PTR [rsp+8]	#,
+	mov	rbp, QWORD PTR [rsp+16]	#,
+	add	rsp, 24	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE109:
 	.size	LabelImage_new, .-LabelImage_new
 	.section	.rodata.str1.8
 	.align 8
-.LC6:
+.LC7:
 	.string	"LabelImage_copy: Passed NULL: this(%p) or src(%p)\n"
 	.text
 	.globl	LabelImage_copy
 	.type	LabelImage_copy, @function
 LabelImage_copy:
-.LFB96:
+.LFB110:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -329,45 +365,42 @@ LabelImage_copy:
 	mov	rbx, rdi	# this, this
 	mov	rbp, rsi	# src, src
 	test	rsi, rsi	# src
-	je	.L20	#,
+	je	.L24	#,
 	test	rdi, rdi	# this
-	jne	.L17	#,
-.L20:
+	jne	.L21	#,
+.L24:
 	mov	r8, rbp	#, src
 	mov	rcx, rbx	#, this
-	mov	edx, OFFSET FLAT:.LC6	#,
+	mov	edx, OFFSET FLAT:.LC7	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	ebx, 0	# this,
-	jmp	.L19	#
-.L17:
-	movzx	r12d, dl	# D.9072, copy_pos
+	jmp	.L23	#
+.L21:
+	movzx	r12d, dl	# D.9645, copy_pos
 	mov	ecx, 1	#,
-	mov	edx, r12d	#, D.9072
+	mov	edx, r12d	#, D.9645
 	call	Widget_copy	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9008	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	lea	rsi, [rbp+176]	# tmp81,
-	lea	rdi, [rbx+176]	# tmp82,
-	mov	edx, r12d	#, D.9072
+	lea	rsi, [rbp+168]	# tmp81,
+	lea	rdi, [rbx+168]	# tmp82,
+	mov	edx, r12d	#, D.9645
 	call	Image_copy	#
-	mov	eax, DWORD PTR [rbp+360]	# D.9075, src_4(D)->border
-	mov	DWORD PTR [rbx+360], eax	# this_2(D)->border, D.9075
-	mov	eax, DWORD PTR [rbp+364]	# D.9076, src_4(D)->background
-	mov	DWORD PTR [rbx+364], eax	# this_2(D)->background, D.9076
-	movzx	eax, WORD PTR [rbp+368]	# D.9077, src_4(D)->border_width
-	mov	WORD PTR [rbx+368], ax	# this_2(D)->border_width, D.9077
-	movzx	eax, WORD PTR [rbp+370]	# D.9078, src_4(D)->padx
-	mov	WORD PTR [rbx+370], ax	# this_2(D)->padx, D.9078
-	movzx	eax, WORD PTR [rbp+372]	# D.9079, src_4(D)->pady
-	mov	WORD PTR [rbx+372], ax	# this_2(D)->pady, D.9079
-	movzx	eax, BYTE PTR [rbp+374]	# D.9080, src_4(D)->fixed_width
-	mov	BYTE PTR [rbx+374], al	# this_2(D)->fixed_width, D.9080
-.L19:
+	mov	eax, DWORD PTR [rbp+344]	# D.9648, src_4(D)->border
+	mov	DWORD PTR [rbx+344], eax	# this_2(D)->border, D.9648
+	mov	eax, DWORD PTR [rbp+348]	# D.9649, src_4(D)->background
+	mov	DWORD PTR [rbx+348], eax	# this_2(D)->background, D.9649
+	movzx	eax, WORD PTR [rbp+352]	# D.9650, src_4(D)->border_width
+	mov	WORD PTR [rbx+352], ax	# this_2(D)->border_width, D.9650
+	movzx	eax, WORD PTR [rbp+354]	# D.9651, src_4(D)->padx
+	mov	WORD PTR [rbx+354], ax	# this_2(D)->padx, D.9651
+	movzx	eax, WORD PTR [rbp+356]	# D.9652, src_4(D)->pady
+	mov	WORD PTR [rbx+356], ax	# this_2(D)->pady, D.9652
+	movzx	eax, BYTE PTR [rbp+358]	# D.9653, src_4(D)->fixed_width
+	mov	BYTE PTR [rbx+358], al	# this_2(D)->fixed_width, D.9653
+.L23:
 	mov	rax, rbx	#, this
 	mov	rbx, QWORD PTR [rsp]	#,
 	mov	rbp, QWORD PTR [rsp+8]	#,
@@ -376,44 +409,44 @@ LabelImage_copy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE110:
 	.size	LabelImage_copy, .-LabelImage_copy
 	.globl	LabelImage_setBorder
 	.type	LabelImage_setBorder, @function
 LabelImage_setBorder:
-.LFB97:
+.LFB111:
 	.cfi_startproc
-	mov	WORD PTR [rdi+368], si	# this_1(D)->border_width, bord_width
-	mov	DWORD PTR [rdi+360], edx	# this_1(D)->border, rgb
+	mov	WORD PTR [rdi+352], si	# this_1(D)->border_width, bord_width
+	mov	DWORD PTR [rdi+344], edx	# this_1(D)->border, rgb
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE111:
 	.size	LabelImage_setBorder, .-LabelImage_setBorder
 	.globl	LabelImage_setPadding
 	.type	LabelImage_setPadding, @function
 LabelImage_setPadding:
-.LFB98:
+.LFB112:
 	.cfi_startproc
-	mov	WORD PTR [rdi+370], si	# this_1(D)->padx, padx
-	mov	WORD PTR [rdi+372], dx	# this_1(D)->pady, pady
+	mov	WORD PTR [rdi+354], si	# this_1(D)->padx, padx
+	mov	WORD PTR [rdi+356], dx	# this_1(D)->pady, pady
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE112:
 	.size	LabelImage_setPadding, .-LabelImage_setPadding
 	.globl	LabelImage_setBgColor
 	.type	LabelImage_setBgColor, @function
 LabelImage_setBgColor:
-.LFB99:
+.LFB113:
 	.cfi_startproc
-	mov	DWORD PTR [rdi+364], esi	# this_1(D)->background, rgb
+	mov	DWORD PTR [rdi+348], esi	# this_1(D)->background, rgb
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE113:
 	.size	LabelImage_setBgColor, .-LabelImage_setBgColor
 	.globl	LabelImage_setImageFromFile
 	.type	LabelImage_setImageFromFile, @function
 LabelImage_setImageFromFile:
-.LFB100:
+.LFB114:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -426,15 +459,15 @@ LabelImage_setImageFromFile:
 	.cfi_offset 12, -24
 	.cfi_offset 13, -16
 	mov	rbp, rsi	# img_path, img_path
-	movzx	r12d, WORD PTR [rdi+272]	# posx, MEM[(struct Widget *)this_1(D) + 176B].pos.x
-	movzx	r13d, WORD PTR [rdi+274]	# posy, MEM[(struct Widget *)this_1(D) + 176B].pos.y
-	lea	rbx, [rdi+176]	# D.9060,
-	mov	rdi, rbx	#, D.9060
+	movzx	r12d, WORD PTR [rdi+264]	# posx, MEM[(struct Widget *)this_1(D) + 168B].pos.x
+	movzx	r13d, WORD PTR [rdi+266]	# posy, MEM[(struct Widget *)this_1(D) + 168B].pos.y
+	lea	rbx, [rdi+168]	# D.9633,
+	mov	rdi, rbx	#, D.9633
 	call	delete	#
 	movzx	ecx, r13w	# posy, posy
 	movzx	edx, r12w	# posx, posx
 	mov	rsi, rbp	#, img_path
-	mov	rdi, rbx	#, D.9060
+	mov	rdi, rbx	#, D.9633
 	call	Image_new	#
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
@@ -444,12 +477,12 @@ LabelImage_setImageFromFile:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE114:
 	.size	LabelImage_setImageFromFile, .-LabelImage_setImageFromFile
 	.globl	LabelImage_setImage
 	.type	LabelImage_setImage, @function
 LabelImage_setImage:
-.LFB101:
+.LFB115:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -462,18 +495,18 @@ LabelImage_setImage:
 	.cfi_offset 12, -24
 	.cfi_offset 13, -16
 	mov	r13, rsi	# image, image
-	movzx	ebp, WORD PTR [rdi+272]	# posx, MEM[(struct Widget *)this_1(D) + 176B].pos.x
-	movzx	r12d, WORD PTR [rdi+274]	# posy, MEM[(struct Widget *)this_1(D) + 176B].pos.y
-	lea	rbx, [rdi+176]	# D.9055,
-	mov	rdi, rbx	#, D.9055
+	movzx	ebp, WORD PTR [rdi+264]	# posx, MEM[(struct Widget *)this_1(D) + 168B].pos.x
+	movzx	r12d, WORD PTR [rdi+266]	# posy, MEM[(struct Widget *)this_1(D) + 168B].pos.y
+	lea	rbx, [rdi+168]	# D.9628,
+	mov	rdi, rbx	#, D.9628
 	call	delete	#
 	mov	edx, 0	#,
 	mov	rsi, r13	#, image
-	mov	rdi, rbx	#, D.9055
+	mov	rdi, rbx	#, D.9628
 	call	Image_copy	#
 	movzx	edx, r12w	# posy, posy
 	movzx	esi, bp	# posx, posx
-	mov	rdi, rbx	#, D.9055
+	mov	rdi, rbx	#, D.9628
 	call	Widget_setPosition	#
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
@@ -483,12 +516,12 @@ LabelImage_setImage:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE115:
 	.size	LabelImage_setImage, .-LabelImage_setImage
 	.globl	LabelImage_scale
 	.type	LabelImage_scale, @function
 LabelImage_scale:
-.LFB102:
+.LFB116:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -497,41 +530,8 @@ LabelImage_scale:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE102:
+.LFE116:
 	.size	LabelImage_scale, .-LabelImage_scale
-	.section	.rodata.str1.1
-.LC7:
-	.string	"labelimage=NULL"
-.LC8:
-	.string	"%s"
-	.text
-	.globl	LabelImage_toString
-	.type	LabelImage_toString, @function
-LabelImage_toString:
-.LFB103:
-	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC7	# D.9048,
-	test	rdi, rdi	# this
-	je	.L36	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	add	rdi, 176	# tmp64,
-	call	Image_toString	#
-	mov	rcx, rax	#, D.9050
-	mov	edx, OFFSET FLAT:.LC8	#,
-	mov	esi, 128	#,
-	mov	edi, OFFSET FLAT:str_id.9044	#,
-	mov	eax, 0	#,
-	call	snprintf	#
-	mov	eax, OFFSET FLAT:str_id.9044	# D.9048,
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L36:
-	rep
-	ret
-	.cfi_endproc
-.LFE103:
-	.size	LabelImage_toString, .-LabelImage_toString
 	.globl	LabelImage_class
 	.data
 	.align 8
@@ -539,47 +539,57 @@ LabelImage_toString:
 	.size	LabelImage_class, 8
 LabelImage_class:
 	.quad	type
+	.comm	IMAGE_SUPPORTED_FILES,8,8
 	.section	.rodata.str1.1
-.LC9:
+.LC8:
 	.string	"LabelImage"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	360
+# name:
+	.quad	.LC8
 # vtable:
 	.quad	vtable
-# size:
-	.quad	376
-# name:
-	.quad	.LC9
+	.section	.rodata
+	.type	__FUNCTION__.9571, @object
+	.size	__FUNCTION__.9571, 15
+__FUNCTION__.9571:
+	.string	"LabelImage_new"
+	.local	str_id.9612
+	.comm	str_id.9612,128,32
+	.data
+	.align 16
+	.type	vtable, @object
+	.size	vtable, 16
+vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.8997, @object
-	.size	__FUNCTION__.8997, 20
-__FUNCTION__.8997:
-	.string	"LabelImage_vdestroy"
-	.type	__FUNCTION__.9002, @object
-	.size	__FUNCTION__.9002, 15
-__FUNCTION__.9002:
-	.string	"LabelImage_new"
-	.align 16
-	.type	__FUNCTION__.9008, @object
-	.size	__FUNCTION__.9008, 16
-__FUNCTION__.9008:
-	.string	"LabelImage_copy"
-	.local	str_id.9044
-	.comm	str_id.9044,128,32
-	.data
-	.align 32
-	.type	vtable, @object
-	.size	vtable, 48
-vtable:
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	LabelImage_vdestroy
+# toString:
+	.quad	LabelImage_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	Widget_vmevent
+# draw:
 	.quad	Widget_vdraw
+# refresh:
 	.quad	LabelImage_vrefresh
+# drag:
 	.quad	Widget_vdrag
+# setVisible:
 	.quad	Widget_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

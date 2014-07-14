@@ -57,6 +57,11 @@
 	typedef struct List2D List2D;
 	typedef struct List2DItem List2DItem;
 	
+	typedef struct Directory Directory;
+	typedef struct DirFileInfo DirFileInfo;
+	typedef struct FileBrowsePanel FileBrowsePanel;
+	typedef struct FbpFileInfo FbpFileInfo;
+	
 	typedef struct options options;
 	
 	typedef enum layouttype layouttype;

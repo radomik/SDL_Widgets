@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT FloatingMenu.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -53,7 +53,7 @@
 	.text
 	.type	FloatingMenu_click, @function
 FloatingMenu_click:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -65,34 +65,46 @@ FloatingMenu_click:
 	.cfi_offset 12, -16
 	mov	r12, rdi	# sender, sender
 	mov	rbp, rsi	# screen, screen
-	mov	rax, QWORD PTR [rdi+136]	# sender_1(D)->vparam, sender_1(D)->vparam
-	mov	rbx, QWORD PTR [rax]	# cont_wt, *D.9263_2
-	cmp	BYTE PTR [rbx+167], 0	# cont_wt_3->visible,
+	mov	rax, QWORD PTR [rdi+128]	# sender_1(D)->vparam, sender_1(D)->vparam
+	mov	rbx, QWORD PTR [rax]	# cont_wt, *D.9542_2
+	cmp	BYTE PTR [rbx+159], 0	# cont_wt_3->visible,
 	je	.L2	#,
-	mov	rdi, QWORD PTR [rsi+56]	# D.9267, screen_5(D)->widget_ontop
-	cmp	rdi, rbx	# D.9267, cont_wt
+	mov	rdi, QWORD PTR [rsi+56]	# D.9546, screen_5(D)->widget_ontop
+	cmp	rdi, rbx	# D.9546, cont_wt
 	jne	.L3	#,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)D.9546_6].class, MEM[(struct coObject *)D.9546_6].class
+	mov	rax, QWORD PTR [rax+16]	# D.9549_7->vtable, D.9549_7->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9550_8 + 8B], MEM[(const void * *)D.9550_8 + 8B]
 	mov	esi, 0	#,
-	call	Widget_setVisible	#
-	mov	BYTE PTR [r12+167], 1	# sender_1(D)->visible,
-	mov	BYTE PTR [rbp+124], 1	# screen_5(D)->need_reload,
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9552_10].setVisible
+	mov	BYTE PTR [r12+159], 1	# sender_1(D)->visible,
+	mov	BYTE PTR [rbp+173], 1	# screen_5(D)->need_reload,
 	mov	QWORD PTR [rbp+56], 0	# screen_5(D)->widget_ontop,
 	jmp	.L1	#
 .L3:
 	mov	QWORD PTR [rsi+56], rbx	# screen_5(D)->widget_ontop, cont_wt
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)cont_wt_3].class, MEM[(struct coObject *)cont_wt_3].class
+	mov	rax, QWORD PTR [rax+16]	# D.9549_12->vtable, D.9549_12->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9550_13 + 8B], MEM[(const void * *)D.9550_13 + 8B]
 	mov	edx, 1	#,
 	mov	rdi, rbx	#, cont_wt
-	call	Widget_draw	#
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9552_15].draw
 	jmp	.L1	#
 .L2:
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)cont_wt_3].class, MEM[(struct coObject *)cont_wt_3].class
+	mov	rax, QWORD PTR [rax+16]	# D.9549_17->vtable, D.9549_17->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9550_18 + 8B], MEM[(const void * *)D.9550_18 + 8B]
 	mov	esi, 1	#,
 	mov	rdi, rbx	#, cont_wt
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9552_20].setVisible
 	mov	QWORD PTR [rbp+56], rbx	# screen_5(D)->widget_ontop, cont_wt
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)cont_wt_3].class, MEM[(struct coObject *)cont_wt_3].class
+	mov	rax, QWORD PTR [rax+16]	# D.9549_22->vtable, D.9549_22->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9550_23 + 8B], MEM[(const void * *)D.9550_23 + 8B]
 	mov	edx, 1	#,
 	mov	rsi, rbp	#, screen
 	mov	rdi, rbx	#, cont_wt
-	call	Widget_draw	#
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9552_25].draw
 .L1:
 	mov	rbx, QWORD PTR [rsp]	#,
 	mov	rbp, QWORD PTR [rsp+8]	#,
@@ -101,7 +113,7 @@ FloatingMenu_click:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	FloatingMenu_click, .-FloatingMenu_click
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC0:
@@ -110,7 +122,7 @@ FloatingMenu_click:
 	.globl	FloatingMenu_vdestroy
 	.type	FloatingMenu_vdestroy, @function
 FloatingMenu_vdestroy:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -121,40 +133,38 @@ FloatingMenu_vdestroy:
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 32
 	mov	rbp, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.9181	#,
-	call	Static_printObj2	#
-	cmp	QWORD PTR [rbp+184], 0	# MEM[(struct StackList *)vthis_2(D)].items,
+	cmp	QWORD PTR [rdi+176], 0	# MEM[(struct StackList *)vthis_2(D)].items,
 	je	.L7	#,
-	cmp	DWORD PTR [rbp+196], 0	# MEM[(struct StackList *)vthis_2(D)].count,
+	cmp	DWORD PTR [rdi+188], 0	# MEM[(struct StackList *)vthis_2(D)].count,
 	je	.L8	#,
 	mov	ebx, 0	# i,
 .L10:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*4]	# tmp79,
 	sal	rax, 3	# tmp80,
-	add	rax, QWORD PTR [rbp+184]	# tmp81, MEM[(struct StackList *)vthis_2(D)].items
-	mov	rdi, QWORD PTR [rax]	# D.9283, c_9->widget
-	test	rdi, rdi	# D.9283
+	add	rax, QWORD PTR [rbp+176]	# tmp81, MEM[(struct StackList *)vthis_2(D)].items
+	mov	rdi, QWORD PTR [rax]	# D.9568, c_9->widget
+	test	rdi, rdi	# D.9568
 	je	.L9	#,
-	cmp	BYTE PTR [rdi+174], 0	# D.9283_10->internal,
+	cmp	BYTE PTR [rdi+166], 0	# D.9568_10->internal,
 	je	.L9	#,
 	call	delete	#
-	mov	edx, 57	#,
+	mov	edx, 68	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
-	mov	rdi, rax	#, D.9289
+	mov	rdi, rax	#, D.9574
 	call	wfree	#
 .L9:
 	add	ebx, 1	# i,
-	cmp	DWORD PTR [rbp+196], ebx	# MEM[(struct StackList *)vthis_2(D)].count, i
+	cmp	DWORD PTR [rbp+188], ebx	# MEM[(struct StackList *)vthis_2(D)].count, i
 	ja	.L10	#,
 .L8:
-	mov	rdi, QWORD PTR [rbp+184]	# MEM[(struct StackList *)vthis_2(D)].items, MEM[(struct StackList *)vthis_2(D)].items
-	mov	edx, 59	#,
+	mov	rdi, QWORD PTR [rbp+176]	# MEM[(struct StackList *)vthis_2(D)].items, MEM[(struct StackList *)vthis_2(D)].items
+	mov	edx, 70	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	call	wfree	#
-	mov	QWORD PTR [rbp+184], 0	# MEM[(struct StackList *)vthis_2(D)].items,
-	mov	DWORD PTR [rbp+196], 0	# MEM[(struct StackList *)vthis_2(D)].count,
-	mov	DWORD PTR [rbp+192], 0	# MEM[(struct StackList *)vthis_2(D)].size,
+	mov	QWORD PTR [rbp+176], 0	# MEM[(struct StackList *)vthis_2(D)].items,
+	mov	DWORD PTR [rbp+188], 0	# MEM[(struct StackList *)vthis_2(D)].count,
+	mov	DWORD PTR [rbp+184], 0	# MEM[(struct StackList *)vthis_2(D)].size,
 .L7:
 	mov	rdi, rbp	#, vthis
 	call	StackList_vdestroy	#
@@ -166,7 +176,7 @@ FloatingMenu_vdestroy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	FloatingMenu_vdestroy, .-FloatingMenu_vdestroy
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -176,7 +186,7 @@ FloatingMenu_vdestroy:
 	.globl	FloatingMenu_new
 	.type	FloatingMenu_new, @function
 FloatingMenu_new:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -191,13 +201,13 @@ FloatingMenu_new:
 	mov	r12d, edx	# size, size
 	test	rdi, rdi	# this
 	jne	.L14	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.9192	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9471	#,
 	call	Static_nullThis2	#
 	mov	edi, ebp	#, layout
 	call	StackList_getLayoutName	#
-	mov	r8, rax	# D.9274,
+	mov	r8, rax	# D.9559,
 	mov	r9d, r12d	#, size
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9192	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9471	#,
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -207,9 +217,6 @@ FloatingMenu_new:
 .L14:
 	call	StackList_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9192	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
 .L15:
 	mov	rax, rbx	#, this
 	mov	rbx, QWORD PTR [rsp]	#,
@@ -219,7 +226,7 @@ FloatingMenu_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	FloatingMenu_new, .-FloatingMenu_new
 	.section	.rodata.str1.8
 	.align 8
@@ -229,7 +236,7 @@ FloatingMenu_new:
 	.globl	FloatingMenu_addBaseHeader
 	.type	FloatingMenu_addBaseHeader, @function
 FloatingMenu_addBaseHeader:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -244,13 +251,13 @@ FloatingMenu_addBaseHeader:
 	mov	rbp, rdi	# this, this
 	mov	r13, rsi	# font, font
 	mov	r12, rdx	# text, text
-	mov	rax, QWORD PTR Button_class[rip]	# Button_class, Button_class
-	mov	rdi, QWORD PTR [rax+8]	# Button_class.4_2->size, Button_class.4_2->size
-	mov	edx, 116	#,
+	mov	edx, 127	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
+	mov	rax, QWORD PTR Button_class[rip]	# Button_class, Button_class
+	mov	rdi, QWORD PTR [rax]	#, Button_class.4_2->size
 	call	wmalloc	#
 	mov	rsi, r12	#, text
-	mov	rdi, rax	#, D.9257
+	mov	rdi, rax	#, D.9536
 	call	Button_new	#
 	mov	rbx, rax	# but,
 	test	rax, rax	# but
@@ -273,7 +280,7 @@ FloatingMenu_addBaseHeader:
 	mov	rdi, rax	#, but
 	call	Button_applyDefaultStyle	#
 	mov	QWORD PTR [rbx+8], OFFSET FLAT:FloatingMenu_click	# MEM[(struct Widget *)but_6].click_handler,
-	mov	BYTE PTR [rbx+174], 1	# MEM[(struct Widget *)but_6].internal,
+	mov	BYTE PTR [rbx+166], 1	# MEM[(struct Widget *)but_6].internal,
 	mov	edx, 1	#,
 	mov	rsi, rbp	#, this
 	mov	rdi, rbx	#, but
@@ -298,7 +305,7 @@ FloatingMenu_addBaseHeader:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	FloatingMenu_addBaseHeader, .-FloatingMenu_addBaseHeader
 	.section	.rodata.str1.8
 	.align 8
@@ -308,7 +315,7 @@ FloatingMenu_addBaseHeader:
 	.globl	FloatingMenu_addMenuButtonLast
 	.type	FloatingMenu_addMenuButtonLast, @function
 FloatingMenu_addMenuButtonLast:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -329,13 +336,13 @@ FloatingMenu_addMenuButtonLast:
 	mov	rbp, rdx	# text, text
 	mov	r14, rcx	# click_handler, click_handler
 	mov	r13d, r8d	# id, id
-	mov	rax, QWORD PTR Button_class[rip]	# Button_class, Button_class
-	mov	rdi, QWORD PTR [rax+8]	# Button_class.2_2->size, Button_class.2_2->size
-	mov	edx, 134	#,
+	mov	edx, 145	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
+	mov	rax, QWORD PTR Button_class[rip]	# Button_class, Button_class
+	mov	rdi, QWORD PTR [rax]	#, Button_class.2_2->size
 	call	wmalloc	#
 	mov	rsi, rbp	#, text
-	mov	rdi, rax	#, D.9249
+	mov	rdi, rax	#, D.9528
 	call	Button_new	#
 	mov	rbx, rax	# but,
 	test	rax, rax	# but
@@ -358,8 +365,8 @@ FloatingMenu_addMenuButtonLast:
 	mov	rdi, rax	#, but
 	call	Button_applyDefaultStyle2	#
 	mov	QWORD PTR [rbx+8], r14	# MEM[(struct Widget *)but_6].click_handler, click_handler
-	mov	DWORD PTR [rbx+160], r13d	# MEM[(struct Widget *)but_6].id, id
-	mov	BYTE PTR [rbx+174], 1	# MEM[(struct Widget *)but_6].internal,
+	mov	DWORD PTR [rbx+152], r13d	# MEM[(struct Widget *)but_6].id, id
+	mov	BYTE PTR [rbx+166], 1	# MEM[(struct Widget *)but_6].internal,
 	mov	DWORD PTR [rsp+8], 0	#,
 	mov	DWORD PTR [rsp], 0	#,
 	mov	r9d, 0	#,
@@ -381,7 +388,7 @@ FloatingMenu_addMenuButtonLast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	FloatingMenu_addMenuButtonLast, .-FloatingMenu_addMenuButtonLast
 	.section	.rodata.str1.8
 	.align 8
@@ -391,7 +398,7 @@ FloatingMenu_addMenuButtonLast:
 	.globl	FloatingMenu_addLabelLast
 	.type	FloatingMenu_addLabelLast, @function
 FloatingMenu_addLabelLast:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -406,13 +413,13 @@ FloatingMenu_addLabelLast:
 	mov	r12, rdi	# this, this
 	mov	r13, rsi	# font, font
 	mov	rbp, rdx	# text, text
-	mov	rax, QWORD PTR Label_class[rip]	# Label_class, Label_class
-	mov	rdi, QWORD PTR [rax+8]	# Label_class.0_2->size, Label_class.0_2->size
-	mov	edx, 148	#,
+	mov	edx, 159	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
+	mov	rax, QWORD PTR Label_class[rip]	# Label_class, Label_class
+	mov	rdi, QWORD PTR [rax]	#, Label_class.0_2->size
 	call	wmalloc	#
 	mov	rsi, rbp	#, text
-	mov	rdi, rax	#, D.9239
+	mov	rdi, rax	#, D.9518
 	call	Label_new	#
 	mov	rbx, rax	# lab,
 	test	rax, rax	# lab
@@ -434,7 +441,7 @@ FloatingMenu_addLabelLast:
 	mov	esi, 0	#,
 	mov	rdi, rax	#, lab
 	call	Label_applyDefaultStyle	#
-	mov	BYTE PTR [rbx+174], 1	# MEM[(struct Widget *)lab_6].internal,
+	mov	BYTE PTR [rbx+166], 1	# MEM[(struct Widget *)lab_6].internal,
 	mov	DWORD PTR [rsp+8], 0	#,
 	mov	DWORD PTR [rsp], 0	#,
 	mov	r9d, 0	#,
@@ -454,12 +461,12 @@ FloatingMenu_addLabelLast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	FloatingMenu_addLabelLast, .-FloatingMenu_addLabelLast
 	.globl	FloatingMenu_addWidgetLast
 	.type	FloatingMenu_addWidgetLast, @function
 FloatingMenu_addWidgetLast:
-.LFB99:
+.LFB109:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -467,7 +474,7 @@ FloatingMenu_addWidgetLast:
 	sub	rsp, 16	#,
 	.cfi_def_cfa_offset 32
 	mov	rbx, rsi	# widget, widget
-	mov	BYTE PTR [rsi+174], 0	# widget_1(D)->internal,
+	mov	BYTE PTR [rsi+166], 0	# widget_1(D)->internal,
 	movzx	eax, WORD PTR [rsp+40]	# marg_right, marg_right
 	mov	DWORD PTR [rsp+8], eax	#, marg_right
 	movzx	eax, WORD PTR [rsp+32]	# marg_bot, marg_bot
@@ -482,7 +489,7 @@ FloatingMenu_addWidgetLast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE109:
 	.size	FloatingMenu_addWidgetLast, .-FloatingMenu_addWidgetLast
 	.globl	FloatingMenu_class
 	.data
@@ -491,12 +498,6 @@ FloatingMenu_addWidgetLast:
 	.size	FloatingMenu_class, 8
 FloatingMenu_class:
 	.quad	type
-	.section	.rodata
-	.align 16
-	.type	__FUNCTION__.9181, @object
-	.size	__FUNCTION__.9181, 22
-__FUNCTION__.9181:
-	.string	"FloatingMenu_vdestroy"
 	.section	.rodata.str1.1
 .LC5:
 	.string	"FloatingMenu"
@@ -505,28 +506,47 @@ __FUNCTION__.9181:
 	.type	type, @object
 	.size	type, 24
 type:
-# vtable:
-	.quad	vtable
 # size:
-	.quad	208
+	.quad	200
 # name:
 	.quad	.LC5
+# vtable:
+	.quad	vtable
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.9192, @object
-	.size	__FUNCTION__.9192, 17
-__FUNCTION__.9192:
+	.type	__FUNCTION__.9471, @object
+	.size	__FUNCTION__.9471, 17
+__FUNCTION__.9471:
 	.string	"FloatingMenu_new"
 	.data
-	.align 32
+	.align 16
 	.type	vtable, @object
-	.size	vtable, 48
+	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	FloatingMenu_vdestroy
+# toString:
+	.quad	StackList_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	StackList_vmevent
+# draw:
 	.quad	StackList_vdraw
+# refresh:
 	.quad	StackList_vrefresh
+# drag:
 	.quad	StackList_vdrag
+# setVisible:
 	.quad	StackList_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

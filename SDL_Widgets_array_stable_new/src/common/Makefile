@@ -25,20 +25,26 @@ ASMFILES        := $(patsubst %.c, %.asm, $(CFILES))
 
 asm:
 	$(CC) $(AFLAGS) $(INC) -c Callback.c -o $(ASMDIR)/Callback.asm
+	$(CC) $(AFLAGS) $(INC) -c DirFileInfo.c -o $(ASMDIR)/DirFileInfo.asm
+	$(CC) $(AFLAGS) $(INC) -c Directory.c -o $(ASMDIR)/Directory.asm
+	$(CC) $(AFLAGS) $(INC) -c FbpFileInfo.c -o $(ASMDIR)/FbpFileInfo.asm
+	$(CC) $(AFLAGS) $(INC) -c File.c -o $(ASMDIR)/File.asm
 	$(CC) $(AFLAGS) $(INC) -c FileBrowsePanel.c -o $(ASMDIR)/FileBrowsePanel.asm
 	$(CC) $(AFLAGS) $(INC) -c Memory.c -o $(ASMDIR)/Memory.asm
 	$(CC) $(AFLAGS) $(INC) -c Screen.c -o $(ASMDIR)/Screen.asm
 	$(CC) $(AFLAGS) $(INC) -c Static.c -o $(ASMDIR)/Static.asm
 	$(CC) $(AFLAGS) $(INC) -c Undo.c -o $(ASMDIR)/Undo.asm
-	$(CC) $(AFLAGS) $(INC) -c file_browse_common.c -o $(ASMDIR)/file_browse_common.asm
 	$(CC) $(AFLAGS) $(INC) -c perr.c -o $(ASMDIR)/perr.asm
 
 all:
 	$(CC) $(CFLAGS) $(INC) -c Callback.c -o $(ODIR)/Callback.o
+	$(CC) $(CFLAGS) $(INC) -c DirFileInfo.c -o $(ODIR)/DirFileInfo.o
+	$(CC) $(CFLAGS) $(INC) -c Directory.c -o $(ODIR)/Directory.o
+	$(CC) $(CFLAGS) $(INC) -c FbpFileInfo.c -o $(ODIR)/FbpFileInfo.o
+	$(CC) $(CFLAGS) $(INC) -c File.c -o $(ODIR)/File.o
 	$(CC) $(CFLAGS) $(INC) -c FileBrowsePanel.c -o $(ODIR)/FileBrowsePanel.o
 	$(CC) $(CFLAGS) $(INC) -c Memory.c -o $(ODIR)/Memory.o
 	$(CC) $(CFLAGS) $(INC) -c Screen.c -o $(ODIR)/Screen.o
 	$(CC) $(CFLAGS) $(INC) -c Static.c -o $(ODIR)/Static.o
 	$(CC) $(CFLAGS) $(INC) -c Undo.c -o $(ODIR)/Undo.o
-	$(CC) $(CFLAGS) $(INC) -c file_browse_common.c -o $(ODIR)/file_browse_common.o
 	$(CC) $(CFLAGS) $(INC) -c perr.c -o $(ODIR)/perr.o

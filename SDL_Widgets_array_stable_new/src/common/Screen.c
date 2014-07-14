@@ -58,8 +58,8 @@ static u16			PREV_HEIGHT				= W_SCREEN_HEIGHT;
 static b8				BASE_SURFACE_FULLSCR	= false;
 
 
-inline u16 				Screen_getWidth() 				{ return (vinfo)?(vinfo)->current_w:0; }
-inline u16 				Screen_getHeight() 				{ return (vinfo)?(vinfo)->current_h:0; }
+inline u16 					Screen_getWidth() 				{ return (vinfo)?(vinfo)->current_w:0; }
+inline u16 					Screen_getHeight() 				{ return (vinfo)?(vinfo)->current_h:0; }
 inline SDL_Surface*			Screen_getBaseSurface()			{ return BASE_SURFACE; }
 inline SDL_PixelFormat*		Screen_getBaseSurfaceFormat()	{ return BASE_SURFACE_FORMAT; }
 
@@ -72,6 +72,7 @@ static void Screen_reloadBgWidget(Screen *this) {
 	if ((this) && (BASE_SURFACE) && (this->background.bg_widget)) {
 		fprintf(stderr, "%s: BASE_SURFACE_WIDTH(%hu), BASE_SURFACE_HEIGHT(%hu), BASE_SURFACE->w(%hu), BASE_SURFACE->h(%hu)\n",
 			__FUNCTION__, BASE_SURFACE_WIDTH, BASE_SURFACE_HEIGHT, BASE_SURFACE->w, BASE_SURFACE->h);
+		fprintf(stderr, "%s: From vinfo: width: %hu, height: %hu\n", __FUNCTION__, Screen_getWidth(), Screen_getHeight());
 		u16 sw = (BASE_SURFACE_WIDTH = BASE_SURFACE->w);
 		u16 sh = (BASE_SURFACE_HEIGHT = BASE_SURFACE->h);
 		u16 w  = this->background.bg_widget->pos.w;
@@ -291,6 +292,14 @@ const char *Screen_getEventName(Uint8 sdl_event_type) {
 	}
 }
 
+inline const char *Screen_currentEventName(const Screen *this) {
+	return Screen_getEventName(this->event.type);
+}
+
+inline u8 Screen_getEventButtonIndex(const Screen *this) {
+	return this->event.button.button;
+}
+
 void Screen_setBackgroundWidget(Screen *this, Widget *bg_widget, u8 mode) {
 	this->background.bg_widget = bg_widget;
 	this->background.bg_mode   = mode;
@@ -363,12 +372,18 @@ Screen* Screen_new(Screen *this, perr *e, u32 size_widget) {
 	this->screen         		= NULL;
 	this->pevent         		= &(this->event);
 	this->key_up         		= NULL;
+	this->before_paint			= NULL;
+	this->after_paint			= NULL;
+	this->mouse_down			= NULL;
+	this->mouse_up				= NULL;
+	this->mouse_move			= NULL;
 	this->toogle_drag_on		= NULL;
 	this->user_event     		= NULL;
 	this->callback       		= NULL;
 	this->has_exited			= false;
 	this->event_handled			= false;
 	this->pool_events    		= false;
+	this->disable_auto_flip 	= false;
 	this->drag_on        		= true;
 	this->need_reload    		= false;
 	
@@ -438,7 +453,8 @@ void Screen_draw(Screen *this) {
 		Widget_draw(widget, this, false);
 	}
 	
-	Screen_flip(this);
+	if (! this->disable_auto_flip) Screen_flip(this);
+	
 	this->need_reload = false;
 }
 
@@ -460,8 +476,11 @@ void Screen_MainStart(Screen *this) {
 		/* Draw all widgets if needed */
 		if ((BASE_SURFACE_WIDTH != BASE_SURFACE->w) || (BASE_SURFACE_HEIGHT != BASE_SURFACE->h)) 
 			Screen_reloadBgWidget(this);
-		if (this->need_reload) 
+		if (this->need_reload) {
+			if (this->before_paint) this->before_paint(this, this->param);
 			Screen_draw(this);
+			if (this->after_paint) this->after_paint(this, this->param);
+		}
 		
 		/* Process events by screen and run user specified callback event handlers from inside */
 		event_loop:
@@ -515,12 +534,25 @@ void Screen_MainStart(Screen *this) {
 						default: break;
 					}
 					if (this->key_up) {		// run user specified key_up callback function
-						this->key_up(this, this->event.key.keysym.sym); // on Screen level
+						this->key_up(this, this->event.key.keysym.sym, this->param); // on Screen level
 					}
 					break;
 				case SDL_MOUSEBUTTONDOWN:
+					if (this->mouse_down) { 
+						this->mouse_down(this, this->param);
+						if (this->event_handled) break;
+					}
 				case SDL_MOUSEBUTTONUP:
+					if ((this->mouse_up) && (this->event.type == SDL_MOUSEBUTTONUP)) { 
+						this->mouse_up(this, this->param);
+						if (this->event_handled) break;
+					}
 				case SDL_MOUSEMOTION:  /** Mouse events (mevents) **/
+					if ((this->mouse_move) && (this->event.type == SDL_MOUSEMOTION)) { 
+						this->mouse_move(this, this->param);
+						if (this->event_handled) break;
+					}
+					
 					if (this->widget_ontop) { // pass event to widget on top
 						Widget_mevent(this->widget_ontop, this);
 						if (this->event_handled) break;
@@ -533,11 +565,14 @@ void Screen_MainStart(Screen *this) {
 							if (this->event_handled) break;
 						}
 					}
+					
 					break;
 				default: goto event_loop;
 			}	// end switch
-			if (this->has_exited) return;
-			if (! this->need_reload) goto event_loop;
+			
+			//end_event_switch:			
+				if (this->has_exited) return;
+				if (! this->need_reload) goto event_loop;
 		/* End event_loop */
 	} /* End main loop */
 }

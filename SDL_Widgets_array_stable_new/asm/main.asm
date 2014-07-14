@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT main.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -58,7 +58,7 @@
 	.globl	button_Audio_clicked
 	.type	button_Audio_clicked, @function
 button_Audio_clicked:
-.LFB96:
+.LFB110:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -66,7 +66,7 @@ button_Audio_clicked:
 	mov	rbx, rsi	# screen, screen
 	mov	eax, 0	#,
 	call	AudioMain_Main	#
-	test	eax, eax	# D.9371
+	test	eax, eax	# D.10072
 	je	.L2	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 61	#,
@@ -75,13 +75,13 @@ button_Audio_clicked:
 	call	fwrite	#
 	jmp	.L1	#
 .L2:
-	mov	BYTE PTR [rbx+124], 1	# screen_3(D)->need_reload,
+	mov	BYTE PTR [rbx+173], 1	# screen_3(D)->need_reload,
 .L1:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE110:
 	.size	button_Audio_clicked, .-button_Audio_clicked
 	.section	.rodata.str1.8
 	.align 8
@@ -91,7 +91,7 @@ button_Audio_clicked:
 	.globl	button_Graphics_clicked
 	.type	button_Graphics_clicked, @function
 button_Graphics_clicked:
-.LFB95:
+.LFB109:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -99,7 +99,7 @@ button_Graphics_clicked:
 	mov	rbx, rsi	# screen, screen
 	mov	eax, 0	#,
 	call	GraphicsMain_Main	#
-	test	eax, eax	# D.9376
+	test	eax, eax	# D.10077
 	je	.L6	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 67	#,
@@ -108,18 +108,18 @@ button_Graphics_clicked:
 	call	fwrite	#
 	jmp	.L5	#
 .L6:
-	mov	BYTE PTR [rbx+124], 1	# screen_3(D)->need_reload,
+	mov	BYTE PTR [rbx+173], 1	# screen_3(D)->need_reload,
 .L5:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE109:
 	.size	button_Graphics_clicked, .-button_Graphics_clicked
 	.globl	main_keydown
 	.type	main_keydown, @function
 main_keydown:
-.LFB97:
+.LFB111:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -142,7 +142,7 @@ main_keydown:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE111:
 	.size	main_keydown, .-main_keydown
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC2:
@@ -172,7 +172,7 @@ main_keydown:
 	.globl	MainProgram_showHelp
 	.type	MainProgram_showHelp, @function
 MainProgram_showHelp:
-.LFB93:
+.LFB107:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -197,7 +197,7 @@ MainProgram_showHelp:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE107:
 	.size	MainProgram_showHelp, .-MainProgram_showHelp
 	.section	.rodata.str1.1
 .LC10:
@@ -229,7 +229,7 @@ MainProgram_showHelp:
 	.globl	MainProgram_parseOptions
 	.type	MainProgram_parseOptions, @function
 MainProgram_parseOptions:
-.LFB94:
+.LFB108:
 	.cfi_startproc
 	push	r13	#
 	.cfi_def_cfa_offset 16
@@ -259,18 +259,18 @@ MainProgram_parseOptions:
 	mov	ebx, 1	# i,
 .L42:
 	movsx	rax, ebx	# i, i
-	mov	rdx, QWORD PTR [r12+rax*8]	# __s1, *D.9386_22
+	mov	rdx, QWORD PTR [r12+rax*8]	# __s1, *D.10087_22
 	cmp	BYTE PTR [rdx], 45	# *__s1_23,
 	jne	.L19	#,
-	movzx	eax, BYTE PTR [rdx+1]	# D.9398, MEM[(const unsigned char *)__s1_23 + 1B]
-	cmp	al, 102	# D.9398,
+	movzx	eax, BYTE PTR [rdx+1]	# D.10099, MEM[(const unsigned char *)__s1_23 + 1B]
+	cmp	al, 102	# D.10099,
 	jne	.L20	#,
 	cmp	BYTE PTR [rdx+2], 0	# MEM[(const unsigned char *)__s1_23 + 2B],
 	jne	.L21	#,
 	mov	BYTE PTR op[rip+16], 1	# op.fullscreen,
 	jmp	.L22	#
 .L20:
-	cmp	al, 115	# D.9398,
+	cmp	al, 115	# D.10099,
 	jne	.L21	#,
 	cmp	BYTE PTR [rdx+2], 0	# MEM[(const unsigned char *)__s1_23 + 2B],
 	jne	.L23	#,
@@ -280,20 +280,20 @@ MainProgram_parseOptions:
 	mov	WORD PTR [rsp+12], 0	# h,
 	mov	WORD PTR [rsp+14], 0	# w,
 	movsx	rax, r13d	# i, i
-	mov	rdi, QWORD PTR [r12+rax*8]	# *D.9386_121, *D.9386_121
+	mov	rdi, QWORD PTR [r12+rax*8]	# *D.10087_121, *D.10087_121
 	lea	rcx, [rsp+12]	#,
 	lea	rdx, [rsp+14]	#,
 	mov	esi, OFFSET FLAT:.LC10	#,
 	mov	eax, 0	#,
 	call	sscanf	#
-	movzx	edx, WORD PTR [rsp+14]	# w.23, w
-	test	dx, dx	# w.23
+	movzx	edx, WORD PTR [rsp+14]	# w.29, w
+	test	dx, dx	# w.29
 	je	.L25	#,
 	cmp	WORD PTR [rsp+12], 0	# h,
 	jne	.L36	#,
 .L25:
 	movzx	ecx, WORD PTR [rsp+12]	# h, h
-	movzx	edx, dx	# w.23, w.23
+	movzx	edx, dx	# w.29, w.29
 	mov	esi, OFFSET FLAT:.LC11	#,
 	mov	edi, 1	#,
 	mov	eax, 0	#,
@@ -305,7 +305,7 @@ MainProgram_parseOptions:
 	.p2align 4,,3
 	jmp	.L18	#
 .L21:
-	cmp	al, 109	# D.9398,
+	cmp	al, 109	# D.10099,
 	jne	.L23	#,
 	cmp	BYTE PTR [rdx+2], 0	# MEM[(const unsigned char *)__s1_23 + 2B],
 	.p2align 4,,5
@@ -316,20 +316,20 @@ MainProgram_parseOptions:
 	mov	WORD PTR [rsp+8], 0	# mh,
 	mov	WORD PTR [rsp+10], 0	# mw,
 	movsx	rax, r13d	# i, i
-	mov	rdi, QWORD PTR [r12+rax*8]	# *D.9386_183, *D.9386_183
+	mov	rdi, QWORD PTR [r12+rax*8]	# *D.10087_183, *D.10087_183
 	lea	rcx, [rsp+8]	#,
 	lea	rdx, [rsp+10]	#,
 	mov	esi, OFFSET FLAT:.LC10	#,
 	mov	eax, 0	#,
 	call	sscanf	#
-	movzx	edx, WORD PTR [rsp+10]	# mw.26, mw
-	test	dx, dx	# mw.26
+	movzx	edx, WORD PTR [rsp+10]	# mw.32, mw
+	test	dx, dx	# mw.32
 	je	.L29	#,
 	cmp	WORD PTR [rsp+8], 0	# mh,
 	jne	.L37	#,
 .L29:
 	movzx	ecx, WORD PTR [rsp+8]	# mh, mh
-	movzx	edx, dx	# mw.26, mw.26
+	movzx	edx, dx	# mw.32, mw.32
 	mov	esi, OFFSET FLAT:.LC13	#,
 	mov	edi, 1	#,
 	mov	eax, 0	#,
@@ -341,7 +341,7 @@ MainProgram_parseOptions:
 	.p2align 4,,3
 	jmp	.L18	#
 .L23:
-	cmp	al, 100	# D.9398,
+	cmp	al, 100	# D.10099,
 	jne	.L27	#,
 	cmp	BYTE PTR [rdx+2], 0	# MEM[(const unsigned char *)__s1_23 + 2B],
 	.p2align 4,,5
@@ -350,22 +350,22 @@ MainProgram_parseOptions:
 	cmp	ebp, ebx	# argc, i
 	jle	.L30	#,
 	movsx	rax, ebx	# i, i
-	mov	rax, QWORD PTR [r12+rax*8]	# D.9424, *D.9386_244
-	mov	QWORD PTR op[rip], rax	# op.base_dir, D.9424
+	mov	rax, QWORD PTR [r12+rax*8]	# D.10125, *D.10087_244
+	mov	QWORD PTR op[rip], rax	# op.base_dir, D.10125
 	jmp	.L22	#
 .L30:
 	mov	edi, OFFSET FLAT:.LC15	#,
 	call	puts	#
 	jmp	.L18	#
 .L27:
-	cmp	al, 104	# D.9398,
+	cmp	al, 104	# D.10099,
 	jne	.L19	#,
 	cmp	BYTE PTR [rdx+2], 0	# MEM[(const unsigned char *)__s1_23 + 2B],
 	.p2align 4,,5
 	jne	.L19	#,
 	mov	eax, 0	#,
 	call	MainProgram_showHelp	#
-	mov	eax, 3	# D.9615,
+	mov	eax, 3	# D.10316,
 	jmp	.L40	#
 .L19:
 	mov	esi, OFFSET FLAT:.LC16	#,
@@ -383,29 +383,29 @@ MainProgram_parseOptions:
 	cmp	ebp, ebx	# argc, i
 	jg	.L42	#,
 .L18:
-	movzx	eax, WORD PTR [rsp+14]	# w.23, w
-	test	ax, ax	# w.23
+	movzx	eax, WORD PTR [rsp+14]	# w.29, w
+	test	ax, ax	# w.29
 	je	.L33	#,
-	movzx	edx, WORD PTR [rsp+12]	# h.22, h
-	test	dx, dx	# h.22
+	movzx	edx, WORD PTR [rsp+12]	# h.28, h
+	test	dx, dx	# h.28
 	je	.L33	#,
-	mov	WORD PTR op[rip+8], ax	# op.screen_width, w.23
-	mov	WORD PTR op[rip+10], dx	# op.screen_height, h.22
+	mov	WORD PTR op[rip+8], ax	# op.screen_width, w.29
+	mov	WORD PTR op[rip+10], dx	# op.screen_height, h.28
 .L33:
-	movzx	eax, WORD PTR [rsp+10]	# mw.26, mw
-	test	ax, ax	# mw.26
+	movzx	eax, WORD PTR [rsp+10]	# mw.32, mw
+	test	ax, ax	# mw.32
 	je	.L34	#,
-	movzx	edx, WORD PTR [rsp+8]	# mh.25, mh
-	test	dx, dx	# mh.25
+	movzx	edx, WORD PTR [rsp+8]	# mh.31, mh
+	test	dx, dx	# mh.31
 	je	.L34	#,
-	mov	WORD PTR op[rip+12], ax	# op.screen_maxwidth, mw.26
-	mov	WORD PTR op[rip+14], dx	# op.screen_maxheight, mh.25
+	mov	WORD PTR op[rip+12], ax	# op.screen_maxwidth, mw.32
+	mov	WORD PTR op[rip+14], dx	# op.screen_maxheight, mh.31
 .L34:
 	mov	rdi, QWORD PTR op[rip]	#, op.base_dir
 	call	chdir	#
-	mov	edx, eax	# D.9625,
-	mov	eax, 0	# D.9615,
-	test	edx, edx	# D.9625
+	mov	edx, eax	# D.10326,
+	mov	eax, 0	# D.10316,
+	test	edx, edx	# D.10326
 	je	.L40	#,
 	call	MainProgram_showHelp	#
 	mov	rcx, QWORD PTR op[rip]	#, op.base_dir
@@ -414,7 +414,7 @@ MainProgram_parseOptions:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 3	# D.9615,
+	mov	eax, 3	# D.10316,
 	jmp	.L40	#
 .L26:
 	add	ebx, 1	# i,
@@ -432,7 +432,7 @@ MainProgram_parseOptions:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE108:
 	.size	MainProgram_parseOptions, .-MainProgram_parseOptions
 	.section	.rodata.str1.1
 .LC18:
@@ -457,30 +457,45 @@ MainProgram_parseOptions:
 	.globl	Main_createInterface
 	.type	Main_createInterface, @function
 Main_createInterface:
-.LFB98:
+.LFB112:
 	.cfi_startproc
-	push	rbx	#
+	push	rbp	#
 	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	mov	edx, 171	#,
+	.cfi_offset 6, -16
+	push	rbx	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 32
+	mov	edx, 181	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
-	mov	edi, 5064	#,
+	mov	edi, 4848	#,
 	call	wmalloc	#
-	mov	QWORD PTR buttonimage[rip], rax	# buttonimage, buttonimage.9
-	mov	rax, QWORD PTR Image_class[rip]	# Image_class, Image_class
-	mov	rdi, QWORD PTR [rax+8]	# Image_class.10_2->size, Image_class.10_2->size
-	mov	edx, 173	#,
+	mov	QWORD PTR buttonimage[rip], rax	# buttonimage, buttonimage.13
+	mov	edx, 182	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	edi, 200	#,
+	call	wmalloc	#
+	mov	QWORD PTR stacklist[rip], rax	# stacklist, stacklist.14
+	mov	edx, 183	#,
+	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	edi, 880	#,
+	call	wmalloc	#
+	mov	QWORD PTR rectangle[rip], rax	# rectangle, rectangle.15
+	mov	edx, 185	#,
+	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	rax, QWORD PTR Image_class[rip]	# Image_class, Image_class
+	mov	rdi, QWORD PTR [rax]	#, Image_class.16_4->size
 	call	wmalloc	#
 	mov	ecx, 0	#,
 	mov	edx, 0	#,
 	mov	esi, OFFSET FLAT:.LC19	#,
-	mov	rdi, rax	#, D.9357
+	mov	rdi, rax	#, D.10050
 	call	Image_new	#
-	mov	QWORD PTR background[rip], rax	# background, background.11
-	mov	rdi, rax	#, background.11
+	mov	QWORD PTR background[rip], rax	# background, background.17
+	mov	rdi, rax	#, background.17
 	call	Widget_toString	#
-	mov	rcx, rax	#, D.9360
+	mov	rcx, rax	#, D.10053
 	mov	edx, OFFSET FLAT:.LC20	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -492,18 +507,18 @@ Main_createInterface:
 	call	Screen_setBackgroundWidget	#
 	mov	rdi, QWORD PTR background[rip]	#, background
 	call	Widget_toString	#
-	mov	rcx, rax	#, D.9363
+	mov	rcx, rax	#, D.10056
 	mov	edx, OFFSET FLAT:.LC20	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.16, c_buttonimage
-	movzx	ebx, ax	# c_buttonimage.16, c_buttonimage.16
-	imul	rbx, rbx, 1688	# tmp95, c_buttonimage.16,
+	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.22, c_buttonimage
+	movzx	ebx, ax	# c_buttonimage.22, c_buttonimage.22
+	imul	rbx, rbx, 1616	# tmp104, c_buttonimage.22,
 	add	rbx, QWORD PTR buttonimage[rip]	# butimg, buttonimage
-	add	eax, 1	# tmp97,
-	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp97
+	add	eax, 1	# tmp106,
+	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp106
 	mov	esi, OFFSET FLAT:.LC21	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_new	#
@@ -514,16 +529,16 @@ Main_createInterface:
 	mov	esi, 93	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_applyDefaultStyle	#
-	mov	QWORD PTR [rbx+8], OFFSET FLAT:button_Graphics_clicked	# MEM[(struct Widget *)butimg_18].click_handler,
+	mov	QWORD PTR [rbx+8], OFFSET FLAT:button_Graphics_clicked	# MEM[(struct Widget *)butimg_20].click_handler,
 	mov	rsi, rbx	#, butimg
 	mov	rdi, QWORD PTR sc[rip]	#, sc
 	call	Screen_addWidget	#
-	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.16, c_buttonimage
-	movzx	ebx, ax	# c_buttonimage.16, c_buttonimage.16
-	imul	rbx, rbx, 1688	# tmp99, c_buttonimage.16,
+	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.22, c_buttonimage
+	movzx	ebx, ax	# c_buttonimage.22, c_buttonimage.22
+	imul	rbx, rbx, 1616	# tmp108, c_buttonimage.22,
 	add	rbx, QWORD PTR buttonimage[rip]	# butimg, buttonimage
-	add	eax, 1	# tmp101,
-	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp101
+	add	eax, 1	# tmp110,
+	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp110
 	mov	esi, OFFSET FLAT:.LC22	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_new	#
@@ -534,16 +549,16 @@ Main_createInterface:
 	mov	esi, 234	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_applyDefaultStyle	#
-	mov	QWORD PTR [rbx+8], OFFSET FLAT:button_Audio_clicked	# MEM[(struct Widget *)butimg_25].click_handler,
+	mov	QWORD PTR [rbx+8], OFFSET FLAT:button_Audio_clicked	# MEM[(struct Widget *)butimg_27].click_handler,
 	mov	rsi, rbx	#, butimg
 	mov	rdi, QWORD PTR sc[rip]	#, sc
 	call	Screen_addWidget	#
-	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.16, c_buttonimage
-	movzx	ebx, ax	# c_buttonimage.16, c_buttonimage.16
-	imul	rbx, rbx, 1688	# tmp103, c_buttonimage.16,
+	movzx	eax, WORD PTR c_buttonimage[rip]	# c_buttonimage.22, c_buttonimage
+	movzx	ebx, ax	# c_buttonimage.22, c_buttonimage.22
+	imul	rbx, rbx, 1616	# tmp112, c_buttonimage.22,
 	add	rbx, QWORD PTR buttonimage[rip]	# butimg, buttonimage
-	add	eax, 1	# tmp105,
-	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp105
+	add	eax, 1	# tmp114,
+	mov	WORD PTR c_buttonimage[rip], ax	# c_buttonimage, tmp114
 	mov	esi, OFFSET FLAT:.LC23	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_new	#
@@ -551,18 +566,31 @@ Main_createInterface:
 	mov	r8d, 20	#,
 	mov	ecx, 20	#,
 	mov	edx, 14	#,
-	mov	esi, 1750	#,
+	mov	esi, 0	#,
 	mov	rdi, rbx	#, butimg
 	call	ButtonImage_applyDefaultStyle	#
-	mov	QWORD PTR [rbx+8], OFFSET FLAT:Screen_buttonExitClicked	# MEM[(struct Widget *)butimg_32].click_handler,
+	movzx	ebp, WORD PTR [rbx+98]	# D.10064, MEM[(struct Widget *)butimg_34].pos.y
+	mov	eax, 0	#,
+	call	Screen_getWidth	#
+	sub	ax, WORD PTR [rbx+100]	# tmp115, MEM[(struct Widget *)butimg_34].pos.w
+	lea	esi, [rax-50]	# tmp117,
+	movzx	esi, si	# tmp118, tmp117
+	mov	edx, ebp	#, D.10064
+	mov	rdi, rbx	#, butimg
+	call	Widget_setPosition	#
+	mov	QWORD PTR [rbx+8], OFFSET FLAT:Screen_buttonExitClicked	# MEM[(struct Widget *)butimg_34].click_handler,
 	mov	rsi, rbx	#, butimg
 	mov	rdi, QWORD PTR sc[rip]	#, sc
 	call	Screen_addWidget	#
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 24
 	pop	rbx	#
+	.cfi_def_cfa_offset 16
+	pop	rbp	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE112:
 	.size	Main_createInterface, .-Main_createInterface
 	.section	.rodata.str1.8
 	.align 8
@@ -584,7 +612,7 @@ Main_createInterface:
 	.globl	main
 	.type	main, @function
 main:
-.LFB99:
+.LFB113:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -606,7 +634,7 @@ main:
 	je	.L47	#,
 	mov	edi, eax	#, ee
 	call	Memory_getError	#
-	mov	rcx, rax	#, D.9307
+	mov	rcx, rax	#, D.9986
 	mov	edx, OFFSET FLAT:.LC24	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -617,29 +645,33 @@ main:
 	mov	rsi, r12	#, argv
 	mov	edi, ebp	#, argc
 	call	MainProgram_parseOptions	#
-	cmp	eax, 3	# D.9310,
-	je	.L48	#,
+	cmp	eax, 3	# D.9989,
+	jne	.L49	#,
+	mov	eax, 0	#,
+	call	Memory_end	#
+	jmp	.L48	#
+.L49:
 	mov	edi, OFFSET FLAT:op	#,
 	call	Screen_setOptions	#
 	mov	DWORD PTR [rsp+12], 0	# e,
-	mov	rax, QWORD PTR Screen_class[rip]	# Screen_class, Screen_class
-	mov	rdi, QWORD PTR [rax+8]	# Screen_class.1_11->size, Screen_class.1_11->size
-	mov	edx, 213	#,
+	mov	edx, 242	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	rax, QWORD PTR Screen_class[rip]	# Screen_class, Screen_class
+	mov	rdi, QWORD PTR [rax]	#, Screen_class.1_13->size
 	call	wmalloc	#
 	mov	edx, 3	#,
 	lea	rsi, [rsp+12]	#,
-	mov	rdi, rax	#, D.9315
+	mov	rdi, rax	#, D.9994
 	call	Screen_new	#
 	mov	QWORD PTR sc[rip], rax	# sc, sc.2
 	mov	edi, DWORD PTR [rsp+12]	# e.3, e
 	test	edi, edi	# e.3
-	jne	.L49	#,
-	test	rax, rax	# sc.2
 	jne	.L50	#,
-.L49:
+	test	rax, rax	# sc.2
+	jne	.L51	#,
+.L50:
 	call	perr_getName	#
-	mov	r8, rax	# D.9322,
+	mov	r8, rax	# D.10001,
 	mov	rcx, QWORD PTR sc[rip]	#, sc
 	mov	edx, OFFSET FLAT:.LC25	#,
 	mov	esi, 1	#,
@@ -648,41 +680,44 @@ main:
 	call	__fprintf_chk	#
 	mov	rdi, QWORD PTR sc[rip]	# sc.4, sc
 	test	rdi, rdi	# sc.4
-	je	.L51	#,
+	je	.L52	#,
 	call	delete	#
-	mov	edx, 216	#,
+	mov	edx, 245	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
-	mov	rdi, rax	#, D.9325
+	mov	rdi, rax	#, D.10004
 	call	wfree	#
 	mov	QWORD PTR sc[rip], 0	# sc,
-.L51:
+.L52:
+	mov	eax, 0	#,
+	call	Memory_end	#
 	mov	edi, DWORD PTR [rsp+12]	#, e
 	call	exit	#
-.L50:
-	mov	BYTE PTR [rax+123], 0	# sc.2_14->drag_on,
-	mov	QWORD PTR [rax+88], OFFSET FLAT:main_keydown	# sc.2_14->key_up,
+.L51:
+	mov	BYTE PTR [rax+172], 1	# sc.2_16->drag_on,
+	mov	QWORD PTR [rax+88], OFFSET FLAT:main_keydown	# sc.2_16->key_up,
+	mov	QWORD PTR [rax+152], 0	# sc.2_16->param,
 	mov	eax, 0	#,
 	call	Main_createInterface	#
 	mov	eax, 0	#,
 	call	AudioMain_Initialize	#
-	test	eax, eax	# D.9327
-	je	.L52	#,
+	test	eax, eax	# D.10006
+	je	.L53	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 50	#,
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC26	#,
 	call	fwrite	#
-.L52:
+.L53:
 	mov	eax, 0	#,
 	call	GraphicsMain_Initialize	#
-	test	eax, eax	# D.9330
-	je	.L53	#,
+	test	eax, eax	# D.10009
+	je	.L54	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 53	#,
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC27	#,
 	call	fwrite	#
-.L53:
+.L54:
 	mov	eax, 0	#,
 	call	Memory_printUsage	#
 	mov	rdi, QWORD PTR sc[rip]	#, sc
@@ -691,16 +726,6 @@ main:
 	call	AudioMain_Destroy	#
 	mov	eax, 0	#,
 	call	GraphicsMain_Destroy	#
-	mov	rdi, QWORD PTR sc[rip]	# sc.4, sc
-	test	rdi, rdi	# sc.4
-	je	.L54	#,
-	call	delete	#
-	mov	edx, 249	#,
-	mov	esi, OFFSET FLAT:.LC18	#,
-	mov	rdi, rax	#, D.9335
-	call	wfree	#
-	mov	QWORD PTR sc[rip], 0	# sc,
-.L54:
 	cmp	QWORD PTR buttonimage[rip], 0	# buttonimage,
 	je	.L55	#,
 	cmp	WORD PTR c_buttonimage[rip], 0	# c_buttonimage,
@@ -708,44 +733,70 @@ main:
 	mov	ebx, 0	# i,
 .L57:
 	movzx	edi, bx	# i, i
-	imul	rdi, rdi, 1688	# tmp108, i,
-	add	rdi, QWORD PTR buttonimage[rip]	# tmp109, buttonimage
+	imul	rdi, rdi, 1616	# tmp109, i,
+	add	rdi, QWORD PTR buttonimage[rip]	# tmp110, buttonimage
 	call	delete	#
 	add	ebx, 1	# i,
 	cmp	WORD PTR c_buttonimage[rip], bx	# c_buttonimage, i
 	ja	.L57	#,
 .L56:
-	mov	edx, 255	#,
+	mov	edx, 283	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
 	mov	rdi, QWORD PTR buttonimage[rip]	#, buttonimage
 	call	wfree	#
 	mov	QWORD PTR buttonimage[rip], 0	# buttonimage,
 .L55:
-	mov	rdi, QWORD PTR background[rip]	# background.8, background
-	test	rdi, rdi	# background.8
+	mov	rdi, QWORD PTR rectangle[rip]	# rectangle.8, rectangle
+	test	rdi, rdi	# rectangle.8
 	je	.L58	#,
-	call	delete	#
-	mov	edx, 260	#,
+	mov	edx, 288	#,
 	mov	esi, OFFSET FLAT:.LC18	#,
-	mov	rdi, rax	#, D.9346
+	call	wfree	#
+	mov	QWORD PTR rectangle[rip], 0	# rectangle,
+.L58:
+	mov	rdi, QWORD PTR stacklist[rip]	# stacklist.10, stacklist
+	test	rdi, rdi	# stacklist.10
+	je	.L59	#,
+	mov	edx, 293	#,
+	mov	esi, OFFSET FLAT:.LC18	#,
+	call	wfree	#
+	mov	QWORD PTR stacklist[rip], 0	# stacklist,
+.L59:
+	mov	rdi, QWORD PTR background[rip]	# background.12, background
+	test	rdi, rdi	# background.12
+	je	.L60	#,
+	call	delete	#
+	mov	edx, 298	#,
+	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	rdi, rax	#, D.10034
 	call	wfree	#
 	mov	QWORD PTR background[rip], 0	# background,
-.L58:
+.L60:
+	mov	rdi, QWORD PTR sc[rip]	# sc.4, sc
+	test	rdi, rdi	# sc.4
+	je	.L61	#,
+	call	delete	#
+	mov	edx, 301	#,
+	mov	esi, OFFSET FLAT:.LC18	#,
+	mov	rdi, rax	#, D.10037
+	call	wfree	#
+	mov	QWORD PTR sc[rip], 0	# sc,
+.L61:
 	mov	eax, 0	#,
 	call	Memory_end	#
 	mov	ebx, eax	# ee,
 	test	eax, eax	# ee
-	je	.L59	#,
+	je	.L62	#,
 	mov	edi, eax	#, ee
 	call	Memory_getError	#
-	mov	rcx, rax	#, D.9349
+	mov	rcx, rax	#, D.10040
 	mov	edx, OFFSET FLAT:.LC28	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	jmp	.L48	#
-.L59:
+.L62:
 	mov	edi, 0	#,
 	call	exit	#
 .L48:
@@ -760,12 +811,17 @@ main:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE113:
 	.size	main, .-main
+	.comm	IMAGE_SUPPORTED_FILES,8,8
 	.local	op
 	.comm	op,24,16
 	.local	buttonimage
 	.comm	buttonimage,8,8
+	.local	stacklist
+	.comm	stacklist,8,8
+	.local	rectangle
+	.comm	rectangle,8,8
 	.local	background
 	.comm	background,8,8
 	.local	sc

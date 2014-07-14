@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT AudioFromGraph.c -march=core2 -mcx16
 # -msahf -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp
 # -mno-fma -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx
@@ -53,10 +53,10 @@
 	.text
 	.type	AudioFromGraph_paCallback, @function
 AudioFromGraph_paCallback:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	mov	r11, rdx	# framesPerBuffer, framesPerBuffer
-	mov	eax, 2	# D.9058,
+	mov	eax, 2	# D.9312,
 	cmp	QWORD PTR [r9+104], 0	# MEM[(struct AudioFromGraph *)vthis_12(D)].samples,
 	je	.L2	#,
 	cmp	QWORD PTR [r9+120], 0	# MEM[(struct AudioFromGraph *)vthis_12(D)].points,
@@ -74,50 +74,50 @@ AudioFromGraph_paCallback:
 	je	.L5	#,
 	mov	r8d, 0	# i,
 .L6:
-	mov	rdi, QWORD PTR [r9+120]	# D.9057, MEM[(struct AudioFromGraph *)vthis_12(D)].points
+	mov	rdi, QWORD PTR [r9+120]	# D.9311, MEM[(struct AudioFromGraph *)vthis_12(D)].points
 	movsx	rax, ecx	# left_phase, left_phase
-	movss	xmm1, DWORD PTR [rdi+rax*8]	# sample_left, D.9064_27->fvalue
+	movss	xmm1, DWORD PTR [rdi+rax*8]	# sample_left, D.9318_27->fvalue
 	lea	eax, [rcx+1]	# left_phase,
 	movsx	rcx, edx	# right_phase, right_phase
-	movss	xmm0, DWORD PTR [rdi+rcx*8]	# sample_right, D.9067_33->fvalue
+	movss	xmm0, DWORD PTR [rdi+rcx*8]	# sample_right, D.9321_33->fvalue
 	lea	r10d, [rdx+1]	# right_phase,
 	movss	DWORD PTR [rsi], xmm1	# MEM[base: out_86, offset: 0B], sample_left
 	movss	DWORD PTR [rsi+4], xmm0	# MEM[base: out_86, offset: 4B], sample_right
 	add	rsi, 8	# out,
-	movzx	edi, WORD PTR [r9+128]	# D.9069, MEM[(struct AudioFromGraph *)vthis_12(D)].points_size
+	movzx	edi, WORD PTR [r9+128]	# D.9323, MEM[(struct AudioFromGraph *)vthis_12(D)].points_size
 	mov	edx, eax	#, left_phase
 	sar	edx, 31	#,
-	idiv	edi	# D.9069
+	idiv	edi	# D.9323
 	mov	ecx, edx	# left_phase,
 	mov	eax, r10d	# tmp129, right_phase
 	mov	edx, r10d	# right_phase, tmp129
 	sar	edx, 31	# right_phase,
-	idiv	edi	# D.9069
+	idiv	edi	# D.9323
 	add	r8d, 1	# i,
 	mov	eax, r8d	# i, i
 	cmp	rax, r11	# i, framesPerBuffer
 	jb	.L6	#,
 	jmp	.L5	#
 .L10:
-	mov	rdi, QWORD PTR [r9+104]	# D.9055, MEM[(struct AudioFromGraph *)vthis_12(D)].samples
+	mov	rdi, QWORD PTR [r9+104]	# D.9309, MEM[(struct AudioFromGraph *)vthis_12(D)].samples
 	movsx	rax, ecx	# left_phase, left_phase
-	movss	xmm1, DWORD PTR [rdi+rax*4]	# sample_left, *D.9073_49
+	movss	xmm1, DWORD PTR [rdi+rax*4]	# sample_left, *D.9327_49
 	lea	eax, [rcx+1]	# left_phase,
 	movsx	rcx, edx	# right_phase, right_phase
-	movss	xmm0, DWORD PTR [rdi+rcx*4]	# sample_right, *D.9075_55
+	movss	xmm0, DWORD PTR [rdi+rcx*4]	# sample_right, *D.9329_55
 	lea	r10d, [rdx+1]	# right_phase,
 	movss	DWORD PTR [rsi], xmm1	# MEM[base: out_97, offset: 0B], sample_left
 	movss	DWORD PTR [rsi+4], xmm0	# MEM[base: out_97, offset: 4B], sample_right
 	add	rsi, 8	# out,
-	movzx	edi, WORD PTR [r9+112]	# D.9077, MEM[(struct AudioFromGraph *)vthis_12(D)].samples_size
+	movzx	edi, WORD PTR [r9+112]	# D.9331, MEM[(struct AudioFromGraph *)vthis_12(D)].samples_size
 	mov	edx, eax	#, left_phase
 	sar	edx, 31	#,
-	idiv	edi	# D.9077
+	idiv	edi	# D.9331
 	mov	ecx, edx	# left_phase,
 	mov	eax, r10d	# tmp136, right_phase
 	mov	edx, r10d	# right_phase, tmp136
 	sar	edx, 31	# right_phase,
-	idiv	edi	# D.9077
+	idiv	edi	# D.9331
 	add	r8d, 1	# i,
 	mov	eax, r8d	# i, i
 	cmp	r11, rax	# framesPerBuffer, i
@@ -125,12 +125,12 @@ AudioFromGraph_paCallback:
 .L5:
 	mov	DWORD PTR [r9+132], ecx	# MEM[(struct AudioFromGraph *)vthis_12(D)].left_phase, left_phase
 	mov	DWORD PTR [r9+136], edx	# MEM[(struct AudioFromGraph *)vthis_12(D)].right_phase, right_phase
-	mov	eax, 0	# D.9058,
+	mov	eax, 0	# D.9312,
 .L2:
 	rep
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	AudioFromGraph_paCallback, .-AudioFromGraph_paCallback
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -155,7 +155,7 @@ AudioFromGraph_paCallback:
 	.globl	AudioFromGraph_vplay
 	.type	AudioFromGraph_vplay, @function
 AudioFromGraph_vplay:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -182,7 +182,7 @@ AudioFromGraph_vplay:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC0	#,
 	call	fwrite	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 	jmp	.L16	#
 .L15:
 	cmp	BYTE PTR [rdi+13], 0	# MEM[(struct Audio *)vthis_2(D)].play,
@@ -193,27 +193,27 @@ AudioFromGraph_vplay:
 	je	.L18	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.9014
+	mov	rcx, rax	#, D.9268
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 	jmp	.L16	#
 .L18:
 	mov	DWORD PTR [rbx+136], 0	# MEM[(struct AudioFromGraph *)vthis_2(D)].right_phase,
 	mov	DWORD PTR [rbx+132], 0	# MEM[(struct AudioFromGraph *)vthis_2(D)].left_phase,
 	call	Pa_GetDefaultOutputDevice	#
-	mov	DWORD PTR [rbx+48], eax	# MEM[(struct Audio *)vthis_2(D)].outputParameters.device, D.9016
+	mov	DWORD PTR [rbx+48], eax	# MEM[(struct Audio *)vthis_2(D)].outputParameters.device, D.9270
 	movzx	edx, BYTE PTR [rbx+34]	# MEM[(struct Audio *)vthis_2(D)].channels, MEM[(struct Audio *)vthis_2(D)].channels
 	mov	DWORD PTR [rbx+52], edx	# MEM[(struct Audio *)vthis_2(D)].outputParameters.channelCount, MEM[(struct Audio *)vthis_2(D)].channels
 	mov	rdx, QWORD PTR [rbx+24]	# MEM[(struct Audio *)vthis_2(D)].audio_format, MEM[(struct Audio *)vthis_2(D)].audio_format
 	mov	QWORD PTR [rbx+56], rdx	# MEM[(struct Audio *)vthis_2(D)].outputParameters.sampleFormat, MEM[(struct Audio *)vthis_2(D)].audio_format
-	mov	edi, eax	#, D.9016
+	mov	edi, eax	#, D.9270
 	call	Pa_GetDeviceInfo	#
-	movsd	xmm0, QWORD PTR [rax+40]	# D.9022, D.9021_20->defaultLowOutputLatency
-	movsd	QWORD PTR [rbx+64], xmm0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.suggestedLatency, D.9022
+	movsd	xmm0, QWORD PTR [rax+40]	# D.9276, D.9275_20->defaultLowOutputLatency
+	movsd	QWORD PTR [rbx+64], xmm0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.suggestedLatency, D.9276
 	mov	QWORD PTR [rbx+72], 0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.hostApiSpecificStreamInfo,
 	movzx	ecx, WORD PTR [rbx+32]	# MEM[(struct Audio *)vthis_2(D)].buffer_size, MEM[(struct Audio *)vthis_2(D)].buffer_size
 	movzx	eax, WORD PTR [rbx+16]	# MEM[(struct Audio *)vthis_2(D)].sample_frequency, MEM[(struct Audio *)vthis_2(D)].sample_frequency
@@ -229,13 +229,13 @@ AudioFromGraph_vplay:
 	je	.L19	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.9031
+	mov	rcx, rax	#, D.9285
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 	jmp	.L16	#
 .L19:
 	test	bpl, bpl	# start_paused
@@ -246,20 +246,20 @@ AudioFromGraph_vplay:
 	je	.L21	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.9037
+	mov	rcx, rax	#, D.9291
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 	jmp	.L16	#
 .L20:
 	mov	BYTE PTR [rbx+14], 1	# MEM[(struct Audio *)vthis_2(D)].pause,
 .L21:
 	mov	BYTE PTR [rbx+13], 1	# MEM[(struct Audio *)vthis_2(D)].play,
 	mov	BYTE PTR [rbx+12], 1	# MEM[(struct Audio *)vthis_2(D)].initialized,
-	mov	eax, 1	# D.9008,
+	mov	eax, 1	# D.9262,
 	jmp	.L16	#
 .L17:
 	cmp	BYTE PTR [rdi+14], 0	# MEM[(struct Audio *)vthis_2(D)].pause,
@@ -270,33 +270,33 @@ AudioFromGraph_vplay:
 	mov	rdi, QWORD PTR [rdi+40]	# MEM[(struct Audio *)vthis_2(D)].pa_stream, MEM[(struct Audio *)vthis_2(D)].pa_stream
 	call	Pa_StopStream	#
 	mov	edi, eax	# pe,
-	mov	eax, 1	# D.9008,
+	mov	eax, 1	# D.9262,
 	test	edi, edi	# pe
 	je	.L16	#,
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.9046
+	mov	rcx, rax	#, D.9300
 	mov	edx, OFFSET FLAT:.LC4	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 	jmp	.L16	#
 .L22:
 	mov	rdi, QWORD PTR [rdi+40]	# MEM[(struct Audio *)vthis_2(D)].pa_stream, MEM[(struct Audio *)vthis_2(D)].pa_stream
 	call	Pa_StartStream	#
 	mov	edi, eax	# pe,
-	mov	eax, 1	# D.9008,
+	mov	eax, 1	# D.9262,
 	test	edi, edi	# pe
 	je	.L16	#,
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.9049
+	mov	rcx, rax	#, D.9303
 	mov	edx, OFFSET FLAT:.LC5	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.9008,
+	mov	eax, 0	# D.9262,
 .L16:
 	add	rsp, 24	#,
 	.cfi_def_cfa_offset 24
@@ -306,12 +306,12 @@ AudioFromGraph_vplay:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	AudioFromGraph_vplay, .-AudioFromGraph_vplay
 	.globl	AudioFromGraph_setType
 	.type	AudioFromGraph_setType, @function
 AudioFromGraph_setType:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -347,31 +347,26 @@ AudioFromGraph_setType:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	AudioFromGraph_setType, .-AudioFromGraph_setType
 	.globl	AudioFromGraph_vdestroy
 	.type	AudioFromGraph_vdestroy, @function
 AudioFromGraph_vdestroy:
-.LFB96:
+.LFB106:
 	.cfi_startproc
-	push	rbx	#
+	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8969	#,
-	call	Static_printObj2	#
-	mov	rdi, rbx	#, vthis
 	call	Audio_vdestroy	#
-	pop	rbx	#
+	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	AudioFromGraph_vdestroy, .-AudioFromGraph_vdestroy
 	.globl	AudioFromGraph_new
 	.type	AudioFromGraph_new, @function
 AudioFromGraph_new:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -379,15 +374,12 @@ AudioFromGraph_new:
 	mov	rbx, rdi	# this, this
 	test	rdi, rdi	# this
 	jne	.L34	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8973	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9227	#,
 	call	Static_nullThis2	#
 	jmp	.L35	#
 .L34:
 	call	Audio_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8973	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
 	mov	DWORD PTR [rbx+8], 1	# MEM[(struct Audio *)this_2(D)].lib,
 	mov	WORD PTR [rbx+32], 256	# MEM[(struct Audio *)this_2(D)].buffer_size,
 	mov	QWORD PTR [rbx+24], 1	# MEM[(struct Audio *)this_2(D)].audio_format,
@@ -404,7 +396,7 @@ AudioFromGraph_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	AudioFromGraph_new, .-AudioFromGraph_new
 	.globl	AudioFromGraph_class
 	.data
@@ -421,29 +413,39 @@ AudioFromGraph_class:
 	.type	type, @object
 	.size	type, 24
 type:
-# vtable:
-	.quad	vtable
 # size:
 	.quad	144
 # name:
 	.quad	.LC6
+# vtable:
+	.quad	vtable
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.8969, @object
-	.size	__FUNCTION__.8969, 24
-__FUNCTION__.8969:
-	.string	"AudioFromGraph_vdestroy"
-	.align 16
-	.type	__FUNCTION__.8973, @object
-	.size	__FUNCTION__.8973, 19
-__FUNCTION__.8973:
+	.type	__FUNCTION__.9227, @object
+	.size	__FUNCTION__.9227, 19
+__FUNCTION__.9227:
 	.string	"AudioFromGraph_new"
 	.data
 	.align 16
 	.type	vtable, @object
 	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IAudio
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	Audio_vdestroy
+# toString:
+	.quad	Audio_vtoString
+	.align 8
+	.type	override_IAudio, @object
+	.size	override_IAudio, 8
+override_IAudio:
+# play:
 	.quad	AudioFromGraph_vplay
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

@@ -28,7 +28,7 @@
 	#define VERBOSE2_EVENTS  1
 	
 	struct ScreenBackground {
-		Widget			*bg_widget;		// any Widget pointer if NULL is not drown
+		Widget		*bg_widget;		// any Widget pointer if NULL is not drown
 		u32			bgcolor;		// background RGB color
 		u8			bg_mode;		// either: BG_STRETCH or BG_CENTERED
 		b8			fillcolor;		// if true FillRect is called before bg_widget is drown
@@ -46,15 +46,25 @@
 		/* Array with widgets on screen */
 		Widget				**widget;
 		Widget				*widget_ontop;
-		u32				c_widget;
+		u32					c_widget;
 		u32 				size_widget;
 		
 		
 		SDL_Surface			*screen;
 		SDL_Event			*pevent;
-		void				(*key_up)(Screen*, SDLKey);
+		void				(*key_up)(Screen*, SDLKey, void *param);
 		void				(*toogle_drag_on)(Screen*);
 		void				(*user_event)(Screen*, SDL_UserEvent*);
+		
+		// method called before or after painting background widget and all screen widgets
+		void				(*before_paint)(Screen*, void *param);
+		void				(*after_paint)(Screen*, void *param);
+		
+		void				(*mouse_down)(Screen*, void *param);
+		void				(*mouse_up)(Screen*, void *param);
+		void				(*mouse_move)(Screen*, void *param);
+		
+		void 				*param;
 		
 		/* Callback array with cparam-s */
 		Callback			*callback;		/*read-only*/
@@ -64,7 +74,7 @@
 		b8				event_handled;	// set to true before run user callback function
 		b8				pool_events;
 		
-		
+		b8				disable_auto_flip;	// disable autoflip of surface after repaint - default false
 		b8				drag_on;
 		b8				need_reload;
 	};										// void mouse_click(Widget *sender, Screen *screen)
@@ -108,6 +118,10 @@
 	const char *Screen_lastWidgetToString(const Screen *screen);
 	const char *Screen_vtoString(const void *vthis);
 	const char *Screen_getEventName(Uint8 sdl_event_type);
+	
+	inline const char *Screen_currentEventName(const Screen *this);
+	
+	inline u8 Screen_getEventButtonIndex(const Screen *this);
 	
 	// Wrappers used to manage cparams 
 	// Call this function after Screen_init to initialize callback cparam 

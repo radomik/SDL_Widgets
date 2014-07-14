@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT AudioTest.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -64,7 +64,7 @@
 	.globl	AudioTest_vplay
 	.type	AudioTest_vplay, @function
 AudioTest_vplay:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -85,21 +85,21 @@ AudioTest_vplay:
 	lea	rsi, [rsp+48]	#,
 	lea	rdi, [rsp+80]	#,
 	call	SDL_OpenAudio	#
-	test	eax, eax	# D.8872
+	test	eax, eax	# D.9124
 	jns	.L3	#,
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.8875
+	mov	rcx, rax	#, D.9127
 	mov	edx, OFFSET FLAT:.LC0	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8877,
+	mov	eax, 0	# D.9129,
 	jmp	.L4	#
 .L3:
 	movzx	r12d, WORD PTR [rsp+56]	# audioBufferSize, obtained.samples
-	mov	ecx, DWORD PTR [rsp+48]	# D.8879, obtained.freq
-	mov	DWORD PTR [rbx+128], ecx	# MEM[(struct AudioTest *)vthis_3(D)].sampleFrequency, D.8879
+	mov	ecx, DWORD PTR [rsp+48]	# D.9131, obtained.freq
+	mov	DWORD PTR [rbx+128], ecx	# MEM[(struct AudioTest *)vthis_3(D)].sampleFrequency, D.9131
 	movzx	r9d, BYTE PTR [rsp+54]	# obtained.channels, obtained.channels
 	movzx	r8d, WORD PTR [rsp+52]	# obtained.format, obtained.format
 	mov	eax, DWORD PTR [rsp+60]	# obtained.size, obtained.size
@@ -118,26 +118,26 @@ AudioTest_vplay:
 	lea	eax, [r8+r8]	# tmp114,
 	cmp	dx, 16	# tmp104,
 	cmove	r8d, eax	# tmp114,, outputAudioBufferSize
-	mov	r9d, DWORD PTR [rbx+128]	# D.8895, MEM[(struct AudioTest *)vthis_3(D)].sampleFrequency
-	mov	esi, DWORD PTR [rbx+104]	# D.8896, MEM[(struct AudioTest *)vthis_3(D)].freq1
-	mov	eax, r9d	#, D.8895
+	mov	r9d, DWORD PTR [rbx+128]	# D.9147, MEM[(struct AudioTest *)vthis_3(D)].sampleFrequency
+	mov	esi, DWORD PTR [rbx+104]	# D.9148, MEM[(struct AudioTest *)vthis_3(D)].freq1
+	mov	eax, r9d	#, D.9147
 	mov	edx, 0	# tmp107,
-	div	esi	# D.8896
+	div	esi	# D.9148
 	mov	edi, eax	# tmp106,
 	mov	DWORD PTR [rbx+120], eax	# MEM[(struct AudioTest *)vthis_3(D)].bytesPerPeriod1, tmp106
-	mov	ecx, DWORD PTR [rbx+108]	# D.8898, MEM[(struct AudioTest *)vthis_3(D)].freq2
-	mov	eax, r9d	# tmp108, D.8895
+	mov	ecx, DWORD PTR [rbx+108]	# D.9150, MEM[(struct AudioTest *)vthis_3(D)].freq2
+	mov	eax, r9d	# tmp108, D.9147
 	mov	edx, 0	# tmp109,
-	div	ecx	# D.8898
+	div	ecx	# D.9150
 	mov	DWORD PTR [rbx+124], eax	# MEM[(struct AudioTest *)vthis_3(D)].bytesPerPeriod2, tmp108
 	mov	DWORD PTR [rsp+40], eax	#, tmp108
 	mov	DWORD PTR [rsp+32], edi	#, tmp106
 	mov	eax, DWORD PTR [rbx+116]	# MEM[(struct AudioTest *)vthis_3(D)].fase2, MEM[(struct AudioTest *)vthis_3(D)].fase2
 	mov	DWORD PTR [rsp+24], eax	#, MEM[(struct AudioTest *)vthis_3(D)].fase2
-	mov	DWORD PTR [rsp+16], ecx	#, D.8898
+	mov	DWORD PTR [rsp+16], ecx	#, D.9150
 	mov	eax, DWORD PTR [rbx+112]	# MEM[(struct AudioTest *)vthis_3(D)].fase1, MEM[(struct AudioTest *)vthis_3(D)].fase1
 	mov	DWORD PTR [rsp+8], eax	#, MEM[(struct AudioTest *)vthis_3(D)].fase1
-	mov	DWORD PTR [rsp], esi	#, D.8896
+	mov	DWORD PTR [rsp], esi	#, D.9148
 	mov	ecx, r12d	#, audioBufferSize
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
@@ -149,16 +149,16 @@ AudioTest_vplay:
 	mov	BYTE PTR [rbx+14], bpl	# MEM[(struct Audio *)vthis_3(D)].pause, start_paused
 	mov	BYTE PTR [rbx+12], 1	# MEM[(struct Audio *)vthis_3(D)].initialized,
 	mov	BYTE PTR [rbx+13], 1	# MEM[(struct Audio *)vthis_3(D)].play,
-	mov	eax, 1	# D.8877,
+	mov	eax, 1	# D.9129,
 	jmp	.L4	#
 .L2:
-	mov	eax, 1	# D.8877,
+	mov	eax, 1	# D.9129,
 	cmp	BYTE PTR [rdi+14], 0	# MEM[(struct Audio *)vthis_3(D)].pause,
 	je	.L4	#,
 	mov	BYTE PTR [rdi+14], 0	# MEM[(struct Audio *)vthis_3(D)].pause,
 	mov	edi, 0	#,
 	call	SDL_PauseAudio	#
-	mov	eax, 1	# D.8877,
+	mov	eax, 1	# D.9129,
 .L4:
 	mov	rbx, QWORD PTR [rsp+112]	#,
 	mov	rbp, QWORD PTR [rsp+120]	#,
@@ -167,11 +167,11 @@ AudioTest_vplay:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	AudioTest_vplay, .-AudioTest_vplay
 	.type	AudioTest_mixAudioCallback, @function
 AudioTest_mixAudioCallback:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	r15	#
 	.cfi_def_cfa_offset 16
@@ -234,7 +234,7 @@ AudioTest_mixAudioCallback:
 	cmp	r15d, 127	# channel1,
 	mov	edx, 127	#,
 	cmovg	r15d, edx	# channel1,, tmp147,
-	mov	BYTE PTR [rbx], r15b	# MEM[base: D.8980_48, offset: 0B], tmp147
+	mov	BYTE PTR [rbx], r15b	# MEM[base: D.9232_48, offset: 0B], tmp147
 	lea	eax, [r12+1]	# fase1,
 	mov	edx, 0	#,
 	div	r14d	# bytesPerPeriod1
@@ -266,31 +266,26 @@ AudioTest_mixAudioCallback:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	AudioTest_mixAudioCallback, .-AudioTest_mixAudioCallback
 	.globl	AudioTest_vdestroy
 	.type	AudioTest_vdestroy, @function
 AudioTest_vdestroy:
-.LFB95:
+.LFB105:
 	.cfi_startproc
-	push	rbx	#
+	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8791	#,
-	call	Static_printObj2	#
-	mov	rdi, rbx	#, vthis
 	call	Audio_vdestroy	#
-	pop	rbx	#
+	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	AudioTest_vdestroy, .-AudioTest_vdestroy
 	.globl	AudioTest_new
 	.type	AudioTest_new, @function
 AudioTest_new:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -298,15 +293,12 @@ AudioTest_new:
 	mov	rbx, rdi	# this, this
 	test	rdi, rdi	# this
 	jne	.L24	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8795	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9047	#,
 	call	Static_nullThis2	#
 	jmp	.L25	#
 .L24:
 	call	Audio_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8795	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
 	mov	DWORD PTR [rbx+8], 0	# MEM[(struct Audio *)this_2(D)].lib,
 	mov	DWORD PTR [rbx+128], 0	# this_2(D)->sampleFrequency,
 	mov	DWORD PTR [rbx+104], 70	# this_2(D)->freq1,
@@ -321,12 +313,12 @@ AudioTest_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	AudioTest_new, .-AudioTest_new
 	.globl	AudioTest_setFreq1
 	.type	AudioTest_setFreq1, @function
 AudioTest_setFreq1:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -361,12 +353,12 @@ AudioTest_setFreq1:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	AudioTest_setFreq1, .-AudioTest_setFreq1
 	.globl	AudioTest_setFreq2
 	.type	AudioTest_setFreq2, @function
 AudioTest_setFreq2:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -401,12 +393,12 @@ AudioTest_setFreq2:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	AudioTest_setFreq2, .-AudioTest_setFreq2
 	.globl	AudioTest_setFase1
 	.type	AudioTest_setFase1, @function
 AudioTest_setFase1:
-.LFB99:
+.LFB109:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -434,12 +426,12 @@ AudioTest_setFase1:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE109:
 	.size	AudioTest_setFase1, .-AudioTest_setFase1
 	.globl	AudioTest_setFase2
 	.type	AudioTest_setFase2, @function
 AudioTest_setFase2:
-.LFB100:
+.LFB110:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -467,7 +459,7 @@ AudioTest_setFase2:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE110:
 	.size	AudioTest_setFase2, .-AudioTest_setFase2
 	.globl	AudioTest_class
 	.data
@@ -484,28 +476,38 @@ AudioTest_class:
 	.type	type, @object
 	.size	type, 24
 type:
-# vtable:
-	.quad	vtable
 # size:
 	.quad	136
 # name:
 	.quad	.LC5
+# vtable:
+	.quad	vtable
 	.section	.rodata
-	.align 16
-	.type	__FUNCTION__.8791, @object
-	.size	__FUNCTION__.8791, 19
-__FUNCTION__.8791:
-	.string	"AudioTest_vdestroy"
-	.type	__FUNCTION__.8795, @object
-	.size	__FUNCTION__.8795, 14
-__FUNCTION__.8795:
+	.type	__FUNCTION__.9047, @object
+	.size	__FUNCTION__.9047, 14
+__FUNCTION__.9047:
 	.string	"AudioTest_new"
 	.data
 	.align 16
 	.type	vtable, @object
 	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IAudio
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	Audio_vdestroy
+# toString:
+	.quad	Audio_vtoString
+	.align 8
+	.type	override_IAudio, @object
+	.size	override_IAudio, 8
+override_IAudio:
+# play:
 	.quad	AudioTest_vplay
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8

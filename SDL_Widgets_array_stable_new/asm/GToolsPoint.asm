@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT GToolsPoint.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -61,7 +61,7 @@
 	.globl	GToolsPoint_apply_brightness_contrast
 	.type	GToolsPoint_apply_brightness_contrast, @function
 GToolsPoint_apply_brightness_contrast:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -83,40 +83,40 @@ GToolsPoint_apply_brightness_contrast:
 	mov	rbp, rdi	# imgsrc, imgsrc
 	test	rdi, rdi	# imgsrc
 	je	.L2	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9862, imgsrc_26(D)->format
-	test	rax, rax	# D.9862
+	mov	rax, QWORD PTR [rdi+8]	# D.10113, imgsrc_26(D)->format
+	test	rax, rax	# D.10113
 	je	.L2	#,
 	mov	r13d, edx	# img_off, img_off
-	mov	rdx, QWORD PTR [rsi+8]	# D.9864, imgdst_28(D)->format
-	test	rdx, rdx	# D.9864
+	mov	rdx, QWORD PTR [rsi+8]	# D.10115, imgdst_28(D)->format
+	test	rdx, rdx	# D.10115
 	je	.L2	#,
-	movzx	edi, WORD PTR [rdi+24]	# D.9866, imgsrc_26(D)->pitch
-	cmp	di, WORD PTR [rsi+24]	# D.9866, imgdst_28(D)->pitch
+	movzx	edi, WORD PTR [rdi+24]	# D.10117, imgsrc_26(D)->pitch
+	cmp	di, WORD PTR [rsi+24]	# D.10117, imgdst_28(D)->pitch
 	jne	.L2	#,
 	mov	r14d, ecx	# allow_overflow, allow_overflow
 	mov	rcx, QWORD PTR [rsi+16]	#,
 	cmp	QWORD PTR [rbp+16], rcx	#,
 	jne	.L2	#,
-	movzx	r15d, BYTE PTR [rax+9]	# D.9876, D.9862_31->BytesPerPixel
-	cmp	r15b, BYTE PTR [rdx+9]	# D.9876, D.9864_32->BytesPerPixel
+	movzx	r15d, BYTE PTR [rax+9]	# D.10127, D.10113_31->BytesPerPixel
+	cmp	r15b, BYTE PTR [rdx+9]	# D.10127, D.10115_32->BytesPerPixel
 	jne	.L2	#,
-	mov	esi, DWORD PTR [rdx+32]	#, D.9864_32->Amask
-	cmp	DWORD PTR [rax+32], esi	# D.9862_31->Amask,
+	mov	esi, DWORD PTR [rdx+32]	#, D.10115_32->Amask
+	cmp	DWORD PTR [rax+32], esi	# D.10113_31->Amask,
 	jne	.L2	#,
-	mov	ecx, DWORD PTR [rdx+20]	#, D.9864_32->Rmask
-	cmp	DWORD PTR [rax+20], ecx	# D.9862_31->Rmask,
+	mov	ecx, DWORD PTR [rdx+20]	#, D.10115_32->Rmask
+	cmp	DWORD PTR [rax+20], ecx	# D.10113_31->Rmask,
 	jne	.L2	#,
 	mov	rsi, QWORD PTR [rdx+24]	#,
 	cmp	QWORD PTR [rax+24], rsi	#,
 	jne	.L2	#,
-	movzx	ecx, BYTE PTR [rdx+17]	#, D.9864_32->Ashift
-	cmp	BYTE PTR [rax+17], cl	# D.9862_31->Ashift,
+	movzx	ecx, BYTE PTR [rdx+17]	#, D.10115_32->Ashift
+	cmp	BYTE PTR [rax+17], cl	# D.10113_31->Ashift,
 	jne	.L2	#,
 	movzx	esi, WORD PTR [rdx+14]	#,
 	cmp	WORD PTR [rax+14], si	#,
 	jne	.L2	#,
-	movzx	ecx, BYTE PTR [rdx+16]	#, D.9864_32->Bshift
-	cmp	BYTE PTR [rax+16], cl	# D.9862_31->Bshift,
+	movzx	ecx, BYTE PTR [rdx+16]	#, D.10115_32->Bshift
+	cmp	BYTE PTR [rax+16], cl	# D.10113_31->Bshift,
 	jne	.L2	#,
 	mov	rsi, QWORD PTR [rbp+32]	#, imgsrc_26(D)->pixels
 	mov	QWORD PTR [rsp+24], rsi	# %sfp,
@@ -132,27 +132,27 @@ GToolsPoint_apply_brightness_contrast:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC0	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9905,
+	mov	eax, -56	# D.10156,
 	jmp	.L4	#
 .L3:
 	lea	eax, [r15-3]	# tmp267,
 	cmp	al, 1	# tmp267,
 	jbe	.L5	#,
-	movzx	ecx, r15b	# D.9876, D.9876
+	movzx	ecx, r15b	# D.10127, D.10127
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9905,
+	mov	eax, 100	# D.10156,
 	jmp	.L4	#
 .L5:
 	movd	r12d, xmm0	# img_mul, img_mul
-	movzx	edi, di	#, D.9866
+	movzx	edi, di	#, D.10117
 	mov	DWORD PTR [rsp+40], edi	# %sfp,
-	movzx	eax, r15b	# D.9876, D.9876
-	imul	eax, DWORD PTR [rbp+16]	# D.9876, imgsrc_26(D)->w
-	mov	DWORD PTR [rsp+20], eax	# %sfp, D.9876
+	movzx	eax, r15b	# D.10127, D.10127
+	imul	eax, DWORD PTR [rbp+16]	# D.10127, imgsrc_26(D)->w
+	mov	DWORD PTR [rsp+20], eax	# %sfp, D.10127
 	mov	eax, edi	#,
 	imul	eax, DWORD PTR [rbx+20]	# tmp271, imgdst_28(D)->h
 	add	rax, QWORD PTR [rsp+8]	# tmp271, %sfp
@@ -165,7 +165,7 @@ GToolsPoint_apply_brightness_contrast:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_LockSurface	#
 .L7:
-	cmp	r15b, 3	# D.9876,
+	cmp	r15b, 3	# D.10127,
 	jne	.L37	#,
 	jmp	.L29	#
 .L17:
@@ -227,7 +227,7 @@ GToolsPoint_apply_brightness_contrast:
 	jb	.L17	#,
 	jmp	.L18	#
 .L37:
-	cmp	r15b, 4	# D.9876,
+	cmp	r15b, 4	# D.10127,
 	jne	.L18	#,
 	.p2align 4,,7
 	jmp	.L31	#
@@ -255,31 +255,31 @@ GToolsPoint_apply_brightness_contrast:
 	mov	r15d, 0	# pitches,
 .L21:
 	mov	r8d, DWORD PTR [rdx]	# col, MEM[(u32 *)pixels_src_11]
-	mov	rax, QWORD PTR [rbp+8]	# D.9862, imgsrc_26(D)->format
-	mov	esi, DWORD PTR [rax+32]	#, D.9862_123->Amask
+	mov	rax, QWORD PTR [rbp+8]	# D.10113, imgsrc_26(D)->format
+	mov	esi, DWORD PTR [rax+32]	#, D.10113_123->Amask
 	and	esi, r8d	#, col
 	mov	DWORD PTR [rsp+8], esi	# %sfp,
-	movzx	r11d, BYTE PTR [rax+14]	# D.9949, D.9862_123->Rshift
-	movzx	ebx, BYTE PTR [rax+15]	# D.9953, D.9862_123->Gshift
-	movzx	r12d, BYTE PTR [rax+16]	# D.9956, D.9862_123->Bshift
-	cvtsi2ss	xmm0, DWORD PTR [rsp+44]	# D.9930, %sfp
+	movzx	r11d, BYTE PTR [rax+14]	# D.10200, D.10113_123->Rshift
+	movzx	ebx, BYTE PTR [rax+15]	# D.10204, D.10113_123->Gshift
+	movzx	r12d, BYTE PTR [rax+16]	# D.10207, D.10113_123->Bshift
+	cvtsi2ss	xmm0, DWORD PTR [rsp+44]	# D.10181, %sfp
 	mov	esi, r8d	# tmp283, col
-	and	esi, DWORD PTR [rax+20]	# tmp283, D.9862_123->Rmask
+	and	esi, DWORD PTR [rax+20]	# tmp283, D.10113_123->Rmask
 	mov	ecx, r11d	#,
 	shr	esi, cl	# tmp284,
 	cvtsi2ss	xmm1, esi	# tmp285, tmp284
 	mulss	xmm1, xmm2	# tmp286, img_mul
-	addss	xmm1, xmm0	# tmp287, D.9930
+	addss	xmm1, xmm0	# tmp287, D.10181
 	cvttss2si	edi, xmm1	# rr, tmp287
 	mov	esi, r8d	# tmp288, col
-	and	esi, DWORD PTR [rax+24]	# tmp288, D.9862_123->Gmask
+	and	esi, DWORD PTR [rax+24]	# tmp288, D.10113_123->Gmask
 	mov	ecx, ebx	#,
 	shr	esi, cl	# tmp289,
 	cvtsi2ss	xmm1, esi	# tmp290, tmp289
 	mulss	xmm1, xmm2	# tmp291, img_mul
-	addss	xmm1, xmm0	# tmp292, D.9930
+	addss	xmm1, xmm0	# tmp292, D.10181
 	cvttss2si	esi, xmm1	# gg, tmp292
-	and	r8d, DWORD PTR [rax+28]	# tmp293, D.9862_123->Bmask
+	and	r8d, DWORD PTR [rax+28]	# tmp293, D.10113_123->Bmask
 	mov	ecx, r12d	#,
 	shr	r8d, cl	# tmp294,
 	cvtsi2ss	xmm1, r8d	# tmp295, tmp294
@@ -348,13 +348,13 @@ GToolsPoint_apply_brightness_contrast:
 .L18:
 	cmp	DWORD PTR [rbx+40], 0	# imgdst_28(D)->offset,
 	jne	.L28	#,
-	mov	eax, 0	# D.9905,
+	mov	eax, 0	# D.10156,
 	test	DWORD PTR [rbx], 16389	# imgdst_28(D)->flags,
 	je	.L4	#,
 .L28:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9905,
+	mov	eax, 0	# D.10156,
 .L4:
 	mov	rbx, QWORD PTR [rsp+56]	#,
 	mov	rbp, QWORD PTR [rsp+64]	#,
@@ -366,7 +366,7 @@ GToolsPoint_apply_brightness_contrast:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	GToolsPoint_apply_brightness_contrast, .-GToolsPoint_apply_brightness_contrast
 	.section	.rodata.str1.8
 	.align 8
@@ -379,7 +379,7 @@ GToolsPoint_apply_brightness_contrast:
 	.globl	GToolsPoint_desaturize_std
 	.type	GToolsPoint_desaturize_std, @function
 GToolsPoint_desaturize_std:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -401,38 +401,38 @@ GToolsPoint_desaturize_std:
 	mov	rbp, rdi	# imgsrc, imgsrc
 	test	rdi, rdi	# imgsrc
 	je	.L40	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9764, imgsrc_20(D)->format
-	test	rax, rax	# D.9764
+	mov	rax, QWORD PTR [rdi+8]	# D.10015, imgsrc_20(D)->format
+	test	rax, rax	# D.10015
 	je	.L40	#,
-	mov	rdx, QWORD PTR [rsi+8]	# D.9766, imgdst_22(D)->format
-	test	rdx, rdx	# D.9766
+	mov	rdx, QWORD PTR [rsi+8]	# D.10017, imgdst_22(D)->format
+	test	rdx, rdx	# D.10017
 	je	.L40	#,
-	movzx	edi, WORD PTR [rdi+24]	# D.9768, imgsrc_20(D)->pitch
-	cmp	di, WORD PTR [rsi+24]	# D.9768, imgdst_22(D)->pitch
+	movzx	edi, WORD PTR [rdi+24]	# D.10019, imgsrc_20(D)->pitch
+	cmp	di, WORD PTR [rsi+24]	# D.10019, imgdst_22(D)->pitch
 	jne	.L40	#,
 	mov	rcx, QWORD PTR [rsi+16]	#,
 	cmp	QWORD PTR [rbp+16], rcx	#,
 	jne	.L40	#,
-	movzx	r12d, BYTE PTR [rax+9]	# D.9778, D.9764_25->BytesPerPixel
-	cmp	r12b, BYTE PTR [rdx+9]	# D.9778, D.9766_26->BytesPerPixel
+	movzx	r12d, BYTE PTR [rax+9]	# D.10029, D.10015_25->BytesPerPixel
+	cmp	r12b, BYTE PTR [rdx+9]	# D.10029, D.10017_26->BytesPerPixel
 	jne	.L40	#,
-	mov	esi, DWORD PTR [rdx+32]	#, D.9766_26->Amask
-	cmp	DWORD PTR [rax+32], esi	# D.9764_25->Amask,
+	mov	esi, DWORD PTR [rdx+32]	#, D.10017_26->Amask
+	cmp	DWORD PTR [rax+32], esi	# D.10015_25->Amask,
 	jne	.L40	#,
-	mov	r11d, DWORD PTR [rdx+20]	#, D.9766_26->Rmask
-	cmp	DWORD PTR [rax+20], r11d	# D.9764_25->Rmask,
+	mov	r11d, DWORD PTR [rdx+20]	#, D.10017_26->Rmask
+	cmp	DWORD PTR [rax+20], r11d	# D.10015_25->Rmask,
 	jne	.L40	#,
 	mov	rcx, QWORD PTR [rdx+24]	#,
 	cmp	QWORD PTR [rax+24], rcx	#,
 	jne	.L40	#,
-	movzx	ecx, BYTE PTR [rdx+17]	#, D.9766_26->Ashift
-	cmp	BYTE PTR [rax+17], cl	# D.9764_25->Ashift,
+	movzx	ecx, BYTE PTR [rdx+17]	#, D.10017_26->Ashift
+	cmp	BYTE PTR [rax+17], cl	# D.10015_25->Ashift,
 	jne	.L40	#,
 	movzx	esi, WORD PTR [rdx+14]	#,
 	cmp	WORD PTR [rax+14], si	#,
 	jne	.L40	#,
-	movzx	ecx, BYTE PTR [rdx+16]	#, D.9766_26->Bshift
-	cmp	BYTE PTR [rax+16], cl	# D.9764_25->Bshift,
+	movzx	ecx, BYTE PTR [rdx+16]	#, D.10017_26->Bshift
+	cmp	BYTE PTR [rax+16], cl	# D.10015_25->Bshift,
 	jne	.L40	#,
 	mov	r14, QWORD PTR [rbp+32]	# pixels_src, imgsrc_20(D)->pixels
 	test	r14, r14	# pixels_src
@@ -446,24 +446,24 @@ GToolsPoint_desaturize_std:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC2	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9807,
+	mov	eax, -56	# D.10058,
 	jmp	.L42	#
 .L41:
 	lea	eax, [r12-3]	# tmp266,
 	cmp	al, 1	# tmp266,
 	jbe	.L43	#,
-	movzx	ecx, r12b	# D.9778, D.9778
+	movzx	ecx, r12b	# D.10029, D.10029
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9807,
+	mov	eax, 100	# D.10058,
 	jmp	.L42	#
 .L43:
-	movzx	edi, di	#, D.9768
+	movzx	edi, di	#, D.10019
 	mov	DWORD PTR [rsp+4], edi	# %sfp,
-	movzx	r15d, r12b	# D.9778, D.9778
+	movzx	r15d, r12b	# D.10029, D.10029
 	imul	r15d, DWORD PTR [rbp+16]	# wb, imgsrc_20(D)->w
 	mov	eax, edi	#,
 	imul	eax, DWORD PTR [rbx+20]	# tmp270, imgdst_22(D)->h
@@ -477,7 +477,7 @@ GToolsPoint_desaturize_std:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_LockSurface	#
 .L45:
-	cmp	r12b, 3	# D.9778,
+	cmp	r12b, 3	# D.10029,
 	jne	.L76	#,
 	jmp	.L71	#
 .L57:
@@ -503,33 +503,33 @@ GToolsPoint_desaturize_std:
 	mov	edx, 0	# pitches,
 .L49:
 	mov	ecx, DWORD PTR [r14]	# col, MEM[(u32 *)pixels_src_8]
-	mov	rax, QWORD PTR [rbp+8]	# D.9764, imgsrc_20(D)->format
+	mov	rax, QWORD PTR [rbp+8]	# D.10015, imgsrc_20(D)->format
 	mov	esi, ecx	# r, col
-	and	esi, DWORD PTR [rax+20]	# r, D.9764_98->Rmask
+	and	esi, DWORD PTR [rax+20]	# r, D.10015_98->Rmask
 	mov	r8d, ecx	# g, col
-	and	r8d, DWORD PTR [rax+24]	# g, D.9764_98->Gmask
+	and	r8d, DWORD PTR [rax+24]	# g, D.10015_98->Gmask
 	mov	edi, ecx	# b, col
-	and	edi, DWORD PTR [rax+28]	# b, D.9764_98->Bmask
-	movzx	ecx, BYTE PTR [rax+14]	# D.9764_98->Rshift, D.9764_98->Rshift
-	shr	esi, cl	# r, D.9764_98->Rshift
+	and	edi, DWORD PTR [rax+28]	# b, D.10015_98->Bmask
+	movzx	ecx, BYTE PTR [rax+14]	# D.10015_98->Rshift, D.10015_98->Rshift
+	shr	esi, cl	# r, D.10015_98->Rshift
 	mov	ecx, esi	# tmp277, tmp275
 	cvtsi2sd	xmm3, rcx	# tmp276, tmp277
-	mulsd	xmm3, xmm2	# D.9836, tmp343
-	cvttsd2si	rsi, xmm3	# r, D.9836
-	movzx	ecx, BYTE PTR [rax+15]	# D.9764_98->Gshift, D.9764_98->Gshift
-	shr	r8d, cl	# g, D.9764_98->Gshift
+	mulsd	xmm3, xmm2	# D.10087, tmp343
+	cvttsd2si	rsi, xmm3	# r, D.10087
+	movzx	ecx, BYTE PTR [rax+15]	# D.10015_98->Gshift, D.10015_98->Gshift
+	shr	r8d, cl	# g, D.10015_98->Gshift
 	mov	ecx, r8d	# tmp286, tmp284
 	cvtsi2sd	xmm3, rcx	# tmp285, tmp286
-	mulsd	xmm3, xmm1	# D.9838, tmp344
-	movzx	ecx, BYTE PTR [rax+16]	# D.9764_98->Bshift, D.9764_98->Bshift
+	mulsd	xmm3, xmm1	# D.10089, tmp344
+	movzx	ecx, BYTE PTR [rax+16]	# D.10015_98->Bshift, D.10015_98->Bshift
 	mov	eax, edi	# tmp292, b
-	shr	eax, cl	# tmp292, D.9764_98->Bshift
+	shr	eax, cl	# tmp292, D.10015_98->Bshift
 	mov	eax, eax	# tmp294, tmp292
 	cvtsi2sd	xmm4, rax	# tmp293, tmp294
-	mulsd	xmm4, xmm0	# D.9840, tmp345
-	cvttsd2si	rcx, xmm3	# tmp299, D.9838
+	mulsd	xmm4, xmm0	# D.10091, tmp345
+	cvttsd2si	rcx, xmm3	# tmp299, D.10089
 	add	esi, ecx	# r, tmp299
-	cvttsd2si	rax, xmm4	# tmp301, D.9840
+	cvttsd2si	rax, xmm4	# tmp301, D.10091
 	add	eax, esi	# tmp303, r
 	movzx	ecx, al	# tmp305, tmp303
 	imul	cx, cx, 257	# tmp306, tmp305,
@@ -549,7 +549,7 @@ GToolsPoint_desaturize_std:
 	jb	.L57	#,
 	jmp	.L58	#
 .L76:
-	cmp	r12b, 4	# D.9778,
+	cmp	r12b, 4	# D.10029,
 	jne	.L58	#,
 	.p2align 4,,7
 	jmp	.L73	#
@@ -576,35 +576,35 @@ GToolsPoint_desaturize_std:
 	mov	edx, 0	# pitches,
 .L61:
 	mov	esi, DWORD PTR [r14]	# col, MEM[(u32 *)pixels_src_11]
-	mov	rax, QWORD PTR [rbp+8]	# D.9764, imgsrc_20(D)->format
+	mov	rax, QWORD PTR [rbp+8]	# D.10015, imgsrc_20(D)->format
 	mov	r11d, esi	# r, col
-	and	r11d, DWORD PTR [rax+20]	# r, D.9764_143->Rmask
+	and	r11d, DWORD PTR [rax+20]	# r, D.10015_143->Rmask
 	mov	r12d, esi	# g, col
-	and	r12d, DWORD PTR [rax+24]	# g, D.9764_143->Gmask
+	and	r12d, DWORD PTR [rax+24]	# g, D.10015_143->Gmask
 	mov	edi, esi	# b, col
-	and	edi, DWORD PTR [rax+28]	# b, D.9764_143->Bmask
-	movzx	r10d, BYTE PTR [rax+14]	# D.9831, D.9764_143->Rshift
-	movzx	r9d, BYTE PTR [rax+15]	# D.9833, D.9764_143->Gshift
-	movzx	r8d, BYTE PTR [rax+16]	# D.9834, D.9764_143->Bshift
+	and	edi, DWORD PTR [rax+28]	# b, D.10015_143->Bmask
+	movzx	r10d, BYTE PTR [rax+14]	# D.10082, D.10015_143->Rshift
+	movzx	r9d, BYTE PTR [rax+15]	# D.10084, D.10015_143->Gshift
+	movzx	r8d, BYTE PTR [rax+16]	# D.10085, D.10015_143->Bshift
 	mov	ecx, r10d	#,
 	shr	r11d, cl	# tmp308,
 	mov	ecx, r11d	# tmp310, tmp308
 	cvtsi2sd	xmm3, rcx	# tmp309, tmp310
-	mulsd	xmm3, xmm2	# D.9836, tmp346
-	cvttsd2si	r11, xmm3	# r, D.9836
+	mulsd	xmm3, xmm2	# D.10087, tmp346
+	cvttsd2si	r11, xmm3	# r, D.10087
 	mov	ecx, r9d	#,
 	shr	r12d, cl	# tmp316,
 	mov	ecx, r12d	# tmp318, tmp316
 	cvtsi2sd	xmm3, rcx	# tmp317, tmp318
-	mulsd	xmm3, xmm1	# D.9838, tmp347
+	mulsd	xmm3, xmm1	# D.10089, tmp347
 	mov	ecx, r8d	#,
 	shr	edi, cl	# tmp323,
 	mov	ecx, edi	# tmp325, tmp323
 	cvtsi2sd	xmm4, rcx	# tmp324, tmp325
-	mulsd	xmm4, xmm0	# D.9840, tmp348
-	cvttsd2si	r12, xmm3	# tmp330, D.9838
+	mulsd	xmm4, xmm0	# D.10091, tmp348
+	cvttsd2si	r12, xmm3	# tmp330, D.10089
 	add	r11d, r12d	# r, tmp330
-	cvttsd2si	rcx, xmm4	# tmp332, D.9840
+	cvttsd2si	rcx, xmm4	# tmp332, D.10091
 	lea	edi, [r11+rcx]	# r,
 	mov	r11d, edi	#, r
 	mov	ecx, r10d	#,
@@ -614,9 +614,9 @@ GToolsPoint_desaturize_std:
 	mov	ecx, r9d	#,
 	sal	r11d, cl	#,
 	or	r10d, r11d	# tmp336, tmp335
-	and	esi, DWORD PTR [rax+32]	# tmp337, D.9764_143->Amask
-	mov	eax, r10d	# D.9851, tmp336
-	or	eax, esi	# D.9851, tmp337
+	and	esi, DWORD PTR [rax+32]	# tmp337, D.10015_143->Amask
+	mov	eax, r10d	# D.10102, tmp336
+	or	eax, esi	# D.10102, tmp337
 	mov	ecx, r8d	#,
 	sal	edi, cl	# tmp338,
 	or	eax, edi	# tmp339, tmp338
@@ -636,13 +636,13 @@ GToolsPoint_desaturize_std:
 .L58:
 	cmp	DWORD PTR [rbx+40], 0	# imgdst_22(D)->offset,
 	jne	.L70	#,
-	mov	eax, 0	# D.9807,
+	mov	eax, 0	# D.10058,
 	test	DWORD PTR [rbx], 16389	# imgdst_22(D)->flags,
 	je	.L42	#,
 .L70:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9807,
+	mov	eax, 0	# D.10058,
 .L42:
 	mov	rbx, QWORD PTR [rsp+24]	#,
 	mov	rbp, QWORD PTR [rsp+32]	#,
@@ -654,7 +654,7 @@ GToolsPoint_desaturize_std:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	GToolsPoint_desaturize_std, .-GToolsPoint_desaturize_std
 	.section	.rodata.str1.8
 	.align 8
@@ -667,7 +667,7 @@ GToolsPoint_desaturize_std:
 	.globl	GToolsPoint_create_histograms
 	.type	GToolsPoint_create_histograms, @function
 GToolsPoint_create_histograms:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -689,8 +689,8 @@ GToolsPoint_create_histograms:
 	mov	rdx, QWORD PTR [rdi+32]	# pixels_src, image_8(D)->pixels
 	test	rdx, rdx	# pixels_src
 	je	.L79	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9704, image_8(D)->format
-	test	rax, rax	# D.9704
+	mov	rax, QWORD PTR [rdi+8]	# D.9955, image_8(D)->format
+	test	rax, rax	# D.9955
 	jne	.L80	#,
 .L79:
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
@@ -698,10 +698,10 @@ GToolsPoint_create_histograms:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC7	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9706,
+	mov	eax, -56	# D.9957,
 	jmp	.L81	#
 .L80:
-	movzx	ebp, BYTE PTR [rax+9]	# Bpp, D.9704_10->BytesPerPixel
+	movzx	ebp, BYTE PTR [rax+9]	# Bpp, D.9955_10->BytesPerPixel
 	lea	eax, [rbp-3]	# tmp138,
 	cmp	al, 1	# tmp138,
 	jbe	.L82	#,
@@ -711,7 +711,7 @@ GToolsPoint_create_histograms:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9706,
+	mov	eax, 100	# D.9957,
 	jmp	.L81	#
 .L82:
 	movzx	r9d, WORD PTR [rdi+24]	# pitch, image_8(D)->pitch
@@ -863,35 +863,35 @@ GToolsPoint_create_histograms:
 	mov	r10d, 0	# pitches,
 .L101:
 	mov	edi, DWORD PTR [rdx]	# col, MEM[(u32 *)pixels_src_5]
-	mov	rax, QWORD PTR [r8+8]	# D.9704, image_8(D)->format
+	mov	rax, QWORD PTR [r8+8]	# D.9955, image_8(D)->format
 	mov	r15d, edi	# tmp183, col
-	and	r15d, DWORD PTR [rax+24]	# tmp183, D.9704_40->Gmask
-	movzx	ecx, BYTE PTR [rax+15]	# D.9704_40->Gshift, D.9704_40->Gshift
-	shr	r15d, cl	# g, D.9704_40->Gshift
+	and	r15d, DWORD PTR [rax+24]	# tmp183, D.9955_40->Gmask
+	movzx	ecx, BYTE PTR [rax+15]	# D.9955_40->Gshift, D.9955_40->Gshift
+	shr	r15d, cl	# g, D.9955_40->Gshift
 	mov	r14d, edi	# tmp185, col
-	and	r14d, DWORD PTR [rax+28]	# tmp185, D.9704_40->Bmask
-	movzx	ecx, BYTE PTR [rax+16]	# D.9704_40->Bshift, D.9704_40->Bshift
-	shr	r14d, cl	# b, D.9704_40->Bshift
-	and	edi, DWORD PTR [rax+20]	# tmp187, D.9704_40->Rmask
-	movzx	ecx, BYTE PTR [rax+14]	# D.9704_40->Rshift, D.9704_40->Rshift
-	shr	edi, cl	# tmp189, D.9704_40->Rshift
+	and	r14d, DWORD PTR [rax+28]	# tmp185, D.9955_40->Bmask
+	movzx	ecx, BYTE PTR [rax+16]	# D.9955_40->Bshift, D.9955_40->Bshift
+	shr	r14d, cl	# b, D.9955_40->Bshift
+	and	edi, DWORD PTR [rax+20]	# tmp187, D.9955_40->Rmask
+	movzx	ecx, BYTE PTR [rax+14]	# D.9955_40->Rshift, D.9955_40->Rshift
+	shr	edi, cl	# tmp189, D.9955_40->Rshift
 	movzx	edi, dil	# tmp190, tmp189
 	mov	rax, QWORD PTR [rsi]	# *colors_30(D), *colors_30(D)
-	add	DWORD PTR [rax+rdi*4], 1	# *D.9740_65,
+	add	DWORD PTR [rax+rdi*4], 1	# *D.9991_65,
 	movzx	ecx, r15b	# g, g
 	mov	rax, QWORD PTR [rsi+8]	# MEM[(u32 * *)colors_30(D) + 8B], MEM[(u32 * *)colors_30(D) + 8B]
-	add	DWORD PTR [rax+rcx*4], 1	# *D.9746_73,
+	add	DWORD PTR [rax+rcx*4], 1	# *D.9997_73,
 	movzx	ecx, r14b	# b, b
 	mov	rax, QWORD PTR [rsi+16]	# MEM[(u32 * *)colors_30(D) + 16B], MEM[(u32 * *)colors_30(D) + 16B]
-	add	DWORD PTR [rax+rcx*4], 1	# *D.9752_81,
+	add	DWORD PTR [rax+rcx*4], 1	# *D.10003_81,
 	add	rdx, r12	# pixels_src, Bpp
 	add	r10d, ebp	# pitches, Bpp
 	cmp	rbx, rdx	# pixels_src_end, pixels_src
 	ja	.L103	#,
-	mov	eax, 0	# D.9706,
+	mov	eax, 0	# D.9957,
 	jmp	.L81	#
 .L104:
-	mov	eax, 0	# D.9706,
+	mov	eax, 0	# D.9957,
 .L81:
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
@@ -903,7 +903,7 @@ GToolsPoint_create_histograms:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	GToolsPoint_create_histograms, .-GToolsPoint_create_histograms
 	.section	.rodata.str1.8
 	.align 8
@@ -913,7 +913,7 @@ GToolsPoint_create_histograms:
 	.globl	GToolsPoint_calculate_binary_threshold
 	.type	GToolsPoint_calculate_binary_threshold, @function
 GToolsPoint_calculate_binary_threshold:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	push	r13	#
 	.cfi_def_cfa_offset 16
@@ -936,12 +936,12 @@ GToolsPoint_calculate_binary_threshold:
 	jmp	.L123	#
 .L112:
 	mov	eax, edx	# k, k
-	mov	ecx, DWORD PTR [rdi+rax*4]	# D.9669, *D.9668_36
-	mov	eax, ecx	#, D.9669
+	mov	ecx, DWORD PTR [rdi+rax*4]	# D.9920, *D.9919_36
+	mov	eax, ecx	#, D.9920
 	imul	eax, edx	# tmp139, k
 	add	r11, rax	# t_cz, tmp139
-	mov	ecx, ecx	# D.9669, D.9669
-	add	r9, rcx	# tmp_t_cz, D.9669
+	mov	ecx, ecx	# D.9920, D.9920
+	add	r9, rcx	# tmp_t_cz, D.9920
 	add	edx, 1	# k,
 	cmp	edx, r8d	# k, m
 	jbe	.L112	#,
@@ -960,12 +960,12 @@ GToolsPoint_calculate_binary_threshold:
 	mov	eax, 0	# t_b,
 .L115:
 	mov	edx, ecx	# k, k
-	mov	r8d, DWORD PTR [rdi+rdx*4]	# D.9669, *D.9668_54
-	mov	edx, r8d	#, D.9669
+	mov	r8d, DWORD PTR [rdi+rdx*4]	# D.9920, *D.9919_54
+	mov	edx, r8d	#, D.9920
 	imul	edx, ecx	# tmp145, k
 	add	rax, rdx	# t_b, tmp145
-	mov	r8d, r8d	# D.9669, D.9669
-	add	r10, r8	# tmp_t_b, D.9669
+	mov	r8d, r8d	# D.9920, D.9920
+	add	r10, r8	# tmp_t_b, D.9920
 	add	ecx, 1	# k,
 	cmp	ecx, 256	# k,
 	jne	.L115	#,
@@ -973,9 +973,9 @@ GToolsPoint_calculate_binary_threshold:
 	je	.L114	#,
 	mov	edx, 0	# tmp149,
 	div	r10	# tmp_t_b
-	sub	r11, rax	# D.9677, tmp148
+	sub	r11, rax	# D.9928, tmp148
 	imul	r9, r10	# tmp150, tmp_t_b
-	imul	r9, r11	# tmp151, D.9677
+	imul	r9, r11	# tmp151, D.9928
 	imul	r11, r9	# tmp_t, tmp151
 	cmp	r11, rbp	# tmp_t, tmp_t_2
 	jbe	.L114	#,
@@ -1000,20 +1000,20 @@ GToolsPoint_calculate_binary_threshold:
 .L125:
 	mov	rbx, rsi	# t, t
 .L111:
-	mov	ecx, 0	# D.9684,
+	mov	ecx, 0	# D.9935,
 	mov	edx, 0	# k,
 	mov	r8d, 0	# tmp_t_cz,
 	mov	esi, 0	# t_cz,
 .L117:
-	mov	ecx, DWORD PTR [rdi+rcx*4]	# D.9669, *D.9668_83
+	mov	ecx, DWORD PTR [rdi+rcx*4]	# D.9920, *D.9919_83
 	mov	eax, edx	#, k
-	imul	eax, ecx	# tmp153, D.9669
+	imul	eax, ecx	# tmp153, D.9920
 	add	rsi, rax	# t_cz, tmp153
-	mov	ecx, ecx	# D.9669, D.9669
-	add	r8, rcx	# tmp_t_cz, D.9669
+	mov	ecx, ecx	# D.9920, D.9920
+	add	r8, rcx	# tmp_t_cz, D.9920
 	add	edx, 1	# k,
-	mov	ecx, edx	# D.9684, k
-	cmp	rbx, rcx	# t, D.9684
+	mov	ecx, edx	# D.9935, k
+	cmp	rbx, rcx	# t, D.9935
 	jae	.L117	#,
 	mov	rax, rsi	# t_cz, t_cz
 	test	r8, r8	# tmp_t_cz
@@ -1029,12 +1029,12 @@ GToolsPoint_calculate_binary_threshold:
 	mov	r8d, 0	# t_b,
 .L120:
 	mov	eax, edx	# k, k
-	mov	ecx, DWORD PTR [rdi+rax*4]	# D.9669, *D.9668_102
-	mov	eax, ecx	#, D.9669
+	mov	ecx, DWORD PTR [rdi+rax*4]	# D.9920, *D.9919_102
+	mov	eax, ecx	#, D.9920
 	imul	eax, edx	# tmp159, k
 	add	r8, rax	# t_b, tmp159
-	mov	ecx, ecx	# D.9669, D.9669
-	add	r9, rcx	# tmp_t_b, D.9669
+	mov	ecx, ecx	# D.9920, D.9920
+	add	r9, rcx	# tmp_t_b, D.9920
 	add	edx, 1	# k,
 	cmp	edx, 255	# k,
 	jbe	.L120	#,
@@ -1061,11 +1061,11 @@ GToolsPoint_calculate_binary_threshold:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 1	# D.9697,
+	mov	eax, 1	# D.9948,
 	jmp	.L122	#
 .L121:
 	mov	QWORD PTR [r12], rbx	# *threshold_117(D), t
-	mov	eax, 0	# D.9697,
+	mov	eax, 0	# D.9948,
 .L122:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 40
@@ -1079,7 +1079,7 @@ GToolsPoint_calculate_binary_threshold:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	GToolsPoint_calculate_binary_threshold, .-GToolsPoint_calculate_binary_threshold
 	.section	.rodata.str1.8
 	.align 8
@@ -1095,7 +1095,7 @@ GToolsPoint_calculate_binary_threshold:
 	.globl	GToolsPoint_apply_bin_threshold
 	.type	GToolsPoint_apply_bin_threshold, @function
 GToolsPoint_apply_bin_threshold:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1120,7 +1120,7 @@ GToolsPoint_apply_bin_threshold:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 1	# D.9555,
+	mov	eax, 1	# D.9806,
 	jmp	.L133	#
 .L132:
 	mov	rbx, rsi	# imgdst, imgdst
@@ -1129,38 +1129,38 @@ GToolsPoint_apply_bin_threshold:
 	mov	r12, rdi	# imgsrc, imgsrc
 	test	rdi, rdi	# imgsrc
 	je	.L134	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9562, imgsrc_26(D)->format
-	test	rax, rax	# D.9562
+	mov	rax, QWORD PTR [rdi+8]	# D.9813, imgsrc_26(D)->format
+	test	rax, rax	# D.9813
 	je	.L134	#,
-	mov	rdx, QWORD PTR [rsi+8]	# D.9564, imgdst_28(D)->format
-	test	rdx, rdx	# D.9564
+	mov	rdx, QWORD PTR [rsi+8]	# D.9815, imgdst_28(D)->format
+	test	rdx, rdx	# D.9815
 	je	.L134	#,
-	movzx	edi, WORD PTR [rdi+24]	# D.9566, imgsrc_26(D)->pitch
-	cmp	di, WORD PTR [rsi+24]	# D.9566, imgdst_28(D)->pitch
+	movzx	edi, WORD PTR [rdi+24]	# D.9817, imgsrc_26(D)->pitch
+	cmp	di, WORD PTR [rsi+24]	# D.9817, imgdst_28(D)->pitch
 	jne	.L134	#,
 	mov	rcx, QWORD PTR [rsi+16]	#,
 	cmp	QWORD PTR [r12+16], rcx	#,
 	jne	.L134	#,
-	movzx	r13d, BYTE PTR [rax+9]	# D.9576, D.9562_31->BytesPerPixel
-	cmp	r13b, BYTE PTR [rdx+9]	# D.9576, D.9564_32->BytesPerPixel
+	movzx	r13d, BYTE PTR [rax+9]	# D.9827, D.9813_31->BytesPerPixel
+	cmp	r13b, BYTE PTR [rdx+9]	# D.9827, D.9815_32->BytesPerPixel
 	jne	.L134	#,
-	mov	esi, DWORD PTR [rdx+32]	#, D.9564_32->Amask
-	cmp	DWORD PTR [rax+32], esi	# D.9562_31->Amask,
+	mov	esi, DWORD PTR [rdx+32]	#, D.9815_32->Amask
+	cmp	DWORD PTR [rax+32], esi	# D.9813_31->Amask,
 	jne	.L134	#,
-	mov	ecx, DWORD PTR [rdx+20]	#, D.9564_32->Rmask
-	cmp	DWORD PTR [rax+20], ecx	# D.9562_31->Rmask,
+	mov	ecx, DWORD PTR [rdx+20]	#, D.9815_32->Rmask
+	cmp	DWORD PTR [rax+20], ecx	# D.9813_31->Rmask,
 	jne	.L134	#,
 	mov	rsi, QWORD PTR [rdx+24]	#,
 	cmp	QWORD PTR [rax+24], rsi	#,
 	jne	.L134	#,
-	movzx	ecx, BYTE PTR [rdx+17]	#, D.9564_32->Ashift
-	cmp	BYTE PTR [rax+17], cl	# D.9562_31->Ashift,
+	movzx	ecx, BYTE PTR [rdx+17]	#, D.9815_32->Ashift
+	cmp	BYTE PTR [rax+17], cl	# D.9813_31->Ashift,
 	jne	.L134	#,
 	movzx	esi, WORD PTR [rdx+14]	#,
 	cmp	WORD PTR [rax+14], si	#,
 	jne	.L134	#,
-	movzx	ecx, BYTE PTR [rdx+16]	#, D.9564_32->Bshift
-	cmp	BYTE PTR [rax+16], cl	# D.9562_31->Bshift,
+	movzx	ecx, BYTE PTR [rdx+16]	#, D.9815_32->Bshift
+	cmp	BYTE PTR [rax+16], cl	# D.9813_31->Bshift,
 	jne	.L134	#,
 	mov	r15, QWORD PTR [r12+32]	# pixels_src, imgsrc_26(D)->pixels
 	test	r15, r15	# pixels_src
@@ -1174,26 +1174,26 @@ GToolsPoint_apply_bin_threshold:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC11	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9555,
+	mov	eax, -56	# D.9806,
 	jmp	.L133	#
 .L135:
 	lea	eax, [r13-3]	# tmp236,
 	cmp	al, 1	# tmp236,
 	jbe	.L136	#,
-	movzx	ecx, r13b	# D.9576, D.9576
+	movzx	ecx, r13b	# D.9827, D.9827
 	mov	edx, OFFSET FLAT:.LC12	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9555,
+	mov	eax, 100	# D.9806,
 	jmp	.L133	#
 .L136:
-	movzx	edi, di	#, D.9566
+	movzx	edi, di	#, D.9817
 	mov	DWORD PTR [rsp+4], edi	# %sfp,
-	movzx	eax, r13b	# D.9576, D.9576
-	imul	eax, DWORD PTR [r12+16]	# D.9576, imgsrc_26(D)->w
-	mov	DWORD PTR [rsp], eax	# %sfp, D.9576
+	movzx	eax, r13b	# D.9827, D.9827
+	imul	eax, DWORD PTR [r12+16]	# D.9827, imgsrc_26(D)->w
+	mov	DWORD PTR [rsp], eax	# %sfp, D.9827
 	mov	eax, edi	#,
 	imul	eax, DWORD PTR [rbx+20]	# tmp240, imgdst_28(D)->h
 	add	rax, r14	#, pixels_dst
@@ -1206,7 +1206,7 @@ GToolsPoint_apply_bin_threshold:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_LockSurface	#
 .L138:
-	cmp	r13b, 3	# D.9576,
+	cmp	r13b, 3	# D.9827,
 	jne	.L165	#,
 	jmp	.L157	#
 .L146:
@@ -1247,7 +1247,7 @@ GToolsPoint_apply_bin_threshold:
 	jb	.L146	#,
 	jmp	.L147	#
 .L165:
-	cmp	r13b, 4	# D.9576,
+	cmp	r13b, 4	# D.9827,
 	jne	.L147	#,
 	.p2align 4,,7
 	jmp	.L159	#
@@ -1275,21 +1275,21 @@ GToolsPoint_apply_bin_threshold:
 	mov	r13d, 0	# pitches,
 .L150:
 	mov	edx, DWORD PTR [r15]	# col, MEM[(u32 *)pixels_src_14]
-	mov	rax, QWORD PTR [r12+8]	# D.9562, imgsrc_26(D)->format
+	mov	rax, QWORD PTR [r12+8]	# D.9813, imgsrc_26(D)->format
 	mov	r9d, edx	# a, col
-	and	r9d, DWORD PTR [rax+32]	# a, D.9562_113->Amask
-	movzx	r8d, BYTE PTR [rax+14]	# D.9636, D.9562_113->Rshift
-	movzx	edi, BYTE PTR [rax+15]	# D.9640, D.9562_113->Gshift
+	and	r9d, DWORD PTR [rax+32]	# a, D.9813_113->Amask
+	movzx	r8d, BYTE PTR [rax+14]	# D.9887, D.9813_113->Rshift
+	movzx	edi, BYTE PTR [rax+15]	# D.9891, D.9813_113->Gshift
 	mov	r11d, edx	# tmp246, col
-	and	r11d, DWORD PTR [rax+24]	# tmp246, D.9562_113->Gmask
+	and	r11d, DWORD PTR [rax+24]	# tmp246, D.9813_113->Gmask
 	mov	ecx, edi	#,
 	shr	r11d, cl	# g,
-	movzx	esi, BYTE PTR [rax+16]	# D.9643, D.9562_113->Bshift
+	movzx	esi, BYTE PTR [rax+16]	# D.9894, D.9813_113->Bshift
 	mov	r10d, edx	# tmp247, col
-	and	r10d, DWORD PTR [rax+28]	# tmp247, D.9562_113->Bmask
+	and	r10d, DWORD PTR [rax+28]	# tmp247, D.9813_113->Bmask
 	mov	ecx, esi	#,
 	shr	r10d, cl	# b,
-	and	edx, DWORD PTR [rax+20]	# tmp248, D.9562_113->Rmask
+	and	edx, DWORD PTR [rax+20]	# tmp248, D.9813_113->Rmask
 	mov	eax, edx	# tmp249, tmp248
 	mov	ecx, r8d	#,
 	shr	eax, cl	# tmp249,
@@ -1327,13 +1327,13 @@ GToolsPoint_apply_bin_threshold:
 .L147:
 	cmp	DWORD PTR [rbx+40], 0	# imgdst_28(D)->offset,
 	jne	.L156	#,
-	mov	eax, 0	# D.9555,
+	mov	eax, 0	# D.9806,
 	test	DWORD PTR [rbx], 16389	# imgdst_28(D)->flags,
 	je	.L133	#,
 .L156:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9555,
+	mov	eax, 0	# D.9806,
 .L133:
 	mov	rbx, QWORD PTR [rsp+24]	#,
 	mov	rbp, QWORD PTR [rsp+32]	#,
@@ -1345,7 +1345,7 @@ GToolsPoint_apply_bin_threshold:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	GToolsPoint_apply_bin_threshold, .-GToolsPoint_apply_bin_threshold
 	.section	.rodata.str1.8
 	.align 8
@@ -1358,7 +1358,7 @@ GToolsPoint_apply_bin_threshold:
 	.globl	GToolsPoint_negative
 	.type	GToolsPoint_negative, @function
 GToolsPoint_negative:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1380,8 +1380,8 @@ GToolsPoint_negative:
 	mov	rbx, QWORD PTR [rdi+32]	# pixels_dst, imgdst_14(D)->pixels
 	test	rbx, rbx	# pixels_dst
 	je	.L168	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9500, imgdst_14(D)->format
-	test	rax, rax	# D.9500
+	mov	rax, QWORD PTR [rdi+8]	# D.9751, imgdst_14(D)->format
+	test	rax, rax	# D.9751
 	jne	.L169	#,
 .L168:
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
@@ -1389,10 +1389,10 @@ GToolsPoint_negative:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC13	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9502,
+	mov	eax, -56	# D.9753,
 	jmp	.L170	#
 .L169:
-	movzx	r14d, BYTE PTR [rax+9]	# Bpp, D.9500_16->BytesPerPixel
+	movzx	r14d, BYTE PTR [rax+9]	# Bpp, D.9751_16->BytesPerPixel
 	lea	eax, [r14-3]	# tmp144,
 	cmp	al, 1	# tmp144,
 	jbe	.L171	#,
@@ -1402,7 +1402,7 @@ GToolsPoint_negative:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9502,
+	mov	eax, 100	# D.9753,
 	jmp	.L170	#
 .L171:
 	movzx	r12d, WORD PTR [rdi+24]	# pitch, imgdst_14(D)->pitch
@@ -1482,20 +1482,20 @@ GToolsPoint_negative:
 	mov	esi, 0	# pitches,
 .L179:
 	mov	edx, DWORD PTR [rbx]	# col, MEM[(u32 *)pixels_dst_11]
-	mov	rax, QWORD PTR [rbp+8]	# D.9500, imgdst_14(D)->format
-	movzx	r10d, BYTE PTR [rax+14]	# D.9535, D.9500_51->Rshift
+	mov	rax, QWORD PTR [rbp+8]	# D.9751, imgdst_14(D)->format
+	movzx	r10d, BYTE PTR [rax+14]	# D.9786, D.9751_51->Rshift
 	mov	r14d, edx	# tmp159, col
-	and	r14d, DWORD PTR [rax+20]	# tmp159, D.9500_51->Rmask
+	and	r14d, DWORD PTR [rax+20]	# tmp159, D.9751_51->Rmask
 	mov	ecx, r10d	#,
 	shr	r14d, cl	# r,
-	movzx	r9d, BYTE PTR [rax+15]	# D.9539, D.9500_51->Gshift
+	movzx	r9d, BYTE PTR [rax+15]	# D.9790, D.9751_51->Gshift
 	mov	r11d, edx	# tmp160, col
-	and	r11d, DWORD PTR [rax+24]	# tmp160, D.9500_51->Gmask
+	and	r11d, DWORD PTR [rax+24]	# tmp160, D.9751_51->Gmask
 	mov	ecx, r9d	#,
 	shr	r11d, cl	# g,
-	movzx	r8d, BYTE PTR [rax+16]	# D.9543, D.9500_51->Bshift
+	movzx	r8d, BYTE PTR [rax+16]	# D.9794, D.9751_51->Bshift
 	mov	r15d, edx	# tmp161, col
-	and	r15d, DWORD PTR [rax+28]	# tmp161, D.9500_51->Bmask
+	and	r15d, DWORD PTR [rax+28]	# tmp161, D.9751_51->Bmask
 	mov	ecx, r8d	#,
 	shr	r15d, cl	# tmp161,
 	mov	DWORD PTR [rsp+12], r15d	# %sfp, tmp161
@@ -1511,8 +1511,8 @@ GToolsPoint_negative:
 	mov	ecx, r9d	#,
 	sal	r14d, cl	# g,
 	or	r10d, r14d	# tmp167, tmp166
-	and	edx, DWORD PTR [rax+32]	# tmp168, D.9500_51->Amask
-	or	r10d, edx	# D.9545, tmp168
+	and	edx, DWORD PTR [rax+32]	# tmp168, D.9751_51->Amask
+	or	r10d, edx	# D.9796, tmp168
 	mov	ecx, r8d	#,
 	sal	r11d, cl	# b,
 	or	r10d, r11d	# tmp170, tmp169
@@ -1524,13 +1524,13 @@ GToolsPoint_negative:
 .L175:
 	cmp	DWORD PTR [rbp+40], 0	# imgdst_14(D)->offset,
 	jne	.L182	#,
-	mov	eax, 0	# D.9502,
+	mov	eax, 0	# D.9753,
 	test	DWORD PTR [rbp+0], 16389	# imgdst_14(D)->flags,
 	je	.L170	#,
 .L182:
 	mov	rdi, rbp	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9502,
+	mov	eax, 0	# D.9753,
 .L170:
 	mov	rbx, QWORD PTR [rsp+40]	#,
 	mov	rbp, QWORD PTR [rsp+48]	#,
@@ -1542,7 +1542,7 @@ GToolsPoint_negative:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	GToolsPoint_negative, .-GToolsPoint_negative
 	.section	.rodata.str1.8
 	.align 8
@@ -1565,7 +1565,7 @@ GToolsPoint_negative:
 	.globl	GToolsPoint_histEqualize
 	.type	GToolsPoint_histEqualize, @function
 GToolsPoint_histEqualize:
-.LFB99:
+.LFB109:
 	.cfi_startproc
 	push	r15	#
 	.cfi_def_cfa_offset 16
@@ -1593,8 +1593,8 @@ GToolsPoint_histEqualize:
 	mov	r12, QWORD PTR [rdi+32]	# pixels_dst, imgdst_14(D)->pixels
 	test	r12, r12	# pixels_dst
 	je	.L192	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9325, imgdst_14(D)->format
-	test	rax, rax	# D.9325
+	mov	rax, QWORD PTR [rdi+8]	# D.9576, imgdst_14(D)->format
+	test	rax, rax	# D.9576
 	jne	.L193	#,
 .L192:
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
@@ -1602,10 +1602,10 @@ GToolsPoint_histEqualize:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC15	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9327,
+	mov	eax, -56	# D.9578,
 	jmp	.L250	#
 .L193:
-	movzx	r13d, BYTE PTR [rax+9]	# Bpp, D.9325_16->BytesPerPixel
+	movzx	r13d, BYTE PTR [rax+9]	# Bpp, D.9576_16->BytesPerPixel
 	lea	eax, [r13-3]	# tmp306,
 	cmp	al, 1	# tmp306,
 	jbe	.L195	#,
@@ -1615,7 +1615,7 @@ GToolsPoint_histEqualize:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9327,
+	mov	eax, 100	# D.9578,
 	jmp	.L250	#
 .L195:
 	mov	rbx, rsi	# colors, colors
@@ -1626,7 +1626,7 @@ GToolsPoint_histEqualize:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC17	#,
 	call	fwrite	#
-	mov	eax, 1	# D.9327,
+	mov	eax, 1	# D.9578,
 	jmp	.L250	#
 .L196:
 	movzx	r15d, WORD PTR [rdi+24]	# pitch, imgdst_14(D)->pitch
@@ -1647,19 +1647,19 @@ GToolsPoint_histEqualize:
 	mov	esi, 4	#,
 	mov	edi, 256	#,
 	call	wcalloc	#
-	mov	QWORD PTR [rbp+0], rax	# *dystrybuanta_40, D.9341
+	mov	QWORD PTR [rbp+0], rax	# *dystrybuanta_40, D.9592
 	mov	ecx, 521	#,
 	mov	edx, OFFSET FLAT:.LC18	#,
 	mov	esi, 4	#,
 	mov	edi, 256	#,
 	call	wcalloc	#
-	mov	QWORD PTR [rbp+8], rax	# MEM[(u32 * *)dystrybuanta_40 + 8B], D.9343
+	mov	QWORD PTR [rbp+8], rax	# MEM[(u32 * *)dystrybuanta_40 + 8B], D.9594
 	mov	ecx, 522	#,
 	mov	edx, OFFSET FLAT:.LC18	#,
 	mov	esi, 4	#,
 	mov	edi, 256	#,
 	call	wcalloc	#
-	mov	QWORD PTR [rbp+16], rax	# MEM[(u32 * *)dystrybuanta_40 + 16B], D.9345
+	mov	QWORD PTR [rbp+16], rax	# MEM[(u32 * *)dystrybuanta_40 + 16B], D.9596
 	mov	QWORD PTR [rsp+128], 0	# sum,
 	mov	QWORD PTR [rsp+136], 0	# sum,
 	mov	QWORD PTR [rsp+144], 0	# sum,
@@ -1672,22 +1672,22 @@ GToolsPoint_histEqualize:
 	cmp	BYTE PTR [rsp+112+rdx], 0	# MEM[symbol: found, index: ivtmp.211_377, offset: 0B],
 	jne	.L198	#,
 	mov	rsi, QWORD PTR [rbx+rax]	# MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B], MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B]
-	mov	esi, DWORD PTR [rsi+rcx]	# D.9357, *D.9356_56
-	test	esi, esi	# D.9357
+	mov	esi, DWORD PTR [rsi+rcx]	# D.9608, *D.9607_56
+	test	esi, esi	# D.9608
 	je	.L199	#,
 	mov	BYTE PTR [rsp+112+rdx], 1	# MEM[symbol: found, index: ivtmp.211_377, offset: 0B],
-	mov	BYTE PTR [rsp+160+rdx], sil	# MEM[symbol: min_col, index: ivtmp.211_377, offset: 0B], D.9357
+	mov	BYTE PTR [rsp+160+rdx], sil	# MEM[symbol: min_col, index: ivtmp.211_377, offset: 0B], D.9608
 .L198:
-	mov	rdi, QWORD PTR [rsp+128+rax]	# D.9361, MEM[symbol: sum, index: ivtmp.219_371, offset: 0B]
+	mov	rdi, QWORD PTR [rsp+128+rax]	# D.9612, MEM[symbol: sum, index: ivtmp.219_371, offset: 0B]
 	mov	rsi, QWORD PTR [rbx+rax]	# MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B], MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B]
-	mov	esi, DWORD PTR [rsi+rcx]	# *D.9356_78, *D.9356_78
-	add	rsi, rdi	# D.9363, D.9361
-	cmp	rdi, rsi	# D.9361, D.9363
+	mov	esi, DWORD PTR [rsi+rcx]	# *D.9607_78, *D.9607_78
+	add	rsi, rdi	# D.9614, D.9612
+	cmp	rdi, rsi	# D.9612, D.9614
 	jae	.L200	#,
-	mov	QWORD PTR [rsp+128+rax], rsi	# MEM[symbol: sum, index: ivtmp.219_371, offset: 0B], D.9363
+	mov	QWORD PTR [rsp+128+rax], rsi	# MEM[symbol: sum, index: ivtmp.219_371, offset: 0B], D.9614
 .L200:
 	mov	rdi, QWORD PTR [rbp+0+rax]	# MEM[base: dystrybuanta_40, index: ivtmp.219_371, offset: 0B], MEM[base: dystrybuanta_40, index: ivtmp.219_371, offset: 0B]
-	mov	DWORD PTR [rdi+rcx], esi	# *D.9369_94, D.9363
+	mov	DWORD PTR [rdi+rcx], esi	# *D.9620_94, D.9614
 	add	rdx, 1	# ivtmp.211,
 	add	rax, 8	# ivtmp.219,
 	cmp	rdx, 3	# ivtmp.211,
@@ -1900,70 +1900,70 @@ GToolsPoint_histEqualize:
 .L232:
 	mov	edx, DWORD PTR [r12]	# clr, MEM[(u32 *)pixels_dst_9]
 .L233:
-	mov	rax, QWORD PTR [r14+8]	# D.9325, imgdst_14(D)->format
+	mov	rax, QWORD PTR [r14+8]	# D.9576, imgdst_14(D)->format
 	mov	r11d, edx	# tmp387, clr
-	and	r11d, DWORD PTR [rax+20]	# tmp387, D.9325_147->Rmask
-	movzx	ecx, BYTE PTR [rax+14]	# D.9325_147->Rshift, D.9325_147->Rshift
-	shr	r11d, cl	# tmp389, D.9325_147->Rshift
+	and	r11d, DWORD PTR [rax+20]	# tmp387, D.9576_147->Rmask
+	movzx	ecx, BYTE PTR [rax+14]	# D.9576_147->Rshift, D.9576_147->Rshift
+	shr	r11d, cl	# tmp389, D.9576_147->Rshift
 	mov	DWORD PTR [rsp+176], r11d	# col, tmp389
 	mov	r11d, edx	# tmp390, clr
-	and	r11d, DWORD PTR [rax+24]	# tmp390, D.9325_147->Gmask
-	movzx	ecx, BYTE PTR [rax+15]	# D.9325_147->Gshift, D.9325_147->Gshift
-	shr	r11d, cl	# tmp392, D.9325_147->Gshift
+	and	r11d, DWORD PTR [rax+24]	# tmp390, D.9576_147->Gmask
+	movzx	ecx, BYTE PTR [rax+15]	# D.9576_147->Gshift, D.9576_147->Gshift
+	shr	r11d, cl	# tmp392, D.9576_147->Gshift
 	mov	DWORD PTR [rsp+180], r11d	# col, tmp392
 	mov	r11d, edx	# tmp393, clr
-	and	r11d, DWORD PTR [rax+28]	# tmp393, D.9325_147->Bmask
-	movzx	ecx, BYTE PTR [rax+16]	# D.9325_147->Bshift, D.9325_147->Bshift
-	shr	r11d, cl	# tmp395, D.9325_147->Bshift
+	and	r11d, DWORD PTR [rax+28]	# tmp393, D.9576_147->Bmask
+	movzx	ecx, BYTE PTR [rax+16]	# D.9576_147->Bshift, D.9576_147->Bshift
+	shr	r11d, cl	# tmp395, D.9576_147->Bshift
 	mov	DWORD PTR [rsp+184], r11d	# col, tmp395
 	cmp	r13b, 4	# Bpp,
 	jne	.L234	#,
 	mov	r10d, edx	# a, clr
-	and	r10d, DWORD PTR [rax+32]	# a, D.9325_147->Amask
+	and	r10d, DWORD PTR [rax+32]	# a, D.9576_147->Amask
 .L234:
 	mov	eax, 0	# ivtmp.186,
 .L239:
 	mov	r11d, DWORD PTR [rsp+176+rax*4]	# MEM[symbol: col, index: ivtmp.186_323, step: 4, offset: 0B], MEM[symbol: col, index: ivtmp.186_323, step: 4, offset: 0B]
 	mov	rdx, QWORD PTR [rbp+0+rax*8]	# MEM[base: dystrybuanta_40, index: ivtmp.186_323, step: 8, offset: 0B], MEM[base: dystrybuanta_40, index: ivtmp.186_323, step: 8, offset: 0B]
 	movzx	ecx, BYTE PTR [rsp+160+rax]	# MEM[symbol: min_col, index: ivtmp.186_323, offset: 0B], MEM[symbol: min_col, index: ivtmp.186_323, offset: 0B]
-	mov	edx, DWORD PTR [rdx+r11*4]	# *D.9436_181, *D.9436_181
+	mov	edx, DWORD PTR [rdx+r11*4]	# *D.9687_181, *D.9687_181
 	sub	edx, ecx	# tmp404, MEM[symbol: min_col, index: ivtmp.186_323, offset: 0B]
 	cvtsi2sd	xmm0, rdx	# tmp403, tmp404
 	mulsd	xmm0, xmm3	# tmp408, tmp464
-	divsd	xmm0, QWORD PTR [rsp+48+rax*8]	# D.9445, MEM[symbol: mian, index: ivtmp.186_323, step: 8, offset: 0B]
-	cvttsd2si	edx, xmm0	# tmp411, D.9445
+	divsd	xmm0, QWORD PTR [rsp+48+rax*8]	# D.9696, MEM[symbol: mian, index: ivtmp.186_323, step: 8, offset: 0B]
+	cvttsd2si	edx, xmm0	# tmp411, D.9696
 	movzx	edx, dl	# tmp414, tmp411
 	cvtsi2sd	xmm1, edx	# tmp415, tmp414
-	movapd	xmm5, xmm0	#, D.9445
+	movapd	xmm5, xmm0	#, D.9696
 	subsd	xmm5, xmm1	#, tmp415
 	ucomisd	xmm5, xmm2	# tmp416, tmp465
 	ja	.L237	#,
-	movsd	QWORD PTR [rsp+80+rax*8], xmm0	# MEM[symbol: v, index: ivtmp.186_323, step: 8, offset: 0B], D.9445
+	movsd	QWORD PTR [rsp+80+rax*8], xmm0	# MEM[symbol: v, index: ivtmp.186_323, step: 8, offset: 0B], D.9696
 	jmp	.L238	#
 .L237:
 	addsd	xmm0, xmm4	# tmp420, tmp466
 	movsd	QWORD PTR [rsp+80+rax*8], xmm0	# MEM[symbol: v, index: ivtmp.186_323, step: 8, offset: 0B], tmp420
 .L238:
-	cvttsd2si	ecx, QWORD PTR [rsp+80+rax*8]	# D.9447, MEM[symbol: v, index: ivtmp.186_323, step: 8, offset: 0B]
-	movzx	edx, cl	# D.9447, D.9447
-	mov	DWORD PTR [rsp+176+rax*4], edx	# MEM[symbol: col, index: ivtmp.186_323, step: 4, offset: 0B], D.9447
-	movzx	ecx, cl	# D.9447, D.9447
+	cvttsd2si	ecx, QWORD PTR [rsp+80+rax*8]	# D.9698, MEM[symbol: v, index: ivtmp.186_323, step: 8, offset: 0B]
+	movzx	edx, cl	# D.9698, D.9698
+	mov	DWORD PTR [rsp+176+rax*4], edx	# MEM[symbol: col, index: ivtmp.186_323, step: 4, offset: 0B], D.9698
+	movzx	ecx, cl	# D.9698, D.9698
 	mov	rdx, QWORD PTR [rbx+rax*8]	# MEM[base: colors_23(D), index: ivtmp.186_323, step: 8, offset: 0B], MEM[base: colors_23(D), index: ivtmp.186_323, step: 8, offset: 0B]
-	add	DWORD PTR [rdx+rcx*4], 1	# *D.9455_220,
+	add	DWORD PTR [rdx+rcx*4], 1	# *D.9706_220,
 	add	rax, 1	# ivtmp.186,
 	cmp	rax, 3	# ivtmp.186,
 	jne	.L239	#,
-	mov	rax, QWORD PTR [r14+8]	# D.9325, imgdst_14(D)->format
-	movzx	ecx, BYTE PTR [rax+15]	# D.9325_225->Gshift, D.9325_225->Gshift
+	mov	rax, QWORD PTR [r14+8]	# D.9576, imgdst_14(D)->format
+	movzx	ecx, BYTE PTR [rax+15]	# D.9576_225->Gshift, D.9576_225->Gshift
 	mov	r11d, DWORD PTR [rsp+180]	# tmp431, col
-	sal	r11d, cl	# tmp431, D.9325_225->Gshift
-	movzx	ecx, BYTE PTR [rax+14]	# D.9325_225->Rshift, D.9325_225->Rshift
+	sal	r11d, cl	# tmp431, D.9576_225->Gshift
+	movzx	ecx, BYTE PTR [rax+14]	# D.9576_225->Rshift, D.9576_225->Rshift
 	mov	edx, DWORD PTR [rsp+176]	# tmp434, col
-	sal	edx, cl	# tmp434, D.9325_225->Rshift
+	sal	edx, cl	# tmp434, D.9576_225->Rshift
 	or	edx, r11d	# tmp436, tmp431
-	movzx	ecx, BYTE PTR [rax+16]	# D.9325_225->Bshift, D.9325_225->Bshift
+	movzx	ecx, BYTE PTR [rax+16]	# D.9576_225->Bshift, D.9576_225->Bshift
 	mov	eax, DWORD PTR [rsp+184]	# tmp438, col
-	sal	eax, cl	# tmp438, D.9325_225->Bshift
+	sal	eax, cl	# tmp438, D.9576_225->Bshift
 	or	eax, edx	# clr, tmp436
 	cmp	r13b, 4	# Bpp,
 	jne	.L240	#,
@@ -2009,12 +2009,12 @@ GToolsPoint_histEqualize:
 	mov	esi, OFFSET FLAT:.LC18	#,
 	mov	rdi, rbp	#, dystrybuanta
 	call	wfree	#
-	mov	eax, 0	# D.9327,
+	mov	eax, 0	# D.9578,
 	jmp	.L250	#
 .L199:
 	mov	rsi, QWORD PTR [rbx+rax]	# MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B], MEM[base: colors_23(D), index: ivtmp.219_371, offset: 0B]
-	mov	esi, DWORD PTR [rsi+rcx]	# *D.9356_269, *D.9356_269
-	add	rsi, QWORD PTR [rsp+128+rax]	# D.9363, MEM[symbol: sum, index: ivtmp.219_371, offset: 0B]
+	mov	esi, DWORD PTR [rsi+rcx]	# *D.9607_269, *D.9607_269
+	add	rsi, QWORD PTR [rsp+128+rax]	# D.9614, MEM[symbol: sum, index: ivtmp.219_371, offset: 0B]
 	jmp	.L200	#
 .L250:
 	add	rsp, 200	#,
@@ -2033,7 +2033,7 @@ GToolsPoint_histEqualize:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE109:
 	.size	GToolsPoint_histEqualize, .-GToolsPoint_histEqualize
 	.section	.rodata.str1.8
 	.align 8
@@ -2046,7 +2046,7 @@ GToolsPoint_histEqualize:
 	.globl	GToolsPoint_replace_pixels
 	.type	GToolsPoint_replace_pixels, @function
 GToolsPoint_replace_pixels:
-.LFB100:
+.LFB110:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -2068,40 +2068,40 @@ GToolsPoint_replace_pixels:
 	mov	rbp, rdi	# imgsrc, imgsrc
 	test	rdi, rdi	# imgsrc
 	je	.L253	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9183, imgsrc_19(D)->format
-	test	rax, rax	# D.9183
+	mov	rax, QWORD PTR [rdi+8]	# D.9434, imgsrc_19(D)->format
+	test	rax, rax	# D.9434
 	je	.L253	#,
 	mov	r13d, edx	# cond, cond
-	mov	rdx, QWORD PTR [rsi+8]	# D.9185, imgdst_21(D)->format
-	test	rdx, rdx	# D.9185
+	mov	rdx, QWORD PTR [rsi+8]	# D.9436, imgdst_21(D)->format
+	test	rdx, rdx	# D.9436
 	je	.L253	#,
-	movzx	esi, WORD PTR [rdi+24]	# D.9187, imgsrc_19(D)->pitch
-	cmp	si, WORD PTR [rbx+24]	# D.9187, imgdst_21(D)->pitch
+	movzx	esi, WORD PTR [rdi+24]	# D.9438, imgsrc_19(D)->pitch
+	cmp	si, WORD PTR [rbx+24]	# D.9438, imgdst_21(D)->pitch
 	jne	.L253	#,
 	mov	r12d, ecx	# threshold, threshold
 	mov	rcx, QWORD PTR [rbx+16]	#,
 	cmp	QWORD PTR [rdi+16], rcx	#,
 	jne	.L253	#,
-	movzx	r14d, BYTE PTR [rax+9]	# D.9197, D.9183_24->BytesPerPixel
-	cmp	r14b, BYTE PTR [rdx+9]	# D.9197, D.9185_25->BytesPerPixel
+	movzx	r14d, BYTE PTR [rax+9]	# D.9448, D.9434_24->BytesPerPixel
+	cmp	r14b, BYTE PTR [rdx+9]	# D.9448, D.9436_25->BytesPerPixel
 	jne	.L253	#,
-	mov	ecx, DWORD PTR [rdx+32]	#, D.9185_25->Amask
-	cmp	DWORD PTR [rax+32], ecx	# D.9183_24->Amask,
+	mov	ecx, DWORD PTR [rdx+32]	#, D.9436_25->Amask
+	cmp	DWORD PTR [rax+32], ecx	# D.9434_24->Amask,
 	jne	.L253	#,
-	mov	ecx, DWORD PTR [rdx+20]	#, D.9185_25->Rmask
-	cmp	DWORD PTR [rax+20], ecx	# D.9183_24->Rmask,
+	mov	ecx, DWORD PTR [rdx+20]	#, D.9436_25->Rmask
+	cmp	DWORD PTR [rax+20], ecx	# D.9434_24->Rmask,
 	jne	.L253	#,
 	mov	rcx, QWORD PTR [rdx+24]	#,
 	cmp	QWORD PTR [rax+24], rcx	#,
 	jne	.L253	#,
-	movzx	ecx, BYTE PTR [rdx+17]	#, D.9185_25->Ashift
-	cmp	BYTE PTR [rax+17], cl	# D.9183_24->Ashift,
+	movzx	ecx, BYTE PTR [rdx+17]	#, D.9436_25->Ashift
+	cmp	BYTE PTR [rax+17], cl	# D.9434_24->Ashift,
 	jne	.L253	#,
 	movzx	ecx, WORD PTR [rdx+14]	#,
 	cmp	WORD PTR [rax+14], cx	#,
 	jne	.L253	#,
-	movzx	edi, BYTE PTR [rax+16]	# D.9219, D.9183_24->Bshift
-	cmp	dil, BYTE PTR [rdx+16]	# D.9219, D.9185_25->Bshift
+	movzx	edi, BYTE PTR [rax+16]	# D.9470, D.9434_24->Bshift
+	cmp	dil, BYTE PTR [rdx+16]	# D.9470, D.9436_25->Bshift
 	jne	.L253	#,
 	mov	rdx, QWORD PTR [rbp+32]	#, imgsrc_19(D)->pixels
 	mov	QWORD PTR [rsp], rdx	# %sfp,
@@ -2116,36 +2116,36 @@ GToolsPoint_replace_pixels:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC24	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9226,
+	mov	eax, -56	# D.9477,
 	jmp	.L255	#
 .L254:
 	lea	edx, [r14-3]	# tmp221,
 	cmp	dl, 1	# tmp221,
 	jbe	.L256	#,
-	movzx	ecx, r14b	# D.9197, D.9197
+	movzx	ecx, r14b	# D.9448, D.9448
 	mov	edx, OFFSET FLAT:.LC25	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9226,
+	mov	eax, 100	# D.9477,
 	jmp	.L255	#
 .L256:
-	movzx	esi, si	#, D.9187
+	movzx	esi, si	#, D.9438
 	mov	DWORD PTR [rsp+28], esi	# %sfp,
-	movzx	edx, r14b	# D.9197, D.9197
-	imul	edx, DWORD PTR [rbp+16]	# D.9197, imgsrc_19(D)->w
-	mov	DWORD PTR [rsp+40], edx	# %sfp, D.9197
+	movzx	edx, r14b	# D.9448, D.9448
+	imul	edx, DWORD PTR [rbp+16]	# D.9448, imgsrc_19(D)->w
+	mov	DWORD PTR [rsp+40], edx	# %sfp, D.9448
 	movzx	edx, BYTE PTR [r8]	# *new_color_81(D), *new_color_81(D)
-	movzx	ecx, BYTE PTR [rax+14]	# D.9183_24->Rshift, D.9183_24->Rshift
-	sal	edx, cl	# *new_color_81(D), D.9183_24->Rshift
+	movzx	ecx, BYTE PTR [rax+14]	# D.9434_24->Rshift, D.9434_24->Rshift
+	sal	edx, cl	# *new_color_81(D), D.9434_24->Rshift
 	mov	DWORD PTR [rsp+8], edx	# %sfp, *new_color_81(D)
 	movzx	edx, BYTE PTR [r8+1]	# MEM[(const u8 *)new_color_81(D) + 1B], MEM[(const u8 *)new_color_81(D) + 1B]
-	movzx	ecx, BYTE PTR [rax+15]	# D.9183_24->Gshift, D.9183_24->Gshift
-	sal	edx, cl	# MEM[(const u8 *)new_color_81(D) + 1B], D.9183_24->Gshift
+	movzx	ecx, BYTE PTR [rax+15]	# D.9434_24->Gshift, D.9434_24->Gshift
+	sal	edx, cl	# MEM[(const u8 *)new_color_81(D) + 1B], D.9434_24->Gshift
 	mov	DWORD PTR [rsp+20], edx	# %sfp, MEM[(const u8 *)new_color_81(D) + 1B]
 	movzx	eax, BYTE PTR [r8+2]	# MEM[(const u8 *)new_color_81(D) + 2B], MEM[(const u8 *)new_color_81(D) + 2B]
-	mov	ecx, edi	#, D.9219
+	mov	ecx, edi	#, D.9470
 	sal	eax, cl	# MEM[(const u8 *)new_color_81(D) + 2B],
 	mov	DWORD PTR [rsp+24], eax	# %sfp, MEM[(const u8 *)new_color_81(D) + 2B]
 	mov	eax, esi	#,
@@ -2171,9 +2171,9 @@ GToolsPoint_replace_pixels:
 	mov	BYTE PTR [rsp+24], dl	# %sfp,
 	mov	esi, 0	# res,
 	mov	r10d, 0	# pitches,
-	movzx	eax, r14b	#, D.9197
+	movzx	eax, r14b	#, D.9448
 	mov	QWORD PTR [rsp+8], rax	# %sfp,
-	movzx	edx, r14b	#, D.9197
+	movzx	edx, r14b	#, D.9448
 	mov	DWORD PTR [rsp+44], edx	# %sfp,
 	jmp	.L259	#
 .L283:
@@ -2200,19 +2200,19 @@ GToolsPoint_replace_pixels:
 .L261:
 	mov	rcx, QWORD PTR [rsp]	#, %sfp
 	mov	eax, DWORD PTR [rcx]	# col, MEM[(const u32 *)pixels_src_5]
-	mov	rdi, QWORD PTR [rbp+8]	# D.9183, imgsrc_19(D)->format
+	mov	rdi, QWORD PTR [rbp+8]	# D.9434, imgsrc_19(D)->format
 	mov	r9d, eax	# tmp238, col
-	and	r9d, DWORD PTR [rdi+20]	# tmp238, D.9183_119->Rmask
-	movzx	ecx, BYTE PTR [rdi+14]	# D.9183_119->Rshift, D.9183_119->Rshift
-	shr	r9d, cl	# r, D.9183_119->Rshift
+	and	r9d, DWORD PTR [rdi+20]	# tmp238, D.9434_119->Rmask
+	movzx	ecx, BYTE PTR [rdi+14]	# D.9434_119->Rshift, D.9434_119->Rshift
+	shr	r9d, cl	# r, D.9434_119->Rshift
 	mov	r8d, eax	# tmp240, col
-	and	r8d, DWORD PTR [rdi+24]	# tmp240, D.9183_119->Gmask
-	movzx	ecx, BYTE PTR [rdi+15]	# D.9183_119->Gshift, D.9183_119->Gshift
-	shr	r8d, cl	# g, D.9183_119->Gshift
+	and	r8d, DWORD PTR [rdi+24]	# tmp240, D.9434_119->Gmask
+	movzx	ecx, BYTE PTR [rdi+15]	# D.9434_119->Gshift, D.9434_119->Gshift
+	shr	r8d, cl	# g, D.9434_119->Gshift
 	mov	edx, eax	# tmp242, col
-	and	edx, DWORD PTR [rdi+28]	# tmp242, D.9183_119->Bmask
-	movzx	ecx, BYTE PTR [rdi+16]	# D.9183_119->Bshift, D.9183_119->Bshift
-	shr	edx, cl	# b, D.9183_119->Bshift
+	and	edx, DWORD PTR [rdi+28]	# tmp242, D.9434_119->Bmask
+	movzx	ecx, BYTE PTR [rdi+16]	# D.9434_119->Bshift, D.9434_119->Bshift
+	shr	edx, cl	# b, D.9434_119->Bshift
 	cmp	r9d, r8d	# r, g
 	jae	.L263	#,
 	cmp	r9d, edx	# r, b
@@ -2275,7 +2275,7 @@ GToolsPoint_replace_pixels:
 .L271:
 	test	sil, sil	# res
 	je	.L279	#,
-	cmp	r14b, 3	# D.9197,
+	cmp	r14b, 3	# D.9448,
 	jne	.L280	#,
 	mov	BYTE PTR [r15], r11b	# *pixels_dst_8, col
 	movzx	eax, BYTE PTR [rsp+20]	#, %sfp
@@ -2284,14 +2284,14 @@ GToolsPoint_replace_pixels:
 	mov	BYTE PTR [r15+2], dl	# MEM[(u8 *)pixels_dst_8 + 2B],
 	jmp	.L281	#
 .L280:
-	cmp	r14b, 4	# D.9197,
+	cmp	r14b, 4	# D.9448,
 	jne	.L281	#,
-	and	eax, DWORD PTR [rdi+32]	# a, D.9183_119->Amask
+	and	eax, DWORD PTR [rdi+32]	# a, D.9434_119->Amask
 	or	eax, r11d	# tmp253, col
 	mov	DWORD PTR [r15], eax	# MEM[(u32 *)pixels_dst_8], tmp253
 	jmp	.L281	#
 .L279:
-	cmp	r14b, 3	# D.9197,
+	cmp	r14b, 3	# D.9448,
 	jne	.L282	#,
 	mov	BYTE PTR [r15], al	# *pixels_dst_8, col
 	mov	edx, eax	# tmp254, col
@@ -2312,13 +2312,13 @@ GToolsPoint_replace_pixels:
 	jb	.L283	#,
 	cmp	DWORD PTR [rbx+40], 0	# imgdst_21(D)->offset,
 	jne	.L284	#,
-	mov	eax, 0	# D.9226,
+	mov	eax, 0	# D.9477,
 	test	DWORD PTR [rbx], 16389	# imgdst_21(D)->flags,
 	je	.L255	#,
 .L284:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9226,
+	mov	eax, 0	# D.9477,
 .L255:
 	mov	rbx, QWORD PTR [rsp+56]	#,
 	mov	rbp, QWORD PTR [rsp+64]	#,
@@ -2330,7 +2330,7 @@ GToolsPoint_replace_pixels:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE110:
 	.size	GToolsPoint_replace_pixels, .-GToolsPoint_replace_pixels
 	.section	.rodata.str1.8
 	.align 8
@@ -2343,7 +2343,7 @@ GToolsPoint_replace_pixels:
 	.globl	GToolsPoint_histogram_stretching
 	.type	GToolsPoint_histogram_stretching, @function
 GToolsPoint_histogram_stretching:
-.LFB101:
+.LFB111:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -2365,40 +2365,40 @@ GToolsPoint_histogram_stretching:
 	mov	rbp, rdi	# imgsrc, imgsrc
 	test	rdi, rdi	# imgsrc
 	je	.L289	#,
-	mov	rax, QWORD PTR [rdi+8]	# D.9037, imgsrc_13(D)->format
-	test	rax, rax	# D.9037
+	mov	rax, QWORD PTR [rdi+8]	# D.9288, imgsrc_13(D)->format
+	test	rax, rax	# D.9288
 	je	.L289	#,
 	mov	r13, rdx	# x, x
-	mov	rdx, QWORD PTR [rsi+8]	# D.9039, imgdst_15(D)->format
-	test	rdx, rdx	# D.9039
+	mov	rdx, QWORD PTR [rsi+8]	# D.9290, imgdst_15(D)->format
+	test	rdx, rdx	# D.9290
 	je	.L289	#,
-	movzx	edi, WORD PTR [rdi+24]	# D.9041, imgsrc_13(D)->pitch
-	cmp	di, WORD PTR [rsi+24]	# D.9041, imgdst_15(D)->pitch
+	movzx	edi, WORD PTR [rdi+24]	# D.9292, imgsrc_13(D)->pitch
+	cmp	di, WORD PTR [rsi+24]	# D.9292, imgdst_15(D)->pitch
 	jne	.L289	#,
 	mov	r12, rcx	# y, y
 	mov	rcx, QWORD PTR [rsi+16]	#,
 	cmp	QWORD PTR [rbp+16], rcx	#,
 	jne	.L289	#,
-	movzx	r15d, BYTE PTR [rax+9]	# D.9051, D.9037_18->BytesPerPixel
-	cmp	r15b, BYTE PTR [rdx+9]	# D.9051, D.9039_19->BytesPerPixel
+	movzx	r15d, BYTE PTR [rax+9]	# D.9302, D.9288_18->BytesPerPixel
+	cmp	r15b, BYTE PTR [rdx+9]	# D.9302, D.9290_19->BytesPerPixel
 	jne	.L289	#,
-	mov	esi, DWORD PTR [rdx+32]	#, D.9039_19->Amask
-	cmp	DWORD PTR [rax+32], esi	# D.9037_18->Amask,
+	mov	esi, DWORD PTR [rdx+32]	#, D.9290_19->Amask
+	cmp	DWORD PTR [rax+32], esi	# D.9288_18->Amask,
 	jne	.L289	#,
-	mov	r11d, DWORD PTR [rdx+20]	#, D.9039_19->Rmask
-	cmp	DWORD PTR [rax+20], r11d	# D.9037_18->Rmask,
+	mov	r11d, DWORD PTR [rdx+20]	#, D.9290_19->Rmask
+	cmp	DWORD PTR [rax+20], r11d	# D.9288_18->Rmask,
 	jne	.L289	#,
 	mov	rcx, QWORD PTR [rdx+24]	#,
 	cmp	QWORD PTR [rax+24], rcx	#,
 	jne	.L289	#,
-	movzx	ecx, BYTE PTR [rdx+17]	#, D.9039_19->Ashift
-	cmp	BYTE PTR [rax+17], cl	# D.9037_18->Ashift,
+	movzx	ecx, BYTE PTR [rdx+17]	#, D.9290_19->Ashift
+	cmp	BYTE PTR [rax+17], cl	# D.9288_18->Ashift,
 	jne	.L289	#,
 	movzx	esi, WORD PTR [rdx+14]	#,
 	cmp	WORD PTR [rax+14], si	#,
 	jne	.L289	#,
-	movzx	ecx, BYTE PTR [rdx+16]	#, D.9039_19->Bshift
-	cmp	BYTE PTR [rax+16], cl	# D.9037_18->Bshift,
+	movzx	ecx, BYTE PTR [rdx+16]	#, D.9290_19->Bshift
+	cmp	BYTE PTR [rax+16], cl	# D.9288_18->Bshift,
 	jne	.L289	#,
 	mov	rsi, QWORD PTR [rbp+32]	#, imgsrc_13(D)->pixels
 	mov	QWORD PTR [rsp+8], rsi	# %sfp,
@@ -2414,27 +2414,27 @@ GToolsPoint_histogram_stretching:
 	mov	esi, 1	#,
 	mov	edi, OFFSET FLAT:.LC26	#,
 	call	fwrite	#
-	mov	eax, -56	# D.9080,
+	mov	eax, -56	# D.9331,
 	jmp	.L291	#
 .L290:
 	lea	eax, [r15-3]	# tmp247,
 	cmp	al, 1	# tmp247,
 	jbe	.L292	#,
-	movzx	ecx, r15b	# D.9051, D.9051
+	movzx	ecx, r15b	# D.9302, D.9302
 	mov	edx, OFFSET FLAT:.LC27	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 100	# D.9080,
+	mov	eax, 100	# D.9331,
 	jmp	.L291	#
 .L292:
 	mov	r14d, r8d	# size, size
-	movzx	edi, di	#, D.9041
+	movzx	edi, di	#, D.9292
 	mov	DWORD PTR [rsp+28], edi	# %sfp,
-	movzx	eax, r15b	# D.9051, D.9051
-	imul	eax, DWORD PTR [rbp+16]	# D.9051, imgsrc_13(D)->w
-	mov	DWORD PTR [rsp+32], eax	# %sfp, D.9051
+	movzx	eax, r15b	# D.9302, D.9302
+	imul	eax, DWORD PTR [rbp+16]	# D.9302, imgsrc_13(D)->w
+	mov	DWORD PTR [rsp+32], eax	# %sfp, D.9302
 	mov	eax, edi	#,
 	imul	eax, DWORD PTR [rbx+20]	# tmp251, imgdst_15(D)->h
 	add	rax, QWORD PTR [rsp]	# tmp251, %sfp
@@ -2448,9 +2448,9 @@ GToolsPoint_histogram_stretching:
 	call	SDL_LockSurface	#
 .L294:
 	mov	DWORD PTR [rsp+20], 0	# %sfp,
-	movzx	esi, r15b	#, D.9051
+	movzx	esi, r15b	#, D.9302
 	mov	QWORD PTR [rsp+40], rsi	# %sfp,
-	movzx	r11d, r15b	#, D.9051
+	movzx	r11d, r15b	#, D.9302
 	mov	DWORD PTR [rsp+60], r11d	# %sfp,
 	mov	rsi, QWORD PTR [rsp]	# pixels_dst, %sfp
 	jmp	.L295	#
@@ -2478,74 +2478,74 @@ GToolsPoint_histogram_stretching:
 .L297:
 	mov	rcx, QWORD PTR [rsp+8]	#, %sfp
 	mov	edx, DWORD PTR [rcx]	# col, MEM[(u32 *)pixels_src_7]
-	mov	rax, QWORD PTR [rbp+8]	# D.9037, imgsrc_13(D)->format
-	movzx	ecx, BYTE PTR [rax+14]	#, D.9037_91->Rshift
+	mov	rax, QWORD PTR [rbp+8]	# D.9288, imgsrc_13(D)->format
+	movzx	ecx, BYTE PTR [rax+14]	#, D.9288_91->Rshift
 	mov	DWORD PTR [rsp], ecx	# %sfp,
 	mov	edi, edx	# tmp255, col
-	and	edi, DWORD PTR [rax+20]	# tmp255, D.9037_91->Rmask
+	and	edi, DWORD PTR [rax+20]	# tmp255, D.9288_91->Rmask
 	shr	edi, cl	# tmp256,
 	mov	DWORD PTR [rsp+64], edi	# c, tmp256
-	movzx	ecx, BYTE PTR [rax+15]	#, D.9037_91->Gshift
+	movzx	ecx, BYTE PTR [rax+15]	#, D.9288_91->Gshift
 	mov	DWORD PTR [rsp+36], ecx	# %sfp,
 	mov	edi, edx	# tmp257, col
-	and	edi, DWORD PTR [rax+24]	# tmp257, D.9037_91->Gmask
+	and	edi, DWORD PTR [rax+24]	# tmp257, D.9288_91->Gmask
 	shr	edi, cl	# tmp258,
 	mov	DWORD PTR [rsp+68], edi	# c, tmp258
-	movzx	ecx, BYTE PTR [rax+16]	#, D.9037_91->Bshift
+	movzx	ecx, BYTE PTR [rax+16]	#, D.9288_91->Bshift
 	mov	DWORD PTR [rsp+56], ecx	# %sfp,
 	mov	edi, edx	# tmp259, col
-	and	edi, DWORD PTR [rax+28]	# tmp259, D.9037_91->Bmask
+	and	edi, DWORD PTR [rax+28]	# tmp259, D.9288_91->Bmask
 	shr	edi, cl	# tmp260,
 	mov	DWORD PTR [rsp+72], edi	# c, tmp260
-	cmp	r15b, 4	# D.9051,
+	cmp	r15b, 4	# D.9302,
 	jne	.L299	#,
-	and	edx, DWORD PTR [rax+32]	# tmp261, D.9037_91->Amask
+	and	edx, DWORD PTR [rax+32]	# tmp261, D.9288_91->Amask
 	mov	DWORD PTR [rsp+76], edx	# c, tmp261
 .L299:
 	mov	ecx, 0	# ivtmp.263,
 	jmp	.L300	#
 .L306:
-	mov	eax, DWORD PTR [rsp+64+rcx*4]	# D.9116, MEM[symbol: c, index: ivtmp.263_230, step: 4, offset: 0B]
-	movzx	edx, r8b	# D.9117, i
-	lea	r9, [rdx+rdx]	# D.9118,
-	movzx	r11d, WORD PTR [r13+0+rdx*2]	# D.9120, *D.9119_124
-	movzx	r10d, r11w	# D.9121, D.9120
-	cmp	eax, r10d	# D.9116, D.9121
+	mov	eax, DWORD PTR [rsp+64+rcx*4]	# D.9367, MEM[symbol: c, index: ivtmp.263_230, step: 4, offset: 0B]
+	movzx	edx, r8b	# D.9368, i
+	lea	r9, [rdx+rdx]	# D.9369,
+	movzx	r11d, WORD PTR [r13+0+rdx*2]	# D.9371, *D.9370_124
+	movzx	r10d, r11w	# D.9372, D.9371
+	cmp	eax, r10d	# D.9367, D.9372
 	jbe	.L301	#,
 	add	r8d, 1	# i,
 	jmp	.L302	#
 .L301:
-	mov	WORD PTR [rsp+18], r11w	# %sfp, D.9120
+	mov	WORD PTR [rsp+18], r11w	# %sfp, D.9371
 	sub	rdx, 1	# tmp263,
-	movzx	r8d, WORD PTR [r13+0+rdx*2]	# D.9128, *D.9127_133
-	movzx	r11d, r8w	#, D.9128
-	cmp	eax, r11d	# D.9116,
+	movzx	r8d, WORD PTR [r13+0+rdx*2]	# D.9379, *D.9378_133
+	movzx	r11d, r8w	#, D.9379
+	cmp	eax, r11d	# D.9367,
 	jne	.L303	#,
-	movsx	rdi, ecx	# D.9115, D.9115
-	movzx	eax, WORD PTR [r12+rdx*2]	# *D.9132_141, *D.9132_141
-	mov	DWORD PTR [rsp+64+rdi*4], eax	# c, *D.9132_141
+	movsx	rdi, ecx	# D.9366, D.9366
+	movzx	eax, WORD PTR [r12+rdx*2]	# *D.9383_141, *D.9383_141
+	mov	DWORD PTR [rsp+64+rdi*4], eax	# c, *D.9383_141
 	jmp	.L304	#
 .L303:
-	cmp	eax, r10d	# D.9116, D.9121
+	cmp	eax, r10d	# D.9367, D.9372
 	jne	.L305	#,
-	movsx	rdi, ecx	# D.9115, D.9115
-	movzx	eax, WORD PTR [r12+r9]	# *D.9137_154, *D.9137_154
-	mov	DWORD PTR [rsp+64+rdi*4], eax	# c, *D.9137_154
+	movsx	rdi, ecx	# D.9366, D.9366
+	movzx	eax, WORD PTR [r12+r9]	# *D.9388_154, *D.9388_154
+	mov	DWORD PTR [rsp+64+rdi*4], eax	# c, *D.9388_154
 	jmp	.L304	#
 .L305:
-	movzx	r10d, WORD PTR [r12+rdx*2]	# D.9141, *D.9132_165
-	movzx	r9d, WORD PTR [r12+r9]	# *D.9137_159, *D.9137_159
-	sub	r9d, r10d	# licz, D.9141
-	movzx	edx, r8w	# D.9143, D.9128
-	sub	eax, edx	# tmp270, D.9143
+	movzx	r10d, WORD PTR [r12+rdx*2]	# D.9392, *D.9383_165
+	movzx	r9d, WORD PTR [r12+r9]	# *D.9388_159, *D.9388_159
+	sub	r9d, r10d	# licz, D.9392
+	movzx	edx, r8w	# D.9394, D.9379
+	sub	eax, edx	# tmp270, D.9394
 	imul	eax, r9d	# licz, licz
-	movzx	r8d, WORD PTR [rsp+18]	# D.9120, %sfp
-	sub	r8d, edx	# tmp272, D.9143
+	movzx	r8d, WORD PTR [rsp+18]	# D.9371, %sfp
+	sub	r8d, edx	# tmp272, D.9394
 	mov	edx, eax	# tmp274, licz
 	sar	edx, 31	# tmp274,
 	idiv	r8d	# tmp272
-	movsx	rdi, ecx	# D.9115, D.9115
-	add	eax, r10d	# tmp276, D.9141
+	movsx	rdi, ecx	# D.9366, D.9366
+	add	eax, r10d	# tmp276, D.9392
 	mov	DWORD PTR [rsp+64+rdi*4], eax	# c, tmp276
 	jmp	.L304	#
 .L302:
@@ -2560,22 +2560,22 @@ GToolsPoint_histogram_stretching:
 	mov	r8d, 1	# i,
 	jmp	.L302	#
 .L307:
-	mov	edx, DWORD PTR [rsp+64]	# D.9148, c
+	mov	edx, DWORD PTR [rsp+64]	# D.9399, c
 	movzx	ecx, BYTE PTR [rsp]	#, %sfp
-	sal	edx, cl	# D.9148,
-	mov	DWORD PTR [rsp+64], edx	# c, D.9148
-	mov	eax, DWORD PTR [rsp+68]	# D.9150, c
+	sal	edx, cl	# D.9399,
+	mov	DWORD PTR [rsp+64], edx	# c, D.9399
+	mov	eax, DWORD PTR [rsp+68]	# D.9401, c
 	movzx	ecx, BYTE PTR [rsp+36]	#, %sfp
-	sal	eax, cl	# D.9150,
-	mov	DWORD PTR [rsp+68], eax	# c, D.9150
-	mov	edi, DWORD PTR [rsp+72]	# D.9152, c
+	sal	eax, cl	# D.9401,
+	mov	DWORD PTR [rsp+68], eax	# c, D.9401
+	mov	edi, DWORD PTR [rsp+72]	# D.9403, c
 	movzx	ecx, BYTE PTR [rsp+56]	#, %sfp
-	sal	edi, cl	# D.9152,
-	mov	DWORD PTR [rsp+72], edi	# c, D.9152
-	cmp	r15b, 3	# D.9051,
+	sal	edi, cl	# D.9403,
+	mov	DWORD PTR [rsp+72], edi	# c, D.9403
+	cmp	r15b, 3	# D.9302,
 	jne	.L308	#,
-	or	eax, edx	# tmp281, D.9148
-	mov	ecx, edi	# col, D.9152
+	or	eax, edx	# tmp281, D.9399
+	mov	ecx, edi	# col, D.9403
 	or	ecx, eax	# col, tmp281
 	mov	BYTE PTR [rsi], cl	# *pixels_dst_10, col
 	mov	eax, ecx	# tmp282, col
@@ -2585,11 +2585,11 @@ GToolsPoint_histogram_stretching:
 	mov	BYTE PTR [rsi+2], cl	# MEM[(u8 *)pixels_dst_10 + 2B], tmp283
 	jmp	.L309	#
 .L308:
-	cmp	r15b, 4	# D.9051,
+	cmp	r15b, 4	# D.9302,
 	jne	.L309	#,
-	or	eax, edx	# tmp284, D.9148
+	or	eax, edx	# tmp284, D.9399
 	or	eax, DWORD PTR [rsp+76]	# tmp285, c
-	mov	ecx, edi	# tmp286, D.9152
+	mov	ecx, edi	# tmp286, D.9403
 	or	ecx, eax	# tmp286, tmp285
 	mov	DWORD PTR [rsi], ecx	# MEM[(u32 *)pixels_dst_10], tmp286
 .L309:
@@ -2603,13 +2603,13 @@ GToolsPoint_histogram_stretching:
 	jb	.L310	#,
 	cmp	DWORD PTR [rbx+40], 0	# imgdst_15(D)->offset,
 	jne	.L311	#,
-	mov	eax, 0	# D.9080,
+	mov	eax, 0	# D.9331,
 	test	DWORD PTR [rbx], 16389	# imgdst_15(D)->flags,
 	je	.L291	#,
 .L311:
 	mov	rdi, rbx	#, imgdst
 	call	SDL_UnlockSurface	#
-	mov	eax, 0	# D.9080,
+	mov	eax, 0	# D.9331,
 .L291:
 	mov	rbx, QWORD PTR [rsp+88]	#,
 	mov	rbp, QWORD PTR [rsp+96]	#,
@@ -2621,7 +2621,7 @@ GToolsPoint_histogram_stretching:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE111:
 	.size	GToolsPoint_histogram_stretching, .-GToolsPoint_histogram_stretching
 	.globl	COND_SYM
 	.section	.rodata.str1.1

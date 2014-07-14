@@ -43,6 +43,10 @@
 	#define Static_pointInside(X, Y, XMIN, XMAX, YMIN, YMAX) (((X)>=(XMIN))&&((Y)>=(YMIN))&&((X)<=(XMAX))&&((Y)<=(YMAX)))
 	#define Bool_toString(VAL) ((VAL)?"true":"false") 
 	
+	extern const char *__true_str;
+	extern const char *__false_str;
+	#define sbool(VAL) ((VAL)?__true_str:__false_str) 
+	
 	inline void Static_printObj2(const void *vthis, const char *fname);
 	inline void Static_nullThis2(const char *fname);
 	
@@ -114,8 +118,6 @@
 							u32 new_pos, u32 curr_count,
 							const u32 def_size, const u32 max_size,
 							const size_t item_size);
-							
-	b8 Static_fileExist(const char *path);
 	
 	SDL_Surface* Static_newSurface(u16 w, u16 h);
 	

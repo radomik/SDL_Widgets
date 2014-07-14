@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT Callback.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -57,7 +57,7 @@
 	.globl	Callback_vdestroy
 	.type	Callback_vdestroy, @function
 Callback_vdestroy:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -68,11 +68,9 @@ Callback_vdestroy:
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 32
 	mov	rbp, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8728	#,
-	call	Static_printObj2	#
-	cmp	QWORD PTR [rbp+8], 0	# MEM[(struct Callback *)vthis_2(D)].cb,
+	cmp	QWORD PTR [rdi+8], 0	# MEM[(struct Callback *)vthis_2(D)].cb,
 	je	.L2	#,
-	cmp	DWORD PTR [rbp+16], 0	# MEM[(struct Callback *)vthis_2(D)].cb_size,
+	cmp	DWORD PTR [rdi+16], 0	# MEM[(struct Callback *)vthis_2(D)].cb_size,
 	je	.L3	#,
 	mov	ebx, 0	# i,
 .L5:
@@ -80,10 +78,10 @@ Callback_vdestroy:
 	lea	rax, [rax+rax*2]	# tmp77,
 	sal	rax, 3	# tmp78,
 	add	rax, QWORD PTR [rbp+8]	# tmp79, MEM[(struct Callback *)vthis_2(D)].cb
-	mov	rdi, QWORD PTR [rax+8]	# D.8867, D.8866_9->cparam
-	test	rdi, rdi	# D.8867
+	mov	rdi, QWORD PTR [rax+8]	# D.9118, D.9117_9->cparam
+	test	rdi, rdi	# D.9118
 	je	.L4	#,
-	mov	edx, 45	#,
+	mov	edx, 51	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	call	wfree	#
 .L4:
@@ -92,7 +90,7 @@ Callback_vdestroy:
 	ja	.L5	#,
 .L3:
 	mov	rdi, QWORD PTR [rbp+8]	# MEM[(struct Callback *)vthis_2(D)].cb, MEM[(struct Callback *)vthis_2(D)].cb
-	mov	edx, 47	#,
+	mov	edx, 53	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	call	wfree	#
 	mov	QWORD PTR [rbp+8], 0	# MEM[(struct Callback *)vthis_2(D)].cb,
@@ -106,7 +104,7 @@ Callback_vdestroy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	Callback_vdestroy, .-Callback_vdestroy
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -122,7 +120,7 @@ Callback_vdestroy:
 	.globl	Callback_new
 	.type	Callback_new, @function
 Callback_new:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -138,11 +136,11 @@ Callback_new:
 	mov	ebp, edx	# size, size
 	test	rdi, rdi	# this
 	jne	.L9	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8740	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.8991	#,
 	call	Static_nullThis2	#
 	mov	r9d, ebp	#, size
 	mov	r8, r12	#, click_handler
-	mov	ecx, OFFSET FLAT:__FUNCTION__.8740	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.8991	#,
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -150,9 +148,8 @@ Callback_new:
 	call	__fprintf_chk	#
 	jmp	.L10	#
 .L9:
-	mov	QWORD PTR [rdi], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8740	#,
-	call	Static_printObj2	#
+	call	coObject_new	#
+	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
 	mov	QWORD PTR [rbx+8], 0	# this_3(D)->cb,
 	mov	DWORD PTR [rbx+16], 0	# this_3(D)->cb_size,
 	test	ebp, ebp	# size
@@ -170,12 +167,12 @@ Callback_new:
 	jmp	.L10	#
 .L11:
 	mov	edi, ebp	# size, size
-	mov	ecx, 83	#,
+	mov	ecx, 89	#,
 	mov	edx, OFFSET FLAT:.LC0	#,
 	mov	esi, 24	#,
 	call	wcalloc	#
-	mov	QWORD PTR [rbx+8], rax	# this_3(D)->cb, D.8850
-	test	rax, rax	# D.8850
+	mov	QWORD PTR [rbx+8], rax	# this_3(D)->cb, D.9101
+	test	rax, rax	# D.9101
 	jne	.L13	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 47	#,
@@ -190,9 +187,9 @@ Callback_new:
 	mov	r11d, 0	# ivtmp.20,
 	mov	r10d, 0	# ivtmp.18,
 .L14:
-	mov	rdx, QWORD PTR [r12+r10*8]	# D.8859, MEM[base: click_handler_5(D), index: ivtmp.18_54, step: 8, offset: 0B]
+	mov	rdx, QWORD PTR [r12+r10*8]	# D.9110, MEM[base: click_handler_5(D), index: ivtmp.18_54, step: 8, offset: 0B]
 	mov	rax, QWORD PTR [rbx+8]	# this_3(D)->cb, this_3(D)->cb
-	mov	QWORD PTR [rax+r11], rdx	# D.8856_22->click_handler, D.8859
+	mov	QWORD PTR [rax+r11], rdx	# D.9107_22->click_handler, D.9110
 	add	r10, 1	# ivtmp.18,
 	add	r11, 24	# ivtmp.20,
 	cmp	ebp, r10d	# size, ivtmp.18
@@ -207,7 +204,7 @@ Callback_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	Callback_new, .-Callback_new
 	.section	.rodata.str1.8
 	.align 8
@@ -226,7 +223,7 @@ Callback_new:
 	.globl	Callback_addParameter
 	.type	Callback_addParameter, @function
 Callback_addParameter:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -251,8 +248,8 @@ Callback_addParameter:
 	mov	r8, QWORD PTR [rdi+8]	# iftmp.1, this_6(D)->cb
 	test	r8, r8	# iftmp.1
 	je	.L20	#,
-	mov	edx, DWORD PTR [rdi+16]	# D.8790, this_6(D)->cb_size
-	test	edx, edx	# D.8790
+	mov	edx, DWORD PTR [rdi+16]	# D.9041, this_6(D)->cb_size
+	test	edx, edx	# D.9041
 	je	.L20	#,
 	test	r12, r12	# parameter
 	je	.L20	#,
@@ -274,32 +271,32 @@ Callback_addParameter:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 1	# D.8804,
+	mov	eax, 1	# D.9055,
 	jmp	.L35	#
 .L21:
 	mov	r14d, ecx	# position, position
 	test	r13, r13	# startPos
 	je	.L24	#,
 	mov	ebx, DWORD PTR [r13+0]	# i, *startPos_14(D)
-	cmp	edx, ebx	# D.8790, i
+	cmp	edx, ebx	# D.9041, i
 	jbe	.L24	#,
 .L32:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*2]	# tmp119,
-	cmp	QWORD PTR [r8+rax*8], r9	# D.8813_130->click_handler, click_handler
+	cmp	QWORD PTR [r8+rax*8], r9	# D.9064_130->click_handler, click_handler
 	jne	.L36	#,
 	jmp	.L25	#
 .L27:
 	mov	eax, ebx	# i, i
 	lea	rax, [rax+rax*2]	# tmp125,
-	cmp	QWORD PTR [r8+rax*8], r9	# D.8813_24->click_handler, click_handler
+	cmp	QWORD PTR [r8+rax*8], r9	# D.9064_24->click_handler, click_handler
 	je	.L25	#,
 .L36:
 	add	ebx, 1	# i,
-	cmp	edx, ebx	# D.8790, i
+	cmp	edx, ebx	# D.9041, i
 	ja	.L27	#,
 .L25:
-	cmp	ebx, edx	# i, D.8790
+	cmp	ebx, edx	# i, D.9041
 	jne	.L28	#,
 	mov	r8, r9	#, click_handler
 	mov	rcx, rbp	#, this
@@ -308,18 +305,18 @@ Callback_addParameter:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 20	# D.8804,
+	mov	eax, 20	# D.9055,
 	jmp	.L35	#
 .L28:
 	mov	eax, ebx	# i, i
 	lea	r15, [rax+rax*2]	# tmp131,
 	sal	r15, 3	# tmp132,
-	lea	rax, [r8+r15]	# D.8813,
-	mov	r8d, DWORD PTR [rax+16]	# D.8818, D.8813_33->cparam_size
-	cmp	r8d, r14d	# D.8818, position
+	lea	rax, [r8+r15]	# D.9064,
+	mov	r8d, DWORD PTR [rax+16]	# D.9069, D.9064_33->cparam_size
+	cmp	r8d, r14d	# D.9069, position
 	ja	.L29	#,
 	lea	rdx, [rax+16]	# tmp133,
-	mov	rsi, QWORD PTR [rax+8]	# D.8813_33->cparam, D.8813_33->cparam
+	mov	rsi, QWORD PTR [rax+8]	# D.9064_33->cparam, D.9064_33->cparam
 	mov	QWORD PTR [rsp+8], 8	#,
 	mov	DWORD PTR [rsp], -1	#,
 	mov	r9d, 8	#,
@@ -330,30 +327,30 @@ Callback_addParameter:
 	jne	.L30	#,
 	mov	edi, DWORD PTR [rsp+60]	#, e
 	call	perr_getName	#
-	mov	r8, rax	# D.8826,
+	mov	r8, rax	# D.9077,
 	mov	rcx, rbp	#, this
 	mov	edx, OFFSET FLAT:.LC6	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, DWORD PTR [rsp+60]	# D.8804, e
+	mov	eax, DWORD PTR [rsp+60]	# D.9055, e
 	jmp	.L35	#
 .L30:
 	mov	rdx, QWORD PTR [rbp+8]	# this_6(D)->cb, this_6(D)->cb
-	mov	QWORD PTR [rdx+8+r15], rax	# D.8813_59->cparam, new_array
+	mov	QWORD PTR [rdx+8+r15], rax	# D.9064_59->cparam, new_array
 .L29:
-	mov	rax, QWORD PTR [rbp+8]	# D.8813, this_6(D)->cb
-	add	rax, r15	# D.8813, tmp132
+	mov	rax, QWORD PTR [rbp+8]	# D.9064, this_6(D)->cb
+	add	rax, r15	# D.9064, tmp132
 	mov	edx, r14d	#, position
 	mov	QWORD PTR [rsp+40], rdx	# %sfp,
-	mov	rdx, QWORD PTR [rax+8]	# D.8813_63->cparam, D.8813_63->cparam
+	mov	rdx, QWORD PTR [rax+8]	# D.9064_63->cparam, D.9064_63->cparam
 	mov	rcx, QWORD PTR [rsp+40]	#, %sfp
-	mov	r8, QWORD PTR [rdx+rcx*8]	# D.8830, *D.8829_67
-	test	r8, r8	# D.8830
+	mov	r8, QWORD PTR [rdx+rcx*8]	# D.9081, *D.9080_67
+	test	r8, r8	# D.9081
 	je	.L31	#,
-	mov	rax, QWORD PTR [rax]	# D.8813_63->click_handler, D.8813_63->click_handler
-	mov	QWORD PTR [rsp+16], rax	#, D.8813_63->click_handler
+	mov	rax, QWORD PTR [rax]	# D.9064_63->click_handler, D.9064_63->click_handler
+	mov	QWORD PTR [rsp+16], rax	#, D.9064_63->click_handler
 	mov	DWORD PTR [rsp+8], ebx	#, i
 	mov	DWORD PTR [rsp], r14d	#, position
 	mov	r9, r12	#, parameter
@@ -365,16 +362,16 @@ Callback_addParameter:
 	call	__fprintf_chk	#
 .L31:
 	mov	rax, QWORD PTR [rbp+8]	# this_6(D)->cb, this_6(D)->cb
-	mov	rax, QWORD PTR [rax+8+r15]	# D.8813_87->cparam, D.8813_87->cparam
+	mov	rax, QWORD PTR [rax+8+r15]	# D.9064_87->cparam, D.9064_87->cparam
 	mov	rdx, QWORD PTR [rsp+40]	#, %sfp
-	mov	QWORD PTR [rax+rdx*8], r12	# *D.8829_91, parameter
+	mov	QWORD PTR [rax+rdx*8], r12	# *D.9080_91, parameter
 	test	r13, r13	# startPos
 	je	.L34	#,
 	mov	DWORD PTR [r13+0], ebx	# *startPos_14(D), i
-	mov	eax, 0	# D.8804,
+	mov	eax, 0	# D.9055,
 	jmp	.L35	#
 .L34:
-	mov	eax, 0	# D.8804,
+	mov	eax, 0	# D.9055,
 	jmp	.L35	#
 .L24:
 	mov	ebx, 0	# i,
@@ -390,50 +387,50 @@ Callback_addParameter:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	Callback_addParameter, .-Callback_addParameter
 	.globl	Callback_getCParam
 	.type	Callback_getCParam, @function
 Callback_getCParam:
-.LFB96:
+.LFB106:
 	.cfi_startproc
-	mov	r8d, DWORD PTR [rdi+16]	# D.8783, this_4(D)->cb_size
-	test	r8d, r8d	# D.8783
+	mov	r8d, DWORD PTR [rdi+16]	# D.9034, this_4(D)->cb_size
+	test	r8d, r8d	# D.9034
 	je	.L44	#,
-	mov	rcx, QWORD PTR [rdi+8]	# D.8775, this_4(D)->cb
-	cmp	QWORD PTR [rcx], rsi	# D.8775_32->click_handler, click_handler
+	mov	rcx, QWORD PTR [rdi+8]	# D.9026, this_4(D)->cb
+	cmp	QWORD PTR [rcx], rsi	# D.9026_32->click_handler, click_handler
 	jne	.L47	#,
 	jmp	.L40	#
 .L43:
-	mov	rcx, rax	# D.8775, ivtmp.32
+	mov	rcx, rax	# D.9026, ivtmp.32
 	add	rax, 24	# ivtmp.32,
-	cmp	QWORD PTR [rax-24], rsi	# MEM[base: D.8952_43, offset: -24B], click_handler
+	cmp	QWORD PTR [rax-24], rsi	# MEM[base: D.9203_43, offset: -24B], click_handler
 	jne	.L42	#,
 .L40:
-	mov	rax, QWORD PTR [rcx+8]	# D.8779, D.8775_38->cparam
-	test	rax, rax	# D.8779
+	mov	rax, QWORD PTR [rcx+8]	# D.9030, D.9026_38->cparam
+	test	rax, rax	# D.9030
 	je	.L45	#,
-	mov	QWORD PTR [rdx], rax	# *cparam_23(D), D.8779
-	mov	eax, 1	# D.8782,
+	mov	QWORD PTR [rdx], rax	# *cparam_23(D), D.9030
+	mov	eax, 1	# D.9033,
 	ret
 .L47:
 	lea	rax, [rcx+24]	# ivtmp.32,
 	sub	r8d, 1	# tmp81,
 	lea	rcx, [r8+r8*2]	# tmp84,
-	lea	rdi, [rax+rcx*8]	# D.8951,
+	lea	rdi, [rax+rcx*8]	# D.9202,
 .L42:
-	cmp	rax, rdi	# ivtmp.32, D.8951
+	cmp	rax, rdi	# ivtmp.32, D.9202
 	jne	.L43	#,
-	mov	eax, 0	# D.8782,
+	mov	eax, 0	# D.9033,
 	ret
 .L44:
-	mov	eax, 0	# D.8782,
+	mov	eax, 0	# D.9033,
 	ret
 .L45:
-	mov	eax, 0	# D.8782,
+	mov	eax, 0	# D.9033,
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	Callback_getCParam, .-Callback_getCParam
 	.globl	Callback_class
 	.data
@@ -442,12 +439,6 @@ Callback_getCParam:
 	.size	Callback_class, 8
 Callback_class:
 	.quad	type
-	.section	.rodata
-	.align 16
-	.type	__FUNCTION__.8728, @object
-	.size	__FUNCTION__.8728, 18
-__FUNCTION__.8728:
-	.string	"Callback_vdestroy"
 	.section	.rodata.str1.1
 .LC8:
 	.string	"Callback"
@@ -456,22 +447,31 @@ __FUNCTION__.8728:
 	.type	type, @object
 	.size	type, 24
 type:
-# vtable:
-	.quad	vtable
 # size:
 	.quad	24
 # name:
 	.quad	.LC8
+# vtable:
+	.quad	vtable
 	.section	.rodata
-	.type	__FUNCTION__.8740, @object
-	.size	__FUNCTION__.8740, 13
-__FUNCTION__.8740:
+	.type	__FUNCTION__.8991, @object
+	.size	__FUNCTION__.8991, 13
+__FUNCTION__.8991:
 	.string	"Callback_new"
 	.data
 	.align 8
 	.type	vtable, @object
 	.size	vtable, 8
 vtable:
+	.quad	override_coIObject
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	Callback_vdestroy
+# toString:
+	.quad	coObject_coIObject_vtoString
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

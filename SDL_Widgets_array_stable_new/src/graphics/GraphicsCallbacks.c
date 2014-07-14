@@ -58,7 +58,12 @@
  * sender->cparam[6]   -- binarization threshold thr_value will be set to 0xFFFFFFFF			as u64
  */
 void button_imgsrc_open(Widget *sender, Screen *screen) {
-	const char *sel_path = FileBrowsePanel_Main(screen->screen);
+	FileBrowsePanel panel;
+	FileBrowsePanel_new(&panel, IMAGE_SUPPORTED_FILES);
+	
+	const char *sel_path = FileBrowsePanel_show(&panel, true, false);
+	delete(&panel);
+	
 	if (sel_path != NULL) { // file selected
 		Image		*imgsrc 		= IMAGE( sender->cparam[0] );
 		Image		*imgdst			= IMAGE( sender->cparam[1] );
@@ -892,7 +897,12 @@ void button_change_reconst_limit(Widget *sender, Screen *screen) {
  * sender->vparam[1]   -- image used as comparision						as const Image*
  */
 void button_reconstruction_marker_open(Widget *sender, Screen *screen) {
-	const char *sel_path = FileBrowsePanel_Main(screen->screen);
+	FileBrowsePanel panel;
+	FileBrowsePanel_new(&panel, IMAGE_SUPPORTED_FILES);
+	
+	const char *sel_path = FileBrowsePanel_show(&panel, true, false);
+	delete(&panel);
+	
 	if (sel_path != NULL) { // file selected
 		Image 		*imgdst = (Image*) sender->vparam[0];
 		Image 		*imgcmp = (Image*) sender->vparam[1];

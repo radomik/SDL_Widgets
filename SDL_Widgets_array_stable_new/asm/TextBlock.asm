@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT TextBlock.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -57,26 +57,24 @@
 	.globl	TextBlock_vdestroy
 	.type	TextBlock_vdestroy, @function
 TextBlock_vdestroy:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8968	#,
-	call	Static_printObj2	#
-	mov	rdi, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_1(D)].text, MEM[(struct TextBlock *)vthis_1(D)].text
-	mov	edx, 109	#,
+	mov	rdi, QWORD PTR [rdi+168]	# MEM[(struct TextBlock *)vthis_1(D)].text, MEM[(struct TextBlock *)vthis_1(D)].text
+	mov	edx, 120	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	call	wfree	#
-	mov	QWORD PTR [rbx+176], 0	# MEM[(struct TextBlock *)vthis_1(D)].text,
+	mov	QWORD PTR [rbx+168], 0	# MEM[(struct TextBlock *)vthis_1(D)].text,
 	mov	rdi, rbx	#, vthis
 	call	Widget_vdestroy	#
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	TextBlock_vdestroy, .-TextBlock_vdestroy
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -98,7 +96,7 @@ TextBlock_vdestroy:
 	.globl	TextBlock_vrefresh
 	.type	TextBlock_vrefresh, @function
 TextBlock_vrefresh:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -112,16 +110,19 @@ TextBlock_vrefresh:
 	sub	rsp, 32	#,
 	.cfi_def_cfa_offset 64
 	mov	rbx, rdi	# vthis, vthis
-	mov	rsi, QWORD PTR [rdi+176]	# D.9051, MEM[(struct TextBlock *)vthis_2(D)].text
-	test	rsi, rsi	# D.9051
+	mov	rsi, QWORD PTR [rdi+168]	# D.9328, MEM[(struct TextBlock *)vthis_2(D)].text
+	test	rsi, rsi	# D.9328
 	je	.L4	#,
-	mov	rdi, QWORD PTR [rdi+184]	# D.9053, MEM[(struct TextBlock *)vthis_2(D)].font
-	test	rdi, rdi	# D.9053
+	mov	rdi, QWORD PTR [rdi+176]	# D.9330, MEM[(struct TextBlock *)vthis_2(D)].font
+	test	rdi, rdi	# D.9330
 	jne	.L5	#,
 .L4:
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_2(D)].class, MEM[(struct coObject *)vthis_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9331_96->vtable, D.9331_96->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9332_97 + 8B], MEM[(const void * *)D.9332_97 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9334_99].setVisible
 	jmp	.L3	#
 .L5:
 	mov	rbp, QWORD PTR [rbx+88]	# bg_surf, MEM[(struct Widget *)vthis_2(D)].surf
@@ -139,7 +140,7 @@ TextBlock_vrefresh:
 	test	ecx, ecx	# h.3
 	jg	.L8	#,
 .L7:
-	mov	rcx, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	rcx, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
 	mov	edx, DWORD PTR [rsp+24]	# h, h
 	mov	DWORD PTR [rsp], edx	#, h
 	mov	r9d, DWORD PTR [rsp+28]	#, w
@@ -149,9 +150,12 @@ TextBlock_vrefresh:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_2(D)].class, MEM[(struct coObject *)vthis_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9331_91->vtable, D.9331_91->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9332_92 + 8B], MEM[(const void * *)D.9332_92 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9334_94].setVisible
 	jmp	.L3	#
 .L8:
 	test	rbp, rbp	# bg_surf
@@ -163,87 +167,90 @@ TextBlock_vrefresh:
 	.p2align 4,,2
 	jle	.L10	#,
 .L9:
-	mov	edx, 70	#,
+	mov	edx, 81	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	mov	rdi, rbp	#, bg_surf
 	call	wSDL_FreeSurface	#
-	movzx	esi, WORD PTR [rsp+24]	# tmp131, h
-	movzx	edi, WORD PTR [rsp+28]	# tmp133, w
+	movzx	esi, WORD PTR [rsp+24]	# tmp155, h
+	movzx	edi, WORD PTR [rsp+28]	# tmp157, w
 	call	Static_newSurface	#
 	mov	rbp, rax	# bg_surf,
 	test	rax, rax	# bg_surf
 	jne	.L10	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9074,
-	mov	rcx, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	r8, rax	# D.9356,
+	mov	rcx, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_2(D)].class, MEM[(struct coObject *)vthis_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9331_28->vtable, D.9331_28->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9332_29 + 8B], MEM[(const void * *)D.9332_29 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9334_31].setVisible
 	jmp	.L3	#
 .L10:
-	mov	edx, DWORD PTR [rbx+200]	# MEM[(struct TextBlock *)vthis_2(D)].background, MEM[(struct TextBlock *)vthis_2(D)].background
+	mov	edx, DWORD PTR [rbx+192]	# MEM[(struct TextBlock *)vthis_2(D)].background, MEM[(struct TextBlock *)vthis_2(D)].background
 	mov	esi, 0	#,
 	mov	rdi, rbp	#, bg_surf
 	call	SDL_FillRect	#
-	test	eax, eax	# D.9076
+	test	eax, eax	# D.9358
 	je	.L11	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9079,
-	mov	rcx, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	r8, rax	# D.9361,
+	mov	rcx, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 .L11:
-	cmp	BYTE PTR [rbx+204], 0	# MEM[(struct TextBlock *)vthis_2(D)].foreground_changed,
+	cmp	BYTE PTR [rbx+196], 0	# MEM[(struct TextBlock *)vthis_2(D)].foreground_changed,
 	je	.L12	#,
-	mov	r12d, DWORD PTR [rbx+196]	# D.9083, MEM[(struct TextBlock *)vthis_2(D)].foreground
+	mov	r12d, DWORD PTR [rbx+188]	# D.9365, MEM[(struct TextBlock *)vthis_2(D)].foreground
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	and	r12d, DWORD PTR [rax+20]	# D.9086, D.9084_35->Rmask
+	and	r12d, DWORD PTR [rax+20]	# D.9368, D.9366_40->Rmask
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	movzx	ecx, BYTE PTR [rax+14]	# D.9087_38->Rshift, D.9087_38->Rshift
-	shr	r12d, cl	# tmp139, D.9087_38->Rshift
-	mov	BYTE PTR [rbx+192], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.r, tmp139
-	mov	r12d, DWORD PTR [rbx+196]	# D.9083, MEM[(struct TextBlock *)vthis_2(D)].foreground
+	movzx	ecx, BYTE PTR [rax+14]	# D.9369_43->Rshift, D.9369_43->Rshift
+	shr	r12d, cl	# tmp167, D.9369_43->Rshift
+	mov	BYTE PTR [rbx+184], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.r, tmp167
+	mov	r12d, DWORD PTR [rbx+188]	# D.9365, MEM[(struct TextBlock *)vthis_2(D)].foreground
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	and	r12d, DWORD PTR [rax+24]	# D.9094, D.9092_44->Gmask
+	and	r12d, DWORD PTR [rax+24]	# D.9376, D.9374_49->Gmask
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	movzx	ecx, BYTE PTR [rax+15]	# D.9095_47->Gshift, D.9095_47->Gshift
-	shr	r12d, cl	# tmp141, D.9095_47->Gshift
-	mov	BYTE PTR [rbx+193], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.g, tmp141
-	mov	r12d, DWORD PTR [rbx+196]	# D.9083, MEM[(struct TextBlock *)vthis_2(D)].foreground
+	movzx	ecx, BYTE PTR [rax+15]	# D.9377_52->Gshift, D.9377_52->Gshift
+	shr	r12d, cl	# tmp169, D.9377_52->Gshift
+	mov	BYTE PTR [rbx+185], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.g, tmp169
+	mov	r12d, DWORD PTR [rbx+188]	# D.9365, MEM[(struct TextBlock *)vthis_2(D)].foreground
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	and	r12d, DWORD PTR [rax+28]	# D.9102, D.9100_53->Bmask
+	and	r12d, DWORD PTR [rax+28]	# D.9384, D.9382_58->Bmask
 	mov	eax, 0	#,
 	call	Screen_getBaseSurfaceFormat	#
-	movzx	ecx, BYTE PTR [rax+16]	# D.9103_56->Bshift, D.9103_56->Bshift
-	shr	r12d, cl	# tmp143, D.9103_56->Bshift
-	mov	BYTE PTR [rbx+194], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.b, tmp143
-	mov	BYTE PTR [rbx+204], 0	# MEM[(struct TextBlock *)vthis_2(D)].foreground_changed,
+	movzx	ecx, BYTE PTR [rax+16]	# D.9385_61->Bshift, D.9385_61->Bshift
+	shr	r12d, cl	# tmp171, D.9385_61->Bshift
+	mov	BYTE PTR [rbx+186], r12b	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor.b, tmp171
+	mov	BYTE PTR [rbx+196], 0	# MEM[(struct TextBlock *)vthis_2(D)].foreground_changed,
 .L12:
-	mov	edx, DWORD PTR [rbx+192]	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor, MEM[(struct TextBlock *)vthis_2(D)].fgcolor
-	mov	rsi, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
-	mov	rdi, QWORD PTR [rbx+184]	# MEM[(struct TextBlock *)vthis_2(D)].font, MEM[(struct TextBlock *)vthis_2(D)].font
-	mov	r8d, 90	#,
+	mov	edx, DWORD PTR [rbx+184]	# MEM[(struct TextBlock *)vthis_2(D)].fgcolor, MEM[(struct TextBlock *)vthis_2(D)].fgcolor
+	mov	rsi, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	rdi, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].font, MEM[(struct TextBlock *)vthis_2(D)].font
+	mov	r8d, 101	#,
 	mov	ecx, OFFSET FLAT:.LC0	#,
 	call	wTTF_RenderUTF8_Solid	#
 	mov	r12, rax	# text_surf,
 	test	rax, rax	# text_surf
 	jne	.L13	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9110,
-	mov	rcx, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	r8, rax	# D.9392,
+	mov	rcx, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
 	mov	edx, OFFSET FLAT:.LC4	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -255,11 +262,11 @@ TextBlock_vrefresh:
 	mov	esi, 0	#,
 	mov	rdi, r12	#, text_surf
 	call	SDL_UpperBlit	#
-	test	eax, eax	# D.9111
+	test	eax, eax	# D.9393
 	je	.L14	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.9114,
-	mov	rcx, QWORD PTR [rbx+176]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
+	mov	r8, rax	# D.9396,
+	mov	rcx, QWORD PTR [rbx+168]	# MEM[(struct TextBlock *)vthis_2(D)].text, MEM[(struct TextBlock *)vthis_2(D)].text
 	mov	edx, OFFSET FLAT:.LC5	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -267,14 +274,17 @@ TextBlock_vrefresh:
 	call	__fprintf_chk	#
 .L14:
 	mov	QWORD PTR [rbx+88], rbp	# MEM[(struct Widget *)vthis_2(D)].surf, bg_surf
-	movzx	edx, WORD PTR [rsp+24]	# tmp149, h
-	movzx	esi, WORD PTR [rsp+28]	# tmp151, w
+	movzx	edx, WORD PTR [rsp+24]	# tmp177, h
+	movzx	esi, WORD PTR [rsp+28]	# tmp179, w
 	mov	rdi, rbx	#, vthis
 	call	Widget_setSizeUpdatePos	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)vthis_2(D)].class, MEM[(struct coObject *)vthis_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9331_82->vtable, D.9331_82->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9332_83 + 8B], MEM[(const void * *)D.9332_83 + 8B]
 	mov	esi, 1	#,
 	mov	rdi, rbx	#, vthis
-	call	Widget_setVisible	#
-	mov	edx, 101	#,
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9334_85].setVisible
+	mov	edx, 112	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
 	mov	rdi, r12	#, text_surf
 	call	wSDL_FreeSurface	#
@@ -289,12 +299,36 @@ TextBlock_vrefresh:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	TextBlock_vrefresh, .-TextBlock_vrefresh
+	.section	.rodata.str1.1
+.LC6:
+	.string	"%s"
+	.text
+	.globl	TextBlock_vtoString
+	.type	TextBlock_vtoString, @function
+TextBlock_vtoString:
+.LFB110:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rcx, QWORD PTR [rdi+168]	# MEM[(struct TextBlock *)vthis_1(D)].text, MEM[(struct TextBlock *)vthis_1(D)].text
+	mov	edx, OFFSET FLAT:.LC6	#,
+	mov	esi, 512	#,
+	mov	edi, OFFSET FLAT:str_id.9272	#,
+	mov	eax, 0	#,
+	call	snprintf	#
+	mov	eax, OFFSET FLAT:str_id.9272	#,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE110:
+	.size	TextBlock_vtoString, .-TextBlock_vtoString
 	.globl	TextBlock_setText
 	.type	TextBlock_setText, @function
 TextBlock_setText:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -312,36 +346,38 @@ TextBlock_setText:
 	repnz scasb
 	not	rcx	# tmp69
 	lea	edx, [rcx-1]	# l,
-	mov	r8, QWORD PTR [rbp+176]	# D.9021, this_5(D)->text
-	test	r8, r8	# D.9021
-	je	.L18	#,
-	mov	rdi, r8	# D.9021, D.9021
+	mov	r8, QWORD PTR [rbp+168]	# D.9293, this_5(D)->text
+	test	r8, r8	# D.9293
+	je	.L20	#,
+	mov	rdi, r8	# D.9293, D.9293
 	mov	rcx, -1	# tmp77,
 	repnz scasb
 	not	rcx	# tmp75
-	sub	rcx, 1	# D.9024,
-	cmp	dx, cx	# l, D.9024
-	ja	.L19	#,
-.L21:
+	sub	rcx, 1	# D.9296,
+	cmp	dx, cx	# l, D.9296
+	ja	.L21	#,
+.L23:
 	mov	rsi, rbx	#, text
-	mov	rdi, r8	#, D.9021
+	mov	rdi, r8	#, D.9293
 	call	strcpy	#
-	jmp	.L17	#
-.L19:
-	mov	edx, 154	#,
+	jmp	.L19	#
+.L21:
+	mov	edx, 165	#,
 	mov	esi, OFFSET FLAT:.LC0	#,
-	mov	rdi, r8	#, D.9021
+	mov	rdi, r8	#, D.9293
 	call	wfree	#
-.L22:
+.L24:
+	mov	edx, 166	#,
+	mov	esi, OFFSET FLAT:.LC0	#,
 	mov	rdi, rbx	#, text
-	call	__strdup	#
-	mov	QWORD PTR [rbp+176], rax	# this_5(D)->text, tmp79
-	jmp	.L17	#
-.L18:
+	call	wstrdup	#
+	mov	QWORD PTR [rbp+168], rax	# this_5(D)->text, D.9303
+	jmp	.L19	#
+.L20:
 	test	dx, dx	# l
-	jne	.L22	#,
-	jmp	.L21	#
-.L17:
+	jne	.L24	#,
+	jmp	.L23	#
+.L19:
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 24
 	pop	rbx	#
@@ -351,24 +387,24 @@ TextBlock_setText:
 	.p2align 4,,2
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	TextBlock_setText, .-TextBlock_setText
 	.section	.rodata.str1.8
 	.align 8
-.LC6:
+.LC7:
 	.string	"%20s:\tWithin context: text='%s'\n"
 	.section	.rodata.str1.1
-.LC7:
+.LC8:
 	.string	"fonts/impact.ttf"
 	.section	.rodata.str1.8
 	.align 8
-.LC8:
+.LC9:
 	.string	"TextBlock_new: Failed to set default font %s\n"
 	.text
 	.globl	TextBlock_new
 	.type	TextBlock_new, @function
 TextBlock_new:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -381,49 +417,49 @@ TextBlock_new:
 	mov	rbx, rdi	# this, this
 	mov	rbp, rsi	# text, text
 	test	rdi, rdi	# this
-	jne	.L25	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8973	#,
+	jne	.L27	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9250	#,
 	call	Static_nullThis2	#
 	mov	r8, rbp	#, text
-	mov	ecx, OFFSET FLAT:__FUNCTION__.8973	#,
-	mov	edx, OFFSET FLAT:.LC6	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9250	#,
+	mov	edx, OFFSET FLAT:.LC7	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L26	#
-.L25:
+	jmp	.L28	#
+.L27:
 	call	Widget_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8973	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	mov	QWORD PTR [rbx+176], 0	# this_2(D)->text,
+	mov	QWORD PTR [rbx+168], 0	# this_2(D)->text,
 	test	rbp, rbp	# text
-	je	.L27	#,
+	je	.L29	#,
 	mov	rsi, rbp	#, text
 	mov	rdi, rbx	#, this
 	call	TextBlock_setText	#
-.L27:
+.L29:
 	mov	eax, 0	#,
 	call	Static_getDefaultFont	#
-	mov	QWORD PTR [rbx+184], rax	# this_2(D)->font, D.9041
-	test	rax, rax	# D.9041
-	jne	.L28	#,
-	mov	ecx, OFFSET FLAT:.LC7	#,
-	mov	edx, OFFSET FLAT:.LC8	#,
+	mov	QWORD PTR [rbx+176], rax	# this_2(D)->font, D.9313
+	test	rax, rax	# D.9313
+	jne	.L30	#,
+	mov	ecx, OFFSET FLAT:.LC8	#,
+	mov	edx, OFFSET FLAT:.LC9	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	call	__fprintf_chk	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_2(D)].class, MEM[(struct coObject *)this_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9317_9->vtable, D.9317_9->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9318_10 + 8B], MEM[(const void * *)D.9318_10 + 8B]
 	mov	esi, 0	#,
 	mov	rdi, rbx	#, this
-	call	Widget_setVisible	#
-	jmp	.L26	#
+	call	[QWORD PTR [rax+32]]	# MEM[(struct IWidget *)D.9320_12].setVisible
+	jmp	.L28	#
+.L30:
+	mov	DWORD PTR [rbx+188], 0	# this_2(D)->foreground,
+	mov	DWORD PTR [rbx+192], 15592683	# this_2(D)->background,
+	mov	BYTE PTR [rbx+196], 1	# this_2(D)->foreground_changed,
 .L28:
-	mov	DWORD PTR [rbx+196], 0	# this_2(D)->foreground,
-	mov	DWORD PTR [rbx+200], 15592683	# this_2(D)->background,
-	mov	BYTE PTR [rbx+204], 1	# this_2(D)->foreground_changed,
-.L26:
 	mov	rax, rbx	#, this
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 24
@@ -433,80 +469,49 @@ TextBlock_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	TextBlock_new, .-TextBlock_new
 	.globl	TextBlock_setFont
 	.type	TextBlock_setFont, @function
 TextBlock_setFont:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	test	rsi, rsi	# font
-	je	.L30	#,
+	je	.L32	#,
 	test	rdi, rdi	# this
-	je	.L30	#,
-	mov	QWORD PTR [rdi+184], rsi	# this_3(D)->font, font
-.L30:
+	je	.L32	#,
+	mov	QWORD PTR [rdi+176], rsi	# this_3(D)->font, font
+.L32:
 	rep
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	TextBlock_setFont, .-TextBlock_setFont
 	.globl	TextBlock_setForegroundColor
 	.type	TextBlock_setForegroundColor, @function
 TextBlock_setForegroundColor:
-.LFB98:
+.LFB108:
 	.cfi_startproc
-	mov	DWORD PTR [rdi+196], esi	# this_1(D)->foreground, rgb
-	mov	BYTE PTR [rdi+204], 1	# this_1(D)->foreground_changed,
+	mov	DWORD PTR [rdi+188], esi	# this_1(D)->foreground, rgb
+	mov	BYTE PTR [rdi+196], 1	# this_1(D)->foreground_changed,
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	TextBlock_setForegroundColor, .-TextBlock_setForegroundColor
 	.globl	TextBlock_setBackgroundColor
 	.type	TextBlock_setBackgroundColor, @function
 TextBlock_setBackgroundColor:
-.LFB99:
+.LFB109:
 	.cfi_startproc
-	mov	DWORD PTR [rdi+200], esi	# this_1(D)->background, rgb
+	mov	DWORD PTR [rdi+192], esi	# this_1(D)->background, rgb
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE109:
 	.size	TextBlock_setBackgroundColor, .-TextBlock_setBackgroundColor
-	.section	.rodata.str1.1
-.LC9:
-	.string	"text_block=NULL"
-.LC10:
-	.string	"%s"
-	.text
-	.globl	TextBlock_toString
-	.type	TextBlock_toString, @function
-TextBlock_toString:
-.LFB100:
-	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC9	# D.9008,
-	test	rdi, rdi	# this
-	je	.L39	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rcx, QWORD PTR [rdi+176]	# this_2(D)->text, this_2(D)->text
-	mov	edx, OFFSET FLAT:.LC10	#,
-	mov	esi, 128	#,
-	mov	edi, OFFSET FLAT:str_id.8998	#,
-	mov	eax, 0	#,
-	call	snprintf	#
-	mov	eax, OFFSET FLAT:str_id.8998	# D.9008,
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L39:
-	rep
-	ret
-	.cfi_endproc
-.LFE100:
-	.size	TextBlock_toString, .-TextBlock_toString
 	.globl	TextBlock_staticGetTextSize
 	.type	TextBlock_staticGetTextSize, @function
 TextBlock_staticGetTextSize:
-.LFB101:
+.LFB111:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -515,7 +520,7 @@ TextBlock_staticGetTextSize:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE111:
 	.size	TextBlock_staticGetTextSize, .-TextBlock_staticGetTextSize
 	.globl	TextBlock_class
 	.data
@@ -525,41 +530,55 @@ TextBlock_staticGetTextSize:
 TextBlock_class:
 	.quad	type
 	.section	.rodata.str1.1
-.LC11:
+.LC10:
 	.string	"TextBlock"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	200
+# name:
+	.quad	.LC10
 # vtable:
 	.quad	vtable
-# size:
-	.quad	208
-# name:
-	.quad	.LC11
+	.section	.rodata
+	.type	__FUNCTION__.9250, @object
+	.size	__FUNCTION__.9250, 14
+__FUNCTION__.9250:
+	.string	"TextBlock_new"
+	.local	str_id.9272
+	.comm	str_id.9272,512,32
+	.data
+	.align 16
+	.type	vtable, @object
+	.size	vtable, 16
+vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.8968, @object
-	.size	__FUNCTION__.8968, 19
-__FUNCTION__.8968:
-	.string	"TextBlock_vdestroy"
-	.type	__FUNCTION__.8973, @object
-	.size	__FUNCTION__.8973, 14
-__FUNCTION__.8973:
-	.string	"TextBlock_new"
-	.local	str_id.8998
-	.comm	str_id.8998,128,32
-	.data
-	.align 32
-	.type	vtable, @object
-	.size	vtable, 48
-vtable:
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	TextBlock_vdestroy
+# toString:
+	.quad	TextBlock_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	Widget_vmevent
+# draw:
 	.quad	Widget_vdraw
+# refresh:
 	.quad	TextBlock_vrefresh
+# drag:
 	.quad	Widget_vdrag
+# setVisible:
 	.quad	Widget_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

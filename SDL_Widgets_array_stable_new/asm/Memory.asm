@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT Memory.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -60,7 +60,7 @@
 	.text
 	.type	MM_Info_print, @function
 MM_Info_print:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -104,7 +104,7 @@ MM_Info_print:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	MM_Info_print, .-MM_Info_print
 	.section	.rodata.str1.8
 	.align 8
@@ -113,7 +113,7 @@ MM_Info_print:
 	.text
 	.type	mm_del_info, @function
 mm_del_info:
-.LFB100:
+.LFB110:
 	.cfi_startproc
 	push	r14	#
 	.cfi_def_cfa_offset 16
@@ -175,7 +175,7 @@ mm_del_info:
 	call	free	#
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-	mov	eax, 1	# D.8746,
+	mov	eax, 1	# D.9003,
 	jmp	.L17	#
 .L5:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
@@ -189,7 +189,7 @@ mm_del_info:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8746,
+	mov	eax, 0	# D.9003,
 .L17:
 	add	rsp, 16	#,
 	.cfi_def_cfa_offset 48
@@ -205,7 +205,7 @@ mm_del_info:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE110:
 	.size	mm_del_info, .-mm_del_info
 	.section	.rodata.str1.1
 .LC3:
@@ -220,41 +220,41 @@ mm_del_info:
 	.globl	Memory_getError
 	.type	Memory_getError, @function
 Memory_getError:
-.LFB94:
+.LFB104:
 	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC4	# D.9024,
+	mov	eax, OFFSET FLAT:.LC4	# D.9292,
 	cmp	edi, 1	# err,
 	je	.L22	#,
-	mov	eax, OFFSET FLAT:.LC5	# D.9024,
+	mov	eax, OFFSET FLAT:.LC5	# D.9292,
 	cmp	edi, 2	# err,
 	je	.L22	#,
 	test	edi, edi	# err
 	mov	eax, OFFSET FLAT:.LC6	# tmp64,
 	mov	edx, OFFSET FLAT:.LC3	# tmp63,
-	cmove	rax, rdx	# tmp63,, D.9024
+	cmove	rax, rdx	# tmp63,, D.9292
 .L22:
 	rep
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	Memory_getError, .-Memory_getError
 	.globl	Memory_init
 	.type	Memory_init, @function
 Memory_init:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
 	call	SDL_CreateMutex	#
-	mov	QWORD PTR mutex[rip], rax	# mutex, mutex.62
-	test	rax, rax	# mutex.62
+	mov	QWORD PTR mutex[rip], rax	# mutex, mutex.64
+	test	rax, rax	# mutex.64
 	sete	al	#, tmp64
 	movzx	eax, al	# tmp64, tmp64
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	Memory_init, .-Memory_init
 	.section	.rodata.str1.1
 .LC7:
@@ -269,7 +269,7 @@ Memory_init:
 	.globl	Memory_printUsage
 	.type	Memory_printUsage, @function
 Memory_printUsage:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
@@ -281,17 +281,17 @@ Memory_printUsage:
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	rax, QWORD PTR size_alloc[rip]	# size_alloc.59, size_alloc
-	cmp	rax, 1023	# size_alloc.59,
+	mov	rax, QWORD PTR size_alloc[rip]	# size_alloc.61, size_alloc
+	cmp	rax, 1023	# size_alloc.61,
 	jbe	.L28	#,
-	cmp	rax, 1048575	# size_alloc.59,
+	cmp	rax, 1048575	# size_alloc.61,
 	ja	.L29	#,
-	test	rax, rax	# size_alloc.59
+	test	rax, rax	# size_alloc.61
 	js	.L30	#,
-	cvtsi2ss	xmm0, rax	# tmp74, size_alloc.59
+	cvtsi2ss	xmm0, rax	# tmp74, size_alloc.61
 	jmp	.L31	#
 .L30:
-	mov	rdx, rax	# tmp76, size_alloc.59
+	mov	rdx, rax	# tmp76, size_alloc.61
 	shr	rdx	# tmp76
 	and	eax, 1	# tmp77,
 	or	rdx, rax	# tmp76, tmp77
@@ -308,13 +308,13 @@ Memory_printUsage:
 	call	__fprintf_chk	#
 	jmp	.L28	#
 .L29:
-	test	rax, rax	# size_alloc.59
+	test	rax, rax	# size_alloc.61
 	js	.L32	#,
-	cvtsi2ss	xmm0, rax	# tmp81, size_alloc.59
+	cvtsi2ss	xmm0, rax	# tmp81, size_alloc.61
 	.p2align 4,,3
 	jmp	.L33	#
 .L32:
-	mov	rdx, rax	# tmp83, size_alloc.59
+	mov	rdx, rax	# tmp83, size_alloc.61
 	shr	rdx	# tmp83
 	and	eax, 1	# tmp84,
 	or	rdx, rax	# tmp83, tmp84
@@ -342,7 +342,7 @@ Memory_printUsage:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	Memory_printUsage, .-Memory_printUsage
 	.section	.rodata.str1.8
 	.align 8
@@ -352,7 +352,7 @@ Memory_printUsage:
 	.globl	Memory_printAll
 	.type	Memory_printAll, @function
 Memory_printAll:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -392,7 +392,7 @@ Memory_printAll:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	Memory_printAll, .-Memory_printAll
 	.section	.rodata.str1.8
 	.align 8
@@ -408,7 +408,7 @@ Memory_printAll:
 	.globl	Memory_end
 	.type	Memory_end, @function
 Memory_end:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -450,7 +450,7 @@ Memory_end:
 	call	__fprintf_chk	#
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_DestroyMutex	#
-	mov	eax, 2	# D.8990,
+	mov	eax, 2	# D.9258,
 	jmp	.L43	#
 .L41:
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
@@ -460,7 +460,7 @@ Memory_end:
 	call	fwrite	#
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_DestroyMutex	#
-	mov	eax, 0	# D.8990,
+	mov	eax, 0	# D.9258,
 .L43:
 	pop	rbx	#
 	.cfi_def_cfa_offset 24
@@ -470,12 +470,12 @@ Memory_end:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	Memory_end, .-Memory_end
 	.globl	MM_seek_ptr
 	.type	MM_seek_ptr, @function
 MM_seek_ptr:
-.LFB101:
+.LFB111:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -520,7 +520,7 @@ MM_seek_ptr:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE111:
 	.size	MM_seek_ptr, .-MM_seek_ptr
 	.section	.rodata.str1.8
 	.align 8
@@ -540,7 +540,7 @@ MM_seek_ptr:
 	.globl	wmalloc
 	.type	wmalloc, @function
 wmalloc:
-.LFB102:
+.LFB112:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-40], rbx	#,
 	mov	QWORD PTR [rsp-32], rbp	#,
@@ -618,7 +618,7 @@ wmalloc:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE102:
+.LFE112:
 	.size	wmalloc, .-wmalloc
 	.section	.rodata.str1.8
 	.align 8
@@ -633,7 +633,7 @@ wmalloc:
 	.globl	wcalloc
 	.type	wcalloc, @function
 wcalloc:
-.LFB103:
+.LFB113:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -717,7 +717,7 @@ wcalloc:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE103:
+.LFE113:
 	.size	wcalloc, .-wcalloc
 	.section	.rodata.str1.8
 	.align 8
@@ -736,7 +736,7 @@ wcalloc:
 	.globl	wrealloc
 	.type	wrealloc, @function
 wrealloc:
-.LFB104:
+.LFB114:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -772,7 +772,7 @@ wrealloc:
 	jmp	.L80	#
 .L69:
 	test	r13, r13	# __size
-	setne	al	#, D.8931
+	setne	al	#, D.9199
 	je	.L71	#,
 	test	rbp, rbp	# __ptr
 	.p2align 4,,2
@@ -817,7 +817,7 @@ wrealloc:
 .L71:
 	test	rbp, rbp	# __ptr
 	je	.L80	#,
-	test	al, al	# D.8931
+	test	al, al	# D.9199
 	.p2align 4,,6
 	je	.L75	#,
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
@@ -866,13 +866,13 @@ wrealloc:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexP	#
 	mov	rax, QWORD PTR size_alloc[rip]	# size_alloc, size_alloc
-	sub	rax, QWORD PTR [rbx+24]	# size_alloc.41, info_93->full_size
+	sub	rax, QWORD PTR [rbx+24]	# size_alloc.43, info_93->full_size
 	mov	QWORD PTR [rbx], r12	# info_93->ptr, ptr
 	mov	QWORD PTR [rbx+8], r15	# info_93->call_file, _file_
 	mov	QWORD PTR [rbx+16], OFFSET FLAT:.LC26	# info_93->create_function_name,
 	mov	QWORD PTR [rbx+24], r13	# info_93->full_size, __size
 	mov	DWORD PTR [rbx+32], r14d	# info_93->call_file_line, _line_
-	add	r13, rax	# tmp102, size_alloc.41
+	add	r13, rax	# tmp102, size_alloc.43
 	mov	QWORD PTR size_alloc[rip], r13	# size_alloc, tmp102
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
@@ -888,89 +888,184 @@ wrealloc:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE104:
+.LFE114:
 	.size	wrealloc, .-wrealloc
-	.section	.rodata.str1.1
+	.section	.rodata.str1.8
+	.align 8
 .LC28:
+	.string	"wstrdup: Failed to allocate memory __s=%p (strdup returned NULL), file: %s, line: %d\n"
+	.section	.rodata.str1.1
+.LC29:
+	.string	"wstrdup"
+.LC30:
+	.string	"strdup"
+	.text
+	.globl	wstrdup
+	.type	wstrdup, @function
+wstrdup:
+.LFB115:
+	.cfi_startproc
+	mov	QWORD PTR [rsp-32], rbx	#,
+	mov	QWORD PTR [rsp-24], rbp	#,
+	mov	QWORD PTR [rsp-16], r12	#,
+	mov	QWORD PTR [rsp-8], r13	#,
+	sub	rsp, 40	#,
+	.cfi_def_cfa_offset 48
+	.cfi_offset 3, -40
+	.cfi_offset 6, -32
+	.cfi_offset 12, -24
+	.cfi_offset 13, -16
+	mov	rbx, rdi	# __s, __s
+	mov	r13, rsi	# _file_, _file_
+	mov	r12d, edx	# _line_, _line_
+	call	__strdup	#
+	mov	rbp, rax	# s,
+	test	rax, rax	# s
+	jne	.L84	#,
+	mov	r9d, r12d	#, _line_
+	mov	r8, r13	#, _file_
+	mov	rcx, rbx	#, __s
+	mov	edx, OFFSET FLAT:.LC28	#,
+	mov	esi, 1	#,
+	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	mov	eax, 0	#,
+	call	__fprintf_chk	#
+	jmp	.L85	#
+.L84:
+	mov	edi, 48	#,
+	call	malloc	#
+	mov	rbx, rax	# info,
+	test	rax, rax	# info
+	jne	.L86	#,
+	mov	ecx, OFFSET FLAT:.LC29	#,
+	mov	edx, OFFSET FLAT:.LC19	#,
+	mov	esi, 1	#,
+	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	mov	eax, 0	#,
+	call	__fprintf_chk	#
+	jmp	.L85	#
+.L86:
+	mov	QWORD PTR [rax], rbp	# info_8->ptr, s
+	mov	QWORD PTR [rax+8], r13	# info_8->call_file, _file_
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC30	# info_8->create_function_name,
+	mov	rdi, rbp	# s, s
+	mov	eax, 0	# tmp85,
+	mov	rcx, -1	# tmp84,
+	repnz scasb
+	not	rcx	# tmp82
+	mov	QWORD PTR [rbx+24], rcx	# info_8->full_size, tmp82
+	mov	DWORD PTR [rbx+32], r12d	# info_8->call_file_line, _line_
+	mov	QWORD PTR [rbx+40], 0	# info_8->next,
+	mov	rdi, QWORD PTR mutex[rip]	#, mutex
+	call	SDL_mutexP	#
+	add	QWORD PTR cnt_alloc[rip], 1	# cnt_alloc,
+	mov	rax, QWORD PTR [rbx+24]	# info_8->full_size, info_8->full_size
+	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_8->full_size
+	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
+	jne	.L87	#,
+	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
+	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
+	jmp	.L88	#
+.L87:
+	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
+	mov	QWORD PTR [rax+40], rbx	# last_mm.16_40->next, info
+	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
+.L88:
+	mov	rdi, QWORD PTR mutex[rip]	#, mutex
+	call	SDL_mutexV	#
+.L85:
+	mov	rax, rbp	#, s
+	mov	rbx, QWORD PTR [rsp+8]	#,
+	mov	rbp, QWORD PTR [rsp+16]	#,
+	mov	r12, QWORD PTR [rsp+24]	#,
+	mov	r13, QWORD PTR [rsp+32]	#,
+	add	rsp, 40	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE115:
+	.size	wstrdup, .-wstrdup
+	.section	.rodata.str1.1
+.LC31:
 	.string	"wfree"
 	.text
 	.globl	wfree
 	.type	wfree, @function
 wfree:
-.LFB105:
+.LFB116:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# __ptr, __ptr
 	test	rdi, rdi	# __ptr
-	je	.L83	#,
+	je	.L90	#,
 	mov	ecx, edx	#, _line_
 	mov	rdx, rsi	#, _file_
-	mov	esi, OFFSET FLAT:.LC28	#,
+	mov	esi, OFFSET FLAT:.LC31	#,
 	call	mm_del_info	#
-	test	eax, eax	# D.8922
-	je	.L83	#,
+	test	eax, eax	# D.9179
+	je	.L90	#,
 	mov	rdi, rbx	#, __ptr
 	call	free	#
-.L83:
+.L90:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	.p2align 4,,2
 	ret
 	.cfi_endproc
-.LFE105:
+.LFE116:
 	.size	wfree, .-wfree
 	.globl	SDL_SURFACE_APPROX_SIZE
 	.type	SDL_SURFACE_APPROX_SIZE, @function
 SDL_SURFACE_APPROX_SIZE:
-.LFB106:
+.LFB117:
 	.cfi_startproc
 	test	rdi, rdi	# ptr
-	je	.L90	#,
+	je	.L97	#,
 	mov	rdx, QWORD PTR [rdi+8]	# fmt, ptr_3(D)->format
 	movzx	eax, WORD PTR [rdi+24]	# ptr_3(D)->pitch, ptr_3(D)->pitch
 	imul	eax, DWORD PTR [rdi+20]	# tmp74, ptr_3(D)->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L88	#,
+	jne	.L95	#,
 	add	rax, 88	# size,
 	ret
-.L88:
+.L95:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_4->palette
 	test	rdx, rdx	# pal
-	jne	.L89	#,
+	jne	.L96	#,
 	add	rax, 136	# size,
 	ret
-.L89:
+.L96:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_12->colors,
-	je	.L87	#,
+	je	.L94	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_12->ncolors, pal_12->ncolors
 	lea	rax, [rax+rdx*4]	# size,
 	ret
-.L90:
+.L97:
 	mov	eax, 0	# size,
-.L87:
+.L94:
 	rep
 	ret
 	.cfi_endproc
-.LFE106:
+.LFE117:
 	.size	SDL_SURFACE_APPROX_SIZE, .-SDL_SURFACE_APPROX_SIZE
 	.section	.rodata.str1.8
 	.align 8
-.LC29:
+.LC32:
 	.string	"wSDL_ConvertSurface: Failed to allocate memory src=%p, fmt=%p, flags=0x%08X (SDL_ConvertSurface failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC30:
+.LC33:
 	.string	"wSDL_ConvertSurface"
-.LC31:
+.LC34:
 	.string	"SDL_ConvertSurface"
 	.text
 	.globl	wSDL_ConvertSurface
 	.type	wSDL_ConvertSurface, @function
 wSDL_ConvertSurface:
-.LFB107:
+.LFB118:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -994,58 +1089,58 @@ wSDL_ConvertSurface:
 	call	SDL_ConvertSurface	#
 	mov	rbp, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L92	#,
+	jne	.L99	#,
 	call	SDL_GetError	#
 	mov	DWORD PTR [rsp+16], r12d	#, _line_
 	mov	QWORD PTR [rsp+8], r14	#, _file_
-	mov	QWORD PTR [rsp], rax	#, D.8892
+	mov	QWORD PTR [rsp], rax	#, D.9149
 	mov	r9d, r15d	#, flags
 	mov	r8, r13	#, fmt
 	mov	rcx, rbx	#, src
-	mov	edx, OFFSET FLAT:.LC29	#,
+	mov	edx, OFFSET FLAT:.LC32	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L93	#
-.L92:
+	jmp	.L100	#
+.L99:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbx, rax	# info,
 	test	rax, rax	# info
-	jne	.L94	#,
-	mov	ecx, OFFSET FLAT:.LC30	#,
+	jne	.L101	#,
+	mov	ecx, OFFSET FLAT:.LC33	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L93	#
-.L94:
+	jmp	.L100	#
+.L101:
 	mov	QWORD PTR [rax], rbp	# info_11->ptr, ptr
 	mov	QWORD PTR [rax+8], r14	# info_11->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC31	# info_11->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC34	# info_11->create_function_name,
 	mov	rdx, QWORD PTR [rbp+8]	# fmt, ptr_5->format
 	movzx	eax, WORD PTR [rbp+24]	# ptr_5->pitch, ptr_5->pitch
 	imul	eax, DWORD PTR [rbp+20]	# tmp93, ptr_5->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L95	#,
+	jne	.L102	#,
 	add	rax, 88	# size,
-	jmp	.L96	#
-.L95:
+	jmp	.L103	#
+.L102:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_36->palette
 	test	rdx, rdx	# pal
-	jne	.L97	#,
+	jne	.L104	#,
 	add	rax, 136	# size,
-	jmp	.L96	#
-.L97:
+	jmp	.L103	#
+.L104:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_43->colors,
-	je	.L96	#,
+	je	.L103	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_43->ncolors, pal_43->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L96:
+.L103:
 	mov	QWORD PTR [rbx+24], rax	# info_11->full_size, size
 	mov	DWORD PTR [rbx+32], r12d	# info_11->call_file_line, _line_
 	mov	QWORD PTR [rbx+40], 0	# info_11->next,
@@ -1055,18 +1150,18 @@ wSDL_ConvertSurface:
 	mov	rax, QWORD PTR [rbx+24]	# info_11->full_size, info_11->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_11->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L98	#,
+	jne	.L105	#,
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
-	jmp	.L99	#
-.L98:
+	jmp	.L106	#
+.L105:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbx	# last_mm.16_59->next, info
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-.L99:
+.L106:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L93:
+.L100:
 	mov	rax, rbp	#, ptr
 	mov	rbx, QWORD PTR [rsp+40]	#,
 	mov	rbp, QWORD PTR [rsp+48]	#,
@@ -1078,22 +1173,22 @@ wSDL_ConvertSurface:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE107:
+.LFE118:
 	.size	wSDL_ConvertSurface, .-wSDL_ConvertSurface
 	.section	.rodata.str1.8
 	.align 8
-.LC32:
+.LC35:
 	.string	"wSDL_CreateRGBSurface: Failed to allocate memory flags=0x%08X, width=%d, height=%d, depth=%d, Rmask=0x%08X, Gmask=0x%08X, Bmask=0x%08X, Amask=0x%08X (SDL_CreateRGBSurface failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC33:
+.LC36:
 	.string	"wSDL_CreateRGBSurface"
-.LC34:
+.LC37:
 	.string	"SDL_CreateRGBSurface"
 	.text
 	.globl	wSDL_CreateRGBSurface
 	.type	wSDL_CreateRGBSurface, @function
 wSDL_CreateRGBSurface:
-.LFB108:
+.LFB119:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1123,13 +1218,13 @@ wSDL_CreateRGBSurface:
 	call	SDL_CreateRGBSurface	#
 	mov	rbx, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L102	#,
+	jne	.L109	#,
 	call	SDL_GetError	#
 	mov	edx, DWORD PTR [rsp+168]	#, _line_
 	mov	DWORD PTR [rsp+56], edx	#,
 	mov	rdx, QWORD PTR [rsp+160]	#, _file_
 	mov	QWORD PTR [rsp+48], rdx	#,
-	mov	QWORD PTR [rsp+40], rax	#, D.8881
+	mov	QWORD PTR [rsp+40], rax	#, D.9138
 	mov	eax, DWORD PTR [rsp+152]	#, Amask
 	mov	DWORD PTR [rsp+32], eax	#,
 	mov	edx, DWORD PTR [rsp+144]	#, Bmask
@@ -1140,51 +1235,51 @@ wSDL_CreateRGBSurface:
 	mov	r9d, r12d	#, height
 	mov	r8d, ebp	#, width
 	mov	ecx, DWORD PTR [rsp+76]	#, %sfp
-	mov	edx, OFFSET FLAT:.LC32	#,
+	mov	edx, OFFSET FLAT:.LC35	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L103	#
-.L102:
+	jmp	.L110	#
+.L109:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbp, rax	# info,
 	test	rax, rax	# info
-	jne	.L104	#,
-	mov	ecx, OFFSET FLAT:.LC33	#,
+	jne	.L111	#,
+	mov	ecx, OFFSET FLAT:.LC36	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L103	#
-.L104:
+	jmp	.L110	#
+.L111:
 	mov	QWORD PTR [rax], rbx	# info_16->ptr, ptr
 	mov	rax, QWORD PTR [rsp+160]	#, _file_
 	mov	QWORD PTR [rbp+8], rax	# info_16->call_file,
-	mov	QWORD PTR [rbp+16], OFFSET FLAT:.LC34	# info_16->create_function_name,
+	mov	QWORD PTR [rbp+16], OFFSET FLAT:.LC37	# info_16->create_function_name,
 	mov	rdx, QWORD PTR [rbx+8]	# fmt, ptr_10->format
 	movzx	eax, WORD PTR [rbx+24]	# ptr_10->pitch, ptr_10->pitch
 	imul	eax, DWORD PTR [rbx+20]	# tmp98, ptr_10->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L105	#,
+	jne	.L112	#,
 	add	rax, 88	# size,
-	jmp	.L106	#
-.L105:
+	jmp	.L113	#
+.L112:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_41->palette
 	test	rdx, rdx	# pal
-	jne	.L107	#,
+	jne	.L114	#,
 	add	rax, 136	# size,
-	jmp	.L106	#
-.L107:
+	jmp	.L113	#
+.L114:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_48->colors,
-	je	.L106	#,
+	je	.L113	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_48->ncolors, pal_48->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L106:
+.L113:
 	mov	QWORD PTR [rbp+24], rax	# info_16->full_size, size
 	mov	edx, DWORD PTR [rsp+168]	#, _line_
 	mov	DWORD PTR [rbp+32], edx	# info_16->call_file_line,
@@ -1195,18 +1290,18 @@ wSDL_CreateRGBSurface:
 	mov	rax, QWORD PTR [rbp+24]	# info_16->full_size, info_16->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_16->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L108	#,
+	jne	.L115	#,
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbp	# first_mm, info
-	jmp	.L109	#
-.L108:
+	jmp	.L116	#
+.L115:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbp	# last_mm.16_64->next, info
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
-.L109:
+.L116:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L103:
+.L110:
 	mov	rax, rbx	#, ptr
 	mov	rbx, QWORD PTR [rsp+88]	#,
 	mov	rbp, QWORD PTR [rsp+96]	#,
@@ -1218,22 +1313,22 @@ wSDL_CreateRGBSurface:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE108:
+.LFE119:
 	.size	wSDL_CreateRGBSurface, .-wSDL_CreateRGBSurface
 	.section	.rodata.str1.8
 	.align 8
-.LC35:
+.LC38:
 	.string	"wSDL_CreateRGBSurfaceFrom: Failed to allocate memory pixels=%p, width=%d, height=%d, depth=%d, pitch=%d, Rmask=0x%08X, Gmask=0x%08X, Bmask=0x%08X, Amask=0x%08X (SDL_CreateRGBSurfaceFrom failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC36:
+.LC39:
 	.string	"wSDL_CreateRGBSurfaceFrom"
-.LC37:
+.LC40:
 	.string	"SDL_CreateRGBSurfaceFrom"
 	.text
 	.globl	wSDL_CreateRGBSurfaceFrom
 	.type	wSDL_CreateRGBSurfaceFrom, @function
 wSDL_CreateRGBSurfaceFrom:
-.LFB109:
+.LFB120:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1265,13 +1360,13 @@ wSDL_CreateRGBSurfaceFrom:
 	call	SDL_CreateRGBSurfaceFrom	#
 	mov	rbx, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L112	#,
+	jne	.L119	#,
 	call	SDL_GetError	#
 	mov	edx, DWORD PTR [rsp+192]	#, _line_
 	mov	DWORD PTR [rsp+64], edx	#,
 	mov	rdx, QWORD PTR [rsp+184]	#, _file_
 	mov	QWORD PTR [rsp+56], rdx	#,
-	mov	QWORD PTR [rsp+48], rax	#, D.8870
+	mov	QWORD PTR [rsp+48], rax	#, D.9127
 	mov	eax, DWORD PTR [rsp+176]	#, Amask
 	mov	DWORD PTR [rsp+40], eax	#,
 	mov	edx, DWORD PTR [rsp+168]	#, Bmask
@@ -1284,51 +1379,51 @@ wSDL_CreateRGBSurfaceFrom:
 	mov	r9d, r12d	#, height
 	mov	r8d, ebp	#, width
 	mov	rcx, QWORD PTR [rsp+88]	#, %sfp
-	mov	edx, OFFSET FLAT:.LC35	#,
+	mov	edx, OFFSET FLAT:.LC38	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L113	#
-.L112:
+	jmp	.L120	#
+.L119:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbp, rax	# info,
 	test	rax, rax	# info
-	jne	.L114	#,
-	mov	ecx, OFFSET FLAT:.LC36	#,
+	jne	.L121	#,
+	mov	ecx, OFFSET FLAT:.LC39	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L113	#
-.L114:
+	jmp	.L120	#
+.L121:
 	mov	QWORD PTR [rax], rbx	# info_17->ptr, ptr
 	mov	rdx, QWORD PTR [rsp+184]	#, _file_
 	mov	QWORD PTR [rax+8], rdx	# info_17->call_file,
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC37	# info_17->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC40	# info_17->create_function_name,
 	mov	rdx, QWORD PTR [rbx+8]	# fmt, ptr_11->format
 	movzx	eax, WORD PTR [rbx+24]	# ptr_11->pitch, ptr_11->pitch
 	imul	eax, DWORD PTR [rbx+20]	# tmp99, ptr_11->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L115	#,
+	jne	.L122	#,
 	add	rax, 88	# size,
-	jmp	.L116	#
-.L115:
+	jmp	.L123	#
+.L122:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_42->palette
 	test	rdx, rdx	# pal
-	jne	.L117	#,
+	jne	.L124	#,
 	add	rax, 136	# size,
-	jmp	.L116	#
-.L117:
+	jmp	.L123	#
+.L124:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_49->colors,
-	je	.L116	#,
+	je	.L123	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_49->ncolors, pal_49->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L116:
+.L123:
 	mov	QWORD PTR [rbp+24], rax	# info_17->full_size, size
 	mov	eax, DWORD PTR [rsp+192]	#, _line_
 	mov	DWORD PTR [rbp+32], eax	# info_17->call_file_line,
@@ -1339,18 +1434,18 @@ wSDL_CreateRGBSurfaceFrom:
 	mov	rax, QWORD PTR [rbp+24]	# info_17->full_size, info_17->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_17->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L118	#,
+	jne	.L125	#,
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbp	# first_mm, info
-	jmp	.L119	#
-.L118:
+	jmp	.L126	#
+.L125:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbp	# last_mm.16_65->next, info
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
-.L119:
+.L126:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L113:
+.L120:
 	mov	rax, rbx	#, ptr
 	mov	rbx, QWORD PTR [rsp+104]	#,
 	mov	rbp, QWORD PTR [rsp+112]	#,
@@ -1362,22 +1457,22 @@ wSDL_CreateRGBSurfaceFrom:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE109:
+.LFE120:
 	.size	wSDL_CreateRGBSurfaceFrom, .-wSDL_CreateRGBSurfaceFrom
 	.section	.rodata.str1.8
 	.align 8
-.LC38:
+.LC41:
 	.string	"wSDL_SetVideoMode: Failed to allocate memory width=%d, height=%d, bpp=%d, flags=0x%08X (SDL_SetVideoMode failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC39:
+.LC42:
 	.string	"wSDL_SetVideoMode"
-.LC40:
+.LC43:
 	.string	"SDL_SetVideoMode"
 	.text
 	.globl	wSDL_SetVideoMode
 	.type	wSDL_SetVideoMode, @function
 wSDL_SetVideoMode:
-.LFB110:
+.LFB121:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1402,59 +1497,59 @@ wSDL_SetVideoMode:
 	call	SDL_SetVideoMode	#
 	mov	rbx, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L122	#,
+	jne	.L129	#,
 	call	SDL_GetError	#
 	mov	DWORD PTR [rsp+24], r14d	#, _line_
 	mov	QWORD PTR [rsp+16], r15	#, _file_
-	mov	QWORD PTR [rsp+8], rax	#, D.8859
+	mov	QWORD PTR [rsp+8], rax	#, D.9116
 	mov	DWORD PTR [rsp], r13d	#, flags
 	mov	r9d, r12d	#, bpp
 	mov	r8d, ebp	#, height
 	mov	ecx, DWORD PTR [rsp+44]	#, %sfp
-	mov	edx, OFFSET FLAT:.LC38	#,
+	mov	edx, OFFSET FLAT:.LC41	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L123	#
-.L122:
+	jmp	.L130	#
+.L129:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbp, rax	# info,
 	test	rax, rax	# info
-	jne	.L124	#,
-	mov	ecx, OFFSET FLAT:.LC39	#,
+	jne	.L131	#,
+	mov	ecx, OFFSET FLAT:.LC42	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L123	#
-.L124:
+	jmp	.L130	#
+.L131:
 	mov	QWORD PTR [rax], rbx	# info_12->ptr, ptr
 	mov	QWORD PTR [rax+8], r15	# info_12->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC40	# info_12->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC43	# info_12->create_function_name,
 	mov	rdx, QWORD PTR [rbx+8]	# fmt, ptr_6->format
 	movzx	eax, WORD PTR [rbx+24]	# ptr_6->pitch, ptr_6->pitch
 	imul	eax, DWORD PTR [rbx+20]	# tmp94, ptr_6->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L125	#,
+	jne	.L132	#,
 	add	rax, 88	# size,
-	jmp	.L126	#
-.L125:
+	jmp	.L133	#
+.L132:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_37->palette
 	test	rdx, rdx	# pal
-	jne	.L127	#,
+	jne	.L134	#,
 	add	rax, 136	# size,
-	jmp	.L126	#
-.L127:
+	jmp	.L133	#
+.L134:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_44->colors,
-	je	.L126	#,
+	je	.L133	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_44->ncolors, pal_44->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L126:
+.L133:
 	mov	QWORD PTR [rbp+24], rax	# info_12->full_size, size
 	mov	DWORD PTR [rbp+32], r14d	# info_12->call_file_line, _line_
 	mov	QWORD PTR [rbp+40], 0	# info_12->next,
@@ -1464,18 +1559,18 @@ wSDL_SetVideoMode:
 	mov	rax, QWORD PTR [rbp+24]	# info_12->full_size, info_12->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_12->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L128	#,
+	jne	.L135	#,
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbp	# first_mm, info
-	jmp	.L129	#
-.L128:
+	jmp	.L136	#
+.L135:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbp	# last_mm.16_60->next, info
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
-.L129:
+.L136:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L123:
+.L130:
 	mov	rax, rbx	#, ptr
 	mov	rbx, QWORD PTR [rsp+56]	#,
 	mov	rbp, QWORD PTR [rsp+64]	#,
@@ -1487,53 +1582,53 @@ wSDL_SetVideoMode:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE110:
+.LFE121:
 	.size	wSDL_SetVideoMode, .-wSDL_SetVideoMode
 	.section	.rodata.str1.1
-.LC41:
+.LC44:
 	.string	"wSDL_FreeSurface"
 	.text
 	.globl	wSDL_FreeSurface
 	.type	wSDL_FreeSurface, @function
 wSDL_FreeSurface:
-.LFB111:
+.LFB122:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# surface, surface
 	test	rdi, rdi	# surface
-	je	.L131	#,
+	je	.L138	#,
 	mov	ecx, edx	#, _line_
 	mov	rdx, rsi	#, _file_
-	mov	esi, OFFSET FLAT:.LC41	#,
+	mov	esi, OFFSET FLAT:.LC44	#,
 	call	mm_del_info	#
-	test	eax, eax	# D.8853
-	je	.L131	#,
+	test	eax, eax	# D.9110
+	je	.L138	#,
 	mov	rdi, rbx	#, surface
 	call	SDL_FreeSurface	#
-.L131:
+.L138:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	.p2align 4,,2
 	ret
 	.cfi_endproc
-.LFE111:
+.LFE122:
 	.size	wSDL_FreeSurface, .-wSDL_FreeSurface
 	.section	.rodata.str1.8
 	.align 8
-.LC42:
+.LC45:
 	.string	"wTTF_RenderUTF8_Solid: Failed to allocate memory font=%p, text=%p, fg.r=0x%02X, fg.g=0x%02X, fg.b=0x%02X  (TTF_RenderUTF8_Solid failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC43:
+.LC46:
 	.string	"wTTF_RenderUTF8_Solid"
-.LC44:
+.LC47:
 	.string	"TTF_RenderUTF8_Solid"
 	.text
 	.globl	wTTF_RenderUTF8_Solid
 	.type	wTTF_RenderUTF8_Solid, @function
 wTTF_RenderUTF8_Solid:
-.LFB112:
+.LFB123:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1557,11 +1652,11 @@ wTTF_RenderUTF8_Solid:
 	call	TTF_RenderUTF8_Solid	#
 	mov	rbp, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L135	#,
+	jne	.L142	#,
 	call	SDL_GetError	#
 	mov	DWORD PTR [rsp+32], r12d	#, _line_
 	mov	QWORD PTR [rsp+24], r14	#, _file_
-	mov	QWORD PTR [rsp+16], rax	#, D.8836
+	mov	QWORD PTR [rsp+16], rax	#, D.9093
 	mov	eax, ebx	#, fg
 	shr	eax, 16	#,
 	movzx	eax, al	# tmp102, tmp101
@@ -1571,50 +1666,50 @@ wTTF_RenderUTF8_Solid:
 	movzx	r9d, bl	#, fg
 	mov	r8, r15	#, text
 	mov	rcx, r13	#, font
-	mov	edx, OFFSET FLAT:.LC42	#,
+	mov	edx, OFFSET FLAT:.LC45	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L136	#
-.L135:
+	jmp	.L143	#
+.L142:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbx, rax	# info,
 	test	rax, rax	# info
-	jne	.L137	#,
-	mov	ecx, OFFSET FLAT:.LC43	#,
+	jne	.L144	#,
+	mov	ecx, OFFSET FLAT:.LC46	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L136	#
-.L137:
+	jmp	.L143	#
+.L144:
 	mov	QWORD PTR [rax], rbp	# info_16->ptr, ptr
 	mov	QWORD PTR [rax+8], r14	# info_16->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC44	# info_16->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC47	# info_16->create_function_name,
 	mov	rdx, QWORD PTR [rbp+8]	# fmt, ptr_4->format
 	movzx	eax, WORD PTR [rbp+24]	# ptr_4->pitch, ptr_4->pitch
 	imul	eax, DWORD PTR [rbp+20]	# tmp107, ptr_4->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L138	#,
+	jne	.L145	#,
 	add	rax, 88	# size,
-	jmp	.L139	#
-.L138:
+	jmp	.L146	#
+.L145:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_41->palette
 	test	rdx, rdx	# pal
-	jne	.L140	#,
+	jne	.L147	#,
 	add	rax, 136	# size,
-	jmp	.L139	#
-.L140:
+	jmp	.L146	#
+.L147:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_48->colors,
-	je	.L139	#,
+	je	.L146	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_48->ncolors, pal_48->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L139:
+.L146:
 	mov	QWORD PTR [rbx+24], rax	# info_16->full_size, size
 	mov	DWORD PTR [rbx+32], r12d	# info_16->call_file_line, _line_
 	mov	QWORD PTR [rbx+40], 0	# info_16->next,
@@ -1624,18 +1719,18 @@ wTTF_RenderUTF8_Solid:
 	mov	rax, QWORD PTR [rbx+24]	# info_16->full_size, info_16->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_16->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L141	#,
+	jne	.L148	#,
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
-	jmp	.L142	#
-.L141:
+	jmp	.L149	#
+.L148:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbx	# last_mm.16_64->next, info
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-.L142:
+.L149:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L136:
+.L143:
 	mov	rax, rbp	#, ptr
 	mov	rbx, QWORD PTR [rsp+56]	#,
 	mov	rbp, QWORD PTR [rsp+64]	#,
@@ -1647,22 +1742,22 @@ wTTF_RenderUTF8_Solid:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE112:
+.LFE123:
 	.size	wTTF_RenderUTF8_Solid, .-wTTF_RenderUTF8_Solid
 	.section	.rodata.str1.8
 	.align 8
-.LC45:
+.LC48:
 	.string	"wzoomSurface: Failed to allocate memory src=%p, zoomx=%f, zoomy=%f, smooth=%d (zoomSurface failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC46:
+.LC49:
 	.string	"wzoomSurface"
-.LC47:
+.LC50:
 	.string	"zoomSurface"
 	.text
 	.globl	wzoomSurface
 	.type	wzoomSurface, @function
 wzoomSurface:
-.LFB113:
+.LFB124:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -1687,59 +1782,59 @@ wzoomSurface:
 	call	zoomSurface	#
 	mov	rbx, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L145	#,
+	jne	.L152	#,
 	call	SDL_GetError	#
-	mov	r9, rax	# D.8825,
+	mov	r9, rax	# D.9082,
 	mov	DWORD PTR [rsp+8], r14d	#, _line_
 	mov	QWORD PTR [rsp], r15	#, _file_
 	mov	r8d, r13d	#, smooth
 	movd	xmm1, r12	#, zoomy
 	movd	xmm0, rbp	#, zoomx
 	mov	rcx, QWORD PTR [rsp+24]	#, %sfp
-	mov	edx, OFFSET FLAT:.LC45	#,
+	mov	edx, OFFSET FLAT:.LC48	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 2	#,
 	call	__fprintf_chk	#
-	jmp	.L146	#
-.L145:
+	jmp	.L153	#
+.L152:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbp, rax	# info,
 	test	rax, rax	# info
-	jne	.L147	#,
-	mov	ecx, OFFSET FLAT:.LC46	#,
+	jne	.L154	#,
+	mov	ecx, OFFSET FLAT:.LC49	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L146	#
-.L147:
+	jmp	.L153	#
+.L154:
 	mov	QWORD PTR [rax], rbx	# info_12->ptr, ptr
 	mov	QWORD PTR [rax+8], r15	# info_12->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC47	# info_12->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC50	# info_12->create_function_name,
 	mov	rdx, QWORD PTR [rbx+8]	# fmt, ptr_6->format
 	movzx	eax, WORD PTR [rbx+24]	# ptr_6->pitch, ptr_6->pitch
 	imul	eax, DWORD PTR [rbx+20]	# tmp94, ptr_6->h
 	cdqe
 	test	rdx, rdx	# fmt
-	jne	.L148	#,
+	jne	.L155	#,
 	add	rax, 88	# size,
-	jmp	.L149	#
-.L148:
+	jmp	.L156	#
+.L155:
 	mov	rdx, QWORD PTR [rdx]	# pal, fmt_37->palette
 	test	rdx, rdx	# pal
-	jne	.L150	#,
+	jne	.L157	#,
 	add	rax, 136	# size,
-	jmp	.L149	#
-.L150:
+	jmp	.L156	#
+.L157:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rdx+8], 0	# pal_44->colors,
-	je	.L149	#,
+	je	.L156	#,
 	movsx	rdx, DWORD PTR [rdx]	# pal_44->ncolors, pal_44->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L149:
+.L156:
 	mov	QWORD PTR [rbp+24], rax	# info_12->full_size, size
 	mov	DWORD PTR [rbp+32], r14d	# info_12->call_file_line, _line_
 	mov	QWORD PTR [rbp+40], 0	# info_12->next,
@@ -1749,18 +1844,18 @@ wzoomSurface:
 	mov	rax, QWORD PTR [rbp+24]	# info_12->full_size, info_12->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_12->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L151	#,
+	jne	.L158	#,
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbp	# first_mm, info
-	jmp	.L152	#
-.L151:
+	jmp	.L159	#
+.L158:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbp	# last_mm.16_60->next, info
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
-.L152:
+.L159:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L146:
+.L153:
 	mov	rax, rbx	#, ptr
 	mov	rbx, QWORD PTR [rsp+40]	#,
 	mov	rbp, QWORD PTR [rsp+48]	#,
@@ -1772,22 +1867,22 @@ wzoomSurface:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE113:
+.LFE124:
 	.size	wzoomSurface, .-wzoomSurface
 	.section	.rodata.str1.8
 	.align 8
-.LC48:
+.LC51:
 	.string	"wIMG_Load: Failed to allocate memory file=%s (IMG_Load failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC49:
+.LC52:
 	.string	"wIMG_Load"
-.LC50:
+.LC53:
 	.string	"IMG_Load"
 	.text
 	.globl	wIMG_Load
 	.type	wIMG_Load, @function
 wIMG_Load:
-.LFB114:
+.LFB125:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -1805,56 +1900,56 @@ wIMG_Load:
 	call	IMG_Load	#
 	mov	rbp, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L155	#,
+	jne	.L162	#,
 	call	SDL_GetError	#
-	mov	r8, rax	# D.8814,
+	mov	r8, rax	# D.9071,
 	mov	DWORD PTR [rsp], r12d	#, _line_
 	mov	r9, r13	#, _file_
 	mov	rcx, rbx	#, file
-	mov	edx, OFFSET FLAT:.LC48	#,
+	mov	edx, OFFSET FLAT:.LC51	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L156	#
-.L155:
+	jmp	.L163	#
+.L162:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbx, rax	# info,
 	test	rax, rax	# info
-	jne	.L157	#,
-	mov	ecx, OFFSET FLAT:.LC49	#,
+	jne	.L164	#,
+	mov	ecx, OFFSET FLAT:.LC52	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L156	#
-.L157:
+	jmp	.L163	#
+.L164:
 	mov	QWORD PTR [rax], rbp	# info_9->ptr, ptr
 	mov	QWORD PTR [rax+8], r13	# info_9->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC50	# info_9->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC53	# info_9->create_function_name,
 	mov	rcx, QWORD PTR [rbp+8]	# fmt, ptr_3->format
 	movzx	eax, WORD PTR [rbp+24]	# ptr_3->pitch, ptr_3->pitch
 	imul	eax, DWORD PTR [rbp+20]	# tmp91, ptr_3->h
 	cdqe
 	test	rcx, rcx	# fmt
-	jne	.L158	#,
+	jne	.L165	#,
 	add	rax, 88	# size,
-	jmp	.L159	#
-.L158:
+	jmp	.L166	#
+.L165:
 	mov	rcx, QWORD PTR [rcx]	# pal, fmt_34->palette
 	test	rcx, rcx	# pal
-	jne	.L160	#,
+	jne	.L167	#,
 	add	rax, 136	# size,
-	jmp	.L159	#
-.L160:
+	jmp	.L166	#
+.L167:
 	add	rax, 152	# size,
 	cmp	QWORD PTR [rcx+8], 0	# pal_41->colors,
-	je	.L159	#,
+	je	.L166	#,
 	movsx	rdx, DWORD PTR [rcx]	# pal_41->ncolors, pal_41->ncolors
 	lea	rax, [rax+rdx*4]	# size,
-.L159:
+.L166:
 	mov	QWORD PTR [rbx+24], rax	# info_9->full_size, size
 	mov	DWORD PTR [rbx+32], r12d	# info_9->call_file_line, _line_
 	mov	QWORD PTR [rbx+40], 0	# info_9->next,
@@ -1864,18 +1959,18 @@ wIMG_Load:
 	mov	rax, QWORD PTR [rbx+24]	# info_9->full_size, info_9->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_9->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L161	#,
+	jne	.L168	#,
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
-	jmp	.L162	#
-.L161:
+	jmp	.L169	#
+.L168:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbx	# last_mm.16_57->next, info
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-.L162:
+.L169:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L156:
+.L163:
 	mov	rax, rbp	#, ptr
 	mov	rbx, QWORD PTR [rsp+24]	#,
 	mov	rbp, QWORD PTR [rsp+32]	#,
@@ -1885,22 +1980,22 @@ wIMG_Load:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE114:
+.LFE125:
 	.size	wIMG_Load, .-wIMG_Load
 	.section	.rodata.str1.8
 	.align 8
-.LC51:
+.LC54:
 	.string	"wTTF_OpenFont: Failed to allocate memory file=%s, ptsize=%d (TTF_OpenFont failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC52:
+.LC55:
 	.string	"wTTF_OpenFont"
-.LC53:
+.LC56:
 	.string	"TTF_OpenFont"
 	.text
 	.globl	wTTF_OpenFont
 	.type	wTTF_OpenFont, @function
 wTTF_OpenFont:
-.LFB115:
+.LFB126:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-40], rbx	#,
 	mov	QWORD PTR [rsp-32], rbp	#,
@@ -1921,36 +2016,36 @@ wTTF_OpenFont:
 	call	TTF_OpenFont	#
 	mov	rbp, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L165	#,
+	jne	.L172	#,
 	call	SDL_GetError	#
-	mov	r9, rax	# D.8804,
+	mov	r9, rax	# D.9061,
 	mov	DWORD PTR [rsp+8], r13d	#, _line_
 	mov	QWORD PTR [rsp], r14	#, _file_
 	mov	r8d, r12d	#, ptsize
 	mov	rcx, rbx	#, file
-	mov	edx, OFFSET FLAT:.LC51	#,
+	mov	edx, OFFSET FLAT:.LC54	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L166	#
-.L165:
+	jmp	.L173	#
+.L172:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbx, rax	# info,
 	test	rax, rax	# info
-	jne	.L167	#,
-	mov	ecx, OFFSET FLAT:.LC52	#,
+	jne	.L174	#,
+	mov	ecx, OFFSET FLAT:.LC55	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L166	#
-.L167:
+	jmp	.L173	#
+.L174:
 	mov	QWORD PTR [rax], rbp	# info_10->ptr, ptr
 	mov	QWORD PTR [rax+8], r14	# info_10->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC53	# info_10->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC56	# info_10->create_function_name,
 	mov	QWORD PTR [rax+24], 0	# info_10->full_size,
 	mov	DWORD PTR [rax+32], r13d	# info_10->call_file_line, _line_
 	mov	QWORD PTR [rax+40], 0	# info_10->next,
@@ -1960,18 +2055,18 @@ wTTF_OpenFont:
 	mov	rax, QWORD PTR [rbx+24]	# info_10->full_size, info_10->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_10->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L168	#,
+	jne	.L175	#,
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
-	jmp	.L169	#
-.L168:
+	jmp	.L176	#
+.L175:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbx	# last_mm.16_41->next, info
 	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-.L169:
+.L176:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L166:
+.L173:
 	mov	rax, rbp	#, ptr
 	mov	rbx, QWORD PTR [rsp+16]	#,
 	mov	rbp, QWORD PTR [rsp+24]	#,
@@ -1982,22 +2077,22 @@ wTTF_OpenFont:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE115:
+.LFE126:
 	.size	wTTF_OpenFont, .-wTTF_OpenFont
 	.section	.rodata.str1.8
 	.align 8
-.LC54:
+.LC57:
 	.string	"wTTF_OpenFontIndex: Failed to allocate memory file=%s, ptsize=%d, index=%ld (TTF_OpenFontIndex failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
-.LC55:
+.LC58:
 	.string	"wTTF_OpenFontIndex"
-.LC56:
+.LC59:
 	.string	"TTF_OpenFontIndex"
 	.text
 	.globl	wTTF_OpenFontIndex
 	.type	wTTF_OpenFontIndex, @function
 wTTF_OpenFontIndex:
-.LFB116:
+.LFB127:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -2021,116 +2116,14 @@ wTTF_OpenFontIndex:
 	call	TTF_OpenFontIndex	#
 	mov	rbp, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L172	#,
-	call	SDL_GetError	#
-	mov	DWORD PTR [rsp+16], r13d	#, _line_
-	mov	QWORD PTR [rsp+8], r14	#, _file_
-	mov	QWORD PTR [rsp], rax	#, D.8794
-	mov	r9, r15	#, index
-	mov	r8d, r12d	#, ptsize
-	mov	rcx, rbx	#, file
-	mov	edx, OFFSET FLAT:.LC54	#,
-	mov	esi, 1	#,
-	mov	rdi, QWORD PTR stderr[rip]	#, stderr
-	mov	eax, 0	#,
-	call	__fprintf_chk	#
-	jmp	.L173	#
-.L172:
-	mov	edi, 48	#,
-	call	malloc	#
-	mov	rbx, rax	# info,
-	test	rax, rax	# info
-	jne	.L174	#,
-	mov	ecx, OFFSET FLAT:.LC55	#,
-	mov	edx, OFFSET FLAT:.LC19	#,
-	mov	esi, 1	#,
-	mov	rdi, QWORD PTR stderr[rip]	#, stderr
-	mov	eax, 0	#,
-	call	__fprintf_chk	#
-	jmp	.L173	#
-.L174:
-	mov	QWORD PTR [rax], rbp	# info_11->ptr, ptr
-	mov	QWORD PTR [rax+8], r14	# info_11->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC56	# info_11->create_function_name,
-	mov	QWORD PTR [rax+24], 0	# info_11->full_size,
-	mov	DWORD PTR [rax+32], r13d	# info_11->call_file_line, _line_
-	mov	QWORD PTR [rax+40], 0	# info_11->next,
-	mov	rdi, QWORD PTR mutex[rip]	#, mutex
-	call	SDL_mutexP	#
-	add	QWORD PTR cnt_alloc[rip], 1	# cnt_alloc,
-	mov	rax, QWORD PTR [rbx+24]	# info_11->full_size, info_11->full_size
-	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_11->full_size
-	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L175	#,
-	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
-	jmp	.L176	#
-.L175:
-	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
-	mov	QWORD PTR [rax+40], rbx	# last_mm.16_42->next, info
-	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
-.L176:
-	mov	rdi, QWORD PTR mutex[rip]	#, mutex
-	call	SDL_mutexV	#
-.L173:
-	mov	rax, rbp	#, ptr
-	mov	rbx, QWORD PTR [rsp+40]	#,
-	mov	rbp, QWORD PTR [rsp+48]	#,
-	mov	r12, QWORD PTR [rsp+56]	#,
-	mov	r13, QWORD PTR [rsp+64]	#,
-	mov	r14, QWORD PTR [rsp+72]	#,
-	mov	r15, QWORD PTR [rsp+80]	#,
-	add	rsp, 88	#,
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE116:
-	.size	wTTF_OpenFontIndex, .-wTTF_OpenFontIndex
-	.section	.rodata.str1.8
-	.align 8
-.LC57:
-	.string	"wTTF_OpenFontRW: Failed to allocate memory src=%p, freesrc=%d, ptsize=%d (TTF_OpenFontRW failed with error %s), file: %s, line: %d\n"
-	.section	.rodata.str1.1
-.LC58:
-	.string	"wTTF_OpenFontRW"
-.LC59:
-	.string	"TTF_OpenFontRW"
-	.text
-	.globl	wTTF_OpenFontRW
-	.type	wTTF_OpenFontRW, @function
-wTTF_OpenFontRW:
-.LFB117:
-	.cfi_startproc
-	mov	QWORD PTR [rsp-48], rbx	#,
-	mov	QWORD PTR [rsp-40], rbp	#,
-	mov	QWORD PTR [rsp-32], r12	#,
-	mov	QWORD PTR [rsp-24], r13	#,
-	mov	QWORD PTR [rsp-16], r14	#,
-	mov	QWORD PTR [rsp-8], r15	#,
-	sub	rsp, 88	#,
-	.cfi_def_cfa_offset 96
-	.cfi_offset 3, -56
-	.cfi_offset 6, -48
-	.cfi_offset 12, -40
-	.cfi_offset 13, -32
-	.cfi_offset 14, -24
-	.cfi_offset 15, -16
-	mov	rbx, rdi	# src, src
-	mov	r12d, esi	# freesrc, freesrc
-	mov	r15d, edx	# ptsize, ptsize
-	mov	r14, rcx	# _file_, _file_
-	mov	r13d, r8d	# _line_, _line_
-	call	TTF_OpenFontRW	#
-	mov	rbp, rax	# ptr,
-	test	rax, rax	# ptr
 	jne	.L179	#,
 	call	SDL_GetError	#
 	mov	DWORD PTR [rsp+16], r13d	#, _line_
 	mov	QWORD PTR [rsp+8], r14	#, _file_
-	mov	QWORD PTR [rsp], rax	#, D.8784
-	mov	r9d, r15d	#, ptsize
-	mov	r8d, r12d	#, freesrc
-	mov	rcx, rbx	#, src
+	mov	QWORD PTR [rsp], rax	#, D.9051
+	mov	r9, r15	#, index
+	mov	r8d, r12d	#, ptsize
+	mov	rcx, rbx	#, file
 	mov	edx, OFFSET FLAT:.LC57	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -2186,22 +2179,124 @@ wTTF_OpenFontRW:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE117:
-	.size	wTTF_OpenFontRW, .-wTTF_OpenFontRW
+.LFE127:
+	.size	wTTF_OpenFontIndex, .-wTTF_OpenFontIndex
 	.section	.rodata.str1.8
 	.align 8
 .LC60:
-	.string	"wTTF_OpenFontIndexRW: Failed to allocate memory src=%p, freesrc=%d, ptsize=%d, index=%ld (TTF_OpenFontIndexRW failed with error %s), file: %s, line: %d\n"
+	.string	"wTTF_OpenFontRW: Failed to allocate memory src=%p, freesrc=%d, ptsize=%d (TTF_OpenFontRW failed with error %s), file: %s, line: %d\n"
 	.section	.rodata.str1.1
 .LC61:
-	.string	"wTTF_OpenFontIndexRW"
+	.string	"wTTF_OpenFontRW"
 .LC62:
+	.string	"TTF_OpenFontRW"
+	.text
+	.globl	wTTF_OpenFontRW
+	.type	wTTF_OpenFontRW, @function
+wTTF_OpenFontRW:
+.LFB128:
+	.cfi_startproc
+	mov	QWORD PTR [rsp-48], rbx	#,
+	mov	QWORD PTR [rsp-40], rbp	#,
+	mov	QWORD PTR [rsp-32], r12	#,
+	mov	QWORD PTR [rsp-24], r13	#,
+	mov	QWORD PTR [rsp-16], r14	#,
+	mov	QWORD PTR [rsp-8], r15	#,
+	sub	rsp, 88	#,
+	.cfi_def_cfa_offset 96
+	.cfi_offset 3, -56
+	.cfi_offset 6, -48
+	.cfi_offset 12, -40
+	.cfi_offset 13, -32
+	.cfi_offset 14, -24
+	.cfi_offset 15, -16
+	mov	rbx, rdi	# src, src
+	mov	r12d, esi	# freesrc, freesrc
+	mov	r15d, edx	# ptsize, ptsize
+	mov	r14, rcx	# _file_, _file_
+	mov	r13d, r8d	# _line_, _line_
+	call	TTF_OpenFontRW	#
+	mov	rbp, rax	# ptr,
+	test	rax, rax	# ptr
+	jne	.L186	#,
+	call	SDL_GetError	#
+	mov	DWORD PTR [rsp+16], r13d	#, _line_
+	mov	QWORD PTR [rsp+8], r14	#, _file_
+	mov	QWORD PTR [rsp], rax	#, D.9041
+	mov	r9d, r15d	#, ptsize
+	mov	r8d, r12d	#, freesrc
+	mov	rcx, rbx	#, src
+	mov	edx, OFFSET FLAT:.LC60	#,
+	mov	esi, 1	#,
+	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	mov	eax, 0	#,
+	call	__fprintf_chk	#
+	jmp	.L187	#
+.L186:
+	mov	edi, 48	#,
+	call	malloc	#
+	mov	rbx, rax	# info,
+	test	rax, rax	# info
+	jne	.L188	#,
+	mov	ecx, OFFSET FLAT:.LC61	#,
+	mov	edx, OFFSET FLAT:.LC19	#,
+	mov	esi, 1	#,
+	mov	rdi, QWORD PTR stderr[rip]	#, stderr
+	mov	eax, 0	#,
+	call	__fprintf_chk	#
+	jmp	.L187	#
+.L188:
+	mov	QWORD PTR [rax], rbp	# info_11->ptr, ptr
+	mov	QWORD PTR [rax+8], r14	# info_11->call_file, _file_
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC62	# info_11->create_function_name,
+	mov	QWORD PTR [rax+24], 0	# info_11->full_size,
+	mov	DWORD PTR [rax+32], r13d	# info_11->call_file_line, _line_
+	mov	QWORD PTR [rax+40], 0	# info_11->next,
+	mov	rdi, QWORD PTR mutex[rip]	#, mutex
+	call	SDL_mutexP	#
+	add	QWORD PTR cnt_alloc[rip], 1	# cnt_alloc,
+	mov	rax, QWORD PTR [rbx+24]	# info_11->full_size, info_11->full_size
+	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_11->full_size
+	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
+	jne	.L189	#,
+	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
+	mov	QWORD PTR first_mm[rip], rbx	# first_mm, info
+	jmp	.L190	#
+.L189:
+	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
+	mov	QWORD PTR [rax+40], rbx	# last_mm.16_42->next, info
+	mov	QWORD PTR last_mm[rip], rbx	# last_mm, info
+.L190:
+	mov	rdi, QWORD PTR mutex[rip]	#, mutex
+	call	SDL_mutexV	#
+.L187:
+	mov	rax, rbp	#, ptr
+	mov	rbx, QWORD PTR [rsp+40]	#,
+	mov	rbp, QWORD PTR [rsp+48]	#,
+	mov	r12, QWORD PTR [rsp+56]	#,
+	mov	r13, QWORD PTR [rsp+64]	#,
+	mov	r14, QWORD PTR [rsp+72]	#,
+	mov	r15, QWORD PTR [rsp+80]	#,
+	add	rsp, 88	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE128:
+	.size	wTTF_OpenFontRW, .-wTTF_OpenFontRW
+	.section	.rodata.str1.8
+	.align 8
+.LC63:
+	.string	"wTTF_OpenFontIndexRW: Failed to allocate memory src=%p, freesrc=%d, ptsize=%d, index=%ld (TTF_OpenFontIndexRW failed with error %s), file: %s, line: %d\n"
+	.section	.rodata.str1.1
+.LC64:
+	.string	"wTTF_OpenFontIndexRW"
+.LC65:
 	.string	"TTF_OpenFontIndexRW"
 	.text
 	.globl	wTTF_OpenFontIndexRW
 	.type	wTTF_OpenFontIndexRW, @function
 wTTF_OpenFontIndexRW:
-.LFB118:
+.LFB129:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -2226,38 +2321,38 @@ wTTF_OpenFontIndexRW:
 	call	TTF_OpenFontIndexRW	#
 	mov	rbx, rax	# ptr,
 	test	rax, rax	# ptr
-	jne	.L186	#,
+	jne	.L193	#,
 	call	SDL_GetError	#
 	mov	DWORD PTR [rsp+24], r14d	#, _line_
 	mov	QWORD PTR [rsp+16], r15	#, _file_
-	mov	QWORD PTR [rsp+8], rax	#, D.8763
+	mov	QWORD PTR [rsp+8], rax	#, D.9020
 	mov	QWORD PTR [rsp], r13	#, index
 	mov	r9d, r12d	#, ptsize
 	mov	r8d, ebp	#, freesrc
 	mov	rcx, QWORD PTR [rsp+40]	#, %sfp
-	mov	edx, OFFSET FLAT:.LC60	#,
+	mov	edx, OFFSET FLAT:.LC63	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L187	#
-.L186:
+	jmp	.L194	#
+.L193:
 	mov	edi, 48	#,
 	call	malloc	#
 	mov	rbp, rax	# info,
 	test	rax, rax	# info
-	jne	.L188	#,
-	mov	ecx, OFFSET FLAT:.LC61	#,
+	jne	.L195	#,
+	mov	ecx, OFFSET FLAT:.LC64	#,
 	mov	edx, OFFSET FLAT:.LC19	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L187	#
-.L188:
+	jmp	.L194	#
+.L195:
 	mov	QWORD PTR [rax], rbx	# info_12->ptr, ptr
 	mov	QWORD PTR [rax+8], r15	# info_12->call_file, _file_
-	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC62	# info_12->create_function_name,
+	mov	QWORD PTR [rax+16], OFFSET FLAT:.LC65	# info_12->create_function_name,
 	mov	QWORD PTR [rax+24], 0	# info_12->full_size,
 	mov	DWORD PTR [rax+32], r14d	# info_12->call_file_line, _line_
 	mov	QWORD PTR [rax+40], 0	# info_12->next,
@@ -2267,18 +2362,18 @@ wTTF_OpenFontIndexRW:
 	mov	rax, QWORD PTR [rbp+24]	# info_12->full_size, info_12->full_size
 	add	QWORD PTR size_alloc[rip], rax	# size_alloc, info_12->full_size
 	cmp	QWORD PTR first_mm[rip], 0	# first_mm,
-	jne	.L189	#,
+	jne	.L196	#,
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
 	mov	QWORD PTR first_mm[rip], rbp	# first_mm, info
-	jmp	.L190	#
-.L189:
+	jmp	.L197	#
+.L196:
 	mov	rax, QWORD PTR last_mm[rip]	# last_mm, last_mm
 	mov	QWORD PTR [rax+40], rbp	# last_mm.16_43->next, info
 	mov	QWORD PTR last_mm[rip], rbp	# last_mm, info
-.L190:
+.L197:
 	mov	rdi, QWORD PTR mutex[rip]	#, mutex
 	call	SDL_mutexV	#
-.L187:
+.L194:
 	mov	rax, rbx	#, ptr
 	mov	rbx, QWORD PTR [rsp+56]	#,
 	mov	rbp, QWORD PTR [rsp+64]	#,
@@ -2290,38 +2385,38 @@ wTTF_OpenFontIndexRW:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE118:
+.LFE129:
 	.size	wTTF_OpenFontIndexRW, .-wTTF_OpenFontIndexRW
 	.section	.rodata.str1.1
-.LC63:
+.LC66:
 	.string	"wTTF_CloseFont"
 	.text
 	.globl	wTTF_CloseFont
 	.type	wTTF_CloseFont, @function
 wTTF_CloseFont:
-.LFB119:
+.LFB130:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# font, font
 	test	rdi, rdi	# font
-	je	.L192	#,
+	je	.L199	#,
 	mov	ecx, edx	#, _line_
 	mov	rdx, rsi	#, _file_
-	mov	esi, OFFSET FLAT:.LC63	#,
+	mov	esi, OFFSET FLAT:.LC66	#,
 	call	mm_del_info	#
-	test	eax, eax	# D.8735
-	je	.L192	#,
+	test	eax, eax	# D.8992
+	je	.L199	#,
 	mov	rdi, rbx	#, font
 	call	TTF_CloseFont	#
-.L192:
+.L199:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	.p2align 4,,2
 	ret
 	.cfi_endproc
-.LFE119:
+.LFE130:
 	.size	wTTF_CloseFont, .-wTTF_CloseFont
 	.local	mutex
 	.comm	mutex,8,8

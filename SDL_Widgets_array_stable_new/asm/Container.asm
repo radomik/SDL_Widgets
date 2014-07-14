@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT Container.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -50,215 +50,240 @@
 # -mieee-fp -mmmx -mno-sse4 -mpush-args -mred-zone -msahf -msse -msse2
 # -msse3 -mssse3 -mtls-direct-seg-refs
 
+	.section	.rodata.str1.8,"aMS",@progbits,1
+	.align 8
+.LC0:
+	.string	"Container(%s): color=0x%X, padx=%hu, pady=%hu"
 	.text
+	.globl	Container_vtoString
+	.type	Container_vtoString, @function
+Container_vtoString:
+.LFB109:
+	.cfi_startproc
+	sub	rsp, 40	#,
+	.cfi_def_cfa_offset 48
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
+	mov	r9, QWORD PTR [rax+8]	# D.9166_8->name, D.9166_8->name
+	movzx	eax, WORD PTR [rdi+174]	# MEM[(const struct Container *)vthis_1(D)].pady, MEM[(const struct Container *)vthis_1(D)].pady
+	mov	DWORD PTR [rsp+16], eax	#, MEM[(const struct Container *)vthis_1(D)].pady
+	movzx	eax, WORD PTR [rdi+172]	# MEM[(const struct Container *)vthis_1(D)].padx, MEM[(const struct Container *)vthis_1(D)].padx
+	mov	DWORD PTR [rsp+8], eax	#, MEM[(const struct Container *)vthis_1(D)].padx
+	mov	eax, DWORD PTR [rdi+168]	# MEM[(const struct Container *)vthis_1(D)].color, MEM[(const struct Container *)vthis_1(D)].color
+	mov	DWORD PTR [rsp], eax	#, MEM[(const struct Container *)vthis_1(D)].color
+	mov	r8d, OFFSET FLAT:.LC0	#,
+	mov	ecx, 750	#,
+	mov	edx, 1	#,
+	mov	esi, 750	#,
+	mov	edi, OFFSET FLAT:str_id	#,
+	mov	eax, 0	#,
+	call	__snprintf_chk	#
+	mov	eax, OFFSET FLAT:str_id	#,
+	add	rsp, 40	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE109:
+	.size	Container_vtoString, .-Container_vtoString
 	.globl	Container_new
 	.type	Container_new, @function
 Container_new:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# this, this
 	test	rdi, rdi	# this
-	jne	.L2	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8873	#,
+	jne	.L4	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9129	#,
 	call	Static_nullThis2	#
-	jmp	.L3	#
-.L2:
+	jmp	.L5	#
+.L4:
 	call	Widget_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8873	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
-	mov	BYTE PTR [rbx+173], 1	# MEM[(struct Widget *)this_2(D)].is_container,
-	mov	WORD PTR [rbx+180], 0	# this_2(D)->padx,
-	mov	WORD PTR [rbx+182], 0	# this_2(D)->pady,
-	mov	DWORD PTR [rbx+176], 15592683	# this_2(D)->color,
-.L3:
+	mov	BYTE PTR [rbx+165], 1	# MEM[(struct Widget *)this_2(D)].is_container,
+	mov	WORD PTR [rbx+172], 0	# this_2(D)->padx,
+	mov	WORD PTR [rbx+174], 0	# this_2(D)->pady,
+	mov	DWORD PTR [rbx+168], 15592683	# this_2(D)->color,
+.L5:
 	mov	rax, rbx	#, this
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	Container_new, .-Container_new
 	.globl	Container_vdestroy
 	.type	Container_vdestroy, @function
 Container_vdestroy:
-.LFB94:
+.LFB104:
 	.cfi_startproc
-	push	rbx	#
+	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 16
-	.cfi_offset 3, -16
-	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8877	#,
-	call	Static_printObj2	#
-	mov	rdi, rbx	#, vthis
 	call	Widget_vdestroy	#
-	pop	rbx	#
+	add	rsp, 8	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	Container_vdestroy, .-Container_vdestroy
 	.globl	Container_setPadding
 	.type	Container_setPadding, @function
 Container_setPadding:
-.LFB95:
+.LFB105:
 	.cfi_startproc
-	mov	WORD PTR [rdi+180], si	# this_1(D)->padx, padx
-	mov	WORD PTR [rdi+182], dx	# this_1(D)->pady, pady
+	mov	WORD PTR [rdi+172], si	# this_1(D)->padx, padx
+	mov	WORD PTR [rdi+174], dx	# this_1(D)->pady, pady
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	Container_setPadding, .-Container_setPadding
 	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC0:
-	.string	"TOP"
 .LC1:
-	.string	"BOTTOM"
+	.string	"TOP"
 .LC2:
-	.string	"CENTER"
+	.string	"BOTTOM"
 .LC3:
-	.string	"LEFT"
+	.string	"CENTER"
 .LC4:
-	.string	"RIGHT"
+	.string	"LEFT"
 .LC5:
+	.string	"RIGHT"
+.LC6:
 	.string	"UNKNOWN"
 	.text
 	.globl	Container_alignmentToString
 	.type	Container_alignmentToString, @function
 Container_alignmentToString:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	cmp	edi, 5	# align,
-	ja	.L9	#,
+	ja	.L11	#,
 	mov	edi, edi	# align, align
-	jmp	[QWORD PTR .L15[0+rdi*8]]	#
+	jmp	[QWORD PTR .L17[0+rdi*8]]	#
 	.section	.rodata
 	.align 8
 	.align 4
-.L15:
-	.quad	.L9
-	.quad	.L10
-	.quad	.L16
+.L17:
+	.quad	.L11
 	.quad	.L12
-	.quad	.L13
+	.quad	.L18
 	.quad	.L14
+	.quad	.L15
+	.quad	.L16
 	.text
-.L10:
-	mov	eax, OFFSET FLAT:.LC0	# D.8977,
-	ret
 .L12:
-	mov	eax, OFFSET FLAT:.LC2	# D.8977,
-	ret
-.L13:
-	mov	eax, OFFSET FLAT:.LC3	# D.8977,
+	mov	eax, OFFSET FLAT:.LC1	# D.9231,
 	ret
 .L14:
-	mov	eax, OFFSET FLAT:.LC4	# D.8977,
+	mov	eax, OFFSET FLAT:.LC3	# D.9231,
 	ret
-.L9:
-	mov	eax, OFFSET FLAT:.LC5	# D.8977,
+.L15:
+	mov	eax, OFFSET FLAT:.LC4	# D.9231,
 	ret
 .L16:
-	mov	eax, OFFSET FLAT:.LC1	# D.8977,
+	mov	eax, OFFSET FLAT:.LC5	# D.9231,
+	ret
+.L11:
+	mov	eax, OFFSET FLAT:.LC6	# D.9231,
+	ret
+.L18:
+	mov	eax, OFFSET FLAT:.LC2	# D.9231,
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	Container_alignmentToString, .-Container_alignmentToString
 	.section	.rodata.str1.1
-.LC6:
-	.string	"Container.c"
-	.section	.rodata.str1.8,"aMS",@progbits,1
-	.align 8
 .LC7:
-	.string	"Container_createSurfaceIfNeeded: CreateRGBSurface of container failed: %s\n"
+	.string	"Container.c"
+	.section	.rodata.str1.8
 	.align 8
 .LC8:
+	.string	"Container_createSurfaceIfNeeded: CreateRGBSurface of container failed: %s\n"
+	.align 8
+.LC9:
 	.string	"Container_createSurfaceIfNeeded: Failed to fill background surface (FillRect)\n"
 	.text
 	.globl	Container_createSurfaceIfNeeded
 	.type	Container_createSurfaceIfNeeded, @function
 Container_createSurfaceIfNeeded:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# this, this
-	mov	rdi, QWORD PTR [rdi+88]	# D.8952, MEM[(struct Widget *)this_2(D)].surf
-	test	rdi, rdi	# D.8952
-	je	.L18	#,
+	mov	rdi, QWORD PTR [rdi+88]	# D.9206, MEM[(struct Widget *)this_2(D)].surf
+	test	rdi, rdi	# D.9206
+	je	.L20	#,
 	movzx	eax, WORD PTR [rbx+100]	# MEM[(struct Widget *)this_2(D)].pos.w, MEM[(struct Widget *)this_2(D)].pos.w
-	cmp	DWORD PTR [rdi+16], eax	# D.8952_5->w, MEM[(struct Widget *)this_2(D)].pos.w
-	jge	.L19	#,
-	mov	edx, 93	#,
-	mov	esi, OFFSET FLAT:.LC6	#,
+	cmp	DWORD PTR [rdi+16], eax	# D.9206_5->w, MEM[(struct Widget *)this_2(D)].pos.w
+	jge	.L21	#,
+	mov	edx, 104	#,
+	mov	esi, OFFSET FLAT:.LC7	#,
 	call	wSDL_FreeSurface	#
-	jmp	.L18	#
-.L22:
+	jmp	.L20	#
+.L24:
 	call	SDL_GetError	#
-	mov	rcx, rax	#, D.8968
-	mov	edx, OFFSET FLAT:.LC7	#,
+	mov	rcx, rax	#, D.9222
+	mov	edx, OFFSET FLAT:.LC8	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	BYTE PTR [rbx+167], 0	# MEM[(struct Widget *)this_2(D)].visible,
-	jmp	.L17	#
-.L23:
-	mov	edx, DWORD PTR [rbx+176]	# this_2(D)->color, this_2(D)->color
+	mov	BYTE PTR [rbx+159], 0	# MEM[(struct Widget *)this_2(D)].visible,
+	jmp	.L19	#
+.L25:
+	mov	edx, DWORD PTR [rbx+168]	# this_2(D)->color, this_2(D)->color
 	mov	esi, 0	#,
 	call	SDL_FillRect	#
-	test	eax, eax	# D.8971
-	je	.L21	#,
+	test	eax, eax	# D.9225
+	je	.L23	#,
 	mov	rcx, QWORD PTR stderr[rip]	#, stderr
 	mov	edx, 78	#,
 	mov	esi, 1	#,
-	mov	edi, OFFSET FLAT:.LC8	#,
+	mov	edi, OFFSET FLAT:.LC9	#,
 	call	fwrite	#
-	mov	BYTE PTR [rbx+167], 0	# MEM[(struct Widget *)this_2(D)].visible,
-	jmp	.L17	#
-.L21:
-	mov	BYTE PTR [rbx+167], 1	# MEM[(struct Widget *)this_2(D)].visible,
-	mov	BYTE PTR [rbx+169], 1	# MEM[(struct Widget *)this_2(D)].need_reload,
-	jmp	.L17	#
-.L18:
+	mov	BYTE PTR [rbx+159], 0	# MEM[(struct Widget *)this_2(D)].visible,
+	jmp	.L19	#
+.L23:
+	mov	BYTE PTR [rbx+159], 1	# MEM[(struct Widget *)this_2(D)].visible,
+	mov	BYTE PTR [rbx+161], 1	# MEM[(struct Widget *)this_2(D)].need_reload,
+	jmp	.L19	#
+.L20:
 	movzx	esi, WORD PTR [rbx+102]	# MEM[(struct Widget *)this_2(D)].pos.h, MEM[(struct Widget *)this_2(D)].pos.h
 	movzx	edi, WORD PTR [rbx+100]	# MEM[(struct Widget *)this_2(D)].pos.w, MEM[(struct Widget *)this_2(D)].pos.w
 	call	Static_newSurface	#
-	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.8965
-	mov	rdi, rax	# D.8952, D.8965
-	test	rax, rax	# D.8965
-	jne	.L23	#,
-	jmp	.L22	#
+	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.9219
+	mov	rdi, rax	# D.9206, D.9219
+	test	rax, rax	# D.9219
+	jne	.L25	#,
+	jmp	.L24	#
+.L21:
+	mov	rdi, QWORD PTR [rbx+88]	# D.9206, MEM[(struct Widget *)this_2(D)].surf
+	jmp	.L25	#
 .L19:
-	mov	rdi, QWORD PTR [rbx+88]	# D.8952, MEM[(struct Widget *)this_2(D)].surf
-	jmp	.L23	#
-.L17:
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	.p2align 4,,6
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	Container_createSurfaceIfNeeded, .-Container_createSurfaceIfNeeded
 	.section	.rodata.str1.1
-.LC9:
-	.string	"(null)"
 .LC10:
+	.string	"(null)"
+.LC11:
 	.string	"container_item=NULL"
 	.section	.rodata.str1.8
 	.align 8
-.LC11:
-	.string	"ContainerItem: widget=%s, margins=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rect=[%hu,%hu,%hu,%hu], cell_max=(%hu,%hu)"
+.LC12:
+	.string	"ContainerItem: widget=%s\n\tmarginTLBR=[%hu,%hu,%hu,%hu], halign=%s, valign=%s, cell_rectXYWH=[%hu,%hu,%hu,%hu], cell_rect_MX,MY=(%hu,%hu)"
 	.text
 	.globl	ContainerItem_toString
 	.type	ContainerItem_toString, @function
 ContainerItem_toString:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -276,12 +301,12 @@ ContainerItem_toString:
 	.cfi_offset 15, -16
 	mov	rbx, rdi	# item, item
 	test	rdi, rdi	# item
-	je	.L28	#,
-	movzx	r15d, WORD PTR [rdi+26]	# D.8923, item_3(D)->maxy
-	movzx	r14d, WORD PTR [rdi+24]	# D.8925, item_3(D)->maxx
-	movzx	r13d, WORD PTR [rdi+14]	# D.8927, item_3(D)->cell_rect.h
-	movzx	r12d, WORD PTR [rdi+12]	# D.8929, item_3(D)->cell_rect.w
-	movsx	ebp, WORD PTR [rdi+10]	# D.8931, item_3(D)->cell_rect.y
+	je	.L30	#,
+	movzx	r15d, WORD PTR [rdi+26]	# D.9177, item_3(D)->maxy
+	movzx	r14d, WORD PTR [rdi+24]	# D.9179, item_3(D)->maxx
+	movzx	r13d, WORD PTR [rdi+14]	# D.9181, item_3(D)->cell_rect.h
+	movzx	r12d, WORD PTR [rdi+12]	# D.9183, item_3(D)->cell_rect.w
+	movsx	ebp, WORD PTR [rdi+10]	# D.9185, item_3(D)->cell_rect.y
 	movsx	eax, WORD PTR [rdi+8]	#, item_3(D)->cell_rect.x
 	mov	DWORD PTR [rsp+108], eax	# %sfp,
 	mov	edi, DWORD PTR [rdi+32]	# item_3(D)->valign, item_3(D)->valign
@@ -298,18 +323,18 @@ ContainerItem_toString:
 	mov	DWORD PTR [rsp+136], eax	# %sfp,
 	movzx	eax, WORD PTR [rbx+20]	#, item_3(D)->margin_top
 	mov	DWORD PTR [rsp+140], eax	# %sfp,
-	mov	rdi, QWORD PTR [rbx]	# D.8947, item_3(D)->widget
-	mov	r9d, OFFSET FLAT:.LC9	# iftmp.0,
-	test	rdi, rdi	# D.8947
-	je	.L27	#,
+	mov	rdi, QWORD PTR [rbx]	# D.9201, item_3(D)->widget
+	mov	r9d, OFFSET FLAT:.LC10	# iftmp.0,
+	test	rdi, rdi	# D.9201
+	je	.L29	#,
 	call	Widget_toString	#
 	mov	r9, rax	# iftmp.0,
-.L27:
-	mov	DWORD PTR [rsp+88], r15d	#, D.8923
-	mov	DWORD PTR [rsp+80], r14d	#, D.8925
-	mov	DWORD PTR [rsp+72], r13d	#, D.8927
-	mov	DWORD PTR [rsp+64], r12d	#, D.8929
-	mov	DWORD PTR [rsp+56], ebp	#, D.8931
+.L29:
+	mov	DWORD PTR [rsp+88], r15d	#, D.9177
+	mov	DWORD PTR [rsp+80], r14d	#, D.9179
+	mov	DWORD PTR [rsp+72], r13d	#, D.9181
+	mov	DWORD PTR [rsp+64], r12d	#, D.9183
+	mov	DWORD PTR [rsp+56], ebp	#, D.9185
 	mov	eax, DWORD PTR [rsp+108]	#, %sfp
 	mov	DWORD PTR [rsp+48], eax	#,
 	mov	rax, QWORD PTR [rsp+112]	#, %sfp
@@ -324,18 +349,18 @@ ContainerItem_toString:
 	mov	DWORD PTR [rsp+8], eax	#,
 	mov	eax, DWORD PTR [rsp+140]	#, %sfp
 	mov	DWORD PTR [rsp], eax	#,
-	mov	r8d, OFFSET FLAT:.LC11	#,
-	mov	ecx, 600	#,
+	mov	r8d, OFFSET FLAT:.LC12	#,
+	mov	ecx, 750	#,
 	mov	edx, 1	#,
-	mov	esi, 600	#,
+	mov	esi, 750	#,
 	mov	edi, OFFSET FLAT:str_id	#,
 	mov	eax, 0	#,
 	call	__snprintf_chk	#
-	mov	eax, OFFSET FLAT:str_id	# D.8921,
-	jmp	.L26	#
+	mov	eax, OFFSET FLAT:str_id	# D.9175,
+	jmp	.L28	#
+.L30:
+	mov	eax, OFFSET FLAT:.LC11	# D.9175,
 .L28:
-	mov	eax, OFFSET FLAT:.LC10	# D.8921,
-.L26:
 	mov	rbx, QWORD PTR [rsp+152]	#,
 	mov	rbp, QWORD PTR [rsp+160]	#,
 	mov	r12, QWORD PTR [rsp+168]	#,
@@ -346,50 +371,8 @@ ContainerItem_toString:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	ContainerItem_toString, .-ContainerItem_toString
-	.section	.rodata.str1.1
-.LC12:
-	.string	"container=NULL"
-	.section	.rodata.str1.8
-	.align 8
-.LC13:
-	.string	"Container(%s): color=0x%X, padx=%hu, pady=%hu"
-	.text
-	.globl	Container_toString
-	.type	Container_toString, @function
-Container_toString:
-.LFB99:
-	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC12	# D.8907,
-	test	rdi, rdi	# this
-	je	.L36	#,
-	sub	rsp, 40	#,
-	.cfi_def_cfa_offset 48
-	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)this_2(D)].class, MEM[(struct coObject *)this_2(D)].class
-	mov	r9, QWORD PTR [rax+16]	# D.8913_9->name, D.8913_9->name
-	movzx	eax, WORD PTR [rdi+182]	# this_2(D)->pady, this_2(D)->pady
-	mov	DWORD PTR [rsp+16], eax	#, this_2(D)->pady
-	movzx	eax, WORD PTR [rdi+180]	# this_2(D)->padx, this_2(D)->padx
-	mov	DWORD PTR [rsp+8], eax	#, this_2(D)->padx
-	mov	eax, DWORD PTR [rdi+176]	# this_2(D)->color, this_2(D)->color
-	mov	DWORD PTR [rsp], eax	#, this_2(D)->color
-	mov	r8d, OFFSET FLAT:.LC13	#,
-	mov	ecx, 600	#,
-	mov	edx, 1	#,
-	mov	esi, 600	#,
-	mov	edi, OFFSET FLAT:str_id	#,
-	mov	eax, 0	#,
-	call	__snprintf_chk	#
-	mov	eax, OFFSET FLAT:str_id	# D.8907,
-	add	rsp, 40	#,
-	.cfi_def_cfa_offset 8
-.L36:
-	rep
-	ret
-	.cfi_endproc
-.LFE99:
-	.size	Container_toString, .-Container_toString
 	.globl	Container_class
 	.data
 	.align 8
@@ -398,42 +381,54 @@ Container_toString:
 Container_class:
 	.quad	type
 	.section	.rodata
-	.type	__FUNCTION__.8873, @object
-	.size	__FUNCTION__.8873, 14
-__FUNCTION__.8873:
+	.type	__FUNCTION__.9129, @object
+	.size	__FUNCTION__.9129, 14
+__FUNCTION__.9129:
 	.string	"Container_new"
 	.section	.rodata.str1.1
-.LC14:
+.LC13:
 	.string	"Container"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	176
+# name:
+	.quad	.LC13
 # vtable:
 	.quad	vtable
-# size:
-	.quad	184
-# name:
-	.quad	.LC14
+	.local	str_id
+	.comm	str_id,750,32
+	.align 16
+	.type	vtable, @object
+	.size	vtable, 16
+vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.8877, @object
-	.size	__FUNCTION__.8877, 19
-__FUNCTION__.8877:
-	.string	"Container_vdestroy"
-	.local	str_id
-	.comm	str_id,600,32
-	.data
-	.align 32
-	.type	vtable, @object
-	.size	vtable, 48
-vtable:
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	Widget_vdestroy
+# toString:
+	.quad	Container_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	Widget_vmevent
+# draw:
 	.quad	Widget_vdraw
+# refresh:
 	.quad	Widget_vrefresh
+# drag:
 	.quad	Widget_vdrag
+# setVisible:
 	.quad	Widget_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

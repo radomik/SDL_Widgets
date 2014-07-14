@@ -24,7 +24,7 @@
 	#include "TextBlock.h"
 	#include "dirent.h"
 	
-	#define 	PATH_MAX_SIZE	(NAME_MAX)
+	#define 	PATH_MAX_SIZE	(PATH_MAX)
 	#define 	PATH_MAX_LEN	(PATH_MAX_SIZE-1)
 	
 	#define 	MAX_EXT_LEN		8
@@ -54,7 +54,7 @@
 	 * 				   długość rozszerzenia przekracza MAX_EXT_LEN, lub plik nie posiada rozszerzenia
 	 * 				   Poprzednia zawartość ext[] zostaje ZNISZCZONA.
 	 */
-	b8 getFileExtension(char *fname, char *ext);
+	b8 getFileExtension(const char *fname, char *ext);
 
 	/** Sprawdza czy rozszerzenie pliku znajduje się w masce.
 	 * Parametry:
@@ -68,7 +68,7 @@
 	 * 					co najmniej jeden z parametrów jest NULL-em
 	 * @TODO need to implement faster search alghoritm searching char* in char** array
 	 */
-	inline b8 fileOnMask(char *ext, char (*file_mask)[][MAX_EXT_SIZE]);
+	inline b8 fileOnMask(const char *ext, const char (*file_mask)[][MAX_EXT_SIZE]);
 
 	/** Funkcja określająca czy plik spełnia podaną maskę, czy jest poprawny 
 	 * 		oraz dodatkowo jego typ: katalog, obraz obsługiwany przez klasę Image, 

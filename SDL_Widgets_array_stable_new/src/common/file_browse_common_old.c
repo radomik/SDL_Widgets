@@ -42,15 +42,15 @@
  * 				   długość rozszerzenia przekracza MAX_EXT_LEN, lub plik nie posiada rozszerzenia
  * 				   Poprzednia zawartość ext[] zostaje ZNISZCZONA.
  */
-b8 getFileExtension(char *fname, char *ext) {
+b8 getFileExtension(const char *fname, char *ext) {
 	if (ext)
 		memset(ext, 0, MAX_EXT_SIZE*sizeof(char));		// wypełnij tablicę ext[MAX_EXT_SIZE] zerami
 	else return false;									// ext to NULL
 	if (! fname) return false;							// fname to NULL
 	
-	char		*sc;									// wskaźnik char*
+	const char		*sc;								// wskaźnik const char*
 	size_t		flen	= strlen(fname);				// długość nazwy pliku
-	u8		i		= MAX_EXT_LEN;					// indeks ostatniego znaku w tablicy ext
+	u8		i		= MAX_EXT_LEN;						// indeks ostatniego znaku w tablicy ext
 	u8		k, j = 0;
 	
 	if (! flen) return false;							// zerowa długość nazwy pliku (fname == "")
@@ -93,7 +93,7 @@ b8 getFileExtension(char *fname, char *ext) {
  * 		false(0) -  Rozszerzenie nie znajduje się w masce, lub 
  * 					co najmniej jeden z parametrów jest NULL-em
  */
-inline b8 fileOnMask(char *ext, char (*file_mask)[][MAX_EXT_SIZE]) {
+inline b8 fileOnMask(const char *ext, const char (*file_mask)[][MAX_EXT_SIZE]) {
 	if (! ext) return false;
 	u8 i = 0;
 	for (; (*file_mask)[i][0] != '\0'; i++)

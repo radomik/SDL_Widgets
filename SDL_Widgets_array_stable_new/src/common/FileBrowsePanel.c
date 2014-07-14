@@ -18,449 +18,591 @@
  *      51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include "StdDefinitions.h"
+#include "FileBrowsePanel.h"
 #include "Screen.h"
 #include "Static.h"
 #include "Memory.h"
-#include "file_browse_common.h"
 #include "TextBlock.h"
-#include "Rectangle.h"
-#include "Widget.h"
 #include "Image.h"
-#include "Button.h"
+#include "Directory.h"
+#include "DirFileInfo.h"
+#include "FbpFileInfo.h"
 
-/** from file_browse_common.h
-	struct fileInfo {
-		TextBlock	text_block;
-		b8 		sel, dir;
-	};
-*/
-/** 
-file_browse_common checks:
-	If file is a directory:
-		.dir = true, other flags are false;
-	If file is file:
-		set .dir = false
-		Moreover:
-			for images (use static method b8 Image_isSupportedExt(char *ext))
-				set .image = true
-			for audio set .audio = true
-				Need to implement CMplayer class based on mplayer and SDL threads
-				Two modes given on construction:
-					play one file from given char *path
-						still working methods: play, stop, pause, 
-												startSeek({SEEK_BACKWARD|SEEK_FORWARD}), stopSeek,
-												destroy
-					play many files from external SongList array (also many arrays)
-						has same methods as above +
-							addPlaylist(playlist, index);
-							addPlaylistLast(playlist);
-							delPlaylist(index);
-							setPlayedPlaylist(index);
-					of course static method: b8 CMplayer_isSupportedExt(char *ext);
+#define UPPER_RESERV 		(50) // space reserved on top of browsing window
+#define SEL_NONE_IND		(0xFFFFFFFF)
 
-	
-	Then in FileBrowseWindow when:
-		no file is selected:
-			image preview and audio preview widget are hidden
-		ONLY ONE file is selected:
-			if (.image) image preview is shown
-			if (.audio) audio preview widget is shown
-		if folder/many folders/many files becomes selected all previews becomes hidden
-*/
 
-/** @OLD global variables and datatypes
-struct FBW_anon {
-	char		(*fileTypes)[][MAX_EXT_SIZE];	// pointer to external array with file extensions to be shown 
-												// like: char types[][MAX_EXT_SIZE] = {"bmp", "jpeg", "\0"};
-	fileInfo	*tblist;						//! @DYNAMIC array of current folder content (size tblistCount)
-	Image		*preview;						// preview for Image files
-	
-	char 		(*file_mask)[][MAX_EXT_SIZE];	// pointer to external array of file extension to be shown
-	char 		(*preview_mask)[][MAX_EXT_SIZE];// pointer to external array of file extension which has preview
-												// can be NULL
-	b8		all_files_has_preview;			// if all files satisfying file_mask has preview 
-												// if true preview_mask is not checked
-												
-												
-												
-	u32		tblistCount;					// size of tblist array
-	
+/** Methods overriden from interface coIObject */
+static const coIObject override_coIObject = {
+	.destroy = FileBrowsePanel_vdestroy,
+	.toString = coObject_coIObject_vtoString
 };
-typedef struct FBW_anon FBW_anon;
 
-#define UPPER_RESERV (50) // space reserved on top of browsing window
-#define FILE_BGCOLOR_UNSEL (0xFFF4B1)
-#define FILE_BGCOLOR_SEL   (0xFF8459)
+static const void *vtable[] = {
+	&override_coIObject
+};
 
+static coClass type = {
+	.size	= sizeof(FileBrowsePanel),
+	.name	= "FileBrowsePanel",
+	.vtable	= vtable
+};
 
+const coClass *FileBrowsePanel_class = &type;
 
+static void FileBrowsePanel_fileClicked(Widget *sender, Screen *screen);
 
-static u8 nameHeight;
-static u32 firstScreenIndex, lastScreenIndex, selIndex, prevClicked;
-static b8 sel;
-static Rectangle *border_rect;
-static Widget *border_rectWidget, *border_rect2Widget;
-static Image *preview;
-static Screen sc;
-static TTF_Font *font;
-static u16 p_x, p_y, p_w, p_h;
-*/
-
-/** @OLD private method showFiles
-void showFiles() {
-	Widget *widget;
-	u32 y = UPPER_RESERV + border_rectWidget->pos.y;
-	u32 x = border_rectWidget->pos.x + 5;
-	u32 i = firstScreenIndex;
-	while ((y < border_rectWidget->maxy) && (i < tblistCount)) {
-		widget = &(tblist[i].text_block.widget);
-		fprintf(stderr, "Show TextBlock [%u/%u] %s\n", i, tblistCount, tblist[i].text_block.text);
-		Widget_setPosition(widget, x, y);
-		Widget_draw(widget, &sc, false);
-		i++;
-		y += nameHeight;
-	}
-	lastScreenIndex = --i;
-}
-*/
-
-/** @OLD private buttons handlers
-void button_ok_clicked(Widget *sender, Screen *screen) {
-	if ((selIndex != 0) && (selIndex != 0xFFFFFFFF)) screen->has_exited = true;
+static inline void FileBrowsePanel_showDebugList(const FileBrowsePanel *this) {
+	FbpFileInfo_arrayShow(this->fileInfoArray, this->fileInfoArraySize, stderr);
 }
 
-void button_anuluj_clicked(Widget *sender, Screen *screen) {
-	screen->has_exited = true;
-	sel = false;
-	selIndex = 0xFFFFFFFF;
+static void FileBrowsePanel_deleteFileArray(FileBrowsePanel *this, b8 del_array) {
+	if (! this->fileInfoArray) return;
+	FbpFileInfo_arrayDelete(&this->fileInfoArray, this->fileInfoArraySize, del_array);
 }
-*/
 
-/** @OLD private mouse click on filename textblock
-void textblock_filename_clicked(Widget *sender, Screen *screen) {
-	u32 i, j = sender->id;
-	fprintf(stderr, "Clicked on id=%u[%s][%p], prevClicked=%u\n", sender->id, ((TextBlock*)sender)->text, ((TextBlock*)sender)->text, prevClicked);
+static b8 FileBrowsePanel_getFolderContent(FileBrowsePanel *this) {
+	Directory 		dir;
+	DirFileInfo 	finfo;
+	FbpFileInfo		*fbinfo;
+	FbpFileInfo		*fileInfoArray = this->fileInfoArray;
+	u32				fsize = this->fileInfoArraySize, fcount = 0;
+	u32 			i;
+	u16				h;
 	
-	if (prevClicked == j) {	// clicked again on the same item (double click)
-		if (j == 0) {		// go to parent directory
-			if (! tblist[j].text_block.text) {
-				fprintf(stderr, "FileBrowsePanel:textblock_filename_clicked() Go to parent directory tblist[j=%u] is directory and have tblist[j].text_block.text == NULL\n", j);
-				return;
+	/// Open current directory
+	Directory_new(&dir);
+	if (! Directory_open(&dir, ".")) {
+		fprintf(stderr, "%s: Failed to open directory\n", __FUNCTION__);
+		delete(&dir);
+		return false;
+	}
+	
+	/// Delete old file info array content
+	if (fileInfoArray) { // delete old array content if not null
+		FileBrowsePanel_deleteFileArray(this, false);
+	}
+	
+	/// enumerate on files to get file count
+	//fprintf(stderr, "%s: Counting files in folder\n", __FUNCTION__);
+	DirFileInfo_new(&finfo);
+	while (Directory_getNext(&dir, &finfo, true)) {
+		if (! DirFileInfo_isHidden(&finfo)) {
+			if ((finfo.is_directory) || 
+					((finfo.is_file) && 
+					(DirFileInfo_checkExt(&finfo, this->fileTypes)))) 
+			{
+				fcount++;
 			}
-			prevClicked = 0xFFFFFFFF;
-			if (! chdir("..")) {// changed directory
-				fprintf(stderr, "Debug list:\n");
-				for (i = 0; i < tblistCount; i++) {
-					fprintf(stderr, "TextBlock [%u/%u] id=%u text=%s\n", i, tblistCount, tblist[i].text_block.widget.id, tblist[i].text_block.text);
-				}
+		}
+	}
+	
+	/// close directory 
+	//fprintf(stderr, "%s: Closing current directory (file count: %u)\n", __FUNCTION__, fcount);
+	Directory_close(&dir);
+	
+	//fprintf(stderr, "%s: Previous array @ %p of size %u elements\n", __FUNCTION__, fileInfoArray, fsize);
+	
+	/// additional first ".." entry
+	fsize = fcount + 1;
+	
+	/// allocate array
+	//fprintf(stderr, "%s: Reallocating array to size %u items\n", __FUNCTION__, fsize);
+	
+	if (! (fileInfoArray = FbpFileInfo_arrayRealloc(fileInfoArray, fsize))) {
+		fprintf(stderr, "%s: Failed to reallocate array\n", __FUNCTION__);
+		delete(&finfo);
+		delete(&dir);
+		return false;
+	}
+	
+	this->fileInfoArray = fileInfoArray;
+	this->fileInfoArraySize = fsize;
+	
+	
+	//fprintf(stderr, "%s: New: fcount=%u, fsize=%u, fileInfoArray: %p\n", 
+	//	__FUNCTION__, fcount, fsize, fileInfoArray);
+	
+	/// create ".." entry
+	//fprintf(stderr, "%s: Creating '..' entry\n", __FUNCTION__);
+	fbinfo = &fileInfoArray[0];
+	FbpFileInfo_new(fbinfo, "..", true, this->font);
+	
+	FbpFileInfo_setClickHandler(fbinfo, FileBrowsePanel_fileClicked, this);
+	this->nameHeight = WIDGET(fbinfo)->pos.h;
+	
+	if (! fcount) { // no files in folder
+		delete(&dir);
+		delete(&finfo);
+		return true; 
+	}
+	
+	/// open directory again
+	//fprintf(stderr, "%s: Opening directory again\n", __FUNCTION__);
+	if (! Directory_open(&dir, ".")) {
+		fprintf(stderr, "%s: Failed to open directory again\n", __FUNCTION__);
+		delete(&dir);
+		delete(&finfo);
+		return false;
+	}
+	
+	/// fill array with files
+	//fprintf(stderr, "%s: Filling array\n", __FUNCTION__);
+	i = 1;
+	while ((i < fsize) && (Directory_getNext(&dir, &finfo, true))) 
+	{
+		if (! DirFileInfo_isHidden(&finfo)) 
+		{
+			fprintf(stderr, "%s: Adding: '%s'\n", __FUNCTION__, DirFileInfo_getName(&finfo));
+			if ((finfo.is_directory) || 
+					((finfo.is_file) && 
+					(DirFileInfo_checkExt(&finfo, this->fileTypes)))) 
+			{
+				fbinfo = &fileInfoArray[i++];
 				
-				// Destroy all TextBlocks in tblist, deallocate tblist and create new tblist with new TextBlocks
-				getCurrentFolderContent(&tblist, &tblistCount, screen->screen, font, 
-										FILE_BGCOLOR_UNSEL, 0x000000, fileTypes, &nameHeight,
-										textblock_filename_clicked);
-				firstScreenIndex = 0;
-				screen->need_reload = true;
+				FbpFileInfo_new(fbinfo, DirFileInfo_getName(&finfo), finfo.is_directory, this->font);
+					
+				FbpFileInfo_setClickHandler(fbinfo, FileBrowsePanel_fileClicked, this);
+				
+				/// has image preview support ?
+				if (finfo.is_file) // finfo.ext is already created (above (if) in DirFileInfo_checkExt())
+					fbinfo->is_image = Image_isExtSupported(finfo.ext);
+				
+				/// find max height of filename
+				h = WIDGET(fbinfo)->pos.h;
+				if (h > this->nameHeight) this->nameHeight = h;
 			}
-			return;
+		}
+	}
+	
+	delete(&finfo);
+	delete(&dir); // close and delete directory
+	
+	
+	FbpFileInfo_arraySort(fileInfoArray, fsize);
+	FbpFileInfo_arrayUpdateIds(fileInfoArray, fsize);
+	
+	//fprintf(stderr, "%s: Finished. Show debug list\n", __FUNCTION__);
+	//FileBrowsePanel_showDebugList(this);
+	
+	return true;
+}
+
+static inline void FileBrowsePanel_createPreviewImage(FileBrowsePanel *this, FbpFileInfo *fbinfo) {
+	Widget *wtImgPrev = WIDGET(&this->previewImage);
+	double scale;
+	
+	delete(wtImgPrev);
+	Image_new(IMAGE(wtImgPrev), FbpFileInfo_getFilename(fbinfo), this->p_x, this->p_y);
+	
+	if (! wtImgPrev->visible) {
+		fprintf(stderr, "%s: Failed to load preview image for file: '%s'\n", __FUNCTION__, FbpFileInfo_getFilename(fbinfo));
+		return;
+	}
+	
+	if (wtImgPrev->pos.w > wtImgPrev->pos.h) {
+		if (wtImgPrev->pos.w > this->p_w) {
+			scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
+			Widget_scale(wtImgPrev, scale, scale, 1);
 		}
 		else {
-			if (tblist[j].dir) {
-				if (! tblist[j].text_block.text) {
-					fprintf(stderr, "FileBrowsePanel:textblock_filename_clicked() Change directory tblist[j=%u] is directory and have tblist[j].text_block.text == NULL\n", j);
-					return;
-				}
-				
-				prevClicked = 0xFFFFFFFF;
-				if (! chdir(tblist[j].text_block.text)) {// changed directory
-					fprintf(stderr, "Changed directory, debug list:\n");
-					for (i = 0; i < tblistCount; i++) {
-						fprintf(stderr, "TextBlock [%u/%u] id=%u text=%s[%p]\n", i, tblistCount, tblist[i].text_block.widget.id, tblist[i].text_block.text, tblist[i].text_block.text);
-					}
-					
-					// Destroy all TextBlocks in tblist, deallocate tblist and create new tblist with new TextBlocks
-					getCurrentFolderContent(&tblist, &tblistCount, screen->screen, font, 
-											FILE_BGCOLOR_UNSEL, 0x000000, fileTypes, &nameHeight,
-											textblock_filename_clicked);
-					firstScreenIndex = 0;
-					screen->need_reload = true;
-				}
-				return;
-			}
-			else {
-				fprintf(stderr, "FileBrowsePanel:textblock_filename_clicked() Failed to change directory\n");
-				//sel = true;
-				//screen->has_exited = true;
-				return;
+			if (wtImgPrev->pos.h > this->p_h) {
+				scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
+				Widget_scale(wtImgPrev, scale, scale, 1);
 			}
 		}
 	}
 	else {
-		prevClicked = j; // first click on item
-		fprintf(stderr, "Set prevClicked=%u j=%u\n", prevClicked, j);
-	}
-	// select folder/file
-	if (! tblist[j].dir) { 		// only file can be selected
-		if (selIndex != 0xFFFFFFFF) {
-			tblist[selIndex].sel = false;
-			TextBlock_setBackgroundColor(&(tblist[selIndex].text_block), FILE_BGCOLOR_UNSEL);
-			TextBlock_refresh(&(tblist[selIndex].text_block));
-			//Widget_draw(&(tblist[selIndex].text_block.widget), screen, false);
-		}
-		selIndex = j;
-		tblist[j].sel = true;
-		TextBlock_setBackgroundColor(&(tblist[selIndex].text_block), FILE_BGCOLOR_SEL);
-		TextBlock_refresh(&(tblist[selIndex].text_block));
-		//Widget_draw(&(tblist[selIndex].text_block.widget), screen, true);
-		//fprintf(stderr, "%s, %hu, %hu\n", tblist[selIndex].text_block.text, border_rectWidget->pos.x+5, border_rectWidget->pos.y+5);
-		delete(preview);
-		Image_new(preview, tblist[selIndex].text_block.text, p_x, p_y);
-		//fprintf(stderr, "VISIBLE=%d\n", preview->widget.visible);
-		//Widget_draw(&(preview->widget), screen, true);
-		double scale;
-		if (preview->widget.pos.w > preview->widget.pos.h) {
-			if (preview->widget.pos.w > p_w) {
-				scale = ((double)(p_w))/((double)(preview->widget.pos.w));
-				Widget_scale(WIDGET(preview), scale, scale, 1);
-			}
-			else {
-				if (preview->widget.pos.h > p_h) {
-					scale = ((double)(p_h))/((double)(preview->widget.pos.h));
-					Widget_scale(WIDGET(preview), scale, scale, 1);
-				}
-			}
+		if (wtImgPrev->pos.h > this->p_h) {
+			scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
+			Widget_scale(wtImgPrev, scale, scale, 1);
 		}
 		else {
-			if (preview->widget.pos.h > p_h) {
-				scale = ((double)(p_h))/((double)(preview->widget.pos.h));
-				Widget_scale(WIDGET(preview), scale, scale, 1);
-			}
-			else {
-				if (preview->widget.pos.w > p_w) {
-					scale = ((double)(p_w))/((double)(preview->widget.pos.w));
-					Widget_scale(WIDGET(preview), scale, scale, 1);
-				}
+			if (wtImgPrev->pos.w > this->p_w) {
+				scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
+				Widget_scale(wtImgPrev, scale, scale, 1);
 			}
 		}
-		Widget_setPosition(WIDGET(preview), preview->widget.pos.x+((p_w-preview->widget.pos.w)>>1),
-									preview->widget.pos.y+((p_h-preview->widget.pos.h)>>1));
+	}
+	
+	Widget_setPosition(wtImgPrev, 
+						wtImgPrev->pos.x + (wtImgPrev->pos.w >> 1),
+						wtImgPrev->pos.y + ((this->p_h - wtImgPrev->pos.h) >> 1));
+}
+
+static void FileBrowsePanel_fileClicked(Widget *sender, Screen *screen) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(sender->void_parameter);
+	const u32 j = sender->id; // clicked textbox index, '..' has index 0 and so on
+	FbpFileInfo *fileInfoArray = this->fileInfoArray;
+	FbpFileInfo *fbinfo_j = &fileInfoArray[j];
+	
+	//fprintf(stderr, "%s: fbinfo_j: %p (%s)\n", __FUNCTION__, fbinfo_j, fbinfo_j?FbpFileInfo_getFilename(fbinfo_j):"");
+	
+	if (this->prevClicked == j) 			// clicked again on the same item
+	{ 
+		if (fbinfo_j->is_directory) 		// clicked again on directory
+		{ 
+			this->changeDirItem = fbinfo_j; // store clicked item
+			// directory will be changed in FileBrowsePanel_screenMouseDownUp()
+			// when sender widget is no more referenced and can be safely deleted
+		} 
+		else {								// clicked again on selected file
+			screen->has_exited = true;		// exit FileBrowsePanel_show()
+		}
+		return;
+	}
+	else { // first click on item
+		this->prevClicked = j;
+	}
+	
+	if (this->selIndex != SEL_NONE_IND) { // unselect previously selected item if any
+		FbpFileInfo *selItem = &fileInfoArray[this->selIndex];
+		FbpFileInfo_unselect(selItem);
+	}
+	
+	this->selIndex = j;					// set new selected item
+	FbpFileInfo_select(fbinfo_j);
+	
+	if (fbinfo_j->is_image) { // if selected item is an image file -> generate preview
+		FileBrowsePanel_createPreviewImage(this, fbinfo_j);
+	}
+	else { // not image -> hide preview image
+		WIDGET(&this->previewImage)->visible = false;
+	}
+	screen->need_reload = true;
+}
+
+
+static void FileBrowsePanel_screenMouseDownUp(Screen *screen, void *vthis) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
+	FbpFileInfo *fileInfoArray = this->fileInfoArray;
+	const u32 fileInfoArraySize = this->fileInfoArraySize;
+	FbpFileInfo *fbinfo;
+	u32 i = 0;
+	
+	//fprintf(stderr, "%s: event:     %s\n", __FUNCTION__, Screen_currentEventName(screen));
+	
+	if (! fileInfoArray) {
+		fprintf(stderr, "%s: .fileInfoArray is NULL\n", __FUNCTION__);
+		return;
+	}
+	
+	for (; i < fileInfoArraySize; i++) { // passs mouse button event to each file item
+		fbinfo = &fileInfoArray[i];
+		//fprintf(stderr, "%s: Passing %s event to [%u] %s '%s'\n",
+		//	__FUNCTION__, Screen_currentEventName(screen), i, fbinfo->is_directory ? "directory" : "file", FbpFileInfo_getFilename(fbinfo));
+		
+		if (Screen_getEventButtonIndex(screen) == 1) {// pass only left mouse button clicks
+			Widget_mevent(WIDGET(fbinfo), screen);
 			
-		screen->need_reload = true;
+			if (screen->event_handled) {
+				//fprintf(stderr, "%s: Event handled, .changeDirItem: %p\n", __FUNCTION__, this->changeDirItem);
+				
+				if (this->changeDirItem) 
+				{ // &fbinfo->text_block widget is no more referenced here 
+				  // this code cannot be included in widget click handler
+					fbinfo = this->changeDirItem;
+					this->changeDirItem = NULL;
+				  
+					//fprintf(stderr, "%s: Changing directory to '%s'\n", __FUNCTION__, FbpFileInfo_getFilename(fbinfo));
+					
+					if (! chdir(FbpFileInfo_getFilename(fbinfo))) 
+					{ // changed directory
+						
+						/// Get current folder content into array of FbpFileInfo (this->fileInfoArray)
+						/// @note after that call this->changeDirItem and fbinfo are invalid pointers
+						if (! FileBrowsePanel_getFolderContent(this)) {
+							fprintf(stderr, "%s: Failed to get current folder content\n", __FUNCTION__);
+						}
+						else { // obtained current directory content
+							this->firstScreenIndex = 0;
+							this->prevClicked = SEL_NONE_IND;
+							screen->need_reload = true;
+						}
+					}
+					else {
+						fprintf(stderr, "%s: Failed to change directory to '%s' [%s]\n", 
+						__FUNCTION__, FbpFileInfo_getFilename(fbinfo), sys_getError());
+					}
+				}
+				
+				return;
+			}
+		}
+		else { // mouse press/release with button other than left
+			// pass event to background rectangle (scrolling list)
+			Widget_mevent(WIDGET(&this->border_rect), screen);
+			
+			if (screen->event_handled) return;
+		}
 	}
 }
-*/
 
-const char *FileBrowsePanel_Main(SDL_Surface *screen) {
-	fprintf(stderr, "FileBrowsePanel_Main: Currently unsupported.\n");
-	return NULL;
-	/** @OLD main function stuff
-	// Create font
-	font = Static_getFont("fonts/ariblk.ttf", 20);
+static void FileBrowsePanel_butOkClicked(Widget *sender, Screen *screen) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(sender->void_parameter);
 	
-	// Create a fileInfo type array containing content of current folder
-	prevClicked = 0xFFFFFFFF;
-	firstScreenIndex = 0;
-	selIndex = 0xFFFFFFFF;
+	if ((this->selIndex != 0) && (this->selIndex != SEL_NONE_IND)) 
+		screen->has_exited = true;
+}
+
+static void FileBrowsePanel_butCancelClicked(Widget *sender, Screen *screen) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(sender->void_parameter);
 	
-	// initialize screen context
-	Screen_init(&sc, screen, 0);
-	Screen_setBackground(&sc, "img/green-design-background.jpg");
-	sc.drag_on = false;
+	screen->has_exited = true;
+	this->selIndex = SEL_NONE_IND;
+}
+
+static void FileBrowsePanel_keyUp(Screen *screen, SDLKey key, void *vthis) {
+	if (key == SDLK_F2) {
+		FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
+		FileBrowsePanel_showDebugList(this);
+	}
+}
+
+static void FileBrowsePanel_wheelEvent(Widget *sender, Screen *screen) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(sender->void_parameter);
+	u8 butInd = Screen_getEventButtonIndex(screen);
 	
-	tblist = NULL;
+	if (butInd == 5) { // wheel down
+		if (this->lastScreenIndex < this->fileInfoArraySize-1) {
+			this->firstScreenIndex++;
+			screen->need_reload = true;
+		}
+	}
+	else {
+		if (butInd == 4) { // wheel up
+			if (this->firstScreenIndex > 0) {
+				this->firstScreenIndex--;
+				screen->need_reload = true;
+			}
+		}
+	}
+}
+
+static void FileBrowsePanel_showFiles(FileBrowsePanel *this, Screen *screen) {
+	Widget *widget;
 	
-	getCurrentFolderContent(&tblist, &tblistCount, sc.screen, font, 
-							FILE_BGCOLOR_UNSEL, 0x000000, fileTypes, &nameHeight,
-							textblock_filename_clicked);
-	//~ u32 i=0; for (; i < tblistCount; i++) 
-		//~ fprintf(stderr, "widget[%u/%u] id=%u\t%s\n", i, tblistCount, 
-			//~ tblist[i].text_block.widget.id, tblist[i].text_block.text);
-	u32 i;
-	nameHeight += 5;
+	FbpFileInfo *fileInfoArray = this->fileInfoArray;
+	u32 		y = UPPER_RESERV + WIDGET(&this->border_rect)->pos.y;
+	const u32 	x = WIDGET(&this->border_rect)->pos.x + 5;
+	u32 		i = this->firstScreenIndex;
+	const u32 	fileInfoArraySize = this->fileInfoArraySize;
 	
-	char current_dir[PATH_MAX_SIZE];
-	getcwd(current_dir, PATH_MAX_SIZE);
 	
-	// Update actual folder path
-	//~ TextBlock *tb_currentFolder = malloc(sizeof(TextBlock));
-	//~ tb_currentFolder->text = (char*) malloc(PATH_MAX_SIZE*sizeof(char));
-	//~ getcwd(tb_currentFolder->text, PATH_MAX_SIZE-1);
-	//~ TextBlock_setFont(tb_currentFolder, font);
-	//~ TextBlock_setBackgroundColor(tb_currentFolder, 0xD9FFAD);
-	//~ TextBlock_setForegroundColor(tb_currentFolder, 0x000000);
-	//~ TextBlock_refresh(tb_currentFolder);
-	//~ Widget *tb_currentFolder_widget = &(tb_currentFolder->widget);
-	//~ tb_currentFolder_widget->id = 4;
-	//~ tb_currentFolder_widget->draggable = true;
-	//~ tb_currentFolder_widget->mevent = true;
+	while ((i < fileInfoArraySize) && (y < WIDGET(&this->border_rect)->maxy)) 
+	{
+		widget = WIDGET(&fileInfoArray[i]);
+		
+		//fprintf(stderr, "%s: Show widget [%u/%u] '%s'\n", __FUNCTION__, i, fileInfoArraySize, toString(widget));
+			
+		Widget_setPosition(widget, x, y);
+		Widget_draw(widget, screen, false);
+		
+		i++;
+		y += this->nameHeight;
+	}
+	this->lastScreenIndex = --i;
+}
+
+static void FileBrowsePanel_afterPaint(Screen *screen, void *vthis) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
 	
-	border_rect = malloc(sizeof(Rectangle));
-	Rectangle *border_rect2 = malloc(sizeof(Rectangle));
-	Rectangle_new(border_rect, sc.screen, 0xE2F3D3);
-	Rectangle_new(border_rect2, sc.screen, 0x2EAE00);
-	border_rectWidget = &(border_rect->widget);
-	border_rect2Widget = &(border_rect2->widget);
+	u16 height = (Screen_getHeight() << 1) / 3;
+	height -= (height-UPPER_RESERV) % this->nameHeight;
 	
-	u16 height = (W_SCREEN_HEIGHT<<1)/3;
-	height -= (height-UPPER_RESERV)%nameHeight;
-	border_rectWidget->pos.y = 100;
-	border_rectWidget->pos.w = 850;
-	border_rectWidget->pos.x = 100;
-	border_rectWidget->pos.h = height;
-	border_rect2Widget->pos.y = border_rectWidget->pos.y - 5;
-	border_rect2Widget->pos.x = border_rectWidget->pos.x - 5;
-	border_rect2Widget->pos.w = border_rectWidget->pos.w + 10;
-	border_rect2Widget->pos.h = border_rectWidget->pos.h + 10;
-	Rectangle_refresh(border_rect);
-	Rectangle_refresh(border_rect2);
+	WIDGET(&this->border_rect)->pos.h = height;
+	WIDGET(&this->border_rect2)->pos.h = WIDGET(&this->border_rect)->pos.h + 10;
+	Widget_refresh(&this->border_rect);
+	Widget_refresh(&this->border_rect2);
+	
+	Widget_draw(&this->border_rect2, screen, false);
+	Widget_draw(&this->border_rect, screen, false);
+	
+	FileBrowsePanel_showFiles(this, screen);
+	Screen_flip(screen);
+}
+
+void FileBrowsePanel_vdestroy(void *vthis) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
+	
+#ifdef VERBOSE_CREATE
+	Static_printObj(vthis);
+#endif
+	/*! Delete self stuff !*/
+	FileBrowsePanel_deleteFileArray(this, true);
+	
+	delete(&this->border_rect);
+	delete(&this->border_rect2);
+	delete(&this->butOk);
+	delete(&this->butCancel);
+	delete(&this->previewImage);
+	delete(&this->backgroundImage);
+	
+	if (this->font) { TTF_CloseFont(this->font); this->font = NULL; }
+	
+	delete(&this->screen);
+	
+	/*! Delete parent object !*/
+	coObject_vdestroy(vthis);
+}
+
+const char* FileBrowsePanel_show(FileBrowsePanel *this, b8 sel_files, b8 sel_directories) {
+	const char *sel_path = NULL;
+	if (! this->is_inited) {
+		fprintf(stderr, "%s: Not initialized\n", __FUNCTION__);
+		return NULL;
+	}
+	
+	Screen_MainStart(&this->screen);
+	
+	if (this->selIndex < SEL_NONE_IND) {
+		FbpFileInfo *sel_info = &this->fileInfoArray[this->selIndex];
+		if (((sel_files) && (! sel_info->is_directory)) || 
+			((sel_directories) && (sel_info->is_directory) && (WIDGET(sel_info)->id != 0))) 
+		{
+			const char *sel_fname = FbpFileInfo_getFilename(sel_info);
+		
+			//fprintf(stderr, "%s: Selected filename:  '%s'\n", __FUNCTION__, sel_fname);
+			
+			if (! (realpath(sel_fname, this->sel_path))) {
+				fprintf(stderr, "%s: Failed to get real path of selected file: '%s' [%s]\n",
+					__FUNCTION__, sel_fname, sys_getError());
+			}
+			else {
+				sel_path = this->sel_path;
+			}
+		}
+	}
+	
+	if ((this->prevDirPath[0]) && (chdir(this->prevDirPath))) {
+		fprintf(stderr, "%s: Failed to change directory to previous: '%s' [%s]\n", 
+			__FUNCTION__, this->prevDirPath, sys_getError());
+	}
+	
+	fprintf(stderr, "%s: Ended with selected path: '%s'\n", __FUNCTION__, sel_path);
+	return sel_path;
+	
+}
+
+b8 FileBrowsePanel_setBgImage(FileBrowsePanel *this, const char *imagePath, u8 mode) {
+	if (this->is_inited) delete(&this->backgroundImage);
+	Image_new(&this->backgroundImage, imagePath, 0, 0);
+	if (WIDGET(&this->backgroundImage)->visible) {
+		Screen_setBackgroundWidget(&this->screen, WIDGET(&this->backgroundImage), mode);
+		return true;
+	}
+	else {
+		fprintf(stderr, "%s: Failed to set background image\n", __FUNCTION__);
+		return false;
+	}
+}
+
+
+FileBrowsePanel* FileBrowsePanel_new(FileBrowsePanel *this, const char (*fileTypes)[][MAX_EXT_SIZE]) {
+	perr e = E_NO_ERROR;
+	u16 height;
+	
+	if (! this) {
+		Static_nullThis();
+		return NULL;
+	}
+	coObject_new(CO_OBJECT(this));
+	class_init(this, &type);
+	
+	//fprintf(stderr, "%s: this @ %p [sizeof(FileBrowsePanel) = %lu]\n", __FUNCTION__, this, sizeof(FileBrowsePanel));
+	
+	this->is_inited = false;
+	this->fileInfoArray = NULL;
+	this->fileInfoArraySize = 0;
+	this->changeDirItem = NULL;
+	
+	this->prevClicked = SEL_NONE_IND;
+	this->firstScreenIndex = 0;
+	this->selIndex = SEL_NONE_IND;
+	this->lastScreenIndex = 0;
+	this->nameHeight = 0;
+	this->prevDirPath[0] = '\0';
+	this->sel_path[0] = '\0';
+	
+	this->sel = false;
+	this->fileTypes = fileTypes;
+	this->font = NULL;
+	
+#ifdef VERBOSE_CREATE
+	Static_printObj(this);
+#endif
+	
+	Screen_new(&this->screen, &e, 0);
+	if (e) {
+		fprintf(stderr, "%s: Screen_new failed with error %s\n", __FUNCTION__, perr_getName(e));
+		return this;
+	}
+	this->screen.drag_on = false;
+	
+	FileBrowsePanel_setBgImage(this, "img/green-design-background.jpg", BG_STRETCH);
+		
+	this->font = Static_getFont("fonts/ariblk.ttf", 20);
+	
+	if (! getcwd(this->prevDirPath, sizeof(this->prevDirPath))) {
+		fprintf(stderr, "%s: Failed to obtain current working directory [%s]\n", __FUNCTION__, sys_getError());
+		this->prevDirPath[0] = '\0';
+	}
+	
+	FileBrowsePanel_getFolderContent(this);
+	
+	/// create interface
+	Rectangle_new(&this->border_rect, 0xE2F3D3);
+	Rectangle_new(&this->border_rect2, 0x2EAE00);
+	
+	height = (Screen_getHeight() << 1) / 3;
+	height -= (height-UPPER_RESERV) % this->nameHeight;
+	
+	WIDGET(&this->border_rect)->pos.y = 100;
+	WIDGET(&this->border_rect)->pos.w = 850;
+	WIDGET(&this->border_rect)->pos.x = 100;
+	WIDGET(&this->border_rect)->pos.h = height;
+	
+	WIDGET(&this->border_rect2)->pos.y = WIDGET(&this->border_rect)->pos.y - 5;
+	WIDGET(&this->border_rect2)->pos.w = WIDGET(&this->border_rect)->pos.x - 5;
+	WIDGET(&this->border_rect2)->pos.x = WIDGET(&this->border_rect)->pos.w + 10;
+	WIDGET(&this->border_rect2)->pos.h = WIDGET(&this->border_rect)->pos.h + 10;
+	
+	Widget_refresh(&this->border_rect);
+	Widget_refresh(&this->border_rect2);
 	
 	// Preview view rectangle
-	p_x = border_rect2Widget->maxx + 10;
-	p_y = border_rect2Widget->pos.y + 10;
-	p_w = W_SCREEN_WIDTH - border_rect2Widget->pos.w - border_rect2Widget->pos.x - 20;
-	p_h = border_rect2Widget->pos.h - 20;
+	this->p_x = WIDGET(&this->border_rect2)->maxx + 10;
+	this->p_y = WIDGET(&this->border_rect2)->pos.y + 10;
+	this->p_w = Screen_getWidth() - WIDGET(&this->border_rect2)->pos.w - WIDGET(&this->border_rect2)->pos.x - 20;
+	this->p_h = WIDGET(&this->border_rect2)->pos.h - 20;
 	
-	Button *butOk = malloc(sizeof(Button));
-	Button *butAnuluj = malloc(sizeof(Button));
+	Button_new(&this->butOk, "OK");
+	Button_new(&this->butCancel, "Anuluj");
+	Button_applyDefaultStyle(&this->butOk, 879, 874, this->font, 50, 5, true);
+	Button_applyDefaultStyle(&this->butCancel, 1061, 874, this->font, 33, 5, true);
 	
-	Button_new(butOk, sc.screen, "OK", true);
-	Widget *butOk_widget = &(butOk->widget);
-	butOk_widget->click_handler = button_ok_clicked;
-	Button_applyDefaultStyle(butOk, 879, 874, font, 50, 5);
-	Button_setFixedWidth(butOk, true);
+	WIDGET(&this->butOk)->click_handler = FileBrowsePanel_butOkClicked;
+	WIDGET(&this->butCancel)->click_handler = FileBrowsePanel_butCancelClicked;
+	WIDGET(&this->border_rect)->press_handler = FileBrowsePanel_wheelEvent;
 	
-	Button_new(butAnuluj, sc.screen, "Anuluj", true);
-	Widget *butAnuluj_widget = &(butAnuluj->widget);
-	butAnuluj_widget->click_handler = button_anuluj_clicked;
-	Button_applyDefaultStyle(butAnuluj, 1061, 874, font, 33, 5);
-	Button_setFixedWidth(butAnuluj, true);
+	WIDGET(&this->butOk)->void_parameter = this;
+	WIDGET(&this->butCancel)->void_parameter = this;
+	WIDGET(&this->border_rect)->void_parameter = this;
 	
-	b8 got_event=false;
-	sel = false;
-	char *ret_path = NULL;
-
-	preview = malloc(sizeof(Image));
-	Image_new(preview, NULL, 0, 0); // invisible preview image
+	Image_new(&this->previewImage, NULL, 0, 0);
 	
-	//~ border_rectWidget->pos.y  = 100;
-	//~ border_rectWidget->pos.w  = W_SCREEN_WIDTH-200;
-	//~ border_rect2Widget->pos.y = border_rectWidget->pos.y - 5;
-	//~ border_rect2Widget->pos.w = border_rectWidget->pos.w + 10;
-	//~ border_rectWidget->pos.x  = (W_SCREEN_WIDTH-border_rectWidget->pos.w)>>1;
-	//~ border_rect2Widget->pos.x = border_rectWidget->pos.x - 5;
+	Screen_addWidget(&this->screen, WIDGET(&this->butOk));
+	Screen_addWidget(&this->screen, WIDGET(&this->butCancel));
+	Screen_addWidget(&this->screen, WIDGET(&this->previewImage));
 	
-	while (! sc.has_exited) {
-		if (sc.need_reload) {
-			sc.need_reload = false;
-			SDL_BlitSurface(sc.background->widget.surf, NULL, sc.screen, NULL);
-			if (preview->widget.visible) {
-				Widget_draw(&(preview->widget), &sc, false);
-			}
-			u16 height = (W_SCREEN_HEIGHT<<1)/3;
-			height -= (height-UPPER_RESERV)%nameHeight;
-			border_rectWidget->pos.h = height;
-			border_rect2Widget->pos.h = border_rectWidget->pos.h + 10;
-			Rectangle_refresh(border_rect);
-			Rectangle_refresh(border_rect2);
-			
-			
-			Widget_draw(border_rect2Widget, &sc, false);
-			Widget_draw(border_rectWidget, &sc, false);
-			Widget_draw(butOk_widget, &sc, false);
-			
-			showFiles();
-			Widget_draw(butOk_widget, &sc, false);
-			Widget_draw(butAnuluj_widget, &sc, true);
-		}
-		
-
-		while (SDL_WaitEvent(sc.pevent)) {
-			got_event = true;
-			switch (sc.event.type) {
-				case SDL_KEYDOWN:	// only for testing purpouses
-					if (sc.event.key.keysym.sym == SDLK_ESCAPE)
-						sc.has_exited = true;
-					else {
-						if (sc.event.key.keysym.sym == SDLK_F2) {
-							fprintf(stderr, "Debug list:\n");
-							for (i = 0; i < tblistCount; i++) {
-								fprintf(stderr, "TextBlock [%u/%u] id=%u text=%s\n", i, tblistCount, tblist[i].text_block.widget.id, tblist[i].text_block.text);
-							}
-						}
-					}
-					break;
-				case SDL_QUIT:
-						sc.has_exited = true;
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-					if (sc.event.button.button == 4) {	 // wheel up
-						if (firstScreenIndex > 0) {
-							firstScreenIndex--;
-							sc.need_reload = true;
-						}
-						break;
-					}
-					else {
-						if (sc.event.button.button == 5) { // wheel down
-							if (lastScreenIndex < tblistCount-1) {
-								firstScreenIndex++;
-								sc.need_reload = true;
-							}
-							break;
-						}
-					}
-				default:
-					Widget_mevent(butOk_widget, &sc);// if (sc.event_handled) break;
-					Widget_mevent(butAnuluj_widget, &sc); //if (sc.event_handled) break;
-					
-					if (sc.event.type != SDL_MOUSEMOTION) {
-						for (i = firstScreenIndex; i <= lastScreenIndex; i++) {
-							Widget_mevent(&(tblist[i].text_block.widget), &sc);
-							//if (sc.event_handled) break;
-						}
-					}
-					break;
-			}
-			if (got_event) break;
-		}
-		
-		
-	}
-	to_end:
+	this->screen.disable_auto_flip = true; // final flip is made in FileBrowsePanel_afterPaint
+	this->screen.after_paint = FileBrowsePanel_afterPaint;
+	this->screen.mouse_down = FileBrowsePanel_screenMouseDownUp;
+	this->screen.mouse_up = FileBrowsePanel_screenMouseDownUp;
+	this->screen.param = this;
 	
-	if ((sel) || (selIndex != 0xFFFFFFFF)) {
-		ret_path = realpath(tblist[selIndex].text_block.text, ret_path);
-		if (! ret_path) {
-			fprintf(stderr, "FileBrowsePanel_Main:FileBrowsePanel > Failed to realpath on selected path %s\n", tblist[selIndex].text_block.text);
-		}
-	}
+	this->screen.key_up = FileBrowsePanel_keyUp;
+	this->is_inited = true;
 	
-	// Remember to copy text of selected file
-	for (i = 0; i < tblistCount; i++) {
-		fprintf(stderr, "Delete TextBlock %u, %s\n", i, tblist[i].text_block.text);
-		delete(&(tblist[i].text_block));
-	}
-	
-	free(tblist);
-	
-	delete(&sc);
-	
-	delete(butOk);
-	delete(butAnuluj);
-	delete(border_rect);
-	delete(border_rect2);
-	
-	
-	free(butOk);
-	free(butAnuluj);
-	free(border_rect);
-	free(border_rect2);
-	free(preview);
-	if (chdir(current_dir)) {	// go back to previous directory
-		fprintf(stderr, "FileBrowsePanel_Main:FileBrowsePanel > Failed to go back to previous directory %s\n", current_dir);
-	}
-	
-	fprintf(stderr, "FileBrowsePanel: Exiting\n");
-	return ret_path;
-	**/
+	return this;
 }

@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT ButtonImage.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -51,68 +51,98 @@
 # -msse3 -mssse3 -mtls-direct-seg-refs
 
 	.text
+	.type	ButtonImage_mousePressed, @function
+ButtonImage_mousePressed:
+.LFB109:
+	.cfi_startproc
+	cmp	BYTE PTR [rdi+1608], 0	# MEM[(struct ButtonImage *)sender_1(D)].enabled,
+	je	.L5	#,
+	cmp	BYTE PTR [rsi+10], 1	# screen_3(D)->event.button.button,
+	jne	.L5	#,
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rax, QWORD PTR [rdi+976]	# MEM[(struct Widget *)sender_1(D) + 888B].surf, MEM[(struct Widget *)sender_1(D) + 888B].surf
+	mov	QWORD PTR [rdi+88], rax	# sender_1(D)->surf, MEM[(struct Widget *)sender_1(D) + 888B].surf
+	mov	BYTE PTR [rdi+161], 1	# sender_1(D)->need_reload,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)sender_1(D)].class, MEM[(struct coObject *)sender_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9949_7->vtable, D.9949_7->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9950_8 + 8B], MEM[(const void * *)D.9950_8 + 8B]
+	mov	edx, 1	#,
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9952_10].draw
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+.L5:
+	rep
+	ret
+	.cfi_endproc
+.LFE109:
+	.size	ButtonImage_mousePressed, .-ButtonImage_mousePressed
+	.type	ButtonImage_mouseEnter, @function
+ButtonImage_mouseEnter:
+.LFB111:
+	.cfi_startproc
+	mov	BYTE PTR [rsi+169], 1	# screen_1(D)->event_handled,
+	cmp	BYTE PTR [rdi+1608], 0	# MEM[(struct ButtonImage *)sender_2(D)].enabled,
+	je	.L10	#,
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rax, QWORD PTR [rdi+616]	# MEM[(struct Widget *)sender_2(D) + 528B].surf, MEM[(struct Widget *)sender_2(D) + 528B].surf
+	mov	QWORD PTR [rdi+88], rax	# sender_2(D)->surf, MEM[(struct Widget *)sender_2(D) + 528B].surf
+	mov	BYTE PTR [rdi+161], 1	# sender_2(D)->need_reload,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)sender_2(D)].class, MEM[(struct coObject *)sender_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9971_6->vtable, D.9971_6->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9972_7 + 8B], MEM[(const void * *)D.9972_7 + 8B]
+	mov	edx, 1	#,
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9974_9].draw
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+.L10:
+	rep
+	ret
+	.cfi_endproc
+.LFE111:
+	.size	ButtonImage_mouseEnter, .-ButtonImage_mouseEnter
+	.type	ButtonImage_mouseExit, @function
+ButtonImage_mouseExit:
+.LFB112:
+	.cfi_startproc
+	mov	BYTE PTR [rsi+169], 1	# screen_1(D)->event_handled,
+	cmp	BYTE PTR [rdi+1608], 0	# MEM[(struct ButtonImage *)sender_2(D)].enabled,
+	je	.L15	#,
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rax, QWORD PTR [rdi+256]	# MEM[(struct Widget *)sender_2(D) + 168B].surf, MEM[(struct Widget *)sender_2(D) + 168B].surf
+	mov	QWORD PTR [rdi+88], rax	# sender_2(D)->surf, MEM[(struct Widget *)sender_2(D) + 168B].surf
+	mov	BYTE PTR [rdi+161], 1	# sender_2(D)->need_reload,
+	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)sender_2(D)].class, MEM[(struct coObject *)sender_2(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9960_6->vtable, D.9960_6->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9961_7 + 8B], MEM[(const void * *)D.9961_7 + 8B]
+	mov	edx, 1	#,
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9963_9].draw
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+.L15:
+	rep
+	ret
+	.cfi_endproc
+.LFE112:
+	.size	ButtonImage_mouseExit, .-ButtonImage_mouseExit
 	.type	ButtonImage_initDefault, @function
 ButtonImage_initDefault:
-.LFB99:
+.LFB113:
 	.cfi_startproc
 	mov	QWORD PTR [rdi+72], OFFSET FLAT:ButtonImage_mouseEnter	# MEM[(struct Widget *)this_1(D)].mevent_internal.mouse_enter,
 	mov	QWORD PTR [rdi+80], OFFSET FLAT:ButtonImage_mouseExit	# MEM[(struct Widget *)this_1(D)].mevent_internal.mouse_exit,
 	mov	QWORD PTR [rdi+56], OFFSET FLAT:ButtonImage_mousePressed	# MEM[(struct Widget *)this_1(D)].mevent_internal.press,
 	mov	QWORD PTR [rdi+64], OFFSET FLAT:ButtonImage_mouseReleased	# MEM[(struct Widget *)this_1(D)].mevent_internal.release,
-	mov	BYTE PTR [rdi+168], 1	# MEM[(struct Widget *)this_1(D)].mevent,
+	mov	BYTE PTR [rdi+160], 1	# MEM[(struct Widget *)this_1(D)].mevent,
 	ret
 	.cfi_endproc
-.LFE99:
+.LFE113:
 	.size	ButtonImage_initDefault, .-ButtonImage_initDefault
-	.globl	ButtonImage_vrefresh
-	.type	ButtonImage_vrefresh, @function
-ButtonImage_vrefresh:
-.LFB93:
-	.cfi_startproc
-	push	rbp	#
-	.cfi_def_cfa_offset 16
-	.cfi_offset 6, -16
-	push	rbx	#
-	.cfi_def_cfa_offset 24
-	.cfi_offset 3, -24
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 32
-	mov	rbx, rdi	# vthis, vthis
-	mov	ebp, 0	# i,
-.L3:
-	movsx	rax, ebp	# i, i
-	imul	rax, rax, 376	# tmp78, i,
-	lea	rdi, [rbx+176+rax]	# tmp80,
-	call	Widget_refresh	#
-	add	ebp, 1	# i,
-	cmp	ebp, 4	# i,
-	jne	.L3	#,
-	mov	rax, QWORD PTR [rbx+264]	# MEM[(struct Widget *)vthis_2(D) + 176B].surf, MEM[(struct Widget *)vthis_2(D) + 176B].surf
-	mov	QWORD PTR [rbx+88], rax	# MEM[(struct Widget *)vthis_2(D)].surf, MEM[(struct Widget *)vthis_2(D) + 176B].surf
-	movzx	edx, WORD PTR [rbx+276]	# D.9372, MEM[(struct Widget *)vthis_2(D) + 176B].pos.w
-	mov	WORD PTR [rbx+100], dx	# MEM[(struct Widget *)vthis_2(D)].pos.w, D.9372
-	movzx	eax, WORD PTR [rbx+278]	# D.9373, MEM[(struct Widget *)vthis_2(D) + 176B].pos.h
-	mov	WORD PTR [rbx+102], ax	# MEM[(struct Widget *)vthis_2(D)].pos.h, D.9373
-	movzx	ecx, BYTE PTR [rbx+343]	# MEM[(struct Widget *)vthis_2(D) + 176B].visible, MEM[(struct Widget *)vthis_2(D) + 176B].visible
-	mov	BYTE PTR [rbx+167], cl	# MEM[(struct Widget *)vthis_2(D)].visible, MEM[(struct Widget *)vthis_2(D) + 176B].visible
-	mov	BYTE PTR [rbx+169], 1	# MEM[(struct Widget *)vthis_2(D)].need_reload,
-	add	dx, WORD PTR [rbx+96]	# tmp83, MEM[(struct Widget *)vthis_2(D)].pos.x
-	mov	WORD PTR [rbx+152], dx	# MEM[(struct Widget *)vthis_2(D)].maxx, tmp83
-	add	ax, WORD PTR [rbx+98]	# tmp85, MEM[(struct Widget *)vthis_2(D)].pos.y
-	mov	WORD PTR [rbx+154], ax	# MEM[(struct Widget *)vthis_2(D)].maxy, tmp85
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 24
-	pop	rbx	#
-	.cfi_def_cfa_offset 16
-	pop	rbp	#
-	.cfi_def_cfa_offset 8
-	ret
-	.cfi_endproc
-.LFE93:
-	.size	ButtonImage_vrefresh, .-ButtonImage_vrefresh
 	.type	ButtonImage_mouseReleased, @function
 ButtonImage_mouseReleased:
-.LFB96:
+.LFB110:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -121,103 +151,39 @@ ButtonImage_mouseReleased:
 	.cfi_offset 3, -24
 	.cfi_offset 6, -16
 	mov	rbx, rdi	# sender, sender
-	cmp	BYTE PTR [rdi+1680], 0	# MEM[(struct ButtonImage *)sender_1(D)].enabled,
-	je	.L6	#,
+	cmp	BYTE PTR [rdi+1608], 0	# MEM[(struct ButtonImage *)sender_1(D)].enabled,
+	je	.L17	#,
 	mov	rbp, rsi	# screen, screen
 	movzx	edx, WORD PTR [rsi+14]	# screen_3(D)->event.button.y, screen_3(D)->event.button.y
 	movzx	esi, WORD PTR [rsi+12]	# screen_3(D)->event.button.x, screen_3(D)->event.button.x
 	call	Widget_contains	#
-	test	al, al	# D.9337
-	setne	al	#, tmp75
-	movzx	eax, al	# tmp75, tmp75
-	imul	rax, rax, 376	# tmp76, tmp75,
-	mov	rax, QWORD PTR [rbx+264+rax]	# D.9340, MEM[(struct Widget *)D.9339_11].surf
-	mov	QWORD PTR [rbx+88], rax	# sender_1(D)->surf, D.9340
-	mov	BYTE PTR [rbx+169], 1	# sender_1(D)->need_reload,
+	test	al, al	# D.9931
+	setne	al	#, tmp79
+	movzx	eax, al	# tmp79, tmp79
+	imul	rax, rax, 360	# tmp80, tmp79,
+	mov	rax, QWORD PTR [rbx+256+rax]	# D.9934, MEM[(struct Widget *)D.9933_11].surf
+	mov	QWORD PTR [rbx+88], rax	# sender_1(D)->surf, D.9934
+	mov	BYTE PTR [rbx+161], 1	# sender_1(D)->need_reload,
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)sender_1(D)].class, MEM[(struct coObject *)sender_1(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9935_13->vtable, D.9935_13->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9936_14 + 8B], MEM[(const void * *)D.9936_14 + 8B]
 	mov	edx, 1	#,
 	mov	rsi, rbp	#, screen
 	mov	rdi, rbx	#, sender
-	call	Widget_draw	#
-.L6:
+	call	[QWORD PTR [rax+8]]	# MEM[(struct IWidget *)D.9938_16].draw
+.L17:
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
 	add	rsp, 24	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE110:
 	.size	ButtonImage_mouseReleased, .-ButtonImage_mouseReleased
-	.type	ButtonImage_mousePressed, @function
-ButtonImage_mousePressed:
-.LFB95:
-	.cfi_startproc
-	cmp	BYTE PTR [rdi+1680], 0	# MEM[(struct ButtonImage *)sender_1(D)].enabled,
-	je	.L13	#,
-	cmp	BYTE PTR [rsi+10], 1	# screen_3(D)->event.button.button,
-	jne	.L13	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR [rdi+1016]	# MEM[(struct Widget *)sender_1(D) + 928B].surf, MEM[(struct Widget *)sender_1(D) + 928B].surf
-	mov	QWORD PTR [rdi+88], rax	# sender_1(D)->surf, MEM[(struct Widget *)sender_1(D) + 928B].surf
-	mov	BYTE PTR [rdi+169], 1	# sender_1(D)->need_reload,
-	mov	edx, 1	#,
-	call	Widget_draw	#
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L13:
-	rep
-	ret
-	.cfi_endproc
-.LFE95:
-	.size	ButtonImage_mousePressed, .-ButtonImage_mousePressed
-	.type	ButtonImage_mouseExit, @function
-ButtonImage_mouseExit:
-.LFB98:
-	.cfi_startproc
-	mov	BYTE PTR [rsi+121], 1	# screen_1(D)->event_handled,
-	cmp	BYTE PTR [rdi+1680], 0	# MEM[(struct ButtonImage *)sender_2(D)].enabled,
-	je	.L18	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR [rdi+264]	# MEM[(struct Widget *)sender_2(D) + 176B].surf, MEM[(struct Widget *)sender_2(D) + 176B].surf
-	mov	QWORD PTR [rdi+88], rax	# sender_2(D)->surf, MEM[(struct Widget *)sender_2(D) + 176B].surf
-	mov	BYTE PTR [rdi+169], 1	# sender_2(D)->need_reload,
-	mov	edx, 1	#,
-	call	Widget_draw	#
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L18:
-	rep
-	ret
-	.cfi_endproc
-.LFE98:
-	.size	ButtonImage_mouseExit, .-ButtonImage_mouseExit
-	.type	ButtonImage_mouseEnter, @function
-ButtonImage_mouseEnter:
-.LFB97:
-	.cfi_startproc
-	mov	BYTE PTR [rsi+121], 1	# screen_1(D)->event_handled,
-	cmp	BYTE PTR [rdi+1680], 0	# MEM[(struct ButtonImage *)sender_2(D)].enabled,
-	je	.L23	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	mov	rax, QWORD PTR [rdi+640]	# MEM[(struct Widget *)sender_2(D) + 552B].surf, MEM[(struct Widget *)sender_2(D) + 552B].surf
-	mov	QWORD PTR [rdi+88], rax	# sender_2(D)->surf, MEM[(struct Widget *)sender_2(D) + 552B].surf
-	mov	BYTE PTR [rdi+169], 1	# sender_2(D)->need_reload,
-	mov	edx, 1	#,
-	call	Widget_draw	#
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L23:
-	rep
-	ret
-	.cfi_endproc
-.LFE97:
-	.size	ButtonImage_mouseEnter, .-ButtonImage_mouseEnter
 	.globl	ButtonImage_vdestroy
 	.type	ButtonImage_vdestroy, @function
 ButtonImage_vdestroy:
-.LFB94:
+.LFB108:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -228,18 +194,16 @@ ButtonImage_vdestroy:
 	sub	rsp, 8	#,
 	.cfi_def_cfa_offset 32
 	mov	rbp, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.9170	#,
-	call	Static_printObj2	#
 	mov	ebx, 0	# i,
-.L25:
+.L21:
 	movsx	rax, ebx	# i, i
-	imul	rax, rax, 376	# tmp65, i,
-	lea	rdi, [rbp+176+rax]	# tmp67,
+	imul	rax, rax, 360	# tmp68, i,
+	lea	rdi, [rbp+168+rax]	# tmp71,
 	call	delete	#
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L25	#,
-	mov	QWORD PTR [rbp+88], 0	# MEM[(struct Widget *)vthis_2(D)].surf,
+	jne	.L21	#,
+	mov	QWORD PTR [rbp+88], 0	# MEM[(struct Widget *)vthis_3(D)].surf,
 	mov	rdi, rbp	#, vthis
 	call	Widget_vdestroy	#
 	add	rsp, 8	#,
@@ -250,17 +214,99 @@ ButtonImage_vdestroy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE108:
 	.size	ButtonImage_vdestroy, .-ButtonImage_vdestroy
+	.globl	ButtonImage_vrefresh
+	.type	ButtonImage_vrefresh, @function
+ButtonImage_vrefresh:
+.LFB107:
+	.cfi_startproc
+	push	rbp	#
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	push	rbx	#
+	.cfi_def_cfa_offset 24
+	.cfi_offset 3, -24
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 32
+	mov	rbp, rdi	# vthis, vthis
+	mov	ebx, 0	# i,
+.L25:
+	movsx	rax, ebx	# i, i
+	imul	rax, rax, 360	# tmp73, i,
+	lea	rax, [rbp+160+rax]	# tmp75,
+	lea	rdi, [rax+8]	# D.9984,
+	mov	rax, QWORD PTR [rax+8]	# MEM[(struct coObject *)D.9984_5].class, MEM[(struct coObject *)D.9984_5].class
+	mov	rax, QWORD PTR [rax+16]	# D.9985_6->vtable, D.9985_6->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9986_7 + 8B], MEM[(const void * *)D.9986_7 + 8B]
+	call	[QWORD PTR [rax+16]]	# MEM[(struct IWidget *)D.9988_9].refresh
+	add	ebx, 1	# i,
+	cmp	ebx, 4	# i,
+	jne	.L25	#,
+	mov	rax, QWORD PTR [rbp+256]	# MEM[(struct Widget *)vthis_2(D) + 168B].surf, MEM[(struct Widget *)vthis_2(D) + 168B].surf
+	mov	QWORD PTR [rbp+88], rax	# MEM[(struct Widget *)vthis_2(D)].surf, MEM[(struct Widget *)vthis_2(D) + 168B].surf
+	movzx	eax, WORD PTR [rbp+268]	# MEM[(struct Widget *)vthis_2(D) + 168B].pos.w, MEM[(struct Widget *)vthis_2(D) + 168B].pos.w
+	mov	WORD PTR [rbp+100], ax	# MEM[(struct Widget *)vthis_2(D)].pos.w, MEM[(struct Widget *)vthis_2(D) + 168B].pos.w
+	movzx	eax, WORD PTR [rbp+270]	# MEM[(struct Widget *)vthis_2(D) + 168B].pos.h, MEM[(struct Widget *)vthis_2(D) + 168B].pos.h
+	mov	WORD PTR [rbp+102], ax	# MEM[(struct Widget *)vthis_2(D)].pos.h, MEM[(struct Widget *)vthis_2(D) + 168B].pos.h
+	movzx	eax, BYTE PTR [rbp+327]	# MEM[(struct Widget *)vthis_2(D) + 168B].visible, MEM[(struct Widget *)vthis_2(D) + 168B].visible
+	mov	BYTE PTR [rbp+159], al	# MEM[(struct Widget *)vthis_2(D)].visible, MEM[(struct Widget *)vthis_2(D) + 168B].visible
+	mov	BYTE PTR [rbp+161], 1	# MEM[(struct Widget *)vthis_2(D)].need_reload,
+	mov	rdi, rbp	#, vthis
+	call	Widget_updateMaxXY	#
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 24
+	pop	rbx	#
+	.cfi_def_cfa_offset 16
+	pop	rbp	#
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE107:
+	.size	ButtonImage_vrefresh, .-ButtonImage_vrefresh
+	.section	.rodata.str1.1,"aMS",@progbits,1
+.LC0:
+	.string	"%s"
+	.text
+	.globl	ButtonImage_vtoString
+	.type	ButtonImage_vtoString, @function
+ButtonImage_vtoString:
+.LFB123:
+	.cfi_startproc
+	sub	rsp, 8	#,
+	.cfi_def_cfa_offset 16
+	mov	rcx, QWORD PTR TO_STRING_NULL_THIS_STR[rip]	# iftmp.0, TO_STRING_NULL_THIS_STR
+	mov	rax, rdi	# D.9853, vthis
+	add	rax, 168	# D.9853,
+	je	.L30	#,
+	mov	rdx, QWORD PTR [rdi+168]	# MEM[(struct coObject *)vthis_2(D) + 168B].class, MEM[(struct coObject *)vthis_2(D) + 168B].class
+	mov	rdx, QWORD PTR [rdx+16]	# D.9856_5->vtable, D.9856_5->vtable
+	mov	rdx, QWORD PTR [rdx]	# *D.9857_6, *D.9857_6
+	mov	rdi, rax	#, D.9853
+	call	[QWORD PTR [rdx+8]]	# MEM[(struct coIObject *)D.9858_7].toString
+	mov	rcx, rax	# iftmp.0,
+.L30:
+	mov	edx, OFFSET FLAT:.LC0	#,
+	mov	esi, 128	#,
+	mov	edi, OFFSET FLAT:str_id.9850	#,
+	mov	eax, 0	#,
+	call	snprintf	#
+	mov	eax, OFFSET FLAT:str_id.9850	#,
+	add	rsp, 8	#,
+	.cfi_def_cfa_offset 8
+	ret
+	.cfi_endproc
+.LFE123:
+	.size	ButtonImage_vtoString, .-ButtonImage_vtoString
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
-.LC0:
+.LC1:
 	.string	"%20s:\tWithin context: img_path=%s\n"
 	.text
 	.globl	ButtonImage_new
 	.type	ButtonImage_new, @function
 ButtonImage_new:
-.LFB100:
+.LFB114:
 	.cfi_startproc
 	push	r12	#
 	.cfi_def_cfa_offset 16
@@ -274,37 +320,34 @@ ButtonImage_new:
 	mov	rbp, rdi	# this, this
 	mov	r12, rsi	# img_path, img_path
 	test	rdi, rdi	# this
-	jne	.L29	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.9199	#,
+	jne	.L33	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9768	#,
 	call	Static_nullThis2	#
 	mov	r8, r12	#, img_path
-	mov	ecx, OFFSET FLAT:__FUNCTION__.9199	#,
-	mov	edx, OFFSET FLAT:.LC0	#,
+	mov	ecx, OFFSET FLAT:__FUNCTION__.9768	#,
+	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	jmp	.L30	#
-.L29:
+	jmp	.L34	#
+.L33:
 	call	Widget_new	#
 	mov	QWORD PTR [rbp+0], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9199	#,
-	mov	rdi, rbp	#, this
-	call	Static_printObj2	#
 	mov	rdi, rbp	#, this
 	call	ButtonImage_initDefault	#
-	mov	BYTE PTR [rbp+1680], 1	# this_3(D)->enabled,
+	mov	BYTE PTR [rbp+1608], 1	# this_3(D)->enabled,
 	mov	ebx, 0	# i,
-.L31:
+.L35:
 	movsx	rax, ebx	# i, i
-	imul	rax, rax, 376	# tmp68, i,
-	lea	rdi, [rbp+176+rax]	# tmp70,
+	imul	rax, rax, 360	# tmp68, i,
+	lea	rdi, [rbp+168+rax]	# tmp71,
 	mov	rsi, r12	#, img_path
 	call	LabelImage_new	#
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L31	#,
-.L30:
+	jne	.L35	#,
+.L34:
 	mov	rax, rbp	#, this
 	pop	rbx	#
 	.cfi_def_cfa_offset 24
@@ -314,17 +357,17 @@ ButtonImage_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE100:
+.LFE114:
 	.size	ButtonImage_new, .-ButtonImage_new
 	.section	.rodata.str1.8
 	.align 8
-.LC1:
+.LC2:
 	.string	"ButtonImage_copy: Passed NULL: this(%p) or src(%p)\n"
 	.text
 	.globl	ButtonImage_copy
 	.type	ButtonImage_copy, @function
 ButtonImage_copy:
-.LFB101:
+.LFB115:
 	.cfi_startproc
 	push	r13	#
 	.cfi_def_cfa_offset 16
@@ -343,48 +386,45 @@ ButtonImage_copy:
 	mov	rbp, rdi	# this, this
 	mov	r12, rsi	# src, src
 	test	rsi, rsi	# src
-	je	.L39	#,
+	je	.L43	#,
 	test	rdi, rdi	# this
-	jne	.L35	#,
-.L39:
+	jne	.L39	#,
+.L43:
 	mov	r8, r12	#, src
 	mov	rcx, rbp	#, this
-	mov	edx, OFFSET FLAT:.LC1	#,
+	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
 	mov	ebp, 0	# this,
-	jmp	.L37	#
-.L35:
-	movzx	r13d, dl	# D.9321, copy_pos
+	jmp	.L41	#
+.L39:
+	movzx	r13d, dl	# D.9915, copy_pos
 	mov	ecx, 0	#,
-	mov	edx, r13d	#, D.9321
+	mov	edx, r13d	#, D.9915
 	call	Widget_copy	#
 	mov	QWORD PTR [rbp+0], OFFSET FLAT:type	# MEM[(struct coObject *)this_3(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.9209	#,
-	mov	rdi, rbp	#, this
-	call	Static_printObj2	#
 	mov	rdi, rbp	#, this
 	call	ButtonImage_initDefault	#
 	mov	ebx, 0	# i,
-.L38:
-	movsx	rdi, ebx	# i, i
-	imul	rdi, rdi, 376	# tmp81, i,
-	add	rdi, 176	# tmp82,
-	lea	rsi, [r12+rdi]	# tmp83,
-	add	rdi, rbp	# tmp87, this
-	mov	edx, r13d	#, D.9321
+.L42:
+	movsx	rax, ebx	# i, i
+	imul	rax, rax, 360	# tmp81, i,
+	add	rax, 160	# tmp82,
+	lea	rsi, [r12+8+rax]	# tmp84,
+	lea	rdi, [rbp+8+rax]	# tmp89,
+	mov	edx, r13d	#, D.9915
 	call	LabelImage_copy	#
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L38	#,
-	movzx	eax, BYTE PTR [r12+1680]	# D.9324, src_5(D)->enabled
-	mov	BYTE PTR [rbp+1680], al	# this_3(D)->enabled, D.9324
-	mov	rax, QWORD PTR [rbp+264]	# MEM[(struct Widget *)this_3(D) + 176B].surf, MEM[(struct Widget *)this_3(D) + 176B].surf
-	mov	QWORD PTR [rbp+88], rax	# MEM[(struct Widget *)this_3(D)].surf, MEM[(struct Widget *)this_3(D) + 176B].surf
-	mov	BYTE PTR [rbp+167], 1	# MEM[(struct Widget *)this_3(D)].visible,
-.L37:
+	jne	.L42	#,
+	movzx	eax, BYTE PTR [r12+1608]	# D.9918, src_5(D)->enabled
+	mov	BYTE PTR [rbp+1608], al	# this_3(D)->enabled, D.9918
+	mov	rax, QWORD PTR [rbp+256]	# MEM[(struct Widget *)this_3(D) + 168B].surf, MEM[(struct Widget *)this_3(D) + 168B].surf
+	mov	QWORD PTR [rbp+88], rax	# MEM[(struct Widget *)this_3(D)].surf, MEM[(struct Widget *)this_3(D) + 168B].surf
+	mov	BYTE PTR [rbp+159], 1	# MEM[(struct Widget *)this_3(D)].visible,
+.L41:
 	mov	rax, rbp	#, this
 	add	rsp, 8	#,
 	.cfi_def_cfa_offset 40
@@ -398,33 +438,33 @@ ButtonImage_copy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE101:
+.LFE115:
 	.size	ButtonImage_copy, .-ButtonImage_copy
 	.globl	ButtonImage_setEnabled
 	.type	ButtonImage_setEnabled, @function
 ButtonImage_setEnabled:
-.LFB102:
+.LFB116:
 	.cfi_startproc
-	cmp	BYTE PTR [rdi+1680], sil	# this_2(D)->enabled, sel
-	je	.L42	#,
+	cmp	BYTE PTR [rdi+1608], sil	# this_2(D)->enabled, sel
+	je	.L46	#,
 	cmp	sil, 1	# sel,
-	sbb	eax, eax	# iftmp.4
-	mov	BYTE PTR [rdi+1680], sil	# this_2(D)->enabled, sel
-	and	eax, 3	# iftmp.4,
-	imul	rax, rax, 376	# tmp67, iftmp.4,
-	mov	rax, QWORD PTR [rdi+264+rax]	# D.9312, MEM[(struct Widget *)D.9311_8].surf
-	mov	QWORD PTR [rdi+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.9312
-	mov	BYTE PTR [rdi+169], 1	# MEM[(struct Widget *)this_2(D)].need_reload,
-.L42:
+	sbb	eax, eax	# iftmp.5
+	mov	BYTE PTR [rdi+1608], sil	# this_2(D)->enabled, sel
+	and	eax, 3	# iftmp.5,
+	imul	rax, rax, 360	# tmp67, iftmp.5,
+	mov	rax, QWORD PTR [rdi+256+rax]	# D.9906, MEM[(struct Widget *)D.9905_8].surf
+	mov	QWORD PTR [rdi+88], rax	# MEM[(struct Widget *)this_2(D)].surf, D.9906
+	mov	BYTE PTR [rdi+161], 1	# MEM[(struct Widget *)this_2(D)].need_reload,
+.L46:
 	rep
 	ret
 	.cfi_endproc
-.LFE102:
+.LFE116:
 	.size	ButtonImage_setEnabled, .-ButtonImage_setEnabled
 	.globl	ButtonImage_setBorder
 	.type	ButtonImage_setBorder, @function
 ButtonImage_setBorder:
-.LFB103:
+.LFB117:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-32], rbx	#,
 	mov	QWORD PTR [rsp-24], rbp	#,
@@ -440,16 +480,16 @@ ButtonImage_setBorder:
 	mov	r12d, edx	# rgb, rgb
 	mov	ebx, 0	# i,
 	movzx	ebp, si	# bord_width, bord_width
-.L47:
+.L51:
 	movsx	rax, ebx	# i, i
-	imul	rax, rax, 376	# tmp70, i,
-	lea	rdi, [r13+176+rax]	# tmp72,
+	imul	rax, rax, 360	# tmp70, i,
+	lea	rdi, [r13+168+rax]	# tmp73,
 	mov	edx, r12d	#, rgb
 	mov	esi, ebp	#, bord_width
 	call	LabelImage_setBorder	#
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L47	#,
+	jne	.L51	#,
 	mov	rbx, QWORD PTR [rsp+8]	#,
 	mov	rbp, QWORD PTR [rsp+16]	#,
 	mov	r12, QWORD PTR [rsp+24]	#,
@@ -458,25 +498,25 @@ ButtonImage_setBorder:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE103:
+.LFE117:
 	.size	ButtonImage_setBorder, .-ButtonImage_setBorder
 	.globl	ButtonImage_setFixedWidth
 	.type	ButtonImage_setFixedWidth, @function
 ButtonImage_setFixedWidth:
-.LFB104:
+.LFB118:
 	.cfi_startproc
-	mov	BYTE PTR [rdi+550], sil	# this_3(D)->labelimage[0].fixed_width, sel
-	mov	BYTE PTR [rdi+926], sil	# this_3(D)->labelimage[1].fixed_width, sel
-	mov	BYTE PTR [rdi+1302], sil	# this_3(D)->labelimage[2].fixed_width, sel
-	mov	BYTE PTR [rdi+1678], sil	# this_3(D)->labelimage[3].fixed_width, sel
+	mov	BYTE PTR [rdi+526], sil	# this_3(D)->labelimage[0].fixed_width, sel
+	mov	BYTE PTR [rdi+886], sil	# this_3(D)->labelimage[1].fixed_width, sel
+	mov	BYTE PTR [rdi+1246], sil	# this_3(D)->labelimage[2].fixed_width, sel
+	mov	BYTE PTR [rdi+1606], sil	# this_3(D)->labelimage[3].fixed_width, sel
 	ret
 	.cfi_endproc
-.LFE104:
+.LFE118:
 	.size	ButtonImage_setFixedWidth, .-ButtonImage_setFixedWidth
 	.globl	ButtonImage_setImage
 	.type	ButtonImage_setImage, @function
 ButtonImage_setImage:
-.LFB105:
+.LFB119:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-24], rbx	#,
 	mov	QWORD PTR [rsp-16], rbp	#,
@@ -489,15 +529,15 @@ ButtonImage_setImage:
 	mov	r12, rdi	# this, this
 	mov	rbp, rsi	# image, image
 	mov	ebx, 0	# i,
-.L52:
+.L56:
 	movsx	rax, ebx	# i, i
-	imul	rax, rax, 376	# tmp66, i,
-	lea	rdi, [r12+176+rax]	# tmp68,
+	imul	rax, rax, 360	# tmp66, i,
+	lea	rdi, [r12+168+rax]	# tmp69,
 	mov	rsi, rbp	#, image
 	call	LabelImage_setImage	#
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L52	#,
+	jne	.L56	#,
 	mov	rbx, QWORD PTR [rsp]	#,
 	mov	rbp, QWORD PTR [rsp+8]	#,
 	mov	r12, QWORD PTR [rsp+16]	#,
@@ -505,56 +545,74 @@ ButtonImage_setImage:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE105:
+.LFE119:
 	.size	ButtonImage_setImage, .-ButtonImage_setImage
 	.globl	ButtonImage_scale
 	.type	ButtonImage_scale, @function
 ButtonImage_scale:
-.LFB106:
+.LFB120:
 	.cfi_startproc
-	mov	QWORD PTR [rsp-40], rbx	#,
-	mov	QWORD PTR [rsp-32], rbp	#,
-	mov	QWORD PTR [rsp-24], r12	#,
-	mov	QWORD PTR [rsp-16], r13	#,
-	mov	QWORD PTR [rsp-8], r14	#,
-	sub	rsp, 40	#,
-	.cfi_def_cfa_offset 48
-	.cfi_offset 3, -48
-	.cfi_offset 6, -40
-	.cfi_offset 12, -32
-	.cfi_offset 13, -24
-	.cfi_offset 14, -16
+	mov	QWORD PTR [rsp-48], rbx	#,
+	mov	QWORD PTR [rsp-40], rbp	#,
+	mov	QWORD PTR [rsp-32], r12	#,
+	mov	QWORD PTR [rsp-24], r13	#,
+	mov	QWORD PTR [rsp-16], r14	#,
+	mov	QWORD PTR [rsp-8], r15	#,
+	sub	rsp, 72	#,
+	.cfi_def_cfa_offset 80
+	.cfi_offset 3, -56
+	.cfi_offset 6, -48
+	.cfi_offset 12, -40
+	.cfi_offset 13, -32
+	.cfi_offset 14, -24
+	.cfi_offset 15, -16
 	mov	r14, rdi	# this, this
-	movd	r13, xmm0	# xscale, xscale
-	movd	r12, xmm1	# yscale, yscale
-	mov	ebp, esi	# smooth, smooth
+	movsd	QWORD PTR [rsp], xmm0	# %sfp, xscale
+	movd	r15, xmm1	# yscale, yscale
+	mov	DWORD PTR [rsp+12], esi	# %sfp, smooth
+	mov	WORD PTR [rdi+102], 0	# MEM[(struct Widget *)this_11(D)].pos.h,
+	mov	WORD PTR [rdi+100], 0	# MEM[(struct Widget *)this_11(D)].pos.w,
+	mov	r13d, 0	# h1,
+	mov	r12d, 0	# w1,
 	mov	ebx, 0	# i,
-.L56:
+.L60:
 	movsx	rax, ebx	# i, i
-	imul	rax, rax, 376	# tmp68, i,
-	lea	rdi, [r14+176+rax]	# tmp70,
-	mov	esi, ebp	#, smooth
-	movd	xmm1, r12	#, yscale
-	movd	xmm0, r13	#, xscale
+	imul	rax, rax, 360	# tmp74, i,
+	lea	rbp, [r14+168+rax]	# lbimg,
+	mov	esi, DWORD PTR [rsp+12]	#, %sfp
+	movd	xmm1, r15	#, yscale
+	movsd	xmm0, QWORD PTR [rsp]	#, %sfp
+	mov	rdi, rbp	#, lbimg
 	call	LabelImage_scale	#
+	movzx	eax, WORD PTR [rbp+100]	# MEM[(struct Widget *)lbimg_13].pos.w, MEM[(struct Widget *)lbimg_13].pos.w
+	cmp	r12w, ax	# w1, MEM[(struct Widget *)lbimg_13].pos.w
+	cmovb	r12d, eax	# w1,, w1, MEM[(struct Widget *)lbimg_13].pos.w
+	movzx	eax, WORD PTR [rbp+102]	# MEM[(struct Widget *)lbimg_13].pos.h, MEM[(struct Widget *)lbimg_13].pos.h
+	cmp	r13w, ax	# h1, MEM[(struct Widget *)lbimg_13].pos.h
+	cmovb	r13d, eax	# h1,, h1, MEM[(struct Widget *)lbimg_13].pos.h
 	add	ebx, 1	# i,
 	cmp	ebx, 4	# i,
-	jne	.L56	#,
-	mov	rbx, QWORD PTR [rsp]	#,
-	mov	rbp, QWORD PTR [rsp+8]	#,
-	mov	r12, QWORD PTR [rsp+16]	#,
-	mov	r13, QWORD PTR [rsp+24]	#,
-	mov	r14, QWORD PTR [rsp+32]	#,
-	add	rsp, 40	#,
+	jne	.L60	#,
+	movzx	edx, r13w	# h1, h1
+	movzx	esi, r12w	# w1, w1
+	mov	rdi, r14	#, this
+	call	Widget_setSizeUpdatePos	#
+	mov	rbx, QWORD PTR [rsp+24]	#,
+	mov	rbp, QWORD PTR [rsp+32]	#,
+	mov	r12, QWORD PTR [rsp+40]	#,
+	mov	r13, QWORD PTR [rsp+48]	#,
+	mov	r14, QWORD PTR [rsp+56]	#,
+	mov	r15, QWORD PTR [rsp+64]	#,
+	add	rsp, 72	#,
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE106:
+.LFE120:
 	.size	ButtonImage_scale, .-ButtonImage_scale
 	.globl	ButtonImage_applyDefaultStyle
 	.type	ButtonImage_applyDefaultStyle, @function
 ButtonImage_applyDefaultStyle:
-.LFB107:
+.LFB121:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-48], rbx	#,
 	mov	QWORD PTR [rsp-40], rbp	#,
@@ -576,13 +634,13 @@ ButtonImage_applyDefaultStyle:
 	mov	BYTE PTR [rsp+15], r9b	# %sfp, fixed_width
 	mov	WORD PTR [rdi+96], si	# MEM[(struct Widget *)this_3(D)].pos.x, posx
 	mov	WORD PTR [rdi+98], dx	# MEM[(struct Widget *)this_3(D)].pos.y, posy
-	lea	r13, [rdi+176]	# labimg,
-	lea	r12d, [r15+2]	# tmp83,
-	movzx	r12d, r12w	# D.9295, tmp83
-	lea	ebp, [r14+2]	# tmp84,
-	movzx	ebp, bp	# D.9296, tmp84
-	mov	edx, r12d	#, D.9295
-	mov	esi, ebp	#, D.9296
+	lea	r13, [rdi+168]	# labimg,
+	lea	r12d, [r15+2]	# tmp87,
+	movzx	r12d, r12w	# D.9878, tmp87
+	lea	ebp, [r14+2]	# tmp88,
+	movzx	ebp, bp	# D.9879, tmp88
+	mov	edx, r12d	#, D.9878
+	mov	esi, ebp	#, D.9879
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 14417872	#,
@@ -592,9 +650,9 @@ ButtonImage_applyDefaultStyle:
 	mov	esi, 5	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+552]	# labimg,
-	mov	edx, r12d	#, D.9295
-	mov	esi, ebp	#, D.9296
+	lea	r13, [rbx+528]	# labimg,
+	mov	edx, r12d	#, D.9878
+	mov	esi, ebp	#, D.9879
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 11927454	#,
@@ -604,7 +662,7 @@ ButtonImage_applyDefaultStyle:
 	mov	esi, 5	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+928]	# labimg,
+	lea	r13, [rbx+888]	# labimg,
 	movzx	edx, r15w	# pady, pady
 	movzx	esi, r14w	# padx, padx
 	mov	rdi, r13	#, labimg
@@ -616,9 +674,9 @@ ButtonImage_applyDefaultStyle:
 	mov	esi, 7	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+1304]	# labimg,
-	mov	edx, r12d	#, D.9295
-	mov	esi, ebp	#, D.9296
+	lea	r13, [rbx+1248]	# labimg,
+	mov	edx, r12d	#, D.9878
+	mov	esi, ebp	#, D.9879
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 14671839	#,
@@ -628,8 +686,11 @@ ButtonImage_applyDefaultStyle:
 	mov	esi, 5	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_3(D)].class, MEM[(struct coObject *)this_3(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9882_22->vtable, D.9882_22->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9883_23 + 8B], MEM[(const void * *)D.9883_23 + 8B]
 	mov	rdi, rbx	#, this
-	call	Widget_refresh	#
+	call	[QWORD PTR [rax+16]]	# MEM[(struct IWidget *)D.9885_25].refresh
 	movzx	esi, BYTE PTR [rsp+15]	# fixed_width, %sfp
 	mov	rdi, rbx	#, this
 	call	ButtonImage_setFixedWidth	#
@@ -643,12 +704,12 @@ ButtonImage_applyDefaultStyle:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE107:
+.LFE121:
 	.size	ButtonImage_applyDefaultStyle, .-ButtonImage_applyDefaultStyle
 	.globl	ButtonImage_applyDefaultStyle3
 	.type	ButtonImage_applyDefaultStyle3, @function
 ButtonImage_applyDefaultStyle3:
-.LFB108:
+.LFB122:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-40], rbx	#,
 	mov	QWORD PTR [rsp-32], rbp	#,
@@ -666,11 +727,11 @@ ButtonImage_applyDefaultStyle3:
 	mov	r14d, r9d	# fixed_width, fixed_width
 	mov	WORD PTR [rdi+96], si	# MEM[(struct Widget *)this_3(D)].pos.x, posx
 	mov	WORD PTR [rdi+98], dx	# MEM[(struct Widget *)this_3(D)].pos.y, posy
-	lea	r13, [rdi+176]	# labimg,
-	movzx	r12d, r8w	# D.9290, pady
-	movzx	ebp, cx	# D.9291, padx
-	mov	edx, r12d	#, D.9290
-	mov	esi, ebp	#, D.9291
+	lea	r13, [rdi+168]	# labimg,
+	movzx	r12d, r8w	# D.9868, pady
+	movzx	ebp, cx	# D.9869, padx
+	mov	edx, r12d	#, D.9868
+	mov	esi, ebp	#, D.9869
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 14417872	#,
@@ -680,9 +741,9 @@ ButtonImage_applyDefaultStyle3:
 	mov	esi, 2	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+552]	# labimg,
-	mov	edx, r12d	#, D.9290
-	mov	esi, ebp	#, D.9291
+	lea	r13, [rbx+528]	# labimg,
+	mov	edx, r12d	#, D.9868
+	mov	esi, ebp	#, D.9869
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 11927454	#,
@@ -692,9 +753,9 @@ ButtonImage_applyDefaultStyle3:
 	mov	esi, 2	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+928]	# labimg,
-	mov	edx, r12d	#, D.9290
-	mov	esi, ebp	#, D.9291
+	lea	r13, [rbx+888]	# labimg,
+	mov	edx, r12d	#, D.9868
+	mov	esi, ebp	#, D.9869
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 16768601	#,
@@ -704,9 +765,9 @@ ButtonImage_applyDefaultStyle3:
 	mov	esi, 2	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
-	lea	r13, [rbx+1304]	# labimg,
-	mov	edx, r12d	#, D.9290
-	mov	esi, ebp	#, D.9291
+	lea	r13, [rbx+1248]	# labimg,
+	mov	edx, r12d	#, D.9868
+	mov	esi, ebp	#, D.9869
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setPadding	#
 	mov	esi, 14671839	#,
@@ -716,8 +777,11 @@ ButtonImage_applyDefaultStyle3:
 	mov	esi, 2	#,
 	mov	rdi, r13	#, labimg
 	call	LabelImage_setBorder	#
+	mov	rax, QWORD PTR [rbx]	# MEM[(struct coObject *)this_3(D)].class, MEM[(struct coObject *)this_3(D)].class
+	mov	rax, QWORD PTR [rax+16]	# D.9870_20->vtable, D.9870_20->vtable
+	mov	rax, QWORD PTR [rax+8]	# MEM[(const void * *)D.9871_21 + 8B], MEM[(const void * *)D.9871_21 + 8B]
 	mov	rdi, rbx	#, this
-	call	Widget_refresh	#
+	call	[QWORD PTR [rax+16]]	# MEM[(struct IWidget *)D.9873_23].refresh
 	movzx	esi, r14b	# fixed_width, fixed_width
 	mov	rdi, rbx	#, this
 	call	ButtonImage_setFixedWidth	#
@@ -730,41 +794,8 @@ ButtonImage_applyDefaultStyle3:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE108:
+.LFE122:
 	.size	ButtonImage_applyDefaultStyle3, .-ButtonImage_applyDefaultStyle3
-	.section	.rodata.str1.1,"aMS",@progbits,1
-.LC2:
-	.string	"buttonimage=NULL"
-.LC3:
-	.string	"%s"
-	.text
-	.globl	ButtonImage_toString
-	.type	ButtonImage_toString, @function
-ButtonImage_toString:
-.LFB109:
-	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC2	# D.9281,
-	test	rdi, rdi	# this
-	je	.L68	#,
-	sub	rsp, 8	#,
-	.cfi_def_cfa_offset 16
-	add	rdi, 176	# tmp64,
-	call	LabelImage_toString	#
-	mov	rcx, rax	#, D.9283
-	mov	edx, OFFSET FLAT:.LC3	#,
-	mov	esi, 128	#,
-	mov	edi, OFFSET FLAT:str_id.9277	#,
-	mov	eax, 0	#,
-	call	snprintf	#
-	mov	eax, OFFSET FLAT:str_id.9277	# D.9281,
-	add	rsp, 8	#,
-	.cfi_def_cfa_offset 8
-.L68:
-	rep
-	ret
-	.cfi_endproc
-.LFE109:
-	.size	ButtonImage_toString, .-ButtonImage_toString
 	.globl	ButtonImage_class
 	.data
 	.align 8
@@ -772,48 +803,58 @@ ButtonImage_toString:
 	.size	ButtonImage_class, 8
 ButtonImage_class:
 	.quad	type
+	.comm	IMAGE_SUPPORTED_FILES,8,8
 	.section	.rodata.str1.1
-.LC4:
+.LC3:
 	.string	"ButtonImage"
 	.data
 	.align 16
 	.type	type, @object
 	.size	type, 24
 type:
+# size:
+	.quad	1616
+# name:
+	.quad	.LC3
 # vtable:
 	.quad	vtable
-# size:
-	.quad	1688
-# name:
-	.quad	.LC4
 	.section	.rodata
 	.align 16
-	.type	__FUNCTION__.9170, @object
-	.size	__FUNCTION__.9170, 21
-__FUNCTION__.9170:
-	.string	"ButtonImage_vdestroy"
-	.align 16
-	.type	__FUNCTION__.9199, @object
-	.size	__FUNCTION__.9199, 16
-__FUNCTION__.9199:
+	.type	__FUNCTION__.9768, @object
+	.size	__FUNCTION__.9768, 16
+__FUNCTION__.9768:
 	.string	"ButtonImage_new"
-	.align 16
-	.type	__FUNCTION__.9209, @object
-	.size	__FUNCTION__.9209, 17
-__FUNCTION__.9209:
-	.string	"ButtonImage_copy"
-	.local	str_id.9277
-	.comm	str_id.9277,128,32
+	.local	str_id.9850
+	.comm	str_id.9850,128,32
 	.data
-	.align 32
+	.align 16
 	.type	vtable, @object
-	.size	vtable, 48
+	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IWidget
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	ButtonImage_vdestroy
+# toString:
+	.quad	ButtonImage_vtoString
+	.align 32
+	.type	override_IWidget, @object
+	.size	override_IWidget, 40
+override_IWidget:
+# mevent:
 	.quad	Widget_vmevent
+# draw:
 	.quad	Widget_vdraw
+# refresh:
 	.quad	ButtonImage_vrefresh
+# drag:
 	.quad	Widget_vdrag
+# setVisible:
 	.quad	Widget_vsetVisible
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

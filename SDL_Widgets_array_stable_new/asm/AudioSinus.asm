@@ -11,7 +11,7 @@
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/graphics/gtools
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets
 # -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/SDL_Widgets_array_stable_new/src/widgets/container
-# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject/v1.0/include
+# -I /home/darek/Dropbox/e/KCK/SDL_Widgets/v2.0/CObject_2/include
 # -D _GNU_SOURCE=1 -D _REENTRANT AudioSinus.c -march=core2 -mcx16 -msahf
 # -mno-movbe -mno-aes -mno-pclmul -mno-popcnt -mno-abm -mno-lwp -mno-fma
 # -mno-fma4 -mno-xop -mno-bmi -mno-bmi2 -mno-tbm -mno-avx -mno-avx2
@@ -53,10 +53,10 @@
 	.text
 	.type	AudioSinus_paCallback, @function
 AudioSinus_paCallback:
-.LFB93:
+.LFB103:
 	.cfi_startproc
 	mov	r8, rdx	# framesPerBuffer, framesPerBuffer
-	mov	eax, 2	# D.8896,
+	mov	eax, 2	# D.9148,
 	cmp	QWORD PTR [r9+104], 0	# MEM[(struct AudioSinus *)vthis_5(D)].sine,
 	je	.L2	#,
 	mov	edx, DWORD PTR [r9+120]	# left_phase, MEM[(struct AudioSinus *)vthis_5(D)].left_phase
@@ -66,7 +66,7 @@ AudioSinus_paCallback:
 .L4:
 	movsx	rdi, edx	# left_phase, left_phase
 	mov	rax, QWORD PTR [r9+104]	# MEM[(struct AudioSinus *)vthis_5(D)].sine, MEM[(struct AudioSinus *)vthis_5(D)].sine
-	movss	xmm0, DWORD PTR [rax+rdi*4]	# sample, *D.8899_18
+	movss	xmm0, DWORD PTR [rax+rdi*4]	# sample, *D.9151_18
 	movss	DWORD PTR [rsi], xmm0	# MEM[base: out_40, offset: 0B], sample
 	movss	DWORD PTR [rsi+4], xmm0	# MEM[base: out_40, offset: 4B], sample
 	add	rsi, 8	# out,
@@ -79,16 +79,16 @@ AudioSinus_paCallback:
 	jb	.L4	#,
 .L3:
 	mov	DWORD PTR [r9+120], edx	# MEM[(struct AudioSinus *)vthis_5(D)].left_phase, left_phase
-	mov	eax, 0	# D.8896,
+	mov	eax, 0	# D.9148,
 .L2:
 	rep
 	ret
 	.cfi_endproc
-.LFE93:
+.LFE103:
 	.size	AudioSinus_paCallback, .-AudioSinus_paCallback
 	.type	AudioSinus_FillArray, @function
 AudioSinus_FillArray:
-.LFB94:
+.LFB104:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -117,7 +117,7 @@ AudioSinus_FillArray:
 	mov	rax, QWORD PTR [rbp+104]	# this_3(D)->sine, this_3(D)->sine
 	unpcklpd	xmm0, xmm0	#
 	cvtpd2ps	xmm0, xmm0	#,
-	movss	DWORD PTR [rax+rdx*4], xmm0	# *D.8828_13,
+	movss	DWORD PTR [rax+rdx*4], xmm0	# *D.9080_13,
 	add	ebx, 1	# i,
 	cmp	DWORD PTR [rbp+116], ebx	# this_3(D)->sine_size, i
 	ja	.L11	#,
@@ -130,7 +130,7 @@ AudioSinus_FillArray:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE94:
+.LFE104:
 	.size	AudioSinus_FillArray, .-AudioSinus_FillArray
 	.section	.rodata.str1.1,"aMS",@progbits,1
 .LC1:
@@ -139,20 +139,17 @@ AudioSinus_FillArray:
 	.globl	AudioSinus_vdestroy
 	.type	AudioSinus_vdestroy, @function
 AudioSinus_vdestroy:
-.LFB96:
+.LFB106:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
 	.cfi_offset 3, -16
 	mov	rbx, rdi	# vthis, vthis
-	mov	esi, OFFSET FLAT:__FUNCTION__.8786	#,
-	call	Static_printObj2	#
-	mov	rdi, rbx	#, vthis
 	call	Audio_stop	#
-	mov	rdi, QWORD PTR [rbx+104]	# D.8846, MEM[(struct AudioSinus *)vthis_1(D)].sine
-	test	rdi, rdi	# D.8846
+	mov	rdi, QWORD PTR [rbx+104]	# D.9098, MEM[(struct AudioSinus *)vthis_1(D)].sine
+	test	rdi, rdi	# D.9098
 	je	.L15	#,
-	mov	edx, 141	#,
+	mov	edx, 152	#,
 	mov	esi, OFFSET FLAT:.LC1	#,
 	call	wfree	#
 	mov	QWORD PTR [rbx+104], 0	# MEM[(struct AudioSinus *)vthis_1(D)].sine,
@@ -163,7 +160,7 @@ AudioSinus_vdestroy:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE96:
+.LFE106:
 	.size	AudioSinus_vdestroy, .-AudioSinus_vdestroy
 	.section	.rodata.str1.8,"aMS",@progbits,1
 	.align 8
@@ -185,7 +182,7 @@ AudioSinus_vdestroy:
 	.globl	AudioSinus_vplay
 	.type	AudioSinus_vplay, @function
 AudioSinus_vplay:
-.LFB95:
+.LFB105:
 	.cfi_startproc
 	push	rbp	#
 	.cfi_def_cfa_offset 16
@@ -204,27 +201,27 @@ AudioSinus_vplay:
 	je	.L19	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8854
+	mov	rcx, rax	#, D.9106
 	mov	edx, OFFSET FLAT:.LC2	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8856,
+	mov	eax, 0	# D.9108,
 	jmp	.L20	#
 .L19:
 	mov	DWORD PTR [rbx+124], 0	# MEM[(struct AudioSinus *)vthis_2(D)].right_phase,
 	mov	DWORD PTR [rbx+120], 0	# MEM[(struct AudioSinus *)vthis_2(D)].left_phase,
 	call	Pa_GetDefaultOutputDevice	#
-	mov	DWORD PTR [rbx+48], eax	# MEM[(struct Audio *)vthis_2(D)].outputParameters.device, D.8858
+	mov	DWORD PTR [rbx+48], eax	# MEM[(struct Audio *)vthis_2(D)].outputParameters.device, D.9110
 	movzx	edx, BYTE PTR [rbx+34]	# MEM[(struct Audio *)vthis_2(D)].channels, MEM[(struct Audio *)vthis_2(D)].channels
 	mov	DWORD PTR [rbx+52], edx	# MEM[(struct Audio *)vthis_2(D)].outputParameters.channelCount, MEM[(struct Audio *)vthis_2(D)].channels
 	mov	rdx, QWORD PTR [rbx+24]	# MEM[(struct Audio *)vthis_2(D)].audio_format, MEM[(struct Audio *)vthis_2(D)].audio_format
 	mov	QWORD PTR [rbx+56], rdx	# MEM[(struct Audio *)vthis_2(D)].outputParameters.sampleFormat, MEM[(struct Audio *)vthis_2(D)].audio_format
-	mov	edi, eax	#, D.8858
+	mov	edi, eax	#, D.9110
 	call	Pa_GetDeviceInfo	#
-	movsd	xmm0, QWORD PTR [rax+40]	# D.8864, D.8863_15->defaultLowOutputLatency
-	movsd	QWORD PTR [rbx+64], xmm0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.suggestedLatency, D.8864
+	movsd	xmm0, QWORD PTR [rax+40]	# D.9116, D.9115_15->defaultLowOutputLatency
+	movsd	QWORD PTR [rbx+64], xmm0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.suggestedLatency, D.9116
 	mov	QWORD PTR [rbx+72], 0	# MEM[(struct Audio *)vthis_2(D)].outputParameters.hostApiSpecificStreamInfo,
 	mov	rdi, rbx	#, vthis
 	call	AudioSinus_FillArray	#
@@ -242,13 +239,13 @@ AudioSinus_vplay:
 	je	.L21	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8873
+	mov	rcx, rax	#, D.9125
 	mov	edx, OFFSET FLAT:.LC3	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8856,
+	mov	eax, 0	# D.9108,
 	jmp	.L20	#
 .L21:
 	test	bpl, bpl	# start_paused
@@ -259,20 +256,20 @@ AudioSinus_vplay:
 	je	.L23	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8879
+	mov	rcx, rax	#, D.9131
 	mov	edx, OFFSET FLAT:.LC4	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8856,
+	mov	eax, 0	# D.9108,
 	jmp	.L20	#
 .L22:
 	mov	BYTE PTR [rbx+14], 1	# MEM[(struct Audio *)vthis_2(D)].pause,
 .L23:
 	mov	BYTE PTR [rbx+13], 1	# MEM[(struct Audio *)vthis_2(D)].play,
 	mov	BYTE PTR [rbx+12], 1	# MEM[(struct Audio *)vthis_2(D)].initialized,
-	mov	eax, 1	# D.8856,
+	mov	eax, 1	# D.9108,
 	jmp	.L20	#
 .L18:
 	cmp	BYTE PTR [rdi+14], 0	# MEM[(struct Audio *)vthis_2(D)].pause,
@@ -283,33 +280,33 @@ AudioSinus_vplay:
 	mov	rdi, QWORD PTR [rdi+40]	# MEM[(struct Audio *)vthis_2(D)].pa_stream, MEM[(struct Audio *)vthis_2(D)].pa_stream
 	call	Pa_StopStream	#
 	mov	edi, eax	# pe,
-	mov	eax, 1	# D.8856,
+	mov	eax, 1	# D.9108,
 	test	edi, edi	# pe
 	je	.L20	#,
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8888
+	mov	rcx, rax	#, D.9140
 	mov	edx, OFFSET FLAT:.LC5	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8856,
+	mov	eax, 0	# D.9108,
 	jmp	.L20	#
 .L24:
 	mov	rdi, QWORD PTR [rdi+40]	# MEM[(struct Audio *)vthis_2(D)].pa_stream, MEM[(struct Audio *)vthis_2(D)].pa_stream
 	call	Pa_StartStream	#
 	mov	edi, eax	# pe,
-	mov	eax, 1	# D.8856,
+	mov	eax, 1	# D.9108,
 	test	edi, edi	# pe
 	je	.L20	#,
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8891
+	mov	rcx, rax	#, D.9143
 	mov	edx, OFFSET FLAT:.LC6	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
 	mov	eax, 0	#,
 	call	__fprintf_chk	#
-	mov	eax, 0	# D.8856,
+	mov	eax, 0	# D.9108,
 .L20:
 	add	rsp, 24	#,
 	.cfi_def_cfa_offset 24
@@ -319,12 +316,12 @@ AudioSinus_vplay:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE95:
+.LFE105:
 	.size	AudioSinus_vplay, .-AudioSinus_vplay
 	.globl	AudioSinus_new
 	.type	AudioSinus_new, @function
 AudioSinus_new:
-.LFB97:
+.LFB107:
 	.cfi_startproc
 	push	rbx	#
 	.cfi_def_cfa_offset 16
@@ -332,24 +329,21 @@ AudioSinus_new:
 	mov	rbx, rdi	# this, this
 	test	rdi, rdi	# this
 	jne	.L29	#,
-	mov	edi, OFFSET FLAT:__FUNCTION__.8790	#,
+	mov	edi, OFFSET FLAT:__FUNCTION__.9042	#,
 	call	Static_nullThis2	#
 	jmp	.L30	#
 .L29:
 	call	Audio_new	#
 	mov	QWORD PTR [rbx], OFFSET FLAT:type	# MEM[(struct coObject *)this_2(D)].class,
-	mov	esi, OFFSET FLAT:__FUNCTION__.8790	#,
-	mov	rdi, rbx	#, this
-	call	Static_printObj2	#
 	mov	DWORD PTR [rbx+8], 1	# MEM[(struct Audio *)this_2(D)].lib,
 	mov	WORD PTR [rbx+32], 256	# MEM[(struct Audio *)this_2(D)].buffer_size,
 	mov	QWORD PTR [rbx+24], 1	# MEM[(struct Audio *)this_2(D)].audio_format,
 	movzx	edi, WORD PTR [rbx+16]	# MEM[(struct Audio *)this_2(D)].sample_frequency, MEM[(struct Audio *)this_2(D)].sample_frequency
-	mov	ecx, 165	#,
+	mov	ecx, 176	#,
 	mov	edx, OFFSET FLAT:.LC1	#,
 	mov	esi, 4	#,
 	call	wcalloc	#
-	mov	QWORD PTR [rbx+104], rax	# this_2(D)->sine, D.8843
+	mov	QWORD PTR [rbx+104], rax	# this_2(D)->sine, D.9095
 	movzx	eax, WORD PTR [rbx+16]	# MEM[(struct Audio *)this_2(D)].sample_frequency, MEM[(struct Audio *)this_2(D)].sample_frequency
 	mov	DWORD PTR [rbx+116], eax	# this_2(D)->sine_size, MEM[(struct Audio *)this_2(D)].sample_frequency
 	mov	DWORD PTR [rbx+112], 0x43960000	# this_2(D)->freq,
@@ -361,7 +355,7 @@ AudioSinus_new:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE97:
+.LFE107:
 	.size	AudioSinus_new, .-AudioSinus_new
 	.section	.rodata.str1.8
 	.align 8
@@ -377,7 +371,7 @@ AudioSinus_new:
 	.globl	AudioSinus_setFrequency
 	.type	AudioSinus_setFrequency, @function
 AudioSinus_setFrequency:
-.LFB98:
+.LFB108:
 	.cfi_startproc
 	mov	QWORD PTR [rsp-16], rbx	#,
 	mov	QWORD PTR [rsp-8], rbp	#,
@@ -407,7 +401,7 @@ AudioSinus_setFrequency:
 	je	.L36	#,
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8814
+	mov	rcx, rax	#, D.9066
 	mov	edx, OFFSET FLAT:.LC9	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -423,7 +417,7 @@ AudioSinus_setFrequency:
 .L40:
 	mov	edi, eax	#, pe
 	call	Pa_GetErrorText	#
-	mov	rcx, rax	#, D.8819
+	mov	rcx, rax	#, D.9071
 	mov	edx, OFFSET FLAT:.LC10	#,
 	mov	esi, 1	#,
 	mov	rdi, QWORD PTR stderr[rip]	#, stderr
@@ -455,7 +449,7 @@ AudioSinus_setFrequency:
 	.cfi_def_cfa_offset 8
 	ret
 	.cfi_endproc
-.LFE98:
+.LFE108:
 	.size	AudioSinus_setFrequency, .-AudioSinus_setFrequency
 	.globl	AudioSinus_class
 	.data
@@ -472,28 +466,38 @@ AudioSinus_class:
 	.type	type, @object
 	.size	type, 24
 type:
-# vtable:
-	.quad	vtable
 # size:
 	.quad	128
 # name:
 	.quad	.LC11
+# vtable:
+	.quad	vtable
 	.section	.rodata
-	.align 16
-	.type	__FUNCTION__.8786, @object
-	.size	__FUNCTION__.8786, 20
-__FUNCTION__.8786:
-	.string	"AudioSinus_vdestroy"
-	.type	__FUNCTION__.8790, @object
-	.size	__FUNCTION__.8790, 15
-__FUNCTION__.8790:
+	.type	__FUNCTION__.9042, @object
+	.size	__FUNCTION__.9042, 15
+__FUNCTION__.9042:
 	.string	"AudioSinus_new"
 	.data
 	.align 16
 	.type	vtable, @object
 	.size	vtable, 16
 vtable:
+	.quad	override_coIObject
+	.quad	override_IAudio
+	.section	.rodata
+	.align 16
+	.type	override_coIObject, @object
+	.size	override_coIObject, 16
+override_coIObject:
+# destroy:
 	.quad	AudioSinus_vdestroy
+# toString:
+	.quad	Audio_vtoString
+	.align 8
+	.type	override_IAudio, @object
+	.size	override_IAudio, 8
+override_IAudio:
+# play:
 	.quad	AudioSinus_vplay
 	.section	.rodata.cst8,"aM",@progbits,8
 	.align 8

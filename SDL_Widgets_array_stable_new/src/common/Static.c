@@ -24,6 +24,9 @@
 #include "Memory.h"
 #include "perr.h"
 
+const char *__true_str = "true";
+const char *__false_str = "false";
+
 
 inline void Static_printObj2(const void *vthis, const char *fname) {
 	const char *Static_printObj_fmt = "%20s: this=%p, this.class.name: %20s, this.class.size: %5lu, this.class.vtable = %p\n";
@@ -33,12 +36,6 @@ inline void Static_printObj2(const void *vthis, const char *fname) {
 inline void Static_nullThis2(const char *fname) {
 	const char *Static_nullThis_fmt = "%20s: Passed NULL this pointer";
 	fprintf(stderr, Static_nullThis_fmt, fname);
-}
-
-#include <sys/stat.h>
-b8 Static_fileExist(const char *path) { 
-	if (! path) return false; struct stat st; 
-	return (stat(path, &st) == 0);
 }
 
 const char* Static_surfaceToString(const SDL_Surface *surf) {
