@@ -25,7 +25,7 @@
 	#include "Widget.h"
 	
 	enum alignment {
-		ALIGN_TOP = 1,
+		ALIGN_TOP = 0,
 		ALIGN_BOTTOM,
 		ALIGN_CENTER,
 		ALIGN_LEFT,
@@ -52,8 +52,8 @@
 		u16 			margin_bottom;
 		u16				maxx;			// this is most right-bottom point of cell rectangle
 		u16				maxy;		
-		alignment 		halign;			// these are alignments of inner rectangle relative to cell rectangle
-		alignment 		valign;
+		alignment 		halign : 3;		// these are alignments of inner rectangle relative to cell rectangle
+		alignment 		valign : 3;
 	};
 	
 	extern const coClass *Container_class;

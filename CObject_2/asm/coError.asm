@@ -50,11 +50,11 @@
 coGetStringError:
 .LFB60:
 	.cfi_startproc
-	mov	eax, OFFSET FLAT:.LC0	# D.3479,
+	mov	eax, OFFSET FLAT:.LC0	# D.3481,
 	cmp	edi, 30	# co_err,
 	ja	.L2	#,
 	mov	edi, edi	# co_err, co_err
-	mov	rax, QWORD PTR names[0+rdi*8]	# D.3479, names
+	mov	rax, QWORD PTR names[0+rdi*8]	# D.3481, names
 .L2:
 	rep
 	ret

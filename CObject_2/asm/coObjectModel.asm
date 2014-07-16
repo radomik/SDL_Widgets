@@ -54,9 +54,9 @@ delete:
 	test	rdi, rdi	# vthis
 	je	.L2	#,
 	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
-	mov	rax, QWORD PTR [rax+16]	# D.3487_2->vtable, D.3487_2->vtable
-	mov	rax, QWORD PTR [rax]	# *D.3488_3, *D.3488_3
-	call	[QWORD PTR [rax]]	# MEM[(struct coIObject *)D.3489_4].destroy
+	mov	rax, QWORD PTR [rax+16]	# D.3467_2->vtable, D.3467_2->vtable
+	mov	rax, QWORD PTR [rax]	# *D.3468_3, *D.3468_3
+	call	[QWORD PTR [rax]]	# MEM[(struct coIObject *)D.3469_4].destroy
 .L2:
 	mov	rax, rbx	#, vthis
 	pop	rbx	#

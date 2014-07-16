@@ -37,7 +37,7 @@
 	struct Button {
 		Widget 	_super;
 		Label 	label[4];
-		b8		enabled;
+		b8		enabled : 1;
 	};
 	
 	Button* Button_new(Button *this, const char	*text);

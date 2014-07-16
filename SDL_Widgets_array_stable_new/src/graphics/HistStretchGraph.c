@@ -379,12 +379,12 @@ HistStretchGraph* HistStretchGraph_new(HistStretchGraph *this, TTF_Font *font, u
 	this->size = size ? size : 8;
 	this->release_handler = NULL;
 	
-	TextBlock_new(&this->labelX, "255");
+	TextBlock_newText(&this->labelX, "255");
 	TextBlock_setFont(&this->labelX, font);
 	TextBlock_setBackgroundColor(&this->labelX, 0xFFFFFF);
 	TextBlock_setForegroundColor(&this->labelX, 0x000000);
 	Widget_refresh(WIDGET(&this->labelX));
-	TextBlock_new(&this->labelY, "255");
+	TextBlock_newText(&this->labelY, "255");
 	TextBlock_setFont(&this->labelY, font);
 	TextBlock_setBackgroundColor(&this->labelY, 0xFFFFFF);
 	TextBlock_setForegroundColor(&this->labelY, 0x000000);

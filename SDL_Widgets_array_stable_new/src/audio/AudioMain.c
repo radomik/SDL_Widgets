@@ -52,6 +52,7 @@ static u16 			c_audio = 0;
 static u16			audio_current_index = 1;
 
 int AudioMain_createAudio() {
+	fprintf(stderr, "%s: sizeof(Audio): %lu\n", __FUNCTION__, sizeof(Audio));
 	audio = (Audio**) malloc(cAUDIO*sizeof(Audio*));
 	
 	// AudioTest [dynamic object] //id=0
@@ -119,7 +120,7 @@ static u16 c_image=0, c_button=0, c_textblock=0, c_label=0, c_labelimage=0, c_wd
 static b8 		is_inited = false;
 
 void screen_toogled_drag_on(Screen *screen) {
-	sprintf(label[0].text_block.text+15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
+	Label_stringPrintf(&label[0], 15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 	Widget_refresh(WIDGET(&label[0]));
 	screen->need_reload = true;
 }
@@ -169,7 +170,7 @@ int AudioMain_createInterface() {
 	
 	{/*!! Screen widgets section (ZERO SECTION) these wigets aren't placed in containers !!*/
 		// Create buttonimage[0] (app exit) and add it to screen
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_new(butimg, "img/application-exit-5.png");
 		ButtonImage_applyDefaultStyle(butimg, 1750, 14, 20, 20, true);
 		Widget_setPosition(WIDGET(butimg), Screen_getWidth() - WIDGET(butimg)->pos.w - 50, WIDGET(butimg)->pos.y);
@@ -178,9 +179,9 @@ int AudioMain_createInterface() {
 		fprintf(stderr, "%hux%hu\n", Screen_getWidth(), Screen_getHeight());
 		
 		// Create label[0] (drag on/off indicator) and add it to screen
-		lab = &(label[c_label++]);
-		Label_new(lab, "Przeciąganie:              ");
-		sprintf(lab->text_block.text+15, "%s", (sc->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
+		lab = &label[c_label++];
+		Label_newText(lab, "Przeciąganie: ");
+		Label_stringPrintf(lab, 15, "%s", (sc->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 		Label_applyDefaultStyle(lab, 1, 950, font2, 10, 5, true);
 		Screen_addWidget(sc, WIDGET(lab));
 	}
@@ -197,7 +198,7 @@ int AudioMain_createInterface() {
 		
 		//! Create buttonimage[1...3] and add them to stacklistX(slix, sli)
 			// buttonimage(play)
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_new(butimg, "img/media-playback-start-3.png");
 		ButtonImage_applyDefaultStyle(butimg, 167, 7, 5, 5, true);
 		WIDGET(butimg)->click_handler = button_play_clicked;
@@ -206,7 +207,7 @@ int AudioMain_createInterface() {
 		StackList_addWidgetLast(slix, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 6, 6, 6, 3);
 		
 			// buttonimage(pause)
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_new(butimg, "img/media-playback-pause-3.png");
 		ButtonImage_applyDefaultStyle(butimg, 240, 7, 5, 5, true);
 		WIDGET(butimg)->click_handler = button_pause_clicked;
@@ -215,7 +216,7 @@ int AudioMain_createInterface() {
 		StackList_addWidgetLast(slix, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 6, 3, 6, 3);
 		
 			// buttonimage(stop)
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_new(butimg, "img/media-playback-stop-3.png");
 		ButtonImage_applyDefaultStyle(butimg, 313, 7, 5, 5, true);
 		WIDGET(butimg)->click_handler = button_stop_clicked;
@@ -233,45 +234,45 @@ int AudioMain_createInterface() {
 		label_off  = c_label;
 		
 		// label[label_off]
-		lab = &(label[c_label++]);
-		Label_new(lab, "Frequency1:          ");
-		sprintf(lab->text_block.text+12, "%5d Hz", audiotest->freq1);
+		lab = &label[c_label++];
+		Label_newText(lab, "Frequency1: ");
+		Label_stringPrintf(lab, 12, "%5d Hz", audiotest->freq1);
 		Label_applyDefaultStyle(lab, 1, 950, font2, 40, 9, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_freq1_change, lab, 	0, &cparam_off);
 		Screen_addCParam(sc, button_freq1_change, audiotest, 1, &cparam_off);
 		
 		// label[label_off+1]
-		lab = &(label[c_label++]);
-		Label_new(lab, "Fase1:          ");
-		sprintf(lab->text_block.text+7, "%5d", audiotest->fase1);
+		lab = &label[c_label++];
+		Label_newText(lab, "Fase1: ");
+		Label_stringPrintf(lab, 7, "%5d", audiotest->fase1);
 		Label_applyDefaultStyle(lab, 1, 950, font2, 87, 9, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_fase1_change, lab,		0, &cparam_off);
 		Screen_addCParam(sc, button_fase1_change, audiotest, 1, &cparam_off);
 		
 		// label[label_off+2]
-		lab = &(label[c_label++]);
-		Label_new(lab, "Frequency2:          ");
-		sprintf(lab->text_block.text+12, "%5d Hz", audiotest->freq2);
+		lab = &label[c_label++];
+		Label_newText(lab, "Frequency2: ");
+		Label_stringPrintf(lab, 12, "%5d Hz", audiotest->freq2);
 		Label_applyDefaultStyle(lab, 1, 950, font2, 40, 10, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_freq2_change, lab,		0, &cparam_off);
 		Screen_addCParam(sc, button_freq2_change, audiotest, 1, &cparam_off);
 		
 		// label[label_off+3]
-		lab = &(label[c_label++]);
-		Label_new(lab, "Fase2:          ");
-		sprintf(lab->text_block.text+7, "%5d", audiotest->fase2);
+		lab = &label[c_label++];
+		Label_newText(lab, "Fase2: ");
+		Label_stringPrintf(lab, 7, "%5d", audiotest->fase2);
 		Label_applyDefaultStyle(lab, 1, 950, font2, 40, 10, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_fase2_change, lab, 	0, &cparam_off);
 		Screen_addCParam(sc, button_fase2_change, audiotest, 1, &cparam_off);
 		
 		// label[label_off+4]
-		lab = &(label[c_label++]);
-		Label_new(lab, "Źródło dźwięku:                      ");
-		sprintf(lab->text_block.text+22, "%20s", audio[audio_current_index]->name);
+		lab = &label[c_label++];
+		Label_newText(lab, "Źródło dźwięku: ");
+		Label_stringPrintf(lab, 22, "%20s", audio[audio_current_index]->name);
 		Label_applyDefaultStyle(lab, 1, 950, font2, 40, 5, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_source_change, lab,					0, &cparam_off);
@@ -280,9 +281,9 @@ int AudioMain_createInterface() {
 		Screen_addCParam(sc, button_source_change, &c_audio,					3, &cparam_off);
 		
 		// label[label_off+5] (lab_sine_freq)
-		lab_sine_freq = &(label[c_label++]);
-		Label_new(lab_sine_freq, "Częstotliwość:          ");
-		sprintf(lab_sine_freq->text_block.text+19, "%8.2f", audiosinus->freq);
+		lab_sine_freq = &label[c_label++];
+		Label_newText(lab_sine_freq, "Częstotliwość: ");
+		Label_stringPrintf(lab_sine_freq, 19, "%8.2f", audiosinus->freq);
 		Label_applyDefaultStyle(lab_sine_freq, 1, 950, font2, 10, 6, true);
 		cparam_off = 0;
 		Screen_addCParam(sc, button_sinefreq_change, lab_sine_freq,		0, &cparam_off);
@@ -303,14 +304,14 @@ int AudioMain_createInterface() {
 			StackList_new(sliy, VERTICAL, 2);
 			
 			// create buttonimage[c_buttonimage] as copy of bt_arrow_up (arrow up) and add to stacklist(sliy)
-			butimg = &(buttonimage[c_buttonimage++]);
+			butimg = &buttonimage[c_buttonimage++];
 			ButtonImage_copy(butimg, Static_getArrowUpButton(), false);
 			WIDGET(butimg)->click_handler = click_handler[f];
 			WIDGET(butimg)->id = 1;
 			StackList_addWidgetLast(sliy, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 			
 			// create buttonimage[c_buttonimage] as copy of bt_arrow_dn (arrow down) and add to stacklist(sliy)
-			butimg = &(buttonimage[c_buttonimage++]);
+			butimg = &buttonimage[c_buttonimage++];
 			ButtonImage_copy(butimg, Static_getArrowDnButton(), false);
 			WIDGET(butimg)->click_handler = click_handler[f];
 			WIDGET(butimg)->id = 0;
@@ -423,14 +424,14 @@ int AudioMain_createInterface() {
 		StackList_new(sliy2, VERTICAL, 2);
 		
 		// create buttonimage[c_buttonimage] as copy of bt_arrow_up (arrow up) and add to stacklist(sliy2)
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_copy(butimg, Static_getArrowUpButton(), false);
 		WIDGET(butimg)->click_handler = button_audio_from_graph_type_change;
 		WIDGET(butimg)->id = 1;
 		StackList_addWidgetLast(sliy2, WIDGET(butimg), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 		
 		// create buttonimage[c_buttonimage] as copy of bt_arrow_dn (arrow down) and add to stacklist(sliy2)
-		butimg = &(buttonimage[c_buttonimage++]);
+		butimg = &buttonimage[c_buttonimage++];
 		ButtonImage_copy(butimg, Static_getArrowDnButton(), false);
 		WIDGET(butimg)->click_handler = button_audio_from_graph_type_change;
 		WIDGET(butimg)->id = 0;
@@ -443,8 +444,8 @@ int AudioMain_createInterface() {
 		StackList_addWidgetLast(slix, WIDGET(sliy2), ALIGN_RIGHT, ALIGN_CENTER, 0, 20, 0, 2);
 		
 		// Label for spinner: Interpolacja/Multipleksacja and add it to StackList(slix)
-		lab = &(label[c_label++]);
-		Label_new(lab, "Multipleksacja");
+		lab = &label[c_label++];
+		Label_newText(lab, "Multipleksacja");
 		Label_applyDefaultStyle(lab, 1, 950, font2, 15, 6, true);
 		StackList_addWidgetLast(slix, WIDGET(lab), ALIGN_LEFT, ALIGN_CENTER, 0, 0, 0, 20);
 		cparam_off = 0;
@@ -452,7 +453,7 @@ int AudioMain_createInterface() {
 		Screen_addCParam(sc, button_audio_from_graph_type_change, afg,		1, &cparam_off);
 		
 		// Button "Wyczyść" and add it to StackList(slix)
-		but = &(button[c_button++]);
+		but = &button[c_button++];
 		Button_new(but, "Wyczyść");
 		Button_applyDefaultStyle(but, 130, 850, font2, 3, 3, true);
 		WIDGET(but)->click_handler  = button_audio_from_graph_clear;

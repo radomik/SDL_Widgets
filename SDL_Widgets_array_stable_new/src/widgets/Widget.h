@@ -43,38 +43,42 @@
 			void				(*mouse_exit)(Widget*, Screen*);
 		} mevent_internal;
 		
-		SDL_Surface 		*surf;			// SDL object
-		SDL_Rect 			pos;			// SDL position
+		SDL_Surface 	*surf;			// SDL object
+		SDL_Rect 		pos;			// SDL position
 		
 		/* Some parameters pointers (obsolete) use widget.vparam and Widget_addVParam(Widget*, void *) instead */
-		struct Widget		*parameter;		// pointer to any widget (used by mouse click handler)
-		void				*void_parameter; // parameter pointer to what you want
+		struct Widget	*parameter;		// pointer to any widget (used by mouse click handler)
+		void			*void_parameter; // parameter pointer to what you want
 		
 		/* Pointer to Screen specified cparam array */
-		void 				**cparam;
+		void 			**cparam;
 		
 		/* Array of void parameters (read-only) - to add void parameter use Widget_addVParam(Widget*, void *)
 		 * which places given parameter on the end of vparam array */
-		void 				**vparam;		/*read-only*/
+		void 			**vparam;		/*read-only*/
+		u32				id;				// id works as simple widget tag, it is much useful sometimes, keep backward compatibility with FileBrowsePanel 
 		u32				vparam_size;	/*read-only*/
 		u32				vparam_count;	/*read-only*/
 		u16				maxx;
 		u16				maxy;			// right-lower corner of widget
 		u16				stx, sty;		// for dragging
 		//~ 
-		u32				id;				// id works as simple widget tag, it is much useful sometimes, keep backward compatibility with FileBrowsePanel 
-		b8				cparam_exist;
-		b8 				draggable;		// if draggable 
-		b8				dragging;		// true while dragging
-		b8 				visible;		// if visible
-		b8 				mevent;			// if widget itself changes while events (e.g. button hovered by mouse pointer)
-		b8 				need_reload;	// whether need redraw
 		
 		u8				mouse_state;	// key pressed same as in SDL
-		b8				mouse_over;		// if mouse pointer over widget
-		b8 				mouse_move_listen; // if widget itself changes while mouse move event (so far always false)
-		b8				is_container;
-		b8				internal;		/** read-only **/
+		
+		
+		b8				cparam_exist : 1;
+		b8 				draggable : 1;		// if draggable 
+		b8				dragging : 1;		// true while dragging
+		b8 				visible : 1;		// if visible
+		b8 				mevent : 1;			// if widget itself changes while events (e.g. button hovered by mouse pointer)
+		b8 				need_reload : 1;	// whether need redraw
+		
+		
+		b8				mouse_over : 1;		// if mouse pointer over widget
+		b8 				mouse_move_listen : 1; // if widget itself changes while mouse move event (so far always false)
+		b8				is_container : 1;
+		b8				internal : 1; 		/** read-only **/
 	};
 	
 	/** Default constructor */

@@ -47,7 +47,7 @@
 coFileExist:
 .LFB77:
 	.cfi_startproc
-	mov	eax, 0	# D.4729,
+	mov	eax, 0	# D.4731,
 	test	rdi, rdi	# path
 	je	.L6	#,
 	sub	rsp, 152	#,
@@ -56,8 +56,8 @@ coFileExist:
 	mov	rsi, rdi	#, path
 	mov	edi, 1	#,
 	call	__xstat	#
-	test	eax, eax	# D.4757
-	sete	al	#, D.4729
+	test	eax, eax	# D.4759
+	sete	al	#, D.4731
 	add	rsp, 152	#,
 	.cfi_def_cfa_offset 8
 .L6:
@@ -189,13 +189,13 @@ coRandUnique:
 	mov	ebx, edi	# max, max
 .L14:
 	call	rand	#
-	mov	edx, eax	# tmp64, D.4715
+	mov	edx, eax	# tmp64, D.4717
 	sar	edx, 31	# tmp64,
 	idiv	ebx	# max
 	mov	eax, edx	# r, tmp64
-	cmp	edx, DWORD PTR r2.4470[rip]	# tmp64, r2
+	cmp	edx, DWORD PTR r2.4472[rip]	# tmp64, r2
 	je	.L14	#,
-	mov	DWORD PTR r2.4470[rip], edx	# r2, r
+	mov	DWORD PTR r2.4472[rip], edx	# r2, r
 	pop	rbx	#
 	.cfi_def_cfa_offset 8
 	ret
@@ -226,7 +226,7 @@ coLoadFileIntoArray:
 	test	rdi, rdi	# path
 	je	.L18	#,
 	call	coFileExist	#
-	test	al, al	# D.4669
+	test	al, al	# D.4671
 	jne	.L19	#,
 .L18:
 	test	rbp, rbp	# e
@@ -252,7 +252,7 @@ coLoadFileIntoArray:
 	mov	esi, 0	#,
 	mov	rdi, rax	#, file
 	call	fseek	#
-	test	eax, eax	# D.4677
+	test	eax, eax	# D.4679
 	je	.L22	#,
 	test	rbp, rbp	# e
 	je	.L23	#,
@@ -295,7 +295,7 @@ coLoadFileIntoArray:
 	mov	rsi, r13	#, len
 	mov	rdi, rax	#, buf
 	call	fread	#
-	cmp	rax, 1	# D.4789,
+	cmp	rax, 1	# D.4791,
 	je	.L28	#,
 	test	rbp, rbp	# e
 	je	.L29	#,
@@ -530,15 +530,15 @@ coResizeArray:
 .L59:
 	mov	rax, rsi	# array, array
 	mov	r12d, ecx	# new_size, new_size
-	mov	ecx, DWORD PTR [rbp+0]	# D.4563, *ext_size_2(D)
-	cmp	ecx, r12d	# D.4563, new_size
+	mov	ecx, DWORD PTR [rbp+0]	# D.4565, *ext_size_2(D)
+	cmp	ecx, r12d	# D.4565, new_size
 	jne	.L61	#,
 	test	rdi, rdi	# e
 	je	.L60	#,
 	mov	DWORD PTR [rdi], 0	# *e_10(D),
 	jmp	.L60	#
 .L61:
-	cmp	ecx, r12d	# D.4563, new_size
+	cmp	ecx, r12d	# D.4565, new_size
 	jae	.L62	#,
 	lea	ecx, [r12-1]	# tmp87,
 	movzx	edx, dl	# flag, flag
@@ -666,9 +666,9 @@ CO_FALSE_STR:
 CO_TRUE_STR:
 	.quad	.LC5
 	.align 4
-	.type	r2.4470, @object
-	.size	r2.4470, 4
-r2.4470:
+	.type	r2.4472, @object
+	.size	r2.4472, 4
+r2.4472:
 	.long	2147483647
 	.ident	"GCC: (Gentoo 4.7.3-r1 p1.4, pie-0.5.5) 4.7.3"
 	.section	.note.GNU-stack,"",@progbits

@@ -30,7 +30,7 @@
 	struct ButtonImage {
 		Widget 		_super;
 		LabelImage 	labelimage[4];
-		b8			enabled;
+		b8			enabled : 1;
 	};
 	
 	ButtonImage* ButtonImage_new(ButtonImage *this, const char *img_path);

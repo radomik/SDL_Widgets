@@ -64,16 +64,16 @@ coObject_coIObject_vtoString:
 	sub	rsp, 24	#,
 	.cfi_def_cfa_offset 32
 	mov	rax, QWORD PTR [rdi]	# MEM[(struct coObject *)vthis_1(D)].class, MEM[(struct coObject *)vthis_1(D)].class
-	mov	r9, QWORD PTR [rax+8]	# D.3481_2->name, D.3481_2->name
+	mov	r9, QWORD PTR [rax+8]	# D.3483_2->name, D.3483_2->name
 	mov	QWORD PTR [rsp], rdi	#, vthis
 	mov	r8d, OFFSET FLAT:.LC0	#,
 	mov	ecx, 64	#,
 	mov	edx, 1	#,
 	mov	esi, 64	#,
-	mov	edi, OFFSET FLAT:buf.3468	#,
+	mov	edi, OFFSET FLAT:buf.3470	#,
 	mov	eax, 0	#,
 	call	__snprintf_chk	#
-	mov	eax, OFFSET FLAT:buf.3468	#,
+	mov	eax, OFFSET FLAT:buf.3470	#,
 	add	rsp, 24	#,
 	.cfi_def_cfa_offset 8
 	ret
@@ -123,8 +123,8 @@ type:
 	.quad	.LC1
 # vtable:
 	.quad	vtable
-	.local	buf.3468
-	.comm	buf.3468,64,32
+	.local	buf.3470
+	.comm	buf.3470,64,32
 	.align 8
 	.type	vtable, @object
 	.size	vtable, 8

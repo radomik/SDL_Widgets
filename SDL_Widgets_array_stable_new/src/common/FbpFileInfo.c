@@ -44,12 +44,12 @@ void FbpFileInfo_vdestroy(void *vthis) {
 
 const char *FbpFileInfo_vtoString(const void *vthis) {
 	static char str_id[PATH_MAX_SIZE+25];
-	snprintf(str_id, sizeof(str_id), "%s @ %p: '%s'", type.name, vthis, TEXTBLOCK(vthis)->text);
+	snprintf(str_id, sizeof(str_id), "%s @ %p: '%s'", type.name, vthis, TextBlock_getText(TEXTBLOCK(vthis)));
 	return str_id;
 }
 
 inline const char *FbpFileInfo_getFilename(const FbpFileInfo *this) {
-	return TEXTBLOCK(this)->text;
+	return TextBlock_getText(TEXTBLOCK(this));
 }
 
 FbpFileInfo* FbpFileInfo_new(FbpFileInfo *this, 
@@ -61,7 +61,7 @@ FbpFileInfo* FbpFileInfo_new(FbpFileInfo *this,
 		fprintf(stderr, "%s: Within context: name(%s), is_directory(%s), font(%p)\n", __FUNCTION__, name, sbool(is_directory), font);
 		return NULL;
 	}
-	TextBlock_new(TEXTBLOCK(this), name);
+	TextBlock_newText(TEXTBLOCK(this), name);
 	class_init(this, &type);
 	
 #ifdef VERBOSE_CREATE
@@ -106,7 +106,7 @@ static int FbpFileInfo_cmpIsDir(const void *a, const void *b) {
 }
 // prywatne
 static int FbpFileInfo_cmpName(const void *a, const void *b) {
-	return strcmp( TEXTBLOCK(a)->text, TEXTBLOCK(b)->text);
+	return strcmp( TextBlock_getText(TEXTBLOCK(a)), TextBlock_getText(TEXTBLOCK(b)));
 }
 
 /** Sort array alphabeticaly with folders first */

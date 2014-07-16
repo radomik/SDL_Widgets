@@ -32,8 +32,13 @@
 	
 	struct FileBrowsePanel {
 		coObject	_super;		// dziedziczy z coObject
+		
 		Screen		screen;
 		Image		backgroundImage;
+		Rectangle	border_rect, border_rect2;
+		Button		butOk, butCancel;
+		Image		previewImage;
+		
 		TTF_Font 	*font;
 		
 		FbpFileInfo	*fileInfoArray;	// old name tblist
@@ -46,9 +51,7 @@
 		char		prevDirPath[PATH_MAX_SIZE];
 		char 		sel_path[PATH_MAX_SIZE];
 		
-		Rectangle	border_rect, border_rect2;
-		Button		butOk, butCancel;
-		Image		previewImage;
+		
 		
 		u32			fileInfoArraySize;
 		
@@ -60,8 +63,8 @@
 		u16 		p_x, p_y, p_w, p_h;
 		
 		u8			nameHeight;
-		b8			sel;
-		b8			is_inited;
+		b8			sel : 1;
+		b8			is_inited : 1;
 	};
 	
 	FileBrowsePanel* FileBrowsePanel_new(FileBrowsePanel *this, const char (*fileTypes)[][MAX_EXT_SIZE]);

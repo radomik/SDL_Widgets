@@ -58,7 +58,7 @@
 	struct CallbackItem {
 		void		(*click_handler)(Widget*, Screen*);					// handler kliknięcia myszą
 		void		**cparam;											// tablic cparam-ów
-		u32		cparam_size;										// rozmiar tablicy cparam
+		u32			cparam_size;										// rozmiar tablicy cparam
 	};
 	
 	extern const coClass *Callback_class;

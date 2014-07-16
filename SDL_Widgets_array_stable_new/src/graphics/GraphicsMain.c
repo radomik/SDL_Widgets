@@ -139,7 +139,7 @@ static void (*click_handler[])(Widget*, Screen*) = {
 static u32 GRAPHICS_CALLBACKS_COUNT = sizeof(click_handler) / sizeof(void (*)(Widget*, Screen*)); // 34
 
 void gdragon_toogle(Screen *screen) {
-	sprintf(label[0].text_block.text+15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
+	Label_stringPrintf(&label[0], 15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 	Widget_refresh(WIDGET(&label[0]));
 	screen->need_reload = true;
 }
@@ -206,8 +206,8 @@ int GraphicsMain_createInterface() {
 		
 		// Create label[0] (drag on/off indicator) and add it to screen
 		lab = &label[c_label++];
-		Label_new(lab, "Przeciąganie:              ");
-		sprintf(lab->text_block.text+15, "%s", (sc->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
+		Label_newText(lab, "Przeciąganie: ");
+		Label_stringPrintf(lab, 15, "%s", (sc->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 		Label_applyDefaultStyle(lab, 1, 950, font2, 10, 5, true);
 		Screen_addWidget(sc, WIDGET(lab));
 		
@@ -339,8 +339,8 @@ int GraphicsMain_createInterface() {
 		
 		// label[label_off] "Jasność:     "
 		lab			= &label[c_label++];
-		Label_new(lab, "Jasność:     ");
-		sprintf(lab->text_block.text+11, "%hd", img_off);
+		Label_newText(lab, "Jasność: ");
+		Label_stringPrintf(lab, 11, "%hd", img_off);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 36, 5, true);
 		//! add some cparams to function button_brightness_change and button_brightness_reset
 			cparam_off = 0;
@@ -357,8 +357,8 @@ int GraphicsMain_createInterface() {
 		
 		// label[label_off+1] "Kontrast:         "
 		lab			= &label[c_label++];
-		Label_new(lab, "Kontrast:         ");
-		sprintf(lab->text_block.text+11, "%5.2f", img_mul);
+		Label_newText(lab, "Kontrast:         ");
+		Label_stringPrintf(lab, 11, "%5.2f", img_mul);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 10, 5, true);
 		//! add some cparams to function button_brightness_reset and button_contrast_change
 			Screen_addCParam(sc, button_brightness_reset, lab,			3, &cparam_off); 
@@ -372,8 +372,8 @@ int GraphicsMain_createInterface() {
 		
 		// label[label_off+2] "Nadmiar:                    "
 		lab				= &label[c_label++];
-		Label_new(lab, "Nadmiar:                    ");
-		sprintf(lab->text_block.text+9, "%s", (img_overflow)?"przepełnienie":"do skrajnych");
+		Label_newText(lab, "Nadmiar:                    ");
+		Label_stringPrintf(lab, 9, "%s", (img_overflow)?"przepełnienie":"do skrajnych");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 10, 5, true);
 		//! add some cparams to function button_overflow_change and button_brightness_reset
 			cparam_off = 0;
@@ -496,21 +496,21 @@ int GraphicsMain_createInterface() {
 		// label[label_off] "Algorytm:           "
 		lab_algo_ind	= c_label;
 		lab				= &label[c_label++];
-		Label_new(lab, "Algorytm:           ");
-		sprintf(lab->text_block.text+10, "%10s", (t_algo)?"Otsu":"tom3k.info");
+		Label_newText(lab, "Algorytm:           ");
+		Label_stringPrintf(lab, 10, "%10s", (t_algo)?"Otsu":"tom3k.info");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 45, 5, true);
 		
 		// label[label_off+1] "Użyty histogram:       "
 		lab_hist_ind	= c_label;
 		lab				= &label[c_label++];
-		Label_new(lab, "Użyty histogram:       ");
-		sprintf(lab->text_block.text+18, "%5s", HIST_NAMES[num_hist]);
+		Label_newText(lab, "Użyty histogram:       ");
+		Label_stringPrintf(lab, 18, "%5s", HIST_NAMES[num_hist]);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 18, 5, true);
 		
 		// label[label_off+2] "Próg:       "
 		lab_thr_ind		= c_label;
 		lab				= &label[c_label++];
-		Label_new(lab, "Próg:       ");
+		Label_newText(lab, "Próg:       ");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 50, 5, true);
 		
 		//! add some cparams to functions which use label with binarization threshold value
@@ -676,8 +676,8 @@ int GraphicsMain_createInterface() {
 			for (x = 0; x < 3; x++) {		// foreach column of grid
 				// Create Label with weight value and add it to grid(gri) at [y][2*x+1] = [0,1,2][1,3,5]
 				lab = &label[c_label++];
-				Label_new(lab, "       ");
-				snprintf(lab->text_block.text, 7, "%6.2f", gtsf->weight[k]);
+				Label_newLen(lab, 7);
+				Label_stringPrintf(lab, 0, "%6.2f", gtsf->weight[k]);
 				Label_applyDefaultStyle(lab, 0, 0, font2, 10, 2, true);
 				Grid_add(gri, WIDGET(lab), y, (x<<1)+1, ALIGN_LEFT, ALIGN_CENTER, 10, 3, 10, (x==2)?0:20);
 				
@@ -719,8 +719,8 @@ int GraphicsMain_createInterface() {
 		
 		// Create Label with predefinied filter name
 		lab = &label[c_label++];
-		Label_new(lab, "STD:                                    ");
-		snprintf(lab->text_block.text+5, 32, "%32s", GToolsSplotFilter_getFilterName(gtsf));
+		Label_newText(lab, "STD: ");
+		Label_stringPrintf(lab, 5, "%32s", GToolsSplotFilter_getFilterName(gtsf));
 		Label_applyDefaultStyle(lab, 0, 0, font2, 60, 2, true);
 		Grid_add(gri, WIDGET(lab), y, (x<<1)+1, ALIGN_LEFT, ALIGN_CENTER, 10, 3, 10, (x==2)?0:20);
 		//! add some cparams for function button_change_filter_weight and button_change_filter_predef
@@ -833,13 +833,13 @@ int GraphicsMain_createInterface() {
 		/** Two header labels, will be added to first row of grid(gri) **/
 		// label "Wierszy:" add to grid(gri) at [0][0]
 		lab = &label[c_label++];
-		Label_new(lab, "Wierszy:");
+		Label_newText(lab, "Wierszy:");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 1, 1, true);
 		Grid_add(gri, WIDGET(lab), 0, 0, ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 		
 		// label "Kolumn:" add to grid(gri) at [0][1]
 		lab = &label[c_label++];
-		Label_new(lab, "Kolumn:");
+		Label_newText(lab, "Kolumn:");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 1, 1, true);
 		Grid_add(gri, WIDGET(lab), 0, 1, ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
 		
@@ -849,8 +849,8 @@ int GraphicsMain_createInterface() {
 			// Create Label(lab) with rows or cols count
 			// [1][i=0] - rows(pdb->actY), [1][i=1] - cols(pdb->actX)
 			lab = &label[c_label++];
-			Label_new(lab, "    ");
-			snprintf(lab->text_block.text, 4, "%3hu", (i==0)?pdb->actY:pdb->actX); 
+			Label_newLen(lab, 4);
+			Label_stringPrintf(lab, 4, "%3hu", (i==0)?pdb->actY:pdb->actX); 
 			Label_applyDefaultStyle(lab, 0, 0, font2, 20, 2, true);
 			
 			// create StackList(sliy2) (contains arrow buttons placed along Y axis)
@@ -974,8 +974,8 @@ int GraphicsMain_createInterface() {
 		
 		// label with reconstruction limit (for spinner)
 		lab = &label[c_label++];
-		Label_new(lab, "       ");
-		sprintf(lab->text_block.text,  "%5hu", reconst_limit);
+		Label_newLen(lab, 7);
+		Label_stringPrintf(lab, 0, "%5hu", reconst_limit);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 20, 2, true);
 		
 		// create StackList(sliy2) (contains arrow buttons placed along Y axis)
@@ -1016,7 +1016,7 @@ int GraphicsMain_createInterface() {
 		
 		// label "Limit iteracji:" add to stacklist(sliy)
 		lab = &label[c_label++];
-		Label_new(lab, "Limit iteracji:");
+		Label_newText(lab, "Limit iteracji:");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 20, 2, true);
 		
 		StackList_addWidgetLast(sliy, WIDGET(lab), ALIGN_CENTER, ALIGN_CENTER, 0, 0, 0, 0);
@@ -1061,8 +1061,8 @@ int GraphicsMain_createInterface() {
 	
 		// label(lab) "Próg:     "
 		lab = &label[c_label++];
-		Label_new(lab, "Próg:     ");
-		sprintf(lab->text_block.text+7, "%3d", rep_thr);
+		Label_newText(lab, "Próg:     ");
+		Label_stringPrintf(lab, 7, "%3d", rep_thr);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 37, 2, true);
 		//!
 			cparam_off = 0; 
@@ -1071,8 +1071,8 @@ int GraphicsMain_createInterface() {
 		
 		// label(lab) "Warunek:      "
 		lab = &label[c_label++];
-		Label_new(lab, "Warunek:      ");
-		sprintf(lab->text_block.text+9, "`%2s`", COND_SYM[rep_cond]);
+		Label_newText(lab, "Warunek:      ");
+		Label_stringPrintf(lab, 9, "`%2s`", COND_SYM[rep_cond]);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 20, 2, true);
 		//!
 			cparam_off = 0; 
@@ -1118,7 +1118,7 @@ int GraphicsMain_createInterface() {
 		
 		// label(lab) "Nowy kolor" add to base FloatingMenu(fmenu)
 		lab = &label[c_label++];
-		Label_new(lab, "Nowy kolor");
+		Label_newText(lab, "Nowy kolor");
 		Label_applyDefaultStyle(lab, 0, 0, font2, 20, 2, true);
 		FloatingMenu_addWidgetLast(fmenu, WIDGET(lab), ALIGN_CENTER, ALIGN_BOTTOM, 10, 10, 2, 10);
 		
@@ -1129,8 +1129,8 @@ int GraphicsMain_createInterface() {
 		for (i = 0; i < 3; i++) {
 			// label(lab) with spinner value
 			lab = &label[c_label++];
-			Label_new(lab, "    ");
-			sprintf(lab->text_block.text, "%3d", rep_new[i]);
+			Label_newLen(lab, 4);
+			Label_stringPrintf(lab, 0, "%3d", rep_new[i]);
 			Label_applyDefaultStyle(lab, 0, 0, font2, 10, 2, true);
 			
 			// create StackList(sliy2) (contains arrow buttons placed along Y axis)
@@ -1211,8 +1211,8 @@ int GraphicsMain_createInterface() {
 		
 		// label (lab) "Liczba węzłów:    "
 		lab = &label[c_label++];
-		Label_new(lab, "Liczba węzłów:    ");
-		sprintf(lab->text_block.text+18, "%3hu", hs->size);
+		Label_newText(lab, "Liczba węzłów:    ");
+		Label_stringPrintf(lab, 18, "%3hu", hs->size);
 		Label_applyDefaultStyle(lab, 0, 0, font2, 10, 2, true);
 		
 		// last row stacklist(slix)

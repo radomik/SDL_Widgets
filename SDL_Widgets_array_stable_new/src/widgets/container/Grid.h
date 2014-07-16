@@ -30,10 +30,10 @@
 		Container			_super;
 		ContainerItem		**items;
 		u16					*maxw;
+		u32					bord_color;		// RGBA (default black)
 		u16					c_row;
 		u16					c_col;
-		u32					bord_color;		// RGBA (default black)
-		b8					showBorder;
+		b8					showBorder : 1;
 	};
 	
 	void Grid_vdestroy(void *vthis);

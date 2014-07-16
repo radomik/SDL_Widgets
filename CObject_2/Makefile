@@ -23,6 +23,7 @@ all:
 	$(CC) $(CFLAGS) $(INC) -c $(SRCDIR)/coIObject.c -o $(ODIR)/coIObject.o
 	$(CC) $(CFLAGS) $(INC) -c $(SRCDIR)/coError.c -o $(ODIR)/coError.o
 	$(CC) $(CFLAGS) $(INC) -c $(SRCDIR)/coUtils.c -o $(ODIR)/coUtils.o
+	$(CC) $(CFLAGS) $(INC) -c $(SRCDIR)/String.c -o $(ODIR)/String.o
 	
 	$(AR) $(LIBPATH) $(OFILES)
 	$(RANLIB) $(LIBPATH)
@@ -33,3 +34,4 @@ asm:
 	$(CC) $(AFLAGS) $(INC) -c $(SRCDIR)/coIObject.c -o $(ASMDIR)/coIObject.asm
 	$(CC) $(AFLAGS) $(INC) -c $(SRCDIR)/coError.c -o $(ASMDIR)/coError.asm
 	$(CC) $(AFLAGS) $(INC) -c $(SRCDIR)/coUtils.c -o $(ASMDIR)/coUtils.asm
+	$(CC) $(AFLAGS) $(INC) -c $(SRCDIR)/String.c -o $(ASMDIR)/String.asm

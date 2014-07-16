@@ -32,17 +32,19 @@
 		
 		/*! First source (with interpolation) !*/
 		float 		*samples;		// source array of samples (pointer to WaveDrawBox.samples
-		u16		samples_size;
+		
 		
 		/*! Second source (with multiplication) !*/
 		wdb_point	*points;
-		u16		points_size;
-		
-		/*! Source  0 - points, 1 - samples !*/
-		u8		type;
 		
 		int 		left_phase;		// left phase
 		int 		right_phase;	// right phase
+		
+		u16			samples_size;
+		u16			points_size;
+		
+		/*! Source  0 - points, 1 - samples !*/
+		u8			type : 1;
 	};
 	
 	/** Default constructor */

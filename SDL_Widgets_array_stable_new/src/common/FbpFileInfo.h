@@ -32,10 +32,10 @@
 extern const coClass *FbpFileInfo_class;
 #define FBP_FILE_INFO(VTHIS) ((FbpFileInfo*)VTHIS)
 struct FbpFileInfo {
-	TextBlock	_super;				// TextBlock with filename (basename)
-	b8			is_selected;			// whether file is selected (by file manager - initialized to false)
-	b8			is_directory;			// whether file is a directory
-	b8			is_image;				// whether file is an image supported by Image class
+	TextBlock	_super;					// TextBlock with filename (basename)
+	b8			is_selected : 1;		// whether file is selected (by file manager - initialized to false)
+	b8			is_directory : 1;		// whether file is a directory
+	b8			is_image : 1;			// whether file is an image supported by Image class
 };
 
 FbpFileInfo* FbpFileInfo_new(FbpFileInfo *this, 

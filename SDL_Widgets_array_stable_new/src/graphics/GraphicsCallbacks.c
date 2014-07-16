@@ -112,8 +112,7 @@ void button_imgsrc_open(Widget *sender, Screen *screen) {
 		
 		if (*thr_value <= 255) {
 			*thr_value = 0xFFFFFFFF;
-			thr_bin_label->text_block.text[7] = '\0'; /// @todo class String and setter access
-			//sprintf(thr_bin_label->text_block.text+7, ""/*"\0"*/); 
+			Label_stringCutAtIndex(thr_bin_label, 7);
 			Widget_refresh(WIDGET(thr_bin_label));
 			ButtonImage_setEnabled(but_thr_up, false);
 			ButtonImage_setEnabled(but_thr_dn, false);
@@ -172,8 +171,7 @@ void button_src_restore(Widget *sender, Screen *screen) {
 	
 	if (*thr_value <= 255) {
 		*thr_value = 0xFFFFFFFF;
-		thr_bin_label->text_block.text[7] = '\0'; /// @todo class String and setter access
-		//sprintf(thr_bin_label->text_block.text+7, "\0"); 
+		Label_stringCutAtIndex(thr_bin_label, 7);
 		Widget_refresh(WIDGET(thr_bin_label));
 		ButtonImage_setEnabled(but_thr_up, false);
 		ButtonImage_setEnabled(but_thr_dn, false);
@@ -227,7 +225,7 @@ void button_brightness_change(Widget *sender, Screen *screen) {
 	else {
 		if (*img_off >= -250) *img_off -= 2; else return;
 	}
-	sprintf(label->text_block.text+11, "%hd", *img_off); 
+	Label_stringPrintf(label, 11, "%hd", *img_off); 
 	Widget_refresh(WIDGET(label));
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
@@ -261,7 +259,7 @@ void button_contrast_change(Widget *sender, Screen *screen) {
 	else {
 		if (*img_mul >= -99.95f) *img_mul -= 0.02f; else return;
 	}
-	sprintf((label->text_block.text+11), "%5.2f", *img_mul); 
+	Label_stringPrintf(label, 11, "%5.2f", *img_mul);
 	Widget_refresh(WIDGET(label));
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
@@ -295,7 +293,7 @@ void button_overflow_change(Widget *sender, Screen *screen) {
 	else {
 		if (! *allow_of) *allow_of = true; else return;
 	}
-	sprintf(label->text_block.text+9, "%s", (*allow_of)?"przepełnienie":"do skrajnych"); 
+	Label_stringPrintf(label, 9, "%s", (*allow_of)?"przepełnienie":"do skrajnych"); 
 	Widget_refresh(WIDGET(label));
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
@@ -329,10 +327,10 @@ void button_brightness_reset(Widget *sender, Screen *screen) {
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
 		fprintf(stderr, "button_brightness_reset() >> Error in GToolsPoint_apply_brightness_contrast() [exited with code %d]\n", s);
-		
-	sprintf((label_off->text_block.text+11), "%hd", *img_off);  // brightness
-	sprintf((label_mul->text_block.text+11), "%5.2f", *img_mul);	// contrast
-	sprintf((label_of->text_block.text+9),   "%s", (*allow_of)?"przepełnienie":"do skrajnych");
+	
+	Label_stringPrintf(label_off, 11, "%hd", *img_off);  // brightness
+	Label_stringPrintf(label_mul, 11, "%5.2f", *img_mul);	// contrast
+	Label_stringPrintf(label_of, 9, "%s", (*allow_of)?"przepełnienie":"do skrajnych");
 	Widget_refresh(WIDGET(label_off));
 	Widget_refresh(WIDGET(label_mul));
 	Widget_refresh(WIDGET(label_of));
@@ -379,8 +377,7 @@ void button_dest_to_src(Widget *sender, Screen *screen) {
 		Widget_setVisible(WIDGET(&histogram[1]), false);
 		Widget_setVisible(WIDGET(&histogram[2]), false);
 	}
-	thr_bin_label->text_block.text[7] = '\0';
-	//sprintf(thr_bin_label->text_block.text+7, "\0"); 
+	Label_stringCutAtIndex(thr_bin_label, 7);
 	Widget_refresh(WIDGET(thr_bin_label)); // reset "Próg:"
 	ButtonImage_setEnabled(thr_up_butimg, false);
 	ButtonImage_setEnabled(thr_dn_butimg, false);
@@ -448,10 +445,12 @@ void button_bin_algo_toggle(Widget *sender, Screen *screen) {
 	
 	*thr_value = 0xFFFFFFFF;
 	
-	sprintf(thr_bin_algo_label->text_block.text+10, (*t_algo)?"Otsu":"tom3k.info"); 
+	Label_stringPrintf(thr_bin_algo_label, 10, "%s", (*t_algo)?"Otsu":"tom3k.info"); 
 	Widget_refresh(WIDGET(thr_bin_algo_label));
-	thr_bin_label->text_block.text[7] = '\0';
-	//sprintf(thr_bin_label->text_block.text+7, "\0");
+	
+	Label_stringCutAtIndex(thr_bin_label, 7);
+	Widget_refresh(WIDGET(thr_bin_label));
+	
 	ButtonImage_setEnabled(thr_up_butimg, false);
 	ButtonImage_setEnabled(thr_dn_butimg, false);
 	screen->need_reload = true;
@@ -484,11 +483,12 @@ void button_used_hist_toggle(Widget *sender, Screen *screen) {
 	
 	*thr_value = 0xFFFFFFFF;
 	
-	sprintf(lab_used_hist->text_block.text+18, "%5s", hist_names[*num_hist]);
+	Label_stringPrintf(lab_used_hist, 18, "%5s", hist_names[*num_hist]);
 	Widget_refresh(WIDGET(lab_used_hist));
-	thr_bin_label->text_block.text[7] = '\0';
-	//sprintf(thr_bin_label->text_block.text+7, "\0"); 
+	
+	Label_stringCutAtIndex(thr_bin_label, 7);
 	Widget_refresh(WIDGET(thr_bin_label));
+	
 	ButtonImage_setEnabled(thr_up_butimg, false);
 	ButtonImage_setEnabled(thr_dn_butimg, false);
 	screen->need_reload = true;
@@ -509,7 +509,8 @@ void button_threshold_change(Widget *sender, Screen *screen) {
 	if (*thr_value <= 255) {
 		if (sender->id) { if (*thr_value <= 254) *thr_value += 1; else return; }
 		else { if (*thr_value >= 1) *thr_value -= 1; else return; }
-		sprintf(thr_bin_label->text_block.text+7, "%lu", *thr_value); 
+		
+		Label_stringPrintf(thr_bin_label, 7, "%lu", *thr_value);
 		Widget_refresh(WIDGET(thr_bin_label));
 		screen->need_reload = true;
 	}
@@ -602,7 +603,7 @@ void button_bin_create_histograms(Widget *sender, Screen *screen) {
 	const b8	 *t_algo		= (const b8*) sender->cparam[9];
 	u8		s;
 	if ( (s = GToolsPoint_create_histograms(imgsrc->surf, colors)) ) {
-		fprintf(stderr, "button_bin_create_histograms() >> Error in GToolsPoint_create_histograms() [exited with code %d]\n", s);
+		fprintf(stderr, "button_bin_create_histograms: Error in GToolsPoint_create_histograms() [exited with code %d]\n", s);
 	}
 	else {	// refresh histograms
 		histogram[0].data = colors[0];		// source for histogram R
@@ -616,12 +617,11 @@ void button_bin_create_histograms(Widget *sender, Screen *screen) {
 		Widget_setVisible(hist_cont_wt, true);
 		
 		if ( (s = GToolsPoint_calculate_binary_threshold(histogram[*num_hist].data, thr_value, *t_algo)) ) {
-			fprintf(stderr, "button_bin_create_histograms() >> Error in GToolsPoint_calculate_binary_threshold() [exited with code %d]\n", s);
-			thr_bin_label->text_block.text[7] = '\0';
-			//sprintf(thr_bin_label->text_block.text+7, "\0"); 
+			fprintf(stderr, "button_bin_create_histograms: Error in GToolsPoint_calculate_binary_threshold() [exited with code %d]\n", s);
+			Label_stringCutAtIndex(thr_bin_label, 7);
 		}
 		else {
-			sprintf(thr_bin_label->text_block.text+7, "%lu", *thr_value);
+			Label_stringPrintf(thr_bin_label, 7, "%lu", *thr_value);
 		}
 		ButtonImage_setEnabled(thr_up_butimg, !s);
 		ButtonImage_setEnabled(thr_dn_butimg, !s);
@@ -705,11 +705,11 @@ void button_change_filter_weight(Widget *sender, Screen *screen) {
 	}
 	
 	if (prev_ind != 0xFFFF) {	// value changed manually (reset predefinied filter label)
-		sprintf(predef_label->text_block.text, "STD: ");
+		Label_setText(predef_label, "STD: ");
 		Widget_refresh(WIDGET(predef_label));
 	}
 	
-	snprintf(weight_label->text_block.text, 7, "%6.2f", gtsf->weight[w]);
+	Label_stringPrintf(weight_label, 0, "%6.2f", gtsf->weight[w]);
 	Widget_refresh(WIDGET(weight_label));
 	screen->need_reload = true;
 }
@@ -735,10 +735,10 @@ void button_change_filter_predef(Widget *sender, Screen *screen) {
 	}
 	
 	// print filter name on sender->parameter label widget
-	snprintf((predef_label->text_block.text+5), 32, "%s", GToolsSplotFilter_getFilterName(gtsf));
+	Label_stringPrintf(predef_label, 5, "%s", GToolsSplotFilter_getFilterName(gtsf));
 	Widget_refresh(WIDGET(predef_label));
 	for (w = 0; w < 9; w++) {	// update weights on labels and in weight array
-		snprintf(weight_label[w].text_block.text, 7, "%6.2f", gtsf->weight[w]);
+		Label_stringPrintf(&weight_label[w], 0, "%6.2f", gtsf->weight[w]);
 		Widget_refresh(WIDGET(&weight_label[w]));
 	}
 	screen->need_reload = true;
@@ -780,7 +780,7 @@ void button_change_strelem_size(Widget *sender, Screen *screen) {
 		case 3: PixelDrawBox_decreaseActX(pdb, d); if (! WIDGET(pdb)->need_reload) return; break;
 		default: return;
 	}
-	snprintf(label->text_block.text, 4, "%3hu", (sender->id < 2) ? pdb->actY : pdb->actX);
+	Label_stringPrintf(label, 0, "%3hu", (sender->id < 2) ? pdb->actY : pdb->actX);
 	
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
@@ -886,7 +886,7 @@ void button_change_reconst_limit(Widget *sender, Screen *screen) {
 	else {
 		if (*limit > 5) *limit -= 5; else return;
 	}
-	sprintf(label->text_block.text, "%5hu", *limit); 
+	Label_stringPrintf(label, 0, "%5hu", *limit); 
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -1018,7 +1018,7 @@ void button_rep_col_change_threshold(Widget *sender, Screen *screen) {
 	if (sender->id) { if (*rep_thr <= 254) (*rep_thr)++; else return; }
 	else { if (*rep_thr >= 1) (*rep_thr)--; else return; }
 	
-	sprintf(label->text_block.text+7, "%3d", *rep_thr); 
+	Label_stringPrintf(label, 7, "%3d", *rep_thr); 
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -1037,7 +1037,7 @@ void button_rep_col_change_condition(Widget *sender, Screen *screen) {
 	if (sender->id) { if (*cond < CONDITION_MAXIND) (*cond)++; else return; }
 	else { if (*cond > 0) (*cond)--; else return; }
 	
-	sprintf(label->text_block.text+9, "`%2s`", COND_SYM[*cond]); 
+	Label_stringPrintf(label, 9, "`%2s`", COND_SYM[*cond]); 
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -1056,7 +1056,7 @@ void button_rep_col_change_new_color(Widget *sender, Screen *screen) {
 	if (sender->id) { if (*rep_channel <= 254) (*rep_channel)++; else return; }
 	else { if (*rep_channel >= 1) (*rep_channel)--; else return; }
 	
-	sprintf(label->text_block.text, "%3d", *rep_channel); 
+	Label_stringPrintf(label, 0, "%3d", *rep_channel);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -1123,7 +1123,7 @@ void button_change_hist_stretch_nodes(Widget *sender, Screen *screen) {
 		if (hsg->size >= 3) s = HistStretchGraph_setCountPoints(hsg, hsg->size-1); 
 		else return; 
 	}
-	sprintf(label->text_block.text+18, "%3d", hsg->size); 
+	Label_stringPrintf(label, 18, "%3d", hsg->size); 
 	Widget_refresh(WIDGET(label));
 	
 	if ( s ) {

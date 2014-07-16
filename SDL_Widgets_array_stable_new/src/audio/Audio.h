@@ -52,21 +52,19 @@
 	#define AUDIO(VTHIS) ((Audio*)VTHIS)
 	
 	struct Audio {
-		coObject 	_super;
-		
-		audiolib	lib;				// library used to play sounds (if more than two need to change conditions in Audio_stop, Audio_pause)
-		b8	 	initialized;		// if library initialized for current object (only one object at once can be initialized)
-		b8	 	play;				// if now playing
-		b8	 	pause;				// if now paused
-		
-		u16		sample_frequency;
-		u64	 	audio_format;
-		u16	 	buffer_size;
-		u8	 	channels;
-		u16	 	id;
-		PaStream 	*pa_stream;
-		PaStreamParameters outputParameters;
-		char	 	name[21];
+		coObject 			_super;
+		PaStream 			*pa_stream;
+		u64	 				audio_format;
+		u16					sample_frequency;
+		u16	 				buffer_size;
+		u16	 				id;
+		PaStreamParameters 	outputParameters;
+		char	 			name[21];
+		u8	 				channels : 4;
+		audiolib			lib : 1;				// library used to play sounds (if more than two need to change conditions in Audio_stop, Audio_pause)
+		b8	 				initialized : 1;		// if library initialized for current object (only one object at once can be initialized)
+		b8	 				play : 1;				// if now playing
+		b8	 				pause : 1;				// if now paused
 	};
 
 	/** Default constructor */

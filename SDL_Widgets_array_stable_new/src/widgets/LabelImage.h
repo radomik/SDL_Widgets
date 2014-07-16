@@ -35,7 +35,7 @@
 		u16 		border_width;
 		u16 		padx;
 		u16 		pady;
-		b8 			fixed_width;	// fixed_width can be set ONLY after first call to LabelImage_refresh
+		b8 			fixed_width : 1; 	// fixed_width can be set ONLY after first call to LabelImage_refresh
 	};
 	
 	LabelImage* LabelImage_new(LabelImage *this, const char	*img_path);

@@ -28,10 +28,10 @@
 	#define VERBOSE2_EVENTS  1
 	
 	struct ScreenBackground {
-		Widget		*bg_widget;		// any Widget pointer if NULL is not drown
-		u32			bgcolor;		// background RGB color
-		u8			bg_mode;		// either: BG_STRETCH or BG_CENTERED
-		b8			fillcolor;		// if true FillRect is called before bg_widget is drown
+		Widget		*bg_widget;			// any Widget pointer if NULL is not drown
+		u32			bgcolor;			// background RGB color
+		u8			bg_mode : 1;		// either: BG_STRETCH or BG_CENTERED
+		b8			fillcolor : 1;		// if true FillRect is called before bg_widget is drown
 	};
 	typedef struct ScreenBackground ScreenBackground;
 	
@@ -41,7 +41,7 @@
 	struct Screen {
 		coObject			_super;		// extends from coObject (to consider: from Widget or Container)
 		SDL_Event			event;
-		ScreenBackground	background;
+		
 		
 		/* Array with widgets on screen */
 		Widget				**widget;
@@ -69,14 +69,16 @@
 		/* Callback array with cparam-s */
 		Callback			*callback;		/*read-only*/
 		
-		/* Event info */
-		b8				has_exited;		// set to true if user press ESC, CTRL-C, or window closes
-		b8				event_handled;	// set to true before run user callback function
-		b8				pool_events;
+		ScreenBackground	background;
 		
-		b8				disable_auto_flip;	// disable autoflip of surface after repaint - default false
-		b8				drag_on;
-		b8				need_reload;
+		/* Event info */
+		b8				has_exited : 1;		// set to true if user press ESC, CTRL-C, or window closes
+		b8				event_handled : 1;	// set to true before run user callback function
+		b8				pool_events : 1;
+		
+		b8				disable_auto_flip : 1;	// disable autoflip of surface after repaint - default false
+		b8				drag_on : 1;
+		b8				need_reload : 1;
 	};										// void mouse_click(Widget *sender, Screen *screen)
 											// to prevent passing event through tree of widgets
 											// simply set screen->event_handled=true at the beginning

@@ -60,7 +60,7 @@
 	
 	 
 	typedef enum {
-		FILTER_SPEC_DIVIDER,
+		FILTER_SPEC_DIVIDER = 0,
 		CUSTOM_DIVIDER,
 		SUM_OF_WEIGHTS_DIVIDER
 	} GToolsSplotFilter_divider_usage;
@@ -70,11 +70,11 @@
 	
 	struct GToolsSplotFilter {
 		coObject							_super;				// inherits from Object
-		u16									predef_filter_ind;
 		float								weight[9];
 		float								divider;
-		GToolsSplotFilter_divider_usage		divider_usage;
-		b8									has_widget_changing_divider;
+		u16									predef_filter_ind;
+		GToolsSplotFilter_divider_usage		divider_usage : 2;
+		b8									has_widget_changing_divider : 1;
 	};
 	
 	// Constructor

@@ -156,7 +156,7 @@ Button* FloatingMenu_addMenuButtonLast(	FloatingMenu	*this,
 }
 
 Label* FloatingMenu_addLabelLast(FloatingMenu *this, TTF_Font *font, const char *text) {
-	Label *lab = Label_new(new(Label_class), text);
+	Label *lab = Label_newText(new(Label_class), text);
 	if (! lab) {
 		fprintf(stderr, "FloatingMenu_addLabel[this=%p, text=%s]: Failed to allocate/create label.\n", this, text);
 		return NULL;

@@ -22,35 +22,64 @@
 	#define _TextBlock_h_
 	#include "StdDefinitions.h"
 	#include "Widget.h"
+	#include "String.h"
 	
 	extern const coClass *TextBlock_class;
 	#define TEXTBLOCK(VTHIS) ((TextBlock*)VTHIS)
 	
 	struct TextBlock {
 		Widget 		_super;			// TextBlock inherits from Widget
-		char		*text;
+		String 		string;
 		TTF_Font	*font;
 		SDL_Color	fgcolor;
 		u32			foreground;		// to set colors use setters, otherwise color wouldn't change
 		u32			background;
-		b8			foreground_changed;
+		b8			foreground_changed : 1;
 	};
 	
-	TextBlock* TextBlock_new(TextBlock *this, const char *text);
-	
+	/// Virtual methods implementations
 	void TextBlock_vrefresh(void *vthis);
-
 	void TextBlock_vdestroy(void *vthis);
+	const char *TextBlock_vtoString(const void *vthis);
 
-	void TextBlock_setText(TextBlock *this, const char *text);
+	/// Constructors
+	TextBlock* TextBlock_newText(TextBlock *this, const char *text);
 
-	void TextBlock_setFont(TextBlock *this, TTF_Font *font);
+	TextBlock* TextBlock_newString(TextBlock *this, const String *string);
+
+	TextBlock* TextBlock_newLen(TextBlock *this, size_t length);
+
+	TextBlock* TextBlock_copy(TextBlock *this, const TextBlock *src, b8 copy_pos);
+	
+
+	inline void TextBlock_stringCutAtIndex(TextBlock *this, size_t index);
+
+	inline TextBlock* TextBlock_stringAppendText(TextBlock *this, const char *text);
+
+	inline TextBlock* TextBlock_stringAppend(TextBlock *this, const String *string);
+
+	int TextBlock_stringPrintf(TextBlock *this, size_t _offset, const char *const format, ...);
+
+	inline int TextBlock_stringVprintf(TextBlock *this, size_t _offset, const char *const format, va_list ap);
+
+	inline void TextBlock_stringClear(TextBlock *this);
+
+	inline void TextBlock_stringWipe(TextBlock *this);
+
+	/// get string for constant operations on string
+	inline const String* TextBlock_getString(const TextBlock *this);
+	
+	inline const char* TextBlock_getText(const TextBlock *this);
+
+	inline void TextBlock_setText(TextBlock *this, const char *text);
+
+	inline void TextBlock_setString(TextBlock *this, const String *string);
+
+	inline void TextBlock_setFont(TextBlock *this, TTF_Font *font);
 		
-	void TextBlock_setForegroundColor(TextBlock *this, u32 rgb);
+	inline void TextBlock_setForegroundColor(TextBlock *this, u32 rgb);
 
 	inline void TextBlock_setBackgroundColor(TextBlock *this, u32 rgb);
-
-	const char *TextBlock_vtoString(const void *vthis);
 
 	inline void TextBlock_staticGetTextSize(TTF_Font *font, const char *text, int *w, int *h);
 	

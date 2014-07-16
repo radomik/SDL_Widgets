@@ -145,12 +145,12 @@ Button* Button_new(Button *this, const char	*text) {
 	this->enabled			= true;
 	
 	int i=0; for (; i < 4; i++)
-		Label_new(&this->label[i], text);
+		Label_newText(&this->label[i], text);
 	return this;
 }
 
 void Button_setBgColor(Button *this, u32 rgb) 
-	{ int i = 0; for(; i < 4; i++) Label_setBgColor(&this->label[i], rgb); }
+	{ int i = 0; for(; i < 4; i++) Label_setBackgroundColor(&this->label[i], rgb); }
 
 void Button_setBorder(Button *this, u16 bord_width, u32 rgb) 
 	{ int i = 0; for(; i < 4; i++) Label_setBorder(&this->label[i], bord_width, rgb); }
@@ -181,32 +181,32 @@ void Button_applyDefaultStyle(	Button *this,  u16 posx, u16 posy,
 	Label *lab = &this->label[BUT_NORMAL];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0x9F00F0);
-	Label_setBgColor(lab, 0xDBFFD0);
+	Label_setForegroundColor(lab, 0x9F00F0);
+	Label_setBackgroundColor(lab, 0xDBFFD0);
 	Label_setBorder(lab, 5, 0x3967FF);
 	
 	// mouse over
 	lab = &this->label[BUT_MOUSE_OVER];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0x9F00F0);
-	Label_setBgColor(lab, 0xB5FF9E);
+	Label_setForegroundColor(lab, 0x9F00F0);
+	Label_setBackgroundColor(lab, 0xB5FF9E);
 	Label_setBorder(lab, 5, 0x3967FF);
 	
 	// pressed
 	lab = &this->label[BUT_PRESSED];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0x9F00F0);
-	Label_setBgColor(lab, 0xFFDE59);
+	Label_setForegroundColor(lab, 0x9F00F0);
+	Label_setBackgroundColor(lab, 0xFFDE59);
 	Label_setBorder(lab, 5, 0x00C9D1);
 	
 	// disabled
 	lab = &this->label[BUT_DISABLED];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0xABABAB);
-	Label_setBgColor(lab, 0xDFDFDF);
+	Label_setForegroundColor(lab, 0xABABAB);
+	Label_setBackgroundColor(lab, 0xDFDFDF);
 	Label_setBorder(lab, 5, 0x717171);
 	
 	Widget_refresh(WIDGET(this));				// apply changes
@@ -223,32 +223,32 @@ void Button_applyDefaultStyle2(	Button *this,  u16 posx, u16 posy,
 	Label *lab = &this->label[BUT_NORMAL];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0x000000);
-	Label_setBgColor(lab, 0xEDECEB);
+	Label_setForegroundColor(lab, 0x000000);
+	Label_setBackgroundColor(lab, 0xEDECEB);
 	Label_setBorder(lab, 1, 0xEDECEB);
 	
 	// mouse over
 	lab = &this->label[BUT_MOUSE_OVER];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0xFFFFFF);
-	Label_setBgColor(lab, 0x7EA4D4);
+	Label_setForegroundColor(lab, 0xFFFFFF);
+	Label_setBackgroundColor(lab, 0x7EA4D4);
 	Label_setBorder(lab, 1, 0x7EA4D4);
 	
 	// pressed
 	lab = &this->label[BUT_PRESSED];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0xFFFFFF);
-	Label_setBgColor(lab, 0xF25560);
+	Label_setForegroundColor(lab, 0xFFFFFF);
+	Label_setBackgroundColor(lab, 0xF25560);
 	Label_setBorder(lab, 1, 0xEDECEB);
 	
 	// disabled
 	lab = &this->label[BUT_DISABLED];
 	Label_setPadding(lab, padx, pady);
 	Label_setFont(lab, font2);
-	Label_setFontColor(lab, 0xAEAEAE);
-	Label_setBgColor(lab, 0xFFFFFF);
+	Label_setForegroundColor(lab, 0xAEAEAE);
+	Label_setBackgroundColor(lab, 0xFFFFFF);
 	Label_setBorder(lab, 1, 0xEDECEB);
 	
 	Widget_refresh(WIDGET(this));				// apply changes

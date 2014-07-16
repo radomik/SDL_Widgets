@@ -225,6 +225,9 @@ void Main_createInterface() {
 }
 
 int main(int argc, const char **argv) {
+	fprintf(stderr,"%s: sizeof(Widget)=%lu, sizeof(Screen)=%lu\n",
+		__FUNCTION__, sizeof(Widget), sizeof(Screen));
+	
 	merr ee;
 	if ( (ee = Memory_init()) ) {
 		fprintf(stderr, "main: Memory_init() failed with error: %s\n", Memory_getError(ee));

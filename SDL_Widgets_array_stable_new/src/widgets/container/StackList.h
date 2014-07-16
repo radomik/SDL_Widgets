@@ -41,7 +41,7 @@
 		ContainerItem 			*items;			// array of items
 		u32 					size;
 		u32 					count;
-		enum layouttype			layout;
+		enum layouttype			layout : 1;
 	};
 	
 	const char* StackList_getLayoutName(layouttype layout);

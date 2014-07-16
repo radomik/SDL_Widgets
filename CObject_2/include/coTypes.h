@@ -38,6 +38,7 @@ extern "C" {
 	typedef struct coList2D				coList2D;
 	typedef struct coList2DItem			coList2DItem;
 	typedef struct coMemoryInfo			coMemoryInfo;
+	typedef struct String				String;
 
 
 

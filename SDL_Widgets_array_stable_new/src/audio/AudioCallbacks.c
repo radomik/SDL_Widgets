@@ -104,7 +104,8 @@ void button_freq1_change(Widget *sender, Screen *screen) {
 		if (audiotest->freq1 > 10) AudioTest_setFreq1(audiotest, audiotest->freq1-10);
 		else return;
 	}
-	sprintf(label->text_block.text+12, "%5d Hz", audiotest->freq1);
+	
+	Label_stringPrintf(label, 12, "%5d Hz", audiotest->freq1);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -127,7 +128,7 @@ void button_fase1_change(Widget *sender, Screen *screen) {
 		if (audiotest->fase1 > 0) AudioTest_setFase1(audiotest, audiotest->fase1-5);
 		else return;
 	}
-	sprintf(label->text_block.text+7, "%5d", audiotest->fase1);
+	Label_stringPrintf(label, 7, "%5d", audiotest->fase1);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -150,7 +151,7 @@ void button_freq2_change(Widget *sender, Screen *screen) {
 		if (audiotest->freq2 > 10) AudioTest_setFreq2(audiotest, audiotest->freq2-10);
 		else return;
 	}
-	sprintf(label->text_block.text+12, "%5d Hz", audiotest->freq2);
+	Label_stringPrintf(label, 12, "%5d Hz", audiotest->freq2);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -173,7 +174,7 @@ void button_fase2_change(Widget *sender, Screen *screen) {
 		if (audiotest->fase2 > 0) AudioTest_setFase2(audiotest, audiotest->fase2-5);
 		else return;
 	}
-	sprintf(label->text_block.text+7, "%5d", audiotest->fase2);
+	Label_stringPrintf(label, 7, "%5d", audiotest->fase2);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -216,7 +217,7 @@ void button_source_change(Widget *sender, Screen *screen) {
 	audio_current = audio[*audio_current_index];
 	
 	if (_play) Audio_play(audio_current, _pause);
-	sprintf(label->text_block.text+22, "%20s", audio_current->name);
+	Label_stringPrintf(label, 22, "%20s", audio_current->name);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -239,7 +240,7 @@ void button_sinefreq_change(Widget *sender, Screen *screen) {
 		if (audiosinus->freq >= 20.0f) AudioSinus_setFrequency(audiosinus, audiosinus->freq - 20.00f);
 		else return;
 	}
-	sprintf((label->text_block.text+19), "%8.2f", audiosinus->freq);
+	Label_stringPrintf(label, 19, "%8.2f", audiosinus->freq);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -256,7 +257,7 @@ void image_mrelease(Widget *sender, Screen *screen) {
 	if (freq > 20000.0f) freq = 20000.0f;
 	
 	AudioSinus_setFrequency(audiosinus, freq);
-	sprintf(label->text_block.text+19, "%8.2f", audiosinus->freq);
+	Label_stringPrintf(label, 19, "%8.2f", audiosinus->freq);
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }
@@ -279,7 +280,7 @@ void button_audio_from_graph_type_change(Widget *sender, Screen *screen) {
 		if (afg->type) AudioFromGraph_setType(afg, 0);
 		else return;
 	}
-	sprintf(label->text_block.text, "%s", (afg->type)?"Interpolacja":"Multipleksacja");
+	Label_stringPrintf(label, 0, "%s", (afg->type)?"Interpolacja":"Multipleksacja");
 	Widget_refresh(WIDGET(label));
 	screen->need_reload = true;
 }

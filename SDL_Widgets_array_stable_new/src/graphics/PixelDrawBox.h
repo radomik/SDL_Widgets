@@ -31,9 +31,6 @@
 	struct PixelDrawBox {
 		Grid	_super;		// inherits from Grid
 		
-		b8		enabled;	// whether Widget is enabled to interact with user
-		b8		mouse_ispressed;
-		
 		u16		width;		// desired width and height of this Widget
 		u16		height;
 		
@@ -46,6 +43,9 @@
 		// private
 		u16		spec_pix_x;
 		u16		spec_pix_y;
+		
+		b8		enabled : 1;	// whether Widget is enabled to interact with user
+		b8		mouse_ispressed : 1;
 	};
 	
 	//! Returns rectangle color of given row and col in PixelDrawBox

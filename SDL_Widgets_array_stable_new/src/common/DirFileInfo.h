@@ -17,11 +17,11 @@ struct DirFileInfo {
 	char			ext[MAX_EXT_SIZE];
 	
 	/// these fields are only valid after call to DirFileInfo_setInfo()
-	b8				is_directory;
-	b8				is_file;
-	b8				is_unknown;
-	b8				is_symlink; // is_symlink=true can be mixed together with
-								// is_directory, is_file, is_unknown set to true
+	b8				is_directory : 1;
+	b8				is_file  : 1;
+	b8				is_unknown  : 1;
+	b8				is_symlink  : 1; // is_symlink=true can be mixed together with
+									 // is_directory, is_file, is_unknown set to true
 };
 
 DirFileInfo* 		DirFileInfo_new(DirFileInfo *this);
