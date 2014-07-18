@@ -35,7 +35,7 @@
 		
 		Screen		screen;
 		Image		backgroundImage;
-		Rectangle	border_rect, border_rect2;
+		Rectangle	topFileRect, bottomFileRect;
 		Button		butOk, butCancel;
 		Image		previewImage;
 		

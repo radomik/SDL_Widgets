@@ -1,5 +1,5 @@
 
-CFLAGS 	:= -Wall -msse3 -march=native -mtune=native -pipe -O1 #-pedantic -ansi
+CFLAGS 	:= -Wall -msse3 -march=native -mtune=native -pipe -O1 -pedantic #-ansi
 AFLAGS  := $(CFLAGS) -S -masm=intel -fverbose-asm
 CC 		:= /usr/lib/colorgcc/bin/x86_64-pc-linux-gnu-gcc
 AR		:= ar rv

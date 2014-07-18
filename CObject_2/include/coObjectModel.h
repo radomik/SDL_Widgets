@@ -52,8 +52,17 @@ void* delete(void *vthis);
 
 #define classname(VTHIS) 		(classof(VTHIS)->name)
 
+/** Call virtual toString method of object */
 #define toString(VTHIS) 		((VTHIS) ? (coIObject_toString(VTHIS)) : (TO_STRING_NULL_THIS_STR))
 
+#define MAX_FULL_STRING_LEN	1024
+/** Get information in form "<typename> @ <this pointer> 'toString()'"
+ * @param	VTHIS 	(void*) any class directly or indirectly inheriting from coObject
+ * @note length of overall message is limited to MAX_FULL_STRING_LEN characters
+ * 
+ * @return Full description of object
+ */
+const char *toFullString(const void *vthis);
 
 #ifdef	__cplusplus
 }

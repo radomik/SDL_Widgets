@@ -124,8 +124,8 @@ static b8 FileBrowsePanel_getFolderContent(FileBrowsePanel *this) {
 	//	__FUNCTION__, fcount, fsize, fileInfoArray);
 	
 	/// create ".." entry
-	//fprintf(stderr, "%s: Creating '..' entry\n", __FUNCTION__);
 	fbinfo = &fileInfoArray[0];
+	fprintf(stderr, "%s: Creating '..' entry [fbinfo=%p]\n", __FUNCTION__, fbinfo);
 	FbpFileInfo_new(fbinfo, "..", true, this->font);
 	
 	FbpFileInfo_setClickHandler(fbinfo, FileBrowsePanel_fileClicked, this);
@@ -159,7 +159,7 @@ static b8 FileBrowsePanel_getFolderContent(FileBrowsePanel *this) {
 					(DirFileInfo_checkExt(&finfo, this->fileTypes)))) 
 			{
 				fbinfo = &fileInfoArray[i++];
-				
+				fprintf(stderr, "%s: Creating '%s' entry [fbinfo=%p]\n", __FUNCTION__, DirFileInfo_getName(&finfo), fbinfo);
 				FbpFileInfo_new(fbinfo, DirFileInfo_getName(&finfo), finfo.is_directory, this->font);
 					
 				FbpFileInfo_setClickHandler(fbinfo, FileBrowsePanel_fileClicked, this);
@@ -188,46 +188,51 @@ static b8 FileBrowsePanel_getFolderContent(FileBrowsePanel *this) {
 	return true;
 }
 
-static inline void FileBrowsePanel_createPreviewImage(FileBrowsePanel *this, FbpFileInfo *fbinfo) {
+static void FileBrowsePanel_rescalePreviewImage(FileBrowsePanel *this) {
 	Widget *wtImgPrev = WIDGET(&this->previewImage);
-	double scale;
-	
-	delete(wtImgPrev);
-	Image_new(IMAGE(wtImgPrev), FbpFileInfo_getFilename(fbinfo), this->p_x, this->p_y);
-	
-	if (! wtImgPrev->visible) {
-		fprintf(stderr, "%s: Failed to load preview image for file: '%s'\n", __FUNCTION__, FbpFileInfo_getFilename(fbinfo));
-		return;
-	}
 	
 	if (wtImgPrev->pos.w > wtImgPrev->pos.h) {
 		if (wtImgPrev->pos.w > this->p_w) {
-			scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
+			double scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
 			Widget_scale(wtImgPrev, scale, scale, 1);
 		}
 		else {
 			if (wtImgPrev->pos.h > this->p_h) {
-				scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
+				double scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
 				Widget_scale(wtImgPrev, scale, scale, 1);
 			}
 		}
 	}
 	else {
 		if (wtImgPrev->pos.h > this->p_h) {
-			scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
+			double scale = ((double)this->p_h) / ((double)wtImgPrev->pos.h);
 			Widget_scale(wtImgPrev, scale, scale, 1);
 		}
 		else {
 			if (wtImgPrev->pos.w > this->p_w) {
-				scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
+				double scale = ((double)this->p_w) / ((double)wtImgPrev->pos.w);
 				Widget_scale(wtImgPrev, scale, scale, 1);
 			}
 		}
 	}
 	
-	Widget_setPosition(wtImgPrev, 
-						wtImgPrev->pos.x + (wtImgPrev->pos.w >> 1),
-						wtImgPrev->pos.y + ((this->p_h - wtImgPrev->pos.h) >> 1));
+	Widget_setCenter(wtImgPrev, 
+					this->p_x + (this->p_w >> 1),
+					this->p_y + (this->p_h >> 1));
+}
+
+static inline void FileBrowsePanel_createPreviewImage(FileBrowsePanel *this, FbpFileInfo *fbinfo) {
+	Widget *wtImgPrev = WIDGET(&this->previewImage);
+	
+	delete(&this->previewImage);
+	Image_new(&this->previewImage, FbpFileInfo_getFilename(fbinfo), this->p_x, this->p_y);
+	
+	if (! WIDGET(&this->previewImage)->visible) {
+		fprintf(stderr, "%s: Failed to load preview image for file: '%s'\n",  __FUNCTION__, FbpFileInfo_getFilename(fbinfo));
+		return;
+	}
+	
+	FileBrowsePanel_rescalePreviewImage(this);
 }
 
 static void FileBrowsePanel_fileClicked(Widget *sender, Screen *screen) {
@@ -331,7 +336,7 @@ static void FileBrowsePanel_screenMouseDownUp(Screen *screen, void *vthis) {
 		}
 		else { // mouse press/release with button other than left
 			// pass event to background rectangle (scrolling list)
-			Widget_mevent(WIDGET(&this->border_rect), screen);
+			Widget_mevent(WIDGET(&this->topFileRect), screen);
 			
 			if (screen->event_handled) return;
 		}
@@ -383,13 +388,13 @@ static void FileBrowsePanel_showFiles(FileBrowsePanel *this, Screen *screen) {
 	Widget *widget;
 	
 	FbpFileInfo *fileInfoArray = this->fileInfoArray;
-	u32 		y = UPPER_RESERV + WIDGET(&this->border_rect)->pos.y;
-	const u32 	x = WIDGET(&this->border_rect)->pos.x + 5;
+	u32 		y = UPPER_RESERV + WIDGET(&this->topFileRect)->pos.y;
+	const u32 	x = WIDGET(&this->topFileRect)->pos.x + 5;
 	u32 		i = this->firstScreenIndex;
 	const u32 	fileInfoArraySize = this->fileInfoArraySize;
 	
 	
-	while ((i < fileInfoArraySize) && (y < WIDGET(&this->border_rect)->maxy)) 
+	while ((i < fileInfoArraySize) && (y < WIDGET(&this->topFileRect)->maxy)) 
 	{
 		widget = WIDGET(&fileInfoArray[i]);
 		
@@ -404,22 +409,52 @@ static void FileBrowsePanel_showFiles(FileBrowsePanel *this, Screen *screen) {
 	this->lastScreenIndex = --i;
 }
 
+static inline u16 FileBrowsePanel_getFldContentH(const FileBrowsePanel *this) {
+	u16 height = (Screen_getHeight() << 1) / 3;
+	height -= (height-UPPER_RESERV) % this->nameHeight;
+	return height;
+}
+
+static void FileBrowsePanel_windowResized(Screen *screen, u16 new_w, u16 new_h, void *vthis) {
+	FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
+	
+	WIDGET(&this->topFileRect)->pos.x = 100;
+	WIDGET(&this->topFileRect)->pos.y = 100;
+	WIDGET(&this->topFileRect)->pos.w = 850;
+	WIDGET(&this->topFileRect)->pos.h = FileBrowsePanel_getFldContentH(this);
+	
+	
+	WIDGET(&this->bottomFileRect)->pos.x = WIDGET(&this->topFileRect)->pos.x - 5;
+	WIDGET(&this->bottomFileRect)->pos.y = WIDGET(&this->topFileRect)->pos.y - 5;
+	WIDGET(&this->bottomFileRect)->pos.w = WIDGET(&this->topFileRect)->pos.w + 10;
+	WIDGET(&this->bottomFileRect)->pos.h = WIDGET(&this->topFileRect)->pos.h + 10;
+	
+	Widget_refresh(&this->topFileRect);
+	Widget_refresh(&this->bottomFileRect);
+	
+	// Preview view rectangle
+	this->p_x = WIDGET(&this->bottomFileRect)->maxx + 10;
+	this->p_y = WIDGET(&this->bottomFileRect)->pos.y + 10;
+	this->p_w = Screen_getWidth() - WIDGET(&this->bottomFileRect)->maxx - 20;
+	this->p_h = WIDGET(&this->bottomFileRect)->pos.h - 20;
+	
+	if (WIDGET(&this->previewImage)->visible) {
+		FileBrowsePanel_rescalePreviewImage(this);
+	}
+}
+
 static void FileBrowsePanel_afterPaint(Screen *screen, void *vthis) {
 	FileBrowsePanel *this = FILE_BROWSE_PANEL(vthis);
 	
-	u16 height = (Screen_getHeight() << 1) / 3;
-	height -= (height-UPPER_RESERV) % this->nameHeight;
+	WIDGET(&this->topFileRect)->pos.h = FileBrowsePanel_getFldContentH(this);
+	WIDGET(&this->bottomFileRect)->pos.h = WIDGET(&this->topFileRect)->pos.h + 10;
+	Widget_refresh(&this->topFileRect);
+	Widget_refresh(&this->bottomFileRect);
 	
-	WIDGET(&this->border_rect)->pos.h = height;
-	WIDGET(&this->border_rect2)->pos.h = WIDGET(&this->border_rect)->pos.h + 10;
-	Widget_refresh(&this->border_rect);
-	Widget_refresh(&this->border_rect2);
-	
-	Widget_draw(&this->border_rect2, screen, false);
-	Widget_draw(&this->border_rect, screen, false);
+	Widget_draw(&this->bottomFileRect, screen, false);
+	Widget_draw(&this->topFileRect, screen, false);
 	
 	FileBrowsePanel_showFiles(this, screen);
-	Screen_flip(screen);
 }
 
 void FileBrowsePanel_vdestroy(void *vthis) {
@@ -431,8 +466,8 @@ void FileBrowsePanel_vdestroy(void *vthis) {
 	/*! Delete self stuff !*/
 	FileBrowsePanel_deleteFileArray(this, true);
 	
-	delete(&this->border_rect);
-	delete(&this->border_rect2);
+	delete(&this->topFileRect);
+	delete(&this->bottomFileRect);
 	delete(&this->butOk);
 	delete(&this->butCancel);
 	delete(&this->previewImage);
@@ -551,30 +586,31 @@ FileBrowsePanel* FileBrowsePanel_new(FileBrowsePanel *this, const char (*fileTyp
 	FileBrowsePanel_getFolderContent(this);
 	
 	/// create interface
-	Rectangle_new(&this->border_rect, 0xE2F3D3);
-	Rectangle_new(&this->border_rect2, 0x2EAE00);
+	Rectangle_new(&this->topFileRect, 0xE2F3D3);
+	Rectangle_new(&this->bottomFileRect, 0x2EAE00);
 	
-	height = (Screen_getHeight() << 1) / 3;
+	height = (Screen_getHeight() << 1) / 3; // height = 2/3 * screen_height
 	height -= (height-UPPER_RESERV) % this->nameHeight;
 	
-	WIDGET(&this->border_rect)->pos.y = 100;
-	WIDGET(&this->border_rect)->pos.w = 850;
-	WIDGET(&this->border_rect)->pos.x = 100;
-	WIDGET(&this->border_rect)->pos.h = height;
+	WIDGET(&this->topFileRect)->pos.x = 100;
+	WIDGET(&this->topFileRect)->pos.y = 100;
+	WIDGET(&this->topFileRect)->pos.w = 850;
+	WIDGET(&this->topFileRect)->pos.h = FileBrowsePanel_getFldContentH(this);
 	
-	WIDGET(&this->border_rect2)->pos.y = WIDGET(&this->border_rect)->pos.y - 5;
-	WIDGET(&this->border_rect2)->pos.w = WIDGET(&this->border_rect)->pos.x - 5;
-	WIDGET(&this->border_rect2)->pos.x = WIDGET(&this->border_rect)->pos.w + 10;
-	WIDGET(&this->border_rect2)->pos.h = WIDGET(&this->border_rect)->pos.h + 10;
 	
-	Widget_refresh(&this->border_rect);
-	Widget_refresh(&this->border_rect2);
+	WIDGET(&this->bottomFileRect)->pos.x = WIDGET(&this->topFileRect)->pos.x - 5;
+	WIDGET(&this->bottomFileRect)->pos.y = WIDGET(&this->topFileRect)->pos.y - 5;
+	WIDGET(&this->bottomFileRect)->pos.w = WIDGET(&this->topFileRect)->pos.w + 10;
+	WIDGET(&this->bottomFileRect)->pos.h = WIDGET(&this->topFileRect)->pos.h + 10;
+	
+	Widget_refresh(&this->topFileRect);
+	Widget_refresh(&this->bottomFileRect);
 	
 	// Preview view rectangle
-	this->p_x = WIDGET(&this->border_rect2)->maxx + 10;
-	this->p_y = WIDGET(&this->border_rect2)->pos.y + 10;
-	this->p_w = Screen_getWidth() - WIDGET(&this->border_rect2)->pos.w - WIDGET(&this->border_rect2)->pos.x - 20;
-	this->p_h = WIDGET(&this->border_rect2)->pos.h - 20;
+	this->p_x = WIDGET(&this->bottomFileRect)->maxx + 10;
+	this->p_y = WIDGET(&this->bottomFileRect)->pos.y + 10;
+	this->p_w = Screen_getWidth() - WIDGET(&this->bottomFileRect)->maxx - 20;
+	this->p_h = WIDGET(&this->bottomFileRect)->pos.h - 20;
 	
 	Button_new(&this->butOk, "OK");
 	Button_new(&this->butCancel, "Anuluj");
@@ -583,11 +619,11 @@ FileBrowsePanel* FileBrowsePanel_new(FileBrowsePanel *this, const char (*fileTyp
 	
 	WIDGET(&this->butOk)->click_handler = FileBrowsePanel_butOkClicked;
 	WIDGET(&this->butCancel)->click_handler = FileBrowsePanel_butCancelClicked;
-	WIDGET(&this->border_rect)->press_handler = FileBrowsePanel_wheelEvent;
+	WIDGET(&this->topFileRect)->press_handler = FileBrowsePanel_wheelEvent;
 	
 	WIDGET(&this->butOk)->void_parameter = this;
 	WIDGET(&this->butCancel)->void_parameter = this;
-	WIDGET(&this->border_rect)->void_parameter = this;
+	WIDGET(&this->topFileRect)->void_parameter = this;
 	
 	Image_new(&this->previewImage, NULL, 0, 0);
 	
@@ -599,6 +635,7 @@ FileBrowsePanel* FileBrowsePanel_new(FileBrowsePanel *this, const char (*fileTyp
 	this->screen.after_paint = FileBrowsePanel_afterPaint;
 	this->screen.mouse_down = FileBrowsePanel_screenMouseDownUp;
 	this->screen.mouse_up = FileBrowsePanel_screenMouseDownUp;
+	this->screen.window_resized = FileBrowsePanel_windowResized;
 	this->screen.param = this;
 	
 	this->screen.key_up = FileBrowsePanel_keyUp;

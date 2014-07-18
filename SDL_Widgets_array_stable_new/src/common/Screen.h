@@ -56,13 +56,16 @@
 		void				(*toogle_drag_on)(Screen*);
 		void				(*user_event)(Screen*, SDL_UserEvent*);
 		
-		// method called before or after painting background widget and all screen widgets
+		/// method called before or after painting background widget and all screen widgets
+		/// @see Screen_draw()
 		void				(*before_paint)(Screen*, void *param);
 		void				(*after_paint)(Screen*, void *param);
 		
 		void				(*mouse_down)(Screen*, void *param);
 		void				(*mouse_up)(Screen*, void *param);
 		void				(*mouse_move)(Screen*, void *param);
+		
+		void				(*window_resized)(Screen*, u16 new_w, u16 new_h, void *param);
 		
 		void 				*param;
 		
@@ -91,7 +94,16 @@
 	
 	void Screen_vdestroy(void *vthis);
 	
-	// This simply draws all widgets on screen
+	/** Redraw screen in order:
+	 * 1. Draw background widget (this->background.bg_widget) 
+	 * 	  or fill whole screen with single color (this->background.bgcolor)
+	 *    if there is no background widget
+	 * 2. Execute this->before_paint(this, this->param) callback if specified
+	 * 3. Draw all screen widgets from array of pointers this->widget[] except
+	 *    this->widget_ontop
+	 * 4. Execute this->after_paint(this, this->param) callback if specified
+	 * 5. Make a flip on screen Screen_flip(this)
+	 */
 	void Screen_draw(Screen *sc);
 	
 	// Add widget to screen

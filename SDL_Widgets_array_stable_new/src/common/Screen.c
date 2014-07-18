@@ -380,6 +380,7 @@ Screen* Screen_new(Screen *this, perr *e, u32 size_widget) {
 	this->toogle_drag_on		= NULL;
 	this->user_event     		= NULL;
 	this->callback       		= NULL;
+	this->window_resized 		= NULL;
 	this->has_exited			= false;
 	this->event_handled			= false;
 	this->pool_events    		= false;
@@ -431,6 +432,16 @@ perr Screen_addWidget(Screen *this, Widget *widget) {
 	return E_NO_ERROR;
 }
 
+/** Redraw screen in order:
+ * 1. Draw background widget (this->background.bg_widget) 
+ * 	  or fill whole screen with single color (this->background.bgcolor)
+ *    if there is no background widget
+ * 2. Execute this->before_paint(this, this->param) callback if specified
+ * 3. Draw all screen widgets from array of pointers this->widget[] except
+ *    this->widget_ontop
+ * 4. Execute this->after_paint(this, this->param) callback if specified
+ * 5. Make a flip on screen Screen_flip(this)
+ */
 void Screen_draw(Screen *this) {
 	Widget	*widget;
 	u32	i=0;
@@ -441,6 +452,8 @@ void Screen_draw(Screen *this) {
 	
 	if (has_bg_widget)
 		SDL_BlitSurface(this->background.bg_widget->surf, NULL, this->screen, &this->background.bg_widget->pos);
+	
+	if (this->before_paint) this->before_paint(this, this->param);
 	
 	for (; i < this->c_widget; i++) {
 		widget = this->widget[i];
@@ -453,7 +466,9 @@ void Screen_draw(Screen *this) {
 		Widget_draw(widget, this, false);
 	}
 	
-	if (! this->disable_auto_flip) Screen_flip(this);
+	if (this->after_paint) this->after_paint(this, this->param);
+	
+	Screen_flip(this);
 	
 	this->need_reload = false;
 }
@@ -477,9 +492,7 @@ void Screen_MainStart(Screen *this) {
 		if ((BASE_SURFACE_WIDTH != BASE_SURFACE->w) || (BASE_SURFACE_HEIGHT != BASE_SURFACE->h)) 
 			Screen_reloadBgWidget(this);
 		if (this->need_reload) {
-			if (this->before_paint) this->before_paint(this, this->param);
 			Screen_draw(this);
-			if (this->after_paint) this->after_paint(this, this->param);
 		}
 		
 		/* Process events by screen and run user specified callback event handlers from inside */
@@ -510,6 +523,8 @@ void Screen_MainStart(Screen *this) {
 						if (this->background.bg_widget) {
 							Screen_reloadBgWidget(this);
 						}
+						if (this->window_resized) 
+							this->window_resized(this, BASE_SURFACE_WIDTH, BASE_SURFACE_HEIGHT, this->param);
 						Screen_draw(this);
 						SDL_FreeSurface(old_surface);
 					}

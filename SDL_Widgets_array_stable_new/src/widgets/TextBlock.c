@@ -66,6 +66,8 @@ void TextBlock_vrefresh(void *vthis) {
 	int 			w=0, h=0;
 	int 			et = TTF_SizeUTF8(text_block->font, text, &w, &h);
 	
+	fprintf(stderr, "%s: this: %p, text: '%s'\n", __FUNCTION__, vthis, text);
+	
 	if ((et == -1) || (w <= 0) || (h <= 0)) {
 		fprintf(stderr, "TextBlock_refresh[%s] Failed to determine font size or invalid size (exit_code=%d, w=%d, h=%d)\n", 
 			text, et, w, h);

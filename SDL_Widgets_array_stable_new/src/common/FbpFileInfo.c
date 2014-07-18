@@ -67,6 +67,8 @@ FbpFileInfo* FbpFileInfo_new(FbpFileInfo *this,
 #ifdef VERBOSE_CREATE
 	Static_printObj(this);
 #endif
+
+	fprintf(stderr, "%s: this: %p, name: '%s'\n", __FUNCTION__, this, name);
 	
 	if (font) TextBlock_setFont(TEXTBLOCK(this), font);
 	TextBlock_setBackgroundColor(TEXTBLOCK(this), FBP_FILE_INFO_BGCOLOR_UNSEL);

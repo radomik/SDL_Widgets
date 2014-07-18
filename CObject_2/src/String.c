@@ -41,7 +41,7 @@ static inline void String_appendTextLength(String *this, const char *str, size_t
 static size_t String_findLastOfLength(const String *this, const char *text, size_t text_len) {
 	if (! text) return STRING_NPOS;
 	else {
-		if (! text_len) { // text == ""
+		if (! text_len) { /* text == "" */
 			if (! this->m_len) return 0;
 			else return STRING_NPOS;
 		}
@@ -233,7 +233,7 @@ inline void String_wipe(String *this) {
  * _offset can cover only characters up to and including terminating '\0'
  * Returns count of characters written, negative value on output error */
 int String_vprintf(String *this, size_t _offset, const char *const format, va_list ap) {
-	if (_offset > this->m_len) return 0; // if first byte of write lays after '\0'
+	if (_offset > this->m_len) return 0; /* if first byte of write lays after '\0' */
 	else {
 		va_list ap2;
 		size_t 	size;
@@ -242,8 +242,8 @@ int String_vprintf(String *this, size_t _offset, const char *const format, va_li
 		va_copy(ap2, ap);
 
 		if (this->m_buffer) {
-			str  = this->m_buffer + _offset;	//X+11
-			size = this->m_size   - _offset;  //12-11 = 1
+			str  = this->m_buffer + _offset;
+			size = this->m_size   - _offset;
 		}
 		else {
 			str  = this->m_buffer;
@@ -252,8 +252,8 @@ int String_vprintf(String *this, size_t _offset, const char *const format, va_li
 
 		ret_val = vsnprintf(str, size, format, ap);
 		
-		if ((ret_val > 0) && ((size = ret_val+_offset) >= this->m_size)) { // here size is length of final string
-			size++; // here size is size of final string //16
+		if ((ret_val > 0) && ((size = ret_val+_offset) >= this->m_size)) { /* here size is length of final string */
+			size++; /* here size is size of final string */
 
 			str = (char*)realloc(this->m_buffer, size);
 			if (str) {
@@ -280,7 +280,7 @@ int String_vprintf(String *this, size_t _offset, const char *const format, va_li
  * _offset can cover only characters up to and including terminating '\0'
  * Returns count of characters written, negative value on output error */
 int String_printf(String *this, size_t _offset, const char *const format, ...) {
-	if (_offset > this->m_len) return 0; // if first byte of write lays after '\0'
+	if (_offset > this->m_len) return 0; /* if first byte of write lays after '\0' */
 	else {
 		va_list ap;
 		int		ret_val;
@@ -316,15 +316,17 @@ inline String* String_append(String *this, const String *str) {
  * return new length of string */
 size_t String_cutLast(String *this, char ch) {
 	if (! this->m_len) return 0;
-	size_t i = this->m_len-1;
-	for (; ; i--) {
-		if (this->m_buffer[i] == ch) {
-			this->m_buffer[i] = '\0';
-			this->m_len = i;
-			return i;
-		}
-		else {
-			if (i == 0) return this->m_len;
+	else {
+		size_t i = this->m_len-1;
+		for (; ; i--) {
+			if (this->m_buffer[i] == ch) {
+				this->m_buffer[i] = '\0';
+				this->m_len = i;
+				return i;
+			}
+			else {
+				if (i == 0) return this->m_len;
+			}
 		}
 	}
 }

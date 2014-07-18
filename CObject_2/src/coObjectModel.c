@@ -25,6 +25,23 @@ void* delete(void *vthis)
 	return vthis;
 }
 
+/** Get information in form "<typename> @ <this pointer> 'toString()'"
+ * @param	VTHIS 	(void*) any class directly or indirectly inheriting from coObject
+ * @note length of overall message is limited to MAX_FULL_STRING_LEN characters
+ * 
+ * @return Full description of object
+ */
+const char *toFullString(const void *vthis) {
+	static char buf[MAX_FULL_STRING_LEN+1];
+	if (! vthis) {
+		return "<None> @ (null) ''";
+	}
+	else {
+		snprintf(buf, sizeof(buf), "%s @ %p '%s'", classname(vthis), vthis, toString(vthis));
+		return buf;
+	}
+}
+
 /** Get class descriptor of object
  * @param	vthis 	(void*) any class directly or indirectly inheriting from coObject
  * @return 	(const coClass*) class descriptor of vthis (NULL if vthis is NULL)
