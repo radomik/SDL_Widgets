@@ -141,7 +141,7 @@ static u32 GRAPHICS_CALLBACKS_COUNT = sizeof(click_handler) / sizeof(void (*)(Wi
 void gdragon_toogle(Screen *screen) {
 	Label_stringPrintf(&label[0], 15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 	Widget_refresh(WIDGET(&label[0]));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(&label[0]));
 }
 
 static TTF_Font *font2, *font4;

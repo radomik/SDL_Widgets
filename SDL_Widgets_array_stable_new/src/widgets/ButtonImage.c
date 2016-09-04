@@ -91,8 +91,7 @@ static void ButtonImage_mousePressed(Widget *sender, Screen *screen) {
 	if (! BUTTON_IMAGE(sender)->enabled) return;
 	if (screen->event.button.button == 1) { 	// left mouse button
 		sender->surf = WIDGET( &( BUTTON_IMAGE(sender)->labelimage[BUT_PRESSED] ) )->surf;
-		sender->need_reload = true;
-		Widget_draw(sender, screen, true);
+		Screen_setRefresh(screen, sender);
 	}
 }
 
@@ -104,24 +103,21 @@ static void ButtonImage_mouseReleased(Widget *sender, Screen *screen) {
 	
 	sender->surf = WIDGET( &( BUTTON_IMAGE(sender)->labelimage[ind] ) )->surf;
 		
-	sender->need_reload = true;
-	Widget_draw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 static void ButtonImage_mouseEnter(Widget *sender, Screen *screen) {
 	screen->event_handled = true;
 	if (! BUTTON_IMAGE(sender)->enabled) return;
 	sender->surf = WIDGET( &( BUTTON_IMAGE(sender)->labelimage[BUT_MOUSE_OVER] ) )->surf;
-	sender->need_reload = true;
-	Widget_draw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 static void ButtonImage_mouseExit(Widget *sender, Screen *screen) {
 	screen->event_handled = true;
 	if (! BUTTON_IMAGE(sender)->enabled) return;
 	sender->surf = WIDGET( &( BUTTON_IMAGE(sender)->labelimage[BUT_NORMAL] ) )->surf;
-	sender->need_reload = true;
-	Widget_draw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 static void ButtonImage_initDefault(ButtonImage *this) {

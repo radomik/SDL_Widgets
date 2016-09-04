@@ -78,7 +78,7 @@ void Rectangle_vrefresh(void *vthis) {
 	}
 	Widget_updateMaxXY(widget);
 	Widget_setVisible(widget, true);
-	widget->need_reload = true;
+	Screen_setRefresh(screen, widget);
 }
 
 void Rectangle_vdestroy(void *vthis) {

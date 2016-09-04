@@ -150,7 +150,7 @@ void button_Graphics_clicked(Widget *sender, Screen *screen) {
 		fprintf(stderr, "button_Graphics_clicked:Main > Failed to start GraphicsMain_Main()\n");
 		return;
 	}
-	screen->need_reload = true;
+	Screen_setRefresh(screen, NULL);
 }
 
 void button_Audio_clicked(Widget *sender, Screen *screen) {
@@ -158,7 +158,7 @@ void button_Audio_clicked(Widget *sender, Screen *screen) {
 		fprintf(stderr, "button_Audio_clicked:Main > Failed to start AudioMain_Main()\n");
 		return;
 	}
-	screen->need_reload = true;
+	Screen_setRefresh(screen, NULL);
 }
 
 void main_keydown(Screen *screen, SDLKey key, void *vthis) {

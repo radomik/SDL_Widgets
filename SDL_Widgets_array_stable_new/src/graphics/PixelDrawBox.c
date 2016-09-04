@@ -112,7 +112,7 @@ void PixelDrawBox_parseClick(PixelDrawBox *pdb, Widget *sender, Screen *screen,
 	if (reload) {
 		//pdb->mouse_ispressed = true;
 		Widget_refresh(WIDGET(press_rect));
-		screen->need_reload = true;
+		Screen_setRefresh(screen, WIDGET(press_rect));
 	}
 }
 

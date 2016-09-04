@@ -274,7 +274,7 @@ static void FileBrowsePanel_fileClicked(Widget *sender, Screen *screen) {
 	else { // not image -> hide preview image
 		WIDGET(&this->previewImage)->visible = false;
 	}
-	screen->need_reload = true;
+	Screen_setRefresh(screen, NULL);
 }
 
 
@@ -322,7 +322,7 @@ static void FileBrowsePanel_screenMouseDownUp(Screen *screen, void *vthis) {
 						else { // obtained current directory content
 							this->firstScreenIndex = 0;
 							this->prevClicked = SEL_NONE_IND;
-							screen->need_reload = true;
+							Screen_setRefresh(screen, NULL);
 						}
 					}
 					else {
@@ -371,14 +371,14 @@ static void FileBrowsePanel_wheelEvent(Widget *sender, Screen *screen) {
 	if (butInd == 5) { // wheel down
 		if (this->lastScreenIndex < this->fileInfoArraySize-1) {
 			this->firstScreenIndex++;
-			screen->need_reload = true;
+			Screen_setRefresh(screen, sender);
 		}
 	}
 	else {
 		if (butInd == 4) { // wheel up
 			if (this->firstScreenIndex > 0) {
 				this->firstScreenIndex--;
-				screen->need_reload = true;
+				Screen_setRefresh(screen, sender);
 			}
 		}
 	}

@@ -57,7 +57,7 @@ void button_play_clicked(Widget *sender, Screen *screen) {
 			ButtonImage *butimg = (ButtonImage*)sender;
 			ButtonImage_setBorder(butimg, butimg->labelimage[BUT_NORMAL].border_width, 0xFF0000);
 			Widget_refresh(sender);
-			screen->need_reload = true;
+			Screen_setRefresh(screen, sender);
 		}
 	}
 }
@@ -107,7 +107,7 @@ void button_freq1_change(Widget *sender, Screen *screen) {
 	
 	Label_stringPrintf(label, 12, "%5d Hz", audiotest->freq1);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button -- change fase 1 of SDL_Audio example
@@ -130,7 +130,7 @@ void button_fase1_change(Widget *sender, Screen *screen) {
 	}
 	Label_stringPrintf(label, 7, "%5d", audiotest->fase1);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button -- change frequency 2 of SDL_Audio example
@@ -153,7 +153,7 @@ void button_freq2_change(Widget *sender, Screen *screen) {
 	}
 	Label_stringPrintf(label, 12, "%5d Hz", audiotest->freq2);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button -- change fase 2 of SDL_Audio example
@@ -176,7 +176,7 @@ void button_fase2_change(Widget *sender, Screen *screen) {
 	}
 	Label_stringPrintf(label, 7, "%5d", audiotest->fase2);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button -- change source
@@ -219,7 +219,7 @@ void button_source_change(Widget *sender, Screen *screen) {
 	if (_play) Audio_play(audio_current, _pause);
 	Label_stringPrintf(label, 22, "%20s", audio_current->name);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button -- change frequency of AudioSinus object
@@ -242,7 +242,7 @@ void button_sinefreq_change(Widget *sender, Screen *screen) {
 	}
 	Label_stringPrintf(label, 19, "%8.2f", audiosinus->freq);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Release image after dragging (sets AudioSinus frequency)
@@ -259,7 +259,7 @@ void image_mrelease(Widget *sender, Screen *screen) {
 	AudioSinus_setFrequency(audiosinus, freq);
 	Label_stringPrintf(label, 19, "%8.2f", audiosinus->freq);
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Change type of AudioFromGraph interpretation:
@@ -282,7 +282,7 @@ void button_audio_from_graph_type_change(Widget *sender, Screen *screen) {
 	}
 	Label_stringPrintf(label, 0, "%s", (afg->type)?"Interpolacja":"Multipleksacja");
 	Widget_refresh(WIDGET(label));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(label));
 }
 
 /*! Button - clear WaveDrawBox graph editor
@@ -291,5 +291,6 @@ void button_audio_from_graph_type_change(Widget *sender, Screen *screen) {
 void button_audio_from_graph_clear(Widget *sender, Screen *screen) {
 	WaveDrawBox *wdb = WAVE_DRAW_BOX( sender->vparam[0] );
 	WaveDrawBox_clearData(wdb);
-	screen->need_reload = true;
+	//TODO: Refreshing all widgets for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }

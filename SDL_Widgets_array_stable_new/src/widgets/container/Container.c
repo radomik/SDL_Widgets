@@ -122,7 +122,7 @@ void Container_createSurfaceIfNeeded(Container *this) {
 		return;
 	}
 	widget->visible     = true;
-	widget->need_reload = true;
+	Screen_setRefresh(screen, widget);
 	//fprintf(stderr, "%s: Surface size is w=%hu, h=%hu\n", __FUNCTION__, widget->surf->w, widget->surf->h);
 }
 

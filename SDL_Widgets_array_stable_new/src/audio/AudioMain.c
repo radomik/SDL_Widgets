@@ -122,7 +122,7 @@ static b8 		is_inited = false;
 void screen_toogled_drag_on(Screen *screen) {
 	Label_stringPrintf(&label[0], 15, "%s", (screen->drag_on) ? " WŁĄCZONE" : "WYŁĄCZONE");
 	Widget_refresh(WIDGET(&label[0]));
-	screen->need_reload = true;
+	Screen_setRefresh(screen, WIDGET(&label[0]));
 }
 
 #define	AUDIO_CALLBACKS_COUNT	7

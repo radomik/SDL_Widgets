@@ -108,7 +108,7 @@ static void FloatingMenu_click(Widget *sender, Screen *screen) {
 		if (screen->widget_ontop == cont_wt) {			// if menu is on top
 			Widget_setVisible(cont_wt, false);			// hide menu (and all of its items)
 			sender->visible = true;						// leave header button visible
-			screen->need_reload = true;					// reload screen
+			Screen_setRefresh(screen, sender);			// reload screen
 			screen->widget_ontop = NULL;				// no widget on top
 		}
 		else {											// menu visible, not on top

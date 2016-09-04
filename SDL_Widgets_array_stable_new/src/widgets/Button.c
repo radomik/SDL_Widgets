@@ -55,8 +55,7 @@ static void Button_mousePressed(Widget *sender, Screen *screen) { // button pres
 	if (! BUTTON(sender)->enabled) return;
 	if (screen->event.button.button == 1) { 	// left mouse button
 		sender->surf = WIDGET( &(BUTTON(sender)->label[BUT_PRESSED]) )->surf;
-		sender->need_reload = true;
-		Widget_vdraw(sender, screen, true);
+		Screen_setRefresh(screen, sender);
 	}
 }
 
@@ -68,24 +67,21 @@ static void Button_mouseReleased(Widget *sender, Screen *screen) { // button rel
 	else // mouse released outside button
 		sender->surf = WIDGET( &(BUTTON(sender)->label[BUT_NORMAL]) )->surf;
 		
-	sender->need_reload = true;
-	Widget_vdraw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 static void Button_mouseEnter(Widget *sender, Screen *screen) { 	// mouse enters button (highlight on)
 	screen->event_handled = true;
 	if (! BUTTON(sender)->enabled) return;
 	sender->surf = WIDGET( &(BUTTON(sender)->label[BUT_MOUSE_OVER]) )->surf;
-	sender->need_reload = true;
-	Widget_vdraw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 static void Button_mouseExit(Widget *sender, Screen *screen) { 	// mouse leaves button (highlight off)
 	screen->event_handled = true;
 	if (! BUTTON(sender)->enabled) return;
 	sender->surf = WIDGET( &(BUTTON(sender)->label[BUT_NORMAL]) )->surf;
-	sender->need_reload = true;
-	Widget_vdraw(sender, screen, true);
+	Screen_setRefresh(screen, sender);
 }
 
 /// Button implementation of Widget_refresh virtual method

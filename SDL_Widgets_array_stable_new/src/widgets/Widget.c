@@ -236,17 +236,32 @@ static void Widget_mousePressed(Widget *this, SDL_Event *event) {
 	}
 }
 
-static b8 Widget_mouseDragging(Widget *this, SDL_Event *event) {
+static b8 Widget_mouseDragging(Widget *this, SDL_Event *event, u16 *minx, u16 *miny, u16 *maxx, u16* maxy) {
 	if (this->dragging) {
 		const s16	dx = event->motion.x - this->stx;
 		const s16	dy = event->motion.y - this->sty;
 		
 		if ((this->pos.x + dx < 0) || (this->pos.y + dy < 0)) return false;
 		
+		u16 prev_minx = this->pos.x;
+		u16 prev_miny = this->pos.y;
+		u16 prev_maxx = prev_minx + (this->surf ? this->surf->w : 1) - 1;
+		u16 prev_maxy = prev_miny + (this->surf ? this->surf->h : 1) - 1;
+		
 		this->stx += dx;
 		this->sty += dy;
 		
 		Widget_drag(this, dx, dy);
+		
+		u16 next_minx = this->pos.x;
+		u16 next_miny = this->pos.y;
+		u16 next_maxx = next_minx + (this->surf ? this->surf->w : 1) - 1;
+		u16 next_maxy = next_miny + (this->surf ? this->surf->h : 1) - 1;
+		
+		*minx = (prev_minx < next_minx ? prev_minx : next_minx);
+		*miny = (prev_miny < next_miny ? prev_miny : next_miny);
+		*maxx = (prev_maxx > next_maxx ? prev_maxx : next_maxx);
+		*maxy = (prev_maxy > next_maxy ? prev_maxy : next_maxy);
 		
 		return true;
 	}
@@ -267,9 +282,13 @@ static void Widget_mouseEvent(Widget *this, Screen *screen, u8 _event_type) {
 		Widget_mousePressed(this, screen->pevent);
 		while (this->dragging) {
 			while (SDL_PollEvent(screen->pevent)) {
-				s = Widget_mouseDragging(this, screen->pevent);
+				u16 minx, miny, maxx, maxy;
+				
+				s = Widget_mouseDragging(this, screen->pevent, &minx, &miny, &maxx, &maxy);
 				if (screen->pevent->type == SDL_MOUSEBUTTONUP) {
-					Screen_draw(screen);
+					if (s) {
+						Screen_draw(screen, minx, miny, maxx, maxy);
+					}
 					this->dragging = false; 
 					fprintf(stderr, "End drag:   %s\n", Widget_toString(this));
 					this->mouse_state = 0;
@@ -285,7 +304,7 @@ static void Widget_mouseEvent(Widget *this, Screen *screen, u8 _event_type) {
 				}
 			}
 			if (s) {
-				Screen_draw(screen);
+				Screen_draw(screen, minx, miny, maxx, maxy);
 			}
 		}
 	}

@@ -31,6 +31,7 @@
 	
 	typedef struct Callback Callback;
 	typedef struct Screen Screen;
+	typedef struct ScreenBackground ScreenBackground;
 	typedef struct Histogram Histogram;
 	typedef struct PixelDrawBox PixelDrawBox;
 	typedef struct HistStretchGraph HistStretchGraph;

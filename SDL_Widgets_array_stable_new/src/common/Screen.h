@@ -33,7 +33,12 @@
 		u8			bg_mode : 1;		// either: BG_STRETCH or BG_CENTERED
 		b8			fillcolor : 1;		// if true FillRect is called before bg_widget is drown
 	};
-	typedef struct ScreenBackground ScreenBackground;
+	
+	enum screen_draw_mode_t {
+		SCREEN_DRAW_MODE_NONE = 0,
+		SCREEN_DRAW_MODE_WIDGET,
+		SCREEN_DRAW_MODE_AREA
+	};
 	
 	extern const coClass *Screen_class;
 	#define SCREEN(VTHIS) ((Screen*)VTHIS)
@@ -72,6 +77,8 @@
 		/* Callback array with cparam-s */
 		Callback			*callback;		/*read-only*/
 		
+		const Widget		*widget_drawn;
+		
 		ScreenBackground	background;
 		
 		/* Event info */
@@ -81,7 +88,7 @@
 		
 		b8				disable_auto_flip : 1;	// disable autoflip of surface after repaint - default false
 		b8				drag_on : 1;
-		b8				need_reload : 1;
+		b8				need_reload : 1;	///< private, use Screen_setRefresh() instead
 	};										// void mouse_click(Widget *sender, Screen *screen)
 											// to prevent passing event through tree of widgets
 											// simply set screen->event_handled=true at the beginning
@@ -104,7 +111,7 @@
 	 * 4. Execute this->after_paint(this, this->param) callback if specified
 	 * 5. Make a flip on screen Screen_flip(this)
 	 */
-	void Screen_draw(Screen *sc);
+	void Screen_draw(Screen *screen, b8 masked, u16 xmin, u16 ymin, u16 xmax, u16 ymax)
 	
 	// Add widget to screen
 	perr Screen_addWidget(Screen *screen, Widget *widget);
@@ -162,5 +169,14 @@
 	void Screen_setOptions(options *op);
 	inline u16 Screen_getWidth();
 	inline u16 Screen_getHeight();
+	
+	/**
+	 * Set screen to be refreshed.
+	 * @param widget_drawn widget (screen area) to be redrawn or NULL if entire screen should be redrawn
+	 */
+	//TODO: Method should accept many widget pointers (screen areas) to be redrawn at once
+	//TODO: May use a member array of fixed size e.g. 10 and use variable length parameter list
+	//TODO: Replace all settings screen->need_reload = true with call to Screen_setRefresh
+	void Screen_setRefresh(Screen *screen, const Widget* widget_drawn);
 	
 #endif

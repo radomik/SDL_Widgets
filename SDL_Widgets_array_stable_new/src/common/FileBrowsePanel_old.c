@@ -160,7 +160,7 @@ void textblock_filename_clicked(Widget *sender, Screen *screen) {
 										FBP_FILE_INFO_BGCOLOR_UNSEL, 0x000000, fileTypes, &nameHeight,
 										textblock_filename_clicked);
 				firstScreenIndex = 0;
-				screen->need_reload = true;
+				Screen_setRefresh(screen, NULL);
 			}
 			return;
 		}
@@ -183,7 +183,7 @@ void textblock_filename_clicked(Widget *sender, Screen *screen) {
 											FBP_FILE_INFO_BGCOLOR_UNSEL, 0x000000, fileTypes, &nameHeight,
 											textblock_filename_clicked);
 					firstScreenIndex = 0;
-					screen->need_reload = true;
+					Screen_setRefresh(screen, NULL);
 				}
 				return;
 			}
@@ -245,7 +245,7 @@ void textblock_filename_clicked(Widget *sender, Screen *screen) {
 		Widget_setPosition(WIDGET(preview), preview->widget.pos.x+((p_w-preview->widget.pos.w)>>1),
 									preview->widget.pos.y+((p_h-preview->widget.pos.h)>>1));
 			
-		screen->need_reload = true;
+		Screen_setRefresh(screen, NULL);
 	}
 }
 */

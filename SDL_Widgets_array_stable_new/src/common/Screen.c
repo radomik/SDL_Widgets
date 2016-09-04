@@ -303,14 +303,14 @@ inline u8 Screen_getEventButtonIndex(const Screen *this) {
 void Screen_setBackgroundWidget(Screen *this, Widget *bg_widget, u8 mode) {
 	this->background.bg_widget = bg_widget;
 	this->background.bg_mode   = mode;
-	this->need_reload = true;
+	Screen_setRefresh(this, NULL);
 	if (! bg_widget) return;
 	Screen_reloadBgWidget(this);
 }
 
 void Screen_setBackgroundColor(Screen *this, u32 rgb) { 
-	this->background.bgcolor = rgb; 
-	this->need_reload = true; 
+	this->background.bgcolor = rgb;
+	Screen_setRefresh(this, NULL);
 }
 
 const char *Screen_lastWidgetToString(const Screen *this) { 
@@ -380,6 +380,7 @@ Screen* Screen_new(Screen *this, perr *e, u32 size_widget) {
 	this->toogle_drag_on		= NULL;
 	this->user_event     		= NULL;
 	this->callback       		= NULL;
+	this->widget_drawn			= NULL;
 	this->window_resized 		= NULL;
 	this->has_exited			= false;
 	this->event_handled			= false;
@@ -442,27 +443,44 @@ perr Screen_addWidget(Screen *this, Widget *widget) {
  * 4. Execute this->after_paint(this, this->param) callback if specified
  * 5. Make a flip on screen Screen_flip(this)
  */
-void Screen_draw(Screen *this) {
-	Widget	*widget;
+void Screen_draw(Screen *this, b8 masked, u16 xmin, u16 ymin, u16 xmax, u16 ymax) {
+	SDL_Rect	masked_rect;
+	SDL_Rect	*masked_rect_ptr = NULL;
+	Widget		*widget;
 	u32	i=0;
 	b8	has_bg_widget = ((this->background.bg_widget) && (this->background.bg_widget->surf) && (this->background.bg_widget->visible));
 	
-	if ((! has_bg_widget) || (this->background.fillcolor)) 
-		SDL_FillRect(this->screen, NULL, this->background.bgcolor);
+	if (masked) {
+		masked_rect.x = xmin;
+		masked_rect.y = ymin;
+		masked_rect.w = xmax - xmin + 1;
+		masked_rect.h = ymax - ymin + 1;
+		masked_rect_ptr = &masked_rect;
+		fprintf(stderr, "%s: masked to x=%hu, y=%hu, w=%hu, h=%hu\n", __FUNCTION__, masked_rect.x, masked_rect.y, masked_rect.w, masked_rect.h);
+	}
+	
+	if ((! has_bg_widget) || (this->background.fillcolor))
+		SDL_FillRect(this->screen, masked_rect_ptr, this->background.bgcolor);
 	
 	if (has_bg_widget)
-		SDL_BlitSurface(this->background.bg_widget->surf, NULL, this->screen, &this->background.bg_widget->pos);
+		SDL_BlitSurface(this->background.bg_widget->surf, masked_rect_ptr, this->screen, &this->background.bg_widget->pos);
 	
 	if (this->before_paint) this->before_paint(this, this->param);
 	
 	for (; i < this->c_widget; i++) {
 		widget = this->widget[i];
-		if ((widget) && (widget != this->widget_ontop)) {
+		if ((widget) && (widget != this->widget_ontop) && 
+			((! masked) || (Widget_contains(widget, xmin, ymin) && Widget_contains(xmax, ymax)))) 
+		{
+			fprintf(stderr, "%s: Redrawing %u [%s]\n", __FUNCTION__, i, toString(widget));
 			Widget_draw(widget, this, false);
 		}
 	}
 	
-	if ( (widget = this->widget_ontop) ) {
+	if ( (widget = this->widget_ontop) && 
+		((! masked) || (Widget_contains(widget, xmin, ymin) && Widget_contains(xmax, ymax)))) 
+	{
+		fprintf(stderr, "%s: Redrawing %u [%s]\n", __FUNCTION__, i, toString(widget));
 		Widget_draw(widget, this, false);
 	}
 	
@@ -471,6 +489,28 @@ void Screen_draw(Screen *this) {
 	Screen_flip(this);
 	
 	this->need_reload = false;
+	this->widget_drawn = NULL;
+}
+
+static void Screen_drawInternal(Screen* this) {
+	b8 masked = (this->widget_drawn != NULL);
+	u16 xmin=0, ymin=0, xmax=0, ymax=0;
+	
+	if (masked) {
+		fprintf(stderr, "%s: widget_drawn: %s\n", __FUNCTION__, toString(this->widget_drawn));
+		if ((! this->widget_drawn->surf) || (this->widget_drawn->surf->w == 0) || (this->widget_drawn->surf->h == 0)) {
+			fprintf(stderr, "%s: Warning. Widget %p has either NULL or zero sized surface\n", __FUNCTION__, this->widget_drawn);
+			this->need_reload = false;
+			this->widget_drawn = NULL;
+			return;
+		}
+		xmin = this->widget_drawn->pos.x;
+		ymin = this->widget_drawn->pos.y;
+		xmax = xmin + this->widget_drawn->surf->w - 1;
+		ymax = ymin + this->widget_drawn->surf->h - 1;
+	}
+	
+	Screen_draw(this, masked, xmin, ymin, xmax, ymax);
 }
 
 void Screen_MainStart(Screen *this) {
@@ -484,15 +524,17 @@ void Screen_MainStart(Screen *this) {
 	}
 	this->need_reload = true;
 	this->has_exited  = false;
+	this->widget_drawn = NULL;
 	
 	Screen_reloadBgWidget(this);
 	
 	while (! this->has_exited) {
 		/* Draw all widgets if needed */
-		if ((BASE_SURFACE_WIDTH != BASE_SURFACE->w) || (BASE_SURFACE_HEIGHT != BASE_SURFACE->h)) 
+		if ((BASE_SURFACE_WIDTH != BASE_SURFACE->w) || (BASE_SURFACE_HEIGHT != BASE_SURFACE->h)) {
 			Screen_reloadBgWidget(this);
+		}
 		if (this->need_reload) {
-			Screen_draw(this);
+			Screen_drawInternal(this);
 		}
 		
 		/* Process events by screen and run user specified callback event handlers from inside */
@@ -644,4 +686,7 @@ b8 Screen_getCParam(	Screen *this,
 	return t;
 }
 
-
+void Screen_setRefresh(Screen *this, const Widget* widget_drawn) {
+	this->need_reload = true;
+	this->widget_drawn = widget_drawn;
+}

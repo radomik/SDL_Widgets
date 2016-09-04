@@ -118,7 +118,7 @@ void button_imgsrc_open(Widget *sender, Screen *screen) {
 			ButtonImage_setEnabled(but_thr_dn, false);
 		}
 	}
-	screen->need_reload = true;
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Restore source image from file (using path from destination image)
@@ -177,7 +177,7 @@ void button_src_restore(Widget *sender, Screen *screen) {
 		ButtonImage_setEnabled(but_thr_dn, false);
 	}
 	
-	screen->need_reload = true;
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Copy source image to destination image
@@ -196,7 +196,8 @@ void button_src_to_dest(Widget *sender, Screen *screen) {
 	Image_copy(imgdst, imgsrc, false);
 	Widget_setPosition(WIDGET(imgdst), posx, posy);
 	WIDGET(imgdst)->draggable = draggable;
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh two areas: sender and imgdst
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button brightness up/down click
@@ -230,7 +231,8 @@ void button_brightness_change(Widget *sender, Screen *screen) {
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
 		fprintf(stderr, "button_brightness_change() >> Error in GToolsPoint_apply_brightness_contrast() [exited with code %d]\n", s);
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button contrast up/down click
@@ -264,7 +266,8 @@ void button_contrast_change(Widget *sender, Screen *screen) {
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
 		fprintf(stderr, "button_contrast_change() >> Error in GToolsPoint_apply_brightness_contrast() [exited with code %d]\n", s);
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button overflow in brightness/contrast up/down click
@@ -298,7 +301,8 @@ void button_overflow_change(Widget *sender, Screen *screen) {
 	
 	if ( (s = GToolsPoint_apply_brightness_contrast(imgsrc, imgdst, *img_mul, *img_off, *allow_of)) )
 		fprintf(stderr, "button_overflow_change() >> Error in GToolsPoint_apply_brightness_contrast() [exited with code %d]\n", s);
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button reset brightness/contrast/overflow
@@ -334,7 +338,8 @@ void button_brightness_reset(Widget *sender, Screen *screen) {
 	Widget_refresh(WIDGET(label_off));
 	Widget_refresh(WIDGET(label_mul));
 	Widget_refresh(WIDGET(label_of));
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button copy destination image to source image
@@ -381,7 +386,8 @@ void button_dest_to_src(Widget *sender, Screen *screen) {
 	Widget_refresh(WIDGET(thr_bin_label)); // reset "Próg:"
 	ButtonImage_setEnabled(thr_up_butimg, false);
 	ButtonImage_setEnabled(thr_dn_butimg, false);
-	screen->need_reload = true;
+	//TODO: Refreshing everything for now but should refresh a few areas only
+	Screen_setRefresh(screen, NULL);
 }
 
 /*! Button save source image to file "img/00_file_src.bmp"
@@ -413,8 +419,9 @@ void button_destaturize_std(Widget *sender, Screen *screen) {
 	u8 s;
 	if ( (s = GToolsPoint_desaturize_std(imgsrc->surf, imgdst->surf)) )
 		fprintf(stderr, "button_destaturize_std() >> Error in GToolsPoint_desaturize_std() [exited with code %d]\n", s);
-	else
-		screen->need_reload = true;
+	else {
+		Screen_setRefresh(screen, NULL);
+	}
 }
 
 /*! Button change binarization algorithm
@@ -1076,10 +1083,13 @@ void button_rep_col_apply(Widget *sender, Screen *screen) {
 	const u8 		*thr    = sender->cparam[3];
 	const u8 		*new_col= sender->cparam[4];
 	u8 		s;
-	if ( (s = GToolsPoint_replace_pixels(imgsrc->surf, imgdst->surf, *cond, *thr, new_col)) )
+	if ( (s = GToolsPoint_replace_pixels(imgsrc->surf, imgdst->surf, *cond, *thr, new_col)) ) {
 		fprintf(stderr, "button_rep_col_apply: GToolsPoint_replace_pixels failed [exit code %d]\n", s);
-	else
-		screen->need_reload = true;
+	}
+	else {
+		//TODO: Refreshing all widgets for now but should refresh a few areas only
+		Screen_setRefresh(screen, NULL);
+	}
 }
 
 /*! Callback run by HistStretchGraph object after graph has changed on mouse release
@@ -1095,7 +1105,10 @@ void histogram_stretch_on_mouse_release(Widget *sender, Screen *screen) {
 	if ( (s = GToolsPoint_histogram_stretching(imgsrc->surf, imgdst->surf, hsg->x, hsg->y, hsg->size)) ) {
 		fprintf(stderr, "histogram_stretch_on_mouse_release: GToolsPoint_histogram_stretching failed [exit code %d]\n", s);
 	}
-	else screen->need_reload = true;
+	else {
+		//TODO: Refreshing all widgets for now but should refresh a few areas only
+		Screen_setRefresh(screen, NULL);
+	}
 }
 
 /*! Button apply histogram stretch
@@ -1129,7 +1142,10 @@ void button_change_hist_stretch_nodes(Widget *sender, Screen *screen) {
 	if ( s ) {
 		fprintf(stderr, "button_change_hist_stretch_nodes: HistStretchGraph_setCountPoints failed [exit code %d]\n", s);
 	}
-	else screen->need_reload = true;
+	else {
+		//TODO: Refreshing all widgets for now but should refresh a few areas only
+		Screen_setRefresh(screen, NULL);
+	}
 }
 
 /*! Button apply generic filter (from GToolsFilters.h)
@@ -1142,8 +1158,12 @@ void button_generic_filter_apply(Widget *sender, Screen *screen) {
 	Widget 				*imgdst = WIDGET( sender->cparam[1] );
 	const generictype 	type 	= sender->id;
 	u8 s;
-	if ( (s = GToolsFilter_apply(imgsrc->surf, imgdst->surf, type)) )
+	if ( (s = GToolsFilter_apply(imgsrc->surf, imgdst->surf, type)) ) {
 		fprintf(stderr, "button_generic_filter_apply: GToolsFilter_apply (filter: %s) failed [exit code %d]\n", 
 			GToolsFilter_getName(type), s);
-	else screen->need_reload = true;
+	}
+	else {
+		//TODO: Refreshing all widgets for now but should refresh a few areas only
+		Screen_setRefresh(screen, NULL);
+	}
 }
